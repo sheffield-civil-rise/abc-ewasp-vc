@@ -1,0 +1,650 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Callback for Carnot model Storage_TypeN_CONF</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-10-20"><meta name="DC.source" content="CarnotCallbacks_StorageConf.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Callback for Carnot model Storage_TypeN_CONF</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Function Call</a></li><li><a href="#2">Inputs</a></li><li><a href="#3">Outputs</a></li><li><a href="#4">Description</a></li><li><a href="#5">References and Literature</a></li><li><a href="#6">Calculations</a></li><li><a href="#7">Copyright and Versions</a></li></ul></div><h2 id="1">Function Call</h2><pre>CarnotCallbacks_StorageConf(storagetype,parameterfile)</pre><h2 id="2">Inputs</h2><pre>pos - 1 = horizontal cylinder; 2 = vertical cylinder
+volume - volume of water in m&sup3;
+dia - diameter of cylinder in m
+nodes - number of nodes in the storage model
+mpoints - number of measurement points
+t0 - initial temperature vector [&deg;C]</pre><h2 id="3">Outputs</h2><pre>standing - true, if vertical cyliner
+dh - height of one node in m
+height - height of storage tank in m
+mpts - vector with relative postion of measurement points
+tini - initial temperature vector of length nodes</pre><h2 id="4">Description</h2><pre>Search for the parameterfile in the folders parameter_set of the model
+and load the parameter set. The function is used by the mask of the
+Carnot Simlink block.
+Sets geometry values and sets the initial temperature
+vector to a vector with the length of the storage nodes.
+The input initial temperature vector can be of any size.</pre><h2 id="5">References and Literature</h2><pre>Function is used by: Simulink block Storage_Type_1 ... Storage_Type_5
+Function calls: CarnotCallbacks_getConfNamelist.m
+see also CarnotCallbacks_getConfNamelist</pre><pre class="codeinput"><span class="keyword">function</span> CarnotCallbacks_StorageConf(storagetype,parameterfile)
+</pre><h2 id="6">Calculations</h2><pre class="codeinput"><span class="keyword">if</span>  ~BlockIsInCarnotLibrary       <span class="comment">% if not located in library</span>
+    <span class="comment">% block name definition</span>
+    <span class="keyword">switch</span> storagetype
+        <span class="keyword">case</span> 1
+            blockname = <span class="string">'Storage_Type_1'</span>;
+            foldername = <span class="string">'Storage_Type_1_CONF'</span>;
+            <span class="comment">% Ncon = '2';</span>
+        <span class="keyword">case</span> 2
+            blockname = <span class="string">'Storage_Type_2'</span>;
+            foldername = <span class="string">'Storage_Type_2_CONF'</span>;
+            <span class="comment">% Ncon = '2';</span>
+        <span class="keyword">case</span> 3
+            blockname = <span class="string">'Storage_Type_3'</span>;
+            foldername = <span class="string">'Storage_Type_3_CONF'</span>;
+            <span class="comment">% Ncon = '3';</span>
+        <span class="keyword">case</span> 4
+            blockname = <span class="string">'Storage_Type_4'</span>;
+            foldername = <span class="string">'Storage_Type_4_CONF'</span>;
+            <span class="comment">% Ncon = '4';</span>
+        <span class="keyword">case</span> 5
+            blockname = <span class="string">'Storage_Type_5'</span>;
+            foldername = <span class="string">'Storage_Type_5_CONF'</span>;
+            <span class="comment">% Ncon = '5';</span>
+        <span class="keyword">otherwise</span>
+            error(<span class="string">'Unknown storage type'</span>)
+    <span class="keyword">end</span>
+
+    <span class="comment">% path definitions</span>
+    parampath = fullfile(<span class="string">'Storage'</span>,<span class="string">'Thermal'</span>,foldername,<span class="string">'parameter_set'</span>);
+    intpath = fullfile(path_carnot(<span class="string">'intlibsl'</span>), parampath);
+    pubpath = fullfile(path_carnot(<span class="string">'libsl'</span>), parampath);
+
+    <span class="comment">% get parameter files</span>
+    <span class="comment">%     [namelist, lib] = getConfNamelist(intpath,pubpath);</span>
+    [namelist, lib] = CarnotCallbacks_getConfNamelist(intpath,pubpath);
+
+    <span class="comment">% Get block properties ---- just a test</span>
+    <span class="comment">%blockHandle = get(gcbh);</span>
+    <span class="comment">%MaskNames = get_param(blockHandle.Handle, 'MaskNames');</span>
+    <span class="comment">%MaskStyles = get_param(blockHandle.Handle, 'MaskStyles');</span>
+    <span class="comment">%MaskParamInitValue = get_param(blockHandle.Handle, 'parameterfile');</span>
+
+    <span class="comment">% set names in the popup mask</span>
+    <span class="keyword">if</span> ~lib
+        myMaskStylesVar{1} = [<span class="string">'popup('</span>, namelist,<span class="string">')'</span>];
+        myMaskStylesVar{2} = <span class="string">'edit'</span>;
+        set_param(gcb, <span class="string">'MaskStyles'</span>, myMaskStylesVar);
+    <span class="keyword">end</span>
+
+    <span class="keyword">if</span> exist(fullfile(intpath, [parameterfile <span class="string">'.mat'</span>]), <span class="string">'file'</span>)
+        load(fullfile(intpath, parameterfile));
+    <span class="keyword">else</span>
+        load(fullfile(pubpath, parameterfile));
+    <span class="keyword">end</span>
+
+    <span class="comment">% set mask parameters</span>
+    <span class="comment">% temperature sensor positions</span>
+    set_param([gcb <span class="string">'/T_Sensor_Surface'</span>], <span class="string">'pos'</span>, <span class="keyword">...</span>
+        [<span class="string">'['</span>, num2str(s.Tsensor), <span class="string">']'</span>]);
+    <span class="comment">% top mask (same for all storage tanks)</span>
+    set_param([gcb <span class="string">'/'</span> blockname], <span class="string">'uloss'</span>, num2str(s.uwall), <span class="keyword">...</span>
+        <span class="string">'ubot'</span>, num2str(s.ubot), <span class="string">'utop'</span>, num2str(s.utop), <span class="keyword">...</span>
+        <span class="string">'cond'</span>, num2str(s.axcond), <span class="keyword">...</span>
+        <span class="string">'volume'</span>, num2str(s.vol) , <span class="string">'dia'</span>, num2str(s.dia), <span class="keyword">...</span>
+        <span class="string">'pos'</span>, <span class="string">'standing cylinder'</span>, <span class="keyword">...</span><span class="comment"> %'nconnect', Ncon, ...</span>
+        <span class="string">'nodes'</span>, num2str(s.nodes), <span class="string">'mpoints'</span>, num2str(s.mpts));
+
+    <span class="comment">% connections, individual for each tank</span>
+    <span class="keyword">switch</span> storagetype
+        <span class="keyword">case</span> 1
+            set_param([gcb <span class="string">'/Storage_Type_1'</span>], <span class="keyword">...</span>
+                <span class="string">'h_in_chg'</span>, num2str(s.pipe_charge.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out_chg'</span>, num2str(s.pipe_charge.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin_chg'</span>, num2str(s.pipe_charge.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua_chg'</span>, num2str(s.pipe_charge.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_1'</span>], <span class="keyword">...</span>
+                <span class="string">'h_in'</span>, num2str(s.pipe_discharge.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out'</span>, num2str(s.pipe_discharge.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin'</span>, num2str(s.pipe_discharge.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua'</span>, num2str(s.pipe_discharge.dpqua));
+
+        <span class="keyword">case</span> 2
+            set_param([gcb <span class="string">'/Storage_Type_2'</span>], <span class="keyword">...</span>
+                <span class="string">'h_in'</span>, num2str(s.pipe.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out'</span>, num2str(s.pipe.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin'</span>, num2str(s.pipe.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua'</span>, num2str(s.pipe.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_2'</span>], <span class="keyword">...</span>
+                <span class="string">'h_in_chg'</span>, num2str(s.HX_data_fit.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out_chg'</span>, num2str(s.HX_data_fit.outlet), <span class="keyword">...</span>
+                <span class="string">'ua0'</span>, num2str(s.HX_data_fit.uac), <span class="keyword">...</span>
+                <span class="string">'uam'</span>, num2str(s.HX_data_fit.uam), <span class="keyword">...</span>
+                <span class="string">'uat'</span>, num2str(s.HX_data_fit.uat), <span class="keyword">...</span>
+                <span class="string">'dplin'</span>, num2str(s.HX_data_fit.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua'</span>, num2str(s.HX_data_fit.dpqua));
+
+        <span class="keyword">case</span> 3
+            set_param([gcb <span class="string">'/Storage_Type_3'</span>], <span class="keyword">...</span>
+                <span class="string">'h_in'</span>, num2str(s.pipe.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out'</span>, num2str(s.pipe.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin'</span>, num2str(s.pipe.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua'</span>, num2str(s.pipe.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_3'</span>], <span class="keyword">...</span>
+                <span class="string">'h_in_hxup'</span>, num2str(s.HX_EN12977_bkp.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out_hxup'</span>, num2str(s.HX_EN12977_bkp.outlet), <span class="keyword">...</span>
+                <span class="string">'ua0_hxup'</span>, num2str(s.HX_EN12977_bkp.uac), <span class="keyword">...</span>
+                <span class="string">'uam_hxup'</span>, num2str(s.HX_EN12977_bkp.uam), <span class="keyword">...</span>
+                <span class="string">'uat_hxup'</span>, num2str(s.HX_EN12977_bkp.uat), <span class="keyword">...</span>
+                <span class="string">'dplin_hxup'</span>, num2str(s.HX_EN12977_bkp.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua_hxup'</span>, num2str(s.HX_EN12977_bkp.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_3'</span>], <span class="keyword">...</span>
+                <span class="string">'h_in_hxlw'</span>, num2str(s.HX_EN12977_solar.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out_hxlw'</span>, num2str(s.HX_EN12977_solar.outlet), <span class="keyword">...</span>
+                <span class="string">'ua0_hxlw'</span>, num2str(s.HX_EN12977_solar.uac), <span class="keyword">...</span>
+                <span class="string">'uam_hxlw'</span>, num2str(s.HX_EN12977_solar.uam), <span class="keyword">...</span>
+                <span class="string">'uat_hxlw'</span>, num2str(s.HX_EN12977_solar.uat), <span class="keyword">...</span>
+                <span class="string">'dplin_hxlw'</span>, num2str(s.HX_EN12977_solar.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua_hxlw'</span>, num2str(s.HX_EN12977_solar.dpqua));
+
+        <span class="keyword">case</span> 4
+            set_param([gcb <span class="string">'/Storage_Type_4'</span>], <span class="keyword">...</span><span class="comment">       % HX_EN12977_dhw</span>
+                <span class="string">'h_in4'</span>, num2str(s.HX_EN12977_dhw.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out4'</span>, num2str(s.HX_EN12977_dhw.outlet), <span class="keyword">...</span>
+                <span class="string">'ua0_4'</span>, num2str(s.HX_EN12977_dhw.uac), <span class="keyword">...</span>
+                <span class="string">'uam_4'</span>, num2str(s.HX_EN12977_dhw.uam), <span class="keyword">...</span>
+                <span class="string">'uat_4'</span>, num2str(s.HX_EN12977_dhw.uat), <span class="keyword">...</span>
+                <span class="string">'dplin4'</span>, num2str(s.HX_EN12977_dhw.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua'</span>, num2str(s.HX_EN12977_dhw.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_4'</span>], <span class="keyword">...</span><span class="comment">      % pipe_bkp_dhw</span>
+                <span class="string">'h_in1'</span>, num2str(s.pipe_bkp_dhw.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out1'</span>, num2str(s.pipe_bkp_dhw.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin1'</span>, num2str(s.pipe_bkp_dhw.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua1'</span>, num2str(s.pipe_bkp_dhw.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_4'</span>], <span class="keyword">...</span><span class="comment">      % pipe_heating</span>
+                <span class="string">'h_in3'</span>, num2str(s.pipe_heating.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out3'</span>, num2str(s.pipe_heating.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin3'</span>, num2str(s.pipe_heating.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua3'</span>, num2str(s.pipe_heating.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_4'</span>], <span class="keyword">...</span><span class="comment">      % HX_EN12977_solar</span>
+                <span class="string">'h_in2'</span>, num2str(s.HX_EN12977_solar.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out2'</span>, num2str(s.HX_EN12977_solar.outlet), <span class="keyword">...</span>
+                <span class="string">'ua0_2'</span>, num2str(s.HX_EN12977_solar.uac), <span class="keyword">...</span>
+                <span class="string">'uam_2'</span>, num2str(s.HX_EN12977_solar.uam), <span class="keyword">...</span>
+                <span class="string">'uat_2'</span>, num2str(s.HX_EN12977_solar.uat), <span class="keyword">...</span>
+                <span class="string">'dplin_2'</span>, num2str(s.HX_EN12977_solar.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua_2'</span>, num2str(s.HX_EN12977_solar.dpqua));
+
+        <span class="keyword">case</span> 5
+            set_param([gcb <span class="string">'/Storage_Type_5'</span>], <span class="keyword">...</span><span class="comment">       % HX_EN12977_dhw</span>
+                <span class="string">'h_in'</span>, num2str(s.HX_EN12977_dhw.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out'</span>, num2str(s.HX_EN12977_dhw.outlet), <span class="keyword">...</span>
+                <span class="string">'ua0'</span>, num2str(s.HX_EN12977_dhw.uac), <span class="keyword">...</span>
+                <span class="string">'uam'</span>, num2str(s.HX_EN12977_dhw.uam), <span class="keyword">...</span>
+                <span class="string">'uat'</span>, num2str(s.HX_EN12977_dhw.uat), <span class="keyword">...</span>
+                <span class="string">'dplin'</span>, num2str(s.HX_EN12977_dhw.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua'</span>, num2str(s.HX_EN12977_dhw.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_5'</span>], <span class="keyword">...</span><span class="comment">      % pipe_bkp_dhw</span>
+                <span class="string">'h_in1'</span>, num2str(s.pipe_bkp_dhw.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out1'</span>, num2str(s.pipe_bkp_dhw.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin1'</span>, num2str(s.pipe_bkp_dhw.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua1'</span>, num2str(s.pipe_bkp_dhw.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_5'</span>], <span class="keyword">...</span><span class="comment">      % pipe_heating</span>
+                <span class="string">'h_in4'</span>, num2str(s.pipe_heating.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out4'</span>, num2str(s.pipe_heating.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin4'</span>, num2str(s.pipe_heating.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua4'</span>, num2str(s.pipe_heating.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_5'</span>], <span class="keyword">...</span><span class="comment">      % pipe_bkp_heating</span>
+                <span class="string">'h_in2'</span>, num2str(s.pipe_bkp_heating.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out2'</span>, num2str(s.pipe_bkp_heating.outlet), <span class="keyword">...</span>
+                <span class="string">'dplin2'</span>, num2str(s.pipe_bkp_heating.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua2'</span>, num2str(s.pipe_bkp_heating.dpqua));
+            set_param([gcb <span class="string">'/Storage_Type_5'</span>], <span class="keyword">...</span><span class="comment">      % HX_EN12977_solar</span>
+                <span class="string">'h_in3'</span>, num2str(s.HX_EN12977_solar.inlet), <span class="keyword">...</span>
+                <span class="string">'h_out3'</span>, num2str(s.HX_EN12977_solar.outlet), <span class="keyword">...</span>
+                <span class="string">'ua0_3'</span>, num2str(s.HX_EN12977_solar.uac), <span class="keyword">...</span>
+                <span class="string">'uam_3'</span>, num2str(s.HX_EN12977_solar.uam), <span class="keyword">...</span>
+                <span class="string">'uat_3'</span>, num2str(s.HX_EN12977_solar.uat), <span class="keyword">...</span>
+                <span class="string">'dplin3'</span>, num2str(s.HX_EN12977_solar.dplin), <span class="keyword">...</span>
+                <span class="string">'dpqua3'</span>, num2str(s.HX_EN12977_solar.dpqua));
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% % % function [namelist, lib] = getConfNamelist(intpath,pubpath)</span>
+<span class="comment">% % % % [namelist, lib] = getConfNamelist_Callbacks(intpath,pubpath)</span>
+<span class="comment">% % % % returns the namelist for configurated blocks.</span>
+<span class="comment">% % % % input: intpath - path to the *.mat files with internal parameter sets</span>
+<span class="comment">% % % %        pubpath - path to the *.mat files with internal parameter sets</span>
+<span class="comment">% % % %        csref - path to the block in the carnot library</span>
+<span class="comment">% % % % output: namelist - character strings of the filenames</span>
+<span class="comment">% % % %         lib - true, if block is still in a library</span>
+<span class="comment">% % % %</span>
+<span class="comment">% % % % See also: --</span>
+<span class="comment">% % % %</span>
+<span class="comment">% % % % Function Calls:</span>
+<span class="comment">% % % % function is used by: all _CONF blocks of Carnot</span>
+<span class="comment">% % % % this function calls: --</span>
+<span class="comment">% % % %</span>
+<span class="comment">% % % % Literature: -</span>
+<span class="comment">% % %</span>
+<span class="comment">% % % % get public parameter files</span>
+<span class="comment">% % % pubfiles = dir(fullfile(pubpath,'*.mat'));</span>
+<span class="comment">% % % % set names in the popup mask</span>
+<span class="comment">% % % namelist = pubfiles(1).name(1:end-4);</span>
+<span class="comment">% % %</span>
+<span class="comment">% % % % if not in the library any more, add internal parameters sets to the list</span>
+<span class="comment">% % % if  BlockIsInCarnotLibrary       % if located in library</span>
+<span class="comment">% % %     lib = true;</span>
+<span class="comment">% % % else</span>
+<span class="comment">% % %     lib = false;</span>
+<span class="comment">% % %     for n = 2:length(pubfiles)</span>
+<span class="comment">% % %         namelist = [namelist,'|',pubfiles(n).name(1:end-4)]; %#ok&lt;AGROW&gt;</span>
+<span class="comment">% % %     end</span>
+<span class="comment">% % %     intfiles = dir(fullfile(intpath,'*.mat'));</span>
+<span class="comment">% % %     for n = 1:length(intfiles)</span>
+<span class="comment">% % %         namelist = [namelist,'|',intfiles(n).name(1:end-4)]; %#ok&lt;AGROW&gt;</span>
+<span class="comment">% % %     end</span>
+<span class="comment">% % % end</span>
+</pre><h2 id="7">Copyright and Versions</h2><pre>This file is part of the CARNOT Blockset.
+Copyright (c) 1998-2015, Solar-Institute Juelich of the FH Aachen.
+Additional Copyright for this file see list auf authors.
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+1. Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.</pre><pre>************************************************************************
+VERSIONS
+author list:     hf -&gt; Bernd Hafner
+version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+Version  Author  Changes                                     Date
+6.1.0    hf      created                                     03oct2014
+6.1.1    hf      direct subsystem mask parameters and        20dec2014
+                 storage sensor position is taken from s.Tsensor
+6.1.2    hf      integrated getConfNamelist                  15feb2015
+6.2.0    hf      set promoted parameters in top mask         13oct2017
+                 instead of parameters in submask, nconnect
+                 is no longer a top mask parameter
+6.2.1    hf      revised for pubish function,                19oct2017
+                 replace function call to getConfNamelist
+                 by CarnotCallbacks_getConfNamelist
+*************************************************************************</pre><pre class="codeinput"><span class="comment">% $Author: carnot-hafner $</span>
+
+<span class="comment">% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/CarnotCallbacks_StorageConf.m $</span>
+<span class="comment">% *************************************************************************</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Callback for Carnot model Storage_TypeN_CONF
+%% Function Call
+%  CarnotCallbacks_StorageConf(storagetype,parameterfile)
+%% Inputs   
+%  pos - 1 = horizontal cylinder; 2 = vertical cylinder
+%  volume - volume of water in m³
+%  dia - diameter of cylinder in m
+%  nodes - number of nodes in the storage model     
+%  mpoints - number of measurement points
+%  t0 - initial temperature vector [°C]
+%% Outputs
+%  standing - true, if vertical cyliner
+%  dh - height of one node in m
+%  height - height of storage tank in m
+%  mpts - vector with relative postion of measurement points
+%  tini - initial temperature vector of length nodes
+% 
+%% Description
+%  Search for the parameterfile in the folders parameter_set of the model
+%  and load the parameter set. The function is used by the mask of the
+%  Carnot Simlink block.
+%  Sets geometry values and sets the initial temperature 
+%  vector to a vector with the length of the storage nodes. 
+%  The input initial temperature vector can be of any size.
+% 
+%% References and Literature
+%  Function is used by: Simulink block Storage_Type_1 ... Storage_Type_5
+%  Function calls: CarnotCallbacks_getConfNamelist.m
+%  see also CarnotCallbacks_getConfNamelist
+
+function CarnotCallbacks_StorageConf(storagetype,parameterfile)
+%% Calculations
+if  ~BlockIsInCarnotLibrary       % if not located in library
+    % block name definition
+    switch storagetype
+        case 1
+            blockname = 'Storage_Type_1';
+            foldername = 'Storage_Type_1_CONF';
+            % Ncon = '2';
+        case 2
+            blockname = 'Storage_Type_2';
+            foldername = 'Storage_Type_2_CONF';
+            % Ncon = '2';
+        case 3
+            blockname = 'Storage_Type_3';
+            foldername = 'Storage_Type_3_CONF';
+            % Ncon = '3';
+        case 4
+            blockname = 'Storage_Type_4';
+            foldername = 'Storage_Type_4_CONF';
+            % Ncon = '4';
+        case 5
+            blockname = 'Storage_Type_5';
+            foldername = 'Storage_Type_5_CONF';
+            % Ncon = '5';
+        otherwise
+            error('Unknown storage type')
+    end
+    
+    % path definitions
+    parampath = fullfile('Storage','Thermal',foldername,'parameter_set');  
+    intpath = fullfile(path_carnot('intlibsl'), parampath);
+    pubpath = fullfile(path_carnot('libsl'), parampath);
+
+    % get parameter files
+    %     [namelist, lib] = getConfNamelist(intpath,pubpath);
+    [namelist, lib] = CarnotCallbacks_getConfNamelist(intpath,pubpath);
+    
+    % Get block properties REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH just a test
+    %blockHandle = get(gcbh);
+    %MaskNames = get_param(blockHandle.Handle, 'MaskNames');
+    %MaskStyles = get_param(blockHandle.Handle, 'MaskStyles');
+    %MaskParamInitValue = get_param(blockHandle.Handle, 'parameterfile');
+
+    % set names in the popup mask
+    if ~lib
+        myMaskStylesVar{1} = ['popup(', namelist,')'];
+        myMaskStylesVar{2} = 'edit';
+        set_param(gcb, 'MaskStyles', myMaskStylesVar);
+    end
+
+    if exist(fullfile(intpath, [parameterfile '.mat']), 'file')
+        load(fullfile(intpath, parameterfile));
+    else
+        load(fullfile(pubpath, parameterfile));
+    end
+
+    % set mask parameters
+    % temperature sensor positions
+    set_param([gcb '/T_Sensor_Surface'], 'pos', ...
+        ['[', num2str(s.Tsensor), ']']);
+    % top mask (same for all storage tanks)
+    set_param([gcb '/' blockname], 'uloss', num2str(s.uwall), ...
+        'ubot', num2str(s.ubot), 'utop', num2str(s.utop), ...
+        'cond', num2str(s.axcond), ...
+        'volume', num2str(s.vol) , 'dia', num2str(s.dia), ...
+        'pos', 'standing cylinder', ... %'nconnect', Ncon, ...
+        'nodes', num2str(s.nodes), 'mpoints', num2str(s.mpts));
+
+    % connections, individual for each tank
+    switch storagetype
+        case 1
+            set_param([gcb '/Storage_Type_1'], ...
+                'h_in_chg', num2str(s.pipe_charge.inlet), ...
+                'h_out_chg', num2str(s.pipe_charge.outlet), ...
+                'dplin_chg', num2str(s.pipe_charge.dplin), ...
+                'dpqua_chg', num2str(s.pipe_charge.dpqua));
+            set_param([gcb '/Storage_Type_1'], ...
+                'h_in', num2str(s.pipe_discharge.inlet), ...
+                'h_out', num2str(s.pipe_discharge.outlet), ...
+                'dplin', num2str(s.pipe_discharge.dplin), ...
+                'dpqua', num2str(s.pipe_discharge.dpqua));
+
+        case 2
+            set_param([gcb '/Storage_Type_2'], ...
+                'h_in', num2str(s.pipe.inlet), ...
+                'h_out', num2str(s.pipe.outlet), ...
+                'dplin', num2str(s.pipe.dplin), ...
+                'dpqua', num2str(s.pipe.dpqua));
+            set_param([gcb '/Storage_Type_2'], ...
+                'h_in_chg', num2str(s.HX_data_fit.inlet), ...
+                'h_out_chg', num2str(s.HX_data_fit.outlet), ...
+                'ua0', num2str(s.HX_data_fit.uac), ...
+                'uam', num2str(s.HX_data_fit.uam), ...
+                'uat', num2str(s.HX_data_fit.uat), ...
+                'dplin', num2str(s.HX_data_fit.dplin), ...
+                'dpqua', num2str(s.HX_data_fit.dpqua));
+
+        case 3
+            set_param([gcb '/Storage_Type_3'], ...             
+                'h_in', num2str(s.pipe.inlet), ...
+                'h_out', num2str(s.pipe.outlet), ...
+                'dplin', num2str(s.pipe.dplin), ...
+                'dpqua', num2str(s.pipe.dpqua));
+            set_param([gcb '/Storage_Type_3'], ...
+                'h_in_hxup', num2str(s.HX_EN12977_bkp.inlet), ...
+                'h_out_hxup', num2str(s.HX_EN12977_bkp.outlet), ...
+                'ua0_hxup', num2str(s.HX_EN12977_bkp.uac), ...
+                'uam_hxup', num2str(s.HX_EN12977_bkp.uam), ...
+                'uat_hxup', num2str(s.HX_EN12977_bkp.uat), ...
+                'dplin_hxup', num2str(s.HX_EN12977_bkp.dplin), ...
+                'dpqua_hxup', num2str(s.HX_EN12977_bkp.dpqua));
+            set_param([gcb '/Storage_Type_3'], ...
+                'h_in_hxlw', num2str(s.HX_EN12977_solar.inlet), ...
+                'h_out_hxlw', num2str(s.HX_EN12977_solar.outlet), ...
+                'ua0_hxlw', num2str(s.HX_EN12977_solar.uac), ...
+                'uam_hxlw', num2str(s.HX_EN12977_solar.uam), ...
+                'uat_hxlw', num2str(s.HX_EN12977_solar.uat), ...
+                'dplin_hxlw', num2str(s.HX_EN12977_solar.dplin), ...
+                'dpqua_hxlw', num2str(s.HX_EN12977_solar.dpqua));
+        
+        case 4
+            set_param([gcb '/Storage_Type_4'], ...       % HX_EN12977_dhw
+                'h_in4', num2str(s.HX_EN12977_dhw.inlet), ...
+                'h_out4', num2str(s.HX_EN12977_dhw.outlet), ...
+                'ua0_4', num2str(s.HX_EN12977_dhw.uac), ...
+                'uam_4', num2str(s.HX_EN12977_dhw.uam), ...
+                'uat_4', num2str(s.HX_EN12977_dhw.uat), ...
+                'dplin4', num2str(s.HX_EN12977_dhw.dplin), ...
+                'dpqua', num2str(s.HX_EN12977_dhw.dpqua));
+            set_param([gcb '/Storage_Type_4'], ...      % pipe_bkp_dhw
+                'h_in1', num2str(s.pipe_bkp_dhw.inlet), ...
+                'h_out1', num2str(s.pipe_bkp_dhw.outlet), ...
+                'dplin1', num2str(s.pipe_bkp_dhw.dplin), ...
+                'dpqua1', num2str(s.pipe_bkp_dhw.dpqua));
+            set_param([gcb '/Storage_Type_4'], ...      % pipe_heating
+                'h_in3', num2str(s.pipe_heating.inlet), ...
+                'h_out3', num2str(s.pipe_heating.outlet), ...
+                'dplin3', num2str(s.pipe_heating.dplin), ...
+                'dpqua3', num2str(s.pipe_heating.dpqua));
+            set_param([gcb '/Storage_Type_4'], ...      % HX_EN12977_solar
+                'h_in2', num2str(s.HX_EN12977_solar.inlet), ...
+                'h_out2', num2str(s.HX_EN12977_solar.outlet), ...
+                'ua0_2', num2str(s.HX_EN12977_solar.uac), ...
+                'uam_2', num2str(s.HX_EN12977_solar.uam), ...
+                'uat_2', num2str(s.HX_EN12977_solar.uat), ...
+                'dplin_2', num2str(s.HX_EN12977_solar.dplin), ...
+                'dpqua_2', num2str(s.HX_EN12977_solar.dpqua));
+
+        case 5
+            set_param([gcb '/Storage_Type_5'], ...       % HX_EN12977_dhw
+                'h_in', num2str(s.HX_EN12977_dhw.inlet), ...
+                'h_out', num2str(s.HX_EN12977_dhw.outlet), ...
+                'ua0', num2str(s.HX_EN12977_dhw.uac), ...
+                'uam', num2str(s.HX_EN12977_dhw.uam), ...
+                'uat', num2str(s.HX_EN12977_dhw.uat), ...
+                'dplin', num2str(s.HX_EN12977_dhw.dplin), ...
+                'dpqua', num2str(s.HX_EN12977_dhw.dpqua));
+            set_param([gcb '/Storage_Type_5'], ...      % pipe_bkp_dhw
+                'h_in1', num2str(s.pipe_bkp_dhw.inlet), ...
+                'h_out1', num2str(s.pipe_bkp_dhw.outlet), ...
+                'dplin1', num2str(s.pipe_bkp_dhw.dplin), ...
+                'dpqua1', num2str(s.pipe_bkp_dhw.dpqua));
+            set_param([gcb '/Storage_Type_5'], ...      % pipe_heating
+                'h_in4', num2str(s.pipe_heating.inlet), ...
+                'h_out4', num2str(s.pipe_heating.outlet), ...
+                'dplin4', num2str(s.pipe_heating.dplin), ...
+                'dpqua4', num2str(s.pipe_heating.dpqua));
+            set_param([gcb '/Storage_Type_5'], ...      % pipe_bkp_heating
+                'h_in2', num2str(s.pipe_bkp_heating.inlet), ...
+                'h_out2', num2str(s.pipe_bkp_heating.outlet), ...
+                'dplin2', num2str(s.pipe_bkp_heating.dplin), ...
+                'dpqua2', num2str(s.pipe_bkp_heating.dpqua));
+            set_param([gcb '/Storage_Type_5'], ...      % HX_EN12977_solar
+                'h_in3', num2str(s.HX_EN12977_solar.inlet), ...
+                'h_out3', num2str(s.HX_EN12977_solar.outlet), ...
+                'ua0_3', num2str(s.HX_EN12977_solar.uac), ...
+                'uam_3', num2str(s.HX_EN12977_solar.uam), ...
+                'uat_3', num2str(s.HX_EN12977_solar.uat), ...
+                'dplin3', num2str(s.HX_EN12977_solar.dplin), ...
+                'dpqua3', num2str(s.HX_EN12977_solar.dpqua));
+    end
+end
+
+% % % function [namelist, lib] = getConfNamelist(intpath,pubpath)
+% % % % [namelist, lib] = getConfNamelist_Callbacks(intpath,pubpath)
+% % % % returns the namelist for configurated blocks. 
+% % % % input: intpath - path to the *.mat files with internal parameter sets
+% % % %        pubpath - path to the *.mat files with internal parameter sets
+% % % %        csref - path to the block in the carnot library
+% % % % output: namelist - character strings of the filenames
+% % % %         lib - true, if block is still in a library
+% % % %                                                                          
+% % % % See also: REPLACE_WITH_DASH_DASH
+% % % % 
+% % % % Function Calls:
+% % % % function is used by: all _CONF blocks of Carnot
+% % % % this function calls: REPLACE_WITH_DASH_DASH
+% % % % 
+% % % % Literature: -
+% % % 
+% % % % get public parameter files
+% % % pubfiles = dir(fullfile(pubpath,'*.mat'));
+% % % % set names in the popup mask
+% % % namelist = pubfiles(1).name(1:end-4);
+% % % 
+% % % % if not in the library any more, add internal parameters sets to the list
+% % % if  BlockIsInCarnotLibrary       % if located in library
+% % %     lib = true;
+% % % else
+% % %     lib = false;
+% % %     for n = 2:length(pubfiles)
+% % %         namelist = [namelist,'|',pubfiles(n).name(1:end-4)]; %#ok<AGROW>
+% % %     end
+% % %     intfiles = dir(fullfile(intpath,'*.mat'));
+% % %     for n = 1:length(intfiles)
+% % %         namelist = [namelist,'|',intfiles(n).name(1:end-4)]; %#ok<AGROW>
+% % %     end
+% % % end
+
+%% Copyright and Versions
+%  This file is part of the CARNOT Blockset.
+%  Copyright (c) 1998-2015, Solar-Institute Juelich of the FH Aachen.
+%  Additional Copyright for this file see list auf authors.
+%  All rights reserved.
+%  Redistribution and use in source and binary forms, with or without 
+%  modification, are permitted provided that the following conditions are 
+%  met:
+%  1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+%  2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+%  3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+%  THE POSSIBILITY OF SUCH DAMAGE.
+%  
+%  ************************************************************************
+%  VERSIONS
+%  author list:     hf -> Bernd Hafner
+%  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+%  Version  Author  Changes                                     Date
+%  6.1.0    hf      created                                     03oct2014
+%  6.1.1    hf      direct subsystem mask parameters and        20dec2014
+%                   storage sensor position is taken from s.Tsensor
+%  6.1.2    hf      integrated getConfNamelist                  15feb2015
+%  6.2.0    hf      set promoted parameters in top mask         13oct2017
+%                   instead of parameters in submask, nconnect
+%                   is no longer a top mask parameter
+%  6.2.1    hf      revised for pubish function,                19oct2017
+%                   replace function call to getConfNamelist
+%                   by CarnotCallbacks_getConfNamelist
+% *************************************************************************
+% $Revision: 315 $
+% $Author: carnot-hafner $
+% $Date: 2017-10-19 21:46:26 +0200 (Do, 19 Okt 2017) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/CarnotCallbacks_StorageConf.m $
+% *************************************************************************
+
+##### SOURCE END #####
+--></body></html>
