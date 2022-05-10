@@ -137,7 +137,9 @@ plot(1:365,e2*24/1000,1:365,e3*24/1000,1:365,e4*24/1000)
  b2=sum(e3*24/1000)/86
  b3=sum(e4*24/1000)/86
  pbaspect([1 1 1])
- print('C:\Users\cpp14rcj\Desktop\CONFPAPERfig1','-dpng','-r500')
+ homePath = char(java.lang.System.getProperty("user.home"));
+ figPath1 = fullfile(homePath, "Desktop", "CONFPAPERfig1");
+ print(figPath1, "-dpng", "-r500");
  
  %%
  subplot(1,2,1)
@@ -154,6 +156,7 @@ plot(1:365,e2*24/1000,1:365,e3*24/1000,1:365,e4*24/1000)
  ylabel('KW_{th}')
  
  pbaspect([1 1 1])
- 
- print('C:\Users\cpp14rcj\Desktop\CONFPAPERfig2','-dpng','-r500')
- 
+
+ homePath = char(java.lang.System.getProperty("user.home"));
+ figPath2 = fullfile(homePath, "Desktop", "CONFPAPERfig2");
+ print(figPath2, "-dpng", "-r500"); 
