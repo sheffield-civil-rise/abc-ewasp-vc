@@ -57,16 +57,13 @@ functionname = 'verify_sfun_storage_heatexchanger2_mdl';
 % 9  S_WALL_FIN  wallthickness fin                           m        
 % 10 N_FIN       number of fins per meter                    1/m      
 
-% heat exchanger, heat transfer fitted to measurement 
-% portID = 203, = 303 for stratified charging
-%   UA = uac+mdot*uam+(Theatexchanger-Tstorage)*uat      
-% EN 12977 heat exchanger, heat transfer fitted to measurement
-% portID = 204, = 304 for stratified charging  
-%   UA = uac * mdot^uam * ((Theatexchanger+Tstorage)/2)^uat * (Theatexchanger-Tstorage)^uat2
+% heat exchanger, heat transfer fitted to measurement  
+%   UA = uac+mdot*uam+(Theatexchanger-Tstorage)*uat   portID = 203, = 303 for stratified charging   
+% EN 12977 heat exchanger, heat transfer fitted to measurement    */
+%   UA = uac * mdot^uam * ((Theatexchanger+Tstorage)/2)^uat     portID = 204, = 304 for stratified charging  
 % 4  UA_C        constant heat transfer rate           W/K        
 % 5  UA_M        massflow dependant heat transfer      W*s/(kg*K) 
 % 6  UA_T        temperature dependant heat transfer   W/K/°C     
-% 7  UA_T2       temperature difference dependant heat transfer   W/K/°C     
 
 hxname = {'smooth tube theoretical', 'smooth tube theoretical - stratified', ...
     'finned tube theoretical', 'finned tube theoretical  - stratified', ...
@@ -83,7 +80,6 @@ nfin = 100;
 uac = 102.7;    % parameters for EN12977 from ITW Uni Stuttgart test report 04STO103
 uam = 0.226;    % according to test report UA is around 450 W/K at 0.1 kg/s at 35°C
 uat = 0.550;
-uat2 = 0;
 Ahx = 1.5;
 
 mdot = 0.1;
@@ -98,8 +94,8 @@ param = [ ...
     dpipe, dwall, L, condwall, dfin, sfin, nfin; ... % finned tube theoretical  - stratified
     100, 1, 1, 0,0,0,0; ... % heat transfer from data fit [ua0, uam, uat, 0,0,0,0]
     100, 1, 1, 0,0,0,0; ... % heat transfer from data fit  - stratified [ua0, uam, uat, 0,0,0,0]
-    uac, uam, uat, uat2,0,0,0; ... % heat transfer data fit EN12977
-    uac, uam, uat, uat2,0,0,0; ... % heat transfer data fit EN12977  - stratified
+    uac, uam, uat, 0,0,0,0; ... % heat transfer data fit EN12977
+    uac, uam, uat, 0,0,0,0; ... % heat transfer data fit EN12977  - stratified
     ];
 u0 = 1:size(param,1);            % heat exchanger type
 
@@ -158,7 +154,7 @@ UA2 = Ahx/(1/u_fin + dwall/condwall + 1/u_in); % heat transfer in W/K
 % dat1 fit 1
 UA3 = 100+mdot*1+(tin-tstg)*1;
 % dat1 fit 1
-UA4 = uac*mdot^uam*((tin+tstg)/2)^uat*(tin-tstg)^uat2;
+UA4 = uac*mdot^uam*((tin+tstg)/2)^uat;
 % heat exchanger surface is 1 m², so UA = U*1
 ua = [UA1;UA1;UA2;UA2;UA3;UA3;UA4;UA4];
 thxn = tstg + (tin-tstg)*exp(-ua/(mdot*heat_capacity(tin,1e5,1,0)));
@@ -251,10 +247,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision$
-%  $Author$
-%  $Date$
-%  $HeadURL$
+%  $Revision: 441 $
+%  $Author: carnot-hafner $
+%  $Date: 2018-09-15 19:23:16 +0200 (Sa, 15 Sep 2018) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Thermal_Models/sfun_storage_heatexchanger/verification/verify_sfun_storage_heatexchanger2.m $
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder

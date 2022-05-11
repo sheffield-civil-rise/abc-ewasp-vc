@@ -1,8 +1,8 @@
 
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 81 $
+% $Author: goettsche $
+% $Date: 2016-11-02 14:10:23 +0100 (Mi, 02 Nov 2016) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/carnot_library_tools/Buses/src_m/BDB_format.m $
 % Format of the Building Data Bus BDB (former S-vector)
 % 1   Incoming solar power            Qdot_sol    W
 % 2   Power input by equipment        Qdot_equip  W   e.g. computers

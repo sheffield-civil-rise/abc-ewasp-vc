@@ -140,10 +140,6 @@ h1  {
 	background-color: #FFFFFF;
 }
 
-.auto-style3 {
-	border-width: 0px;
-}
-
 </style>
 
 </head>
@@ -173,14 +169,13 @@ style='font-size:13.5pt;color:windowtext'>
 
 <p><b><span lang=EN-US>System Requirements</span></b><span
 lang=EN-US> <br>
-Operating system: </span>Windows <span
-lang=EN-US> 7 or newer <br>
-MATLAB R2018b and Simulink already installed </span></p>
+Operating system: 7 or newer <br>
+MATLAB R2017b and Simulink already installed </span></p>
 
 <p><b><span lang=EN-US>Installation of CARNOT Toolbox</span></b></p>
 
 <p><span
-lang=EN-US>1.&nbsp;&nbsp;&nbsp;&nbsp; Download the Carnot Zip file.</span></p>
+lang=EN-US>1.&nbsp;&nbsp;&nbsp;&nbsp; Download the 32 or 64-bit Carnot Zip file.</span></p>
 
 <p><span
 lang=EN-US>2.&nbsp;&nbsp;&nbsp;&nbsp; Extract the contents of the zip file to 
@@ -190,24 +185,23 @@ lang=EN-US>2.&nbsp;&nbsp;&nbsp;&nbsp; Extract the contents of the zip file to
 lang=EN-US>3.&nbsp;&nbsp;&nbsp;&nbsp; [Path_to_Carnot] can be any directory.</span></p>
 
 <p><span lang=EN-US>4.&nbsp;&nbsp;&nbsp;&nbsp; Run the file 
-</span>"init_carnot" or <span lang=EN-US>"init_carnot_savepath.m" from the [Path_to_Carnot]\carnot_71 folder to 
+"init_carnot_savepath.m" from the [Path_to_Carnot]\carnot_60_2016b folder to 
 automatically add folders to the Matlab path.</span></p>
 
 <p><span lang=EN-US>OR&nbsp; Manually add the following folders to the Matlab 
 path:<br>
-(Menu "File" \ "Set Path", Save when finished</span> if you want to keep the 
-settings<span lang=EN-US>)</span></p>
+(Menu "File" \ "Set Path", Save when finished)</span></p>
 
 <ul>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70</span></p>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70\internal\bin</span></p>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70\public\bin</span></p>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70\public\src_m</span></p>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70\internal\src_m</span></p>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70\public\src</span></p>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70\internal\src</span></p>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70\internal\ \data</span></p>
-<p><span lang=EN-US>[Path_to_Carnot]\carnot_70\public\data</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b\internal\bin</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b\public\bin</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b\public\src_m</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b\internal\src_m</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b\public\src</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b\internal\src</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b\internal\ \data</span></p>
+<p><span lang=EN-US>[Path_to_Carnot]\carnot_60_2016b\public\data</span></p>
 </ul>
 <p><span lang=EN-US>and click "Update Toolbox Path Cache" from Menu <br>
 “File" \ "Preferences" \ "General" <br>
@@ -222,7 +216,7 @@ lang=EN-US>&nbsp;</span></p>
 
 <p><span
 lang=EN-US><strong>NOTE</strong> :&nbsp; The included S-functions have been compiled with 
-<a href="http://mingw-w64.org">MinGW64</a> GCC-Version 6.3 as available through the Matlab AddOn Explorer<br>
+<a href="http://tdm-gcc.tdragon.net/index.php/">TDM-GCC</a> 5.9.2 (Version 1.1309.0) <br>
 If you change something in the C-file or expand the 
 Library with another compiler problems may arise.</span></p>
 <p>Warning: Please do not mix two compilers; this will cause unexpected results.
@@ -398,8 +392,7 @@ There are several options to build up systems and define parameters. </span></p>
 
 <p><span lang=EN-US>The CARNOT library consists of the following blocksets: </span></p>
 
-<p>
-<img alt="" src="Figures/CARNOT_71_R2018b.png" class="auto-style3" height="267" width="1031" /><a name="figure_1_2"></a><a></a><span lang=EN-US><br clear=all>
+<p><img alt="" src="Figures/Library.jpg" /><a name="figure_1_2"></a><a></a><span lang=EN-US><br clear=all>
 <br>
 Figure 1.1 : The CARNOT Library </span></p>
 

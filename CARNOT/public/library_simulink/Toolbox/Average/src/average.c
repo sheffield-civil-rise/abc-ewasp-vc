@@ -1,6 +1,6 @@
 /***********************************************************************
  * This file is part of the CARNOT Blockset.
- * Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
+ * Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
  * Additional Copyright for this file see list auf authors.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without 
@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 372 $
+ * $Author: carnot-wohlfeil $
+ * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Toolbox/Average/src/average.c $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -45,7 +45,8 @@
  *                          all DWork vectors initialisated
  * 6.0.2    Arnold Wohlfeil SUM_TIME set to int32_T               15sep2015
  *                          unused functions delted
- * 7.1.0    Lena Frank      average of upper and lower integral   07apr2020
+ *
+ * Copyright (c) 2000 Solar-Institut Juelich, Germany
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *  D E S C R I P T I O N
@@ -127,7 +128,6 @@
 #define DWORK_LASTOUTPUT_TIME_NR        5
 #define DWORK_ENABLED_NR                6
 #define DWORK_NUMBER_NR                 7
-#define DWORK_LAST_INPUT_NR             8
 
 #define NEXTTIME                        dwork_nexttime[0]          /* next time to calculate average        */
 #define LASTTIME                        dwork_lasttime[0]          /* last time function was called         */
@@ -138,7 +138,6 @@
 #define LAST_OUTPUT(x)                  dwork_last_output[x]          
 #define COUNTER(x)                      dwork_counter[x]           /* sum of input(i)*(time now - LASTTIME) */
 #define SUM_TIME                        dwork_sum_time[0]          /* sum of (time now - LASTTIME)          */
-#define LAST_INPUT(x)                   dwork_last_input[x]         /* Last input values(i) */
 
 
 
@@ -177,7 +176,7 @@ static void mdlInitializeSizes(SimStruct *S)
     ssSetNumIWork(S, 0);
     ssSetNumPWork(S, 0);
     
-    ssSetNumDWork(S, 9);
+    ssSetNumDWork(S, 8);
     ssSetDWorkWidth(S, 0, number);
     ssSetDWorkDataType(S, 0, SS_DOUBLE);
     ssSetDWorkName(S, 0, "D_LAST_OUTPUT");
@@ -210,10 +209,6 @@ static void mdlInitializeSizes(SimStruct *S)
     ssSetDWorkDataType(S, 7, SS_INT32);
     ssSetDWorkName(S, 7, "DWORK_NUMBER");
     ssSetDWorkUsageType(S, 7, SS_DWORK_USED_AS_DSTATE);
-    ssSetDWorkWidth(S, 8, number);
-    ssSetDWorkDataType(S, 8, SS_DOUBLE);
-    ssSetDWorkName(S, 8, "D_LAST_INPUT");
-    ssSetDWorkUsageType(S, 8, SS_DWORK_USED_AS_DSTATE);
     
     ssSetNumModes(S, 0);
     ssSetNumNonsampledZCs(S, 0);
@@ -269,7 +264,6 @@ static void mdlInitializeSampleTimes(SimStruct *S)
     int32_T *dwork_lastoutput_time = (int32_T *)ssGetDWork(S, DWORK_LASTOUTPUT_TIME_NR);
     int32_T *dwork_enabled         = (int32_T *)ssGetDWork(S, DWORK_ENABLED_NR);
     int32_T *dwork_number          = (int32_T *)ssGetDWork(S, DWORK_NUMBER_NR);
-    real_T  *dwork_last_input      = (real_T  *)ssGetDWork(S, DWORK_LAST_INPUT_NR);
     int_T second, i;
 
     LASTTIME = second = (int_T)TIME;
@@ -279,7 +273,6 @@ static void mdlInitializeSampleTimes(SimStruct *S)
     {
       COUNTER(i) = 0.0;
       LAST_OUTPUT(i) = 0.0;
-      LAST_INPUT(i) = 0.0;
     }
     SUM_TIME = 0;
      
@@ -346,7 +339,6 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     int32_T *dwork_lastoutput_time = (int32_T *)ssGetDWork(S, DWORK_LASTOUTPUT_TIME_NR);
     int32_T *dwork_enabled         = (int32_T *)ssGetDWork(S, DWORK_ENABLED_NR);
     int32_T *dwork_number          = (int32_T *)ssGetDWork(S, DWORK_NUMBER_NR);
-    real_T  *dwork_last_input      = (real_T  *)ssGetDWork(S, DWORK_LAST_INPUT_NR);
   
     int_T  second, second_full,i;
 
@@ -399,13 +391,9 @@ static void mdlOutputs(SimStruct *S, int_T tid)
 
    
     for (i=0;i<NUMBER;i++)
-    {
-      COUNTER(i) += (LAST_INPUT(i)+INPUT(i))/2*(second-LASTTIME);
-      LAST_INPUT(i) = INPUT(i);
-    }                       /* sum the input to the stack */
+      COUNTER(i) += INPUT(i)*(second-LASTTIME);              /* sum the input to the stack */
     SUM_TIME += second-LASTTIME;
     LASTTIME = second;
-    
 
 
     if (second >= NEXTTIME && ENABLED!=0)             /* when end of time intervall is reached */

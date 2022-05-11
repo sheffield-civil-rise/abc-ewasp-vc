@@ -80,14 +80,12 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 </v:shape><![endif]--><![if !vml]><img width=97 height=81
 src="Figures/pump_const.jpg" align=right v:shapes="Bild_x0020_171"><![endif]><span class=GramE><span
 style='mso-bookmark:Pump_const'><span style='mso-bookmark:schwamberger'><span
-style='mso-bookmark:literature'><b><span style='font-size:18.0pt;
-line-height:120%'>Pu</span><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'>mp</span><span style='font-size:18.0pt;
-line-height:120%'>_C</span></b></span></span></span></span><span
+style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'>pump</span></b></span></span></span></span><span
 style='mso-bookmark:Pump_const'><span style='mso-bookmark:schwamberger'><span
 style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'>onst</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-<b>Path: CARNOT/<span lang="de">Hydraulics</span></b> <br clear=all style='mso-special-character:line-break'>
+line-height:120%'> const</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+<b>Path: CARNOT/Pumps</b> <br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -109,21 +107,11 @@ lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-This is </span><span style='font-size:13.5pt;line-height:120%'> a simple pump 
-model: <span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'>
-<span style='font-size:13.5pt;line-height:120%'> T</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>he mass flow is set to the 
-maximum mass flow rate specified in the mask.</span> </span></span>In addition to the 
-<a href="Pump_basic.html">Pump_basic</a> the model has a thermal node 
-for thermal losses (and to break algebraic loops in the temperature signal). </span></span></span></p>
-<p><span style='mso-bookmark:literature'>
-<span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> The electric power consumption 
-of the pump is given by a quadradic polynom: </span></span></span></p>
-<p><span style='mso-bookmark:literature'>
-<span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> Pel = e0 + e1*mdot + e2*mdot² </span></span></span></p>
-<p>&nbsp;</p>
+This is a very simple pump, where the mass flow is set to the maximum mass flow
+rate specified in the mask. The direct feedthrough in the temperature is broken
+by a transfer function with a time-constant of 100 s. The pump has a heat
+capacity of 1 kg steel, so the temperature at the outlet is not directly equal
+to the inlet temperature. </span></span></span></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Inputs:</span></b><span
@@ -134,10 +122,7 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
      margin-left:36.0pt;mso-list:l187 level1 lfo160;tab-stops:list 36.0pt'><span
      style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>TH</span><span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>B</span><span
-     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'> </span><span lang=EN-US
+     "Times New Roman"'>THV </span><span lang=EN-US
      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l187 level1 lfo160;tab-stops:list 36.0pt'><span
@@ -156,18 +141,38 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
      margin-left:36.0pt;mso-list:l199 level1 lfo161;tab-stops:list 36.0pt'><span
      style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>TH</span><span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>B</span><span
-     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'> </span><span lang=EN-US
+     "Times New Roman"'>THV </span><span lang=EN-US
      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
 </ul>
 
-<p class=MsoNormal>&nbsp;</p>
-<p class=MsoNormal><span style='mso-bookmark:schwamberger'>
-<span
-style='mso-bookmark:literature'><b>
-<span lang=EN-US style='font-size:13.5pt;
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></div>
+
+<p class=MsoNormal><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>NOTE:</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'> If you use free components of the THV, you have to change
+the Pumps. To avoid algebraic loops, unused components of the THV are not fed
+through. <o:p></o:p></span></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></div>
+
+<p class=MsoNormal><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:13.5pt;
 line-height:120%;mso-fareast-font-family:"Times New Roman"'>Example:</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 "Times New Roman"'> the load in storage demos </span><span
@@ -175,8 +180,9 @@ lang=EN-US style='font-size:12.0pt;line-height:120%;mso-fareast-font-family:
 "Times New Roman"'><o:p></o:p></span></span></span></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b></span></span></p>
-<p><!--[if gte vml 1]><v:shape id="Bild_x0020_172" o:spid="_x0000_s1473"
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
+</span></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_172" o:spid="_x0000_s1473"
  type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
  margin-left:0;margin-top:0;width:282pt;height:270.75pt;z-index:170;
  visibility:visible;mso-wrap-style:square;mso-wrap-distance-left:0;
@@ -186,8 +192,7 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</
  o:allowoverlap="f">
  <v:imagedata src="Figures/pump_constSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><![if !vml]>
-<img width=452 height=677
+</v:shape><![endif]--><![if !vml]><img width=376 height=361
 src="Figures/pump_constSHOT.jpg" align=left v:shapes="Bild_x0020_172"><![endif]><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
@@ -230,17 +235,18 @@ style='mso-special-character:line-break'>
      margin-left:36.0pt;mso-list:l60 level1 lfo162;tab-stops:list 36.0pt'><span
      style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>system pressure [Pa]&nbsp; </span>
- <span lang=EN-US style='mso-fareast-font-family:
-     "Times New Roman"'>
- <o:p></o:p>
- </span></span></span></li>
+     "Times New Roman"'>system pressure [Pa] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l60 level1 lfo162;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>level of pressure calculation [only friction, friction
+     and thermal head] </span><span lang=EN-US style='mso-fareast-font-family:
+     "Times New Roman"'><o:p></o:p></span></span></span></li>
 </ul>
 
-<p>&nbsp;</p>
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'><b>
-<span
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
 Direct Feedthrough&nbsp;&nbsp;&nbsp;No <br>

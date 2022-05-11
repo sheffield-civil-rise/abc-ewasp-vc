@@ -1,4 +1,4 @@
-%% Callback for Carnot model Inverter
+%% Callback for Carnot model Inverter_CONF
 %% Function Call
 %  [ok, param] = CarnotCallbacks_InverterConf(fname, bhandle)
 %% Inputs   
@@ -23,7 +23,7 @@
 %  by the user.
 % 
 %% References and Literature
-%  Function is used by: Carnot block Inverter
+%  Function is used by: Carnot block Inverter_CONF
 %  see also CarnotCallbacks_CONFblocks
 
 function varargout = CarnotCallbacks_InverterConf(varargin)
@@ -32,11 +32,11 @@ function varargout = CarnotCallbacks_InverterConf(varargin)
 if nargin >= 2 && ischar(varargin{1})
     command = varargin{1};
 else
-    error(['CarnotCallbacks_InverterConf: First argument must be ', ...
+    error(['CarnotCallbacks_CollectorEN12975Conf: First argument must be ', ...
         'a valid function name. Second argument must be the blockhandle.'])
 end
 
-blockpath = fullfile('Source','Electric_Generator','Inverter','parameter_set');
+blockpath = fullfile('Source','Electric_Generator','Inverter_CONF','parameter_set');
 
 % switch for command line calls
 switch command      % switch for command line calls
@@ -98,7 +98,6 @@ end     % end of function
 %  6.2.0    hf      userParam as additional input               26oct2017
 %                   adapted to CarnotCallbacks_loadConfParameters
 %  6.3.0    hf      adapted to new callback concept             18feb2017
-%  7.1.0    hf      Inverter_CONF renamed to Inverter           10mar2019
 %  **********************************************************************
 %  * $Revision: 137 $
 %  * $Author: carnot-hafner $

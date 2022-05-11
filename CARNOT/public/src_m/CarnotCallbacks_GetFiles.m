@@ -49,10 +49,10 @@
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 420 $
+% $Author: carnot-kefer $
+% $Date: 2018-06-08 15:48:04 +0200 (Fr, 08 Jun 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/CarnotCallbacks_GetFiles.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -113,8 +113,6 @@ if ~BlockIsInCarnotLibrary          % not in carnot library any more
         flag = true;
     end
 
-    set_param([gcb '/From_Workspace'], 'VariableName', file);
-    
     % sample time is timestep of data
     if flag == true                 % if the file exists
         if isa(data,'double')                   % if variable is a real matrix
@@ -130,4 +128,5 @@ if ~BlockIsInCarnotLibrary          % not in carnot library any more
     else
         assignin('base',file,[0 0; 3600 0]) % no data available: assign a flat line of zeros  
     end
+    set_param([gcb '/From_Workspace'], 'VariableName', file);
 end

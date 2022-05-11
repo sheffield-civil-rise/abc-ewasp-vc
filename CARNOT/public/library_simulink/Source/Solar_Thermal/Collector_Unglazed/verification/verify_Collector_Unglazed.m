@@ -12,11 +12,9 @@
 %  v - true if verification passed, false otherwise
 %  s - text string with verification result
 %% Description
-%  Verification of the Collector_Unglazed block in the Carnot Toolbox by
-%  comparing the simulation results to the initial simulation and a
-%  EN 12975 collector test results of an unglazed absorber.
+%  verification of the Collector_Unglazed block in the Carnot Toolbox
 %                                                                          
-%  Literature:   EN 12975, ISO 9806
+%  Literature:   EN 12975
 %  see also template_verify_mFunction, template_verify_SimulinkBlock, verification_carnot
 
 function [v, s] = verify_Collector_Unglazed(varargin)
@@ -36,12 +34,14 @@ end
 
 %% ---------- set your specific model or function parameters here ---------
 % ----- set error tolerances ----------------------------------------------
-max_error = 35;         % max error between simulation and reference
+max_error = 1e-7;        % max error between simulation and reference
 max_simu_error = 1e-7;   % max error between initial and current simu
 
 % ---------- set model file or function name ------------------------------
 functionname = 'verify_Collector_Unglazed_mdl';
-t0 = 1800:900:14*3600;
+
+% % reference time vector
+t0 = 0:600:24*3600;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
@@ -51,17 +51,13 @@ simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
 yy = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
 tt = simOut.get('tout');        % get the whole time vector from simu
-yy_ts = timeseries(yy,tt);
-yt = resample(yy_ts,t0);
-u0 = yt.data(:,1);              % temperature difference as x-vector for the plot
-y0 = yt.data(:,2);              % reference power values from fcn block (iso equation)
-y2 = yt.data(:,3);              % power from model
-y2(:,2) = yt.data(:,4)*1000;    % pressure drop from model
-y0(:,2) = ones(size(u0))*200300; % reference pressure drop from TUEV test report
+tsy = timeseries(yy,tt);        % timeseries for the columns
+tx = resample(tsy,t0);          % resample with t0
+y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
-%% set the reference values 
-% set reference values initial simulation
+%% ---------------- set the reference values ------------------------------
+% ----------------- set reference values initial simulation ---------------
 % result from call at creation of function if required it can be determined
 % from the simulation result
 if (save_sim_ref)
@@ -70,6 +66,10 @@ if (save_sim_ref)
 else
     y1 = importdata('simRef_Collector_Unglazed.mat');  % result from call at creation of function
 end
+
+% ----------------- set the literature reference values -------------------
+y0 = y1;
+disp('verify_Collector_Unglazed.m: using simulation data as reference data')
 
 %% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
@@ -108,32 +108,75 @@ end
 %% ------------ display and plot results if required ----------------------
 if (show)
     disp(s)
-    sz = strrep(s,'_',' ');
     disp(['Initial error = ', num2str(e1)])
-    sx = 'Temperature difference in K';                         % x-axis label
-    st = 'Simulink model unglazes absorber';   % title
+    
+    st = 'Simulink block verification';     % title
+    sx = '';                                % x-axis label
+    
     % upper legend
     sleg1 = {'reference data','initial simulation','current simulation'};
     % lower legend
     sleg2 = {'ref. vs initial simu','ref. vs current simu','initial simu vs current'};
+    
+    %   y - matrix with y-values (reference values and result of the function call)
+    y_Qdot    = [y0(:,1), y1(:,1), y2(:,1)];
+    y_T       = [y0(:,2), y1(:,2), y2(:,2)];
+    
     %   x - vector with x values for the plot
-    x = reshape(u0,length(u0),1);
-
-    %   y - matrix with y-values (reference values and result of the function call)
-    sy1 = 'Power in W';                     % y-axis label in the upper plot
-    sy2 = 'error in W';                     % y-axis label in the lower plot
-    y = [y0(:,1), y1(:,1), y2(:,1)]; 
+    x = t0;
+    
     %   ye - matrix with error values for each y-value
-    ye = [ye1(:,1), ye2(:,1), ye3(:,1)]; 
-    display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, sz)
+    ye_Qdot    = [ye1(:,1), ye2(:,1), ye3(:,1)];
+    ye_T       = [ye1(:,2), ye2(:,2), ye3(:,2)];
 
-    %   y - matrix with y-values (reference values and result of the function call)
-    sy1 = 'Pressure drop in mPa';                     % y-axis label in the upper plot
-    sy2 = 'error in mPa';                     % y-axis label in the lower plot
-    y = [y0(:,2), y1(:,2), y2(:,2)]; 
-    %   ye - matrix with error values for each y-value
-    ye = [ye1(:,2), ye2(:,2), ye3(:,2)]; 
-    display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, sz)
+    sz = strrep(s,'_',' ');
+    
+% ----------------------- Combining plots ---------------------------------
+    figure              % open a new figure
+    
+    % Power plots
+    subplot(2,2,1)      % divide in subplots (lower and upper one)
+    if size(y_Qdot,2) == 3
+        plot(x,y_Qdot(:,1),'x',x,y_Qdot(:,2),'o',x,y_Qdot(:,3),'-')
+    else
+        plot(x,y_Qdot,'-')
+    end
+    title(st)
+    ylabel('Power in W')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,2,3)      % choose lower window
+    if size(ye_Qdot,2) == 3
+        plot(x,ye_Qdot(:,1),'x',x,ye_Qdot(:,2),'o',x,ye_Qdot(:,3),'-')
+    else
+        plot(x,ye_Qdot,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Differences in W')
+    
+    % Temperature plots
+    subplot(2,2,2)      % divide in subplots (lower and upper one)
+    if size(y_T,2) == 3
+        plot(x,y_T(:,1),'x',x,y_T(:,2),'o',x,y_T(:,3),'-')
+    else
+        plot(x,y_T,'-')
+    end
+    title(st)
+    ylabel('Temperature in °C')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,2,4)      % choose lower window
+    if size(ye_T,2) == 3
+        plot(x,ye_T(:,1),'x',x,ye_T(:,2),'o',x,ye_T(:,3),'-')
+    else
+        plot(x,ye_T,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Differences in °C')
 end
 
 %% Copyright and Versions
@@ -174,11 +217,9 @@ end
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
-%  Ver. Author  Changes                                         Date
-%  6.1  ts      created                                         08aug2017
-%  6.1  hf      comments adapted to publish function            01nov2017
+%  Version  Author  Changes                                     Date
+%  6.1.0    ts      created                                     10aug2017
+%  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  7.1  hf      new block name Collector_Unglazed               20mar2019
-%                   (old name Collector_Unglazed_CONF)
-%  7.2  hf      collector test data as reference                11may2019
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+

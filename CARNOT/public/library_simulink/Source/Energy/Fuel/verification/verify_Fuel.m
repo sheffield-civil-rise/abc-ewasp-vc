@@ -57,8 +57,6 @@ t0 = simOut.get('tout');        % get the whole time vector from simu
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
-% ----------------- set the literature reference values -------------------
-
 % ----------------- set reference values initial simulation ---------------
 % result from call at creation of function if required it can be determined
 % from the simulation result
@@ -69,6 +67,7 @@ else
     y1 = importdata('simRef_Fuel.mat');  % result from call at creation of function
 end
 
+% ----------------- set the literature reference values -------------------
 y0 = y1;
 disp('verify_Fuel.m: using simulation data as reference data')
 
@@ -143,7 +142,7 @@ if (show)
         plot(x,y_T,'-')
     end
     title(st)
-    ylabel('Price in arb. unit')
+    ylabel('Tenperature in °C')
     legend(sleg1,'Location','best')
     text(0,-0.2,sz,'Units','normalized')  % display valiation text
     
@@ -165,7 +164,7 @@ if (show)
         plot(x,y_P,'-')
     end
     title(st)
-    ylabel('Tenperature in °C')
+    ylabel('Price in arb. unit')
     legend(sleg1,'Location','best')
     text(0,-0.2,sz,'Units','normalized')  % display valiation text
     
@@ -222,5 +221,4 @@ end
 %  6.1.0    ts      created                                     10aug2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  7.1.0    hf      Fuel_CONF renamed to Fuel                   09mar2019
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

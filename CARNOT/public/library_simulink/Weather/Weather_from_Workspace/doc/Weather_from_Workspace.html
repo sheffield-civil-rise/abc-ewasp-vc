@@ -94,31 +94,40 @@ This block corresponds to the simulink block &quot;From Workspace&quot;. You can
 read in weather data from external files, like TRY (Test Reference Years) <span
 class=GramE>The</span> data files have to be in a Matlab readable form, i.e. in
 the first column the time has to appear. To bring Test Reference Years in the
-Weather data format of CARNOT </span>
-<span style='font-size:13.5pt;line-height:120%'> different import filters can be 
-used</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>. </span>
-<span style='font-size:13.5pt;line-height:120%'> See</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span>
-<a href="CarnotFunctionsOverview.html"><span
+Weather data format of CARNOT the m-file </span><tt><span
+lang=EN-US style='font-size:10.0pt;line-height:120%'>Wprepro.m</span></tt><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>, which is located in the
+CARNOT root <span class=GramE>directory</span> can be used. To get more
+information about the </span></span></span><a href="carnot_manual.htm#utility_functions"><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>utility functions</span></span></span></a>.</p>
+lang=EN-US style='font-size:13.5pt;line-height:120%'>utility functions</span></span></span></a><span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> you can type </span></span></span></p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+class=GramE><tt><span lang=EN-US style='font-size:10.0pt;line-height:120%'>help</span></tt></span><tt><span
+lang=EN-US style='font-size:10.0pt;line-height:120%'> write_try</span></tt><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>to</span></span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> the workspace, like as
+for any other MATLAB function. For Weather input data files of a different
+format the Wprepro.m has to be adapted to the suitable format. Before the data
+is available it has to be loaded onto the Workspace in the way that is
+described in chapter 2.3.</span></span></span></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><i><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>If you are not <span
 class=GramE>intend</span> to make operation on data before you use it in the
-model, prefer using </span></i></b></span></span><a href="WeatherDatafile.html">
-<span
-style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><i>
-<span style='font-size:13.5pt;line-height:120%'>We</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>ather</span><span style='font-size:13.5pt;line-height:120%'>_Datafile</span></i></b></span></span></a><span
+model, prefer using </span></i></b></span></span><a href="carnot_manual.htm#weather_from_file"><span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><i><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>weather_from_file</span></i></b></span></span></a><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><i><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>.</span></i></b></span></span></p>
 
-<p>&nbsp;</p>
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'><b>
-<span
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
 </span></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_300" o:spid="_x0000_s1345"
@@ -142,11 +151,11 @@ style='mso-special-character:line-break'>
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
 Direct Feedthrough&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>
-No</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> Yes <br>
 Sample time specify</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;
 </span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> &nbsp;-1 <br>
+lang=EN-US style='font-size:13.5pt;line-height:120%'> &nbsp;-1 (although weather data usually have 3600 s) <br>
 Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;
 </span><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> No

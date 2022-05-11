@@ -157,10 +157,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision$
-%  $Author$
-%  $Date$
-%  $HeadURL$
+%  $Revision: 434 $
+%  $Author: carnot-hafner $
+%  $Date: 2018-07-24 21:12:32 +0200 (Di, 24 Jul 2018) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Weather/Weather_from_Workspace/verification/verify_WeatherFromWorkspace.m $
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder

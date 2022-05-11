@@ -226,10 +226,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision$
-%  $Author$
-%  $Date$
-%  $HeadURL$
+%  $Revision: 449 $
+%  $Author: carnot-hafner $
+%  $Date: 2018-10-09 21:32:17 +0200 (Di, 09 Okt 2018) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Thermal_Models/sfun_storageTnodes/verification/verify_StorageTnodesEN12977losses.m $
 %  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction

@@ -1,83 +1,25 @@
-%% calculate_verification_error of the verification of a function or model
-%  [e ye] = calculate_verification_error(yref, ysim, r, s)
-%  Description
-%  Calculates the error as a difference of the columns in yref and ysim.
-%  For more than one column or page of yref and ysim the error is the
-%  maximum of the error of each column.
-%  Inputs:  
-%  yref -  reference ('correct') values for the result of the function
-%  ysim -  simulated or calculated results of the function
-%  r    -  'relative' error or 'absolute' error
-%  s    -  'sum' - e is the sum of the individual errors of ysim 
+function [e, ye] = calculate_verification_error(yref, ysim, r, s)
+% calulates the error of a verification process for a function or model
+% [e ye] = calculate_verification_error(yref, ysim, r, s)
+% inputs:  
+%   yref - reference ('correct') values for the result of the function
+%   ysim - simulated or calculated results of the function
+%   r    - 'relative' error or 'absolute' error
+%   s    - 'sum' - e is the sum of the individual errors of ysim 
 %          'mean' - e is the mean of the individual errors of ysim
 %          'max' - e is the maximum of the individual errors of ysim
 %          'last' - e is the last value in ysim
-%          'relmax' - e is the error relative to the maximum in reference
-%               (relmax is only available for 'relative' error calculation)
-%  Outputs:
-%  e   - scalar error (absolute or relative error over the total dataset)
-%  ye  - individual error (absolute or relative) of each value in y
+% outputs
+%   e   - scalar error (absolute or relative error over the total dataset)
+%   ye  - individual error (absolute or relative) of each value in y
 % 
-%  The function is used by: verify_<BlockNameOrFunctionName>
-%  This function calls: --
+% function calls:
+% function is used by: verify_<BlockNameOrFunctionName>
+% this function calls: --
 % 
-%  Literature: --
+% Literature: ---
 
-function [e, ye] = calculate_verification_error(yref, ysim, r, s)
-if size(ysim) ~= size(yref)
-    error('calculate_verification_error: parameters yref and ysim must have same size')
-end
-
-%% calculate the error
-% the base of the error calculation is the difference of sim and ref
-ye = ysim-yref;
-
-if (strcmp(r,'relative'))           % if relative error is wanted
-    d = yref;                       % denominator are the columns in yref
-    switch s
-        case 'sum'                  % error is sum of individual errors
-            % result is sum of the absolute values
-            e = max(sum(abs(ye))./sum(yref),[],'all');
-        case 'mean'                 % 'mean' error calculation
-            % error is mean of absolute individual values
-            e = max(mean(abs(ye))./mean(yref),[],'all');
-        case 'max'                  % 'max' error calculation
-            % error is maximum of absolute individual values
-            e = max(abs(ye./yref),[],'all');
-        case 'last'                 % 'last' error calculation
-            % error is from the last values
-            e = max(abs(ye(end,:,:)./yref(end,:,:)),[],'all');
-        case 'relmax'               % 'relmax' error calculation
-            d = max(abs(yref));     % new denominator: maximum of absolute of all values
-            % error is maximum of absolute values relative to maximum in reference
-            e = max(abs(ye./d),[],'all');
-        otherwise                   % default error calculation
-            % error is maximum of absolute individual values
-            e = max(abs(ye./yref),[],'all');
-    end
-    ye = ye./d;                     % relative error is difference of sim and ref / ref
-else                                % else: absolute error
-    switch s
-        case 'sum'                  % error is sum of individual errors
-            % result is sum of the absolute values
-            e = max(sum(abs(ye)),[],'all');      
-        case 'mean'                 % 'mean' error calculation
-            % error is mean of absolute individual values
-            e = max(mean(abs(ye)),[],'all');     
-        case 'max'                  % 'max' error calculation
-            % error is maximum of absolute individual values
-            e = max(abs(ye),[],'all');     
-        case 'last'                 % 'last' error calculation
-            % error is from the last values
-            e = max(abs(ye(end)),[],'all');   
-        otherwise                   % default error calculation
-            % error is maximum of absolute individual values
-            e = max(abs(ye),[],'all'); 
-    end
-end
-
-
-%% Copyright and Versions
+% ***********************************************************************
 % This file is part of the CARNOT Blockset.
 % 
 % Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
@@ -110,10 +52,10 @@ end
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/calculate_verification_error.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -128,7 +70,44 @@ end
 % 6.2.1     hf      name verification_ replaced by verification   09jan2015
 % 6.2.2     hf      separate arguments of function call by comma  28jul2015
 % 6.3.0     hf      revised calculation of relative errors        28sep2017
-% 7.1.0     hf      added relative case 'relmax'                  03feb2020
-% 7.1.1     hf      always set d = yref for relative error        01mar2020
-% 7.1.2     hf      relmax takes the abs of max for denominator   27mar2021
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+[nrow, ncol, npage] = size(yref);       % input may be a matrix or array
+yref = reshape(yref,1,numel(yref))';    % reshape to column vector
+ysim = reshape(ysim,1,numel(ysim))';
+ye = ysim-yref;                             % error is difference of sim and ref
+
+if (strcmp(r,'relative'))                   % if relative error is wanted
+    switch s
+        case 'sum'                          % error is sum of individual errors
+            e = sum(abs(ye))/sum(yref);     % result is sum of the absolute values
+        case 'mean'                         % 'mean' error calculation
+            e = mean(abs(ye))/mean(yref);   % error is mean of absolute individual values
+        case 'max'                          % 'max' error calculation    
+            e = max(abs(ye./yref));         % error is maximum of absolute individual values
+        case 'last'                         % 'last' error calculation    
+            e = abs(ye(end)./yref(end));    % error is from the last values
+            %ea = abs(ye(end));              % error is from the last values
+            %e = repmat(ea,numel(yref),1);   % make it a matrix
+        otherwise                           % default error calculation    
+            e = max(abs(ye./yref));         % error is maximum of absolute individual values
+    end
+    ye = ye./yref;                          % relative error is difference of sim and ref / ref
+else                                        % else: absolute error
+    switch s
+        case 'sum'                          % error is sum of individual errors
+            e = sum(abs(ye));               % result is sum of the absolute values
+        case 'mean'                         % 'mean' error calculation
+            e = mean(abs(ye));              % error is mean of absolute individual values
+        case 'max'                          % 'max' error calculation    
+            e = max(abs(ye));               % error is maximum of absolute individual values
+        case 'last'                         % 'last' error calculation    
+            e = abs(ye(end));              % error is from the last values
+            %ea = abs(ye(end));              % error is from the last values
+            %e = repmat(ea,numel(yref),1);   % make it a matrix
+        otherwise                           % default error calculation    
+            e = max(abs(ye));               % error is maximum of absolute individual values
+    end
+end
+
+ye = reshape(ye,nrow,ncol,npage);   % reshape result to original yref format

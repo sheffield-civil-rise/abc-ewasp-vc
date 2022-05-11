@@ -44,9 +44,6 @@ p
 .auto-style1 {
 	margin-left: 120px;
 }
-.auto-style2 {
-	font-size: medium;
-}
 </style>
 </head>
 
@@ -61,24 +58,24 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 
 </span></span></span></div>
 
-<p><img alt="" src="Figures/PressureDropChangeD.gif" style="float: right" /><!--[if gte vml 1]><v:shape id="Bild_x0020_155" o:spid="_x0000_s1490"
+<p><!--[if gte vml 1]><v:shape id="Bild_x0020_155" o:spid="_x0000_s1490"
  type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
  margin-left:28.25pt;margin-top:0;width:68.25pt;height:74.25pt;z-index:153;
  visibility:visible;mso-wrap-style:square;mso-wrap-distance-left:0;
  mso-wrap-distance-top:0;mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
  mso-position-horizontal:right;mso-position-horizontal-relative:text;
  mso-position-vertical:absolute;mso-position-vertical-relative:line'
- o:allowoverlap="f"><v:imagedata src="Figures/pressure_drop.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/><w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/></v:shape><![endif]--><span class=GramE><span style='mso-bookmark:
+ o:allowoverlap="f">
+ <v:imagedata src="Figures/pressure_drop.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
+ <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
+</v:shape><![endif]--><![if !vml]><img width=91 height=99
+src="Figures/pressure_drop.jpg" align=right v:shapes="Bild_x0020_155"><![endif]><span class=GramE><span style='mso-bookmark:
 pressuredrop'><span style='mso-bookmark:literature'><span style='mso-bookmark:
-schwamberger'><b><span style='font-size:18.0pt;line-height:120%'>P</span><span lang=EN-US style='font-size:18.0pt;line-height:120%'>ressure</span></b></span></span></span></span><span
+schwamberger'><b><span lang=EN-US style='font-size:18.0pt;line-height:120%'>pressure</span></b></span></span></span></span><span
 style='mso-bookmark:pressuredrop'><span style='mso-bookmark:literature'><span
 style='mso-bookmark:schwamberger'><b><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'> drop</span><span style='font-size:18.0pt;
-line-height:120%'>_changeD</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-<b>Path: </b><span
-style='mso-bookmark:pressuredrop'><span style='mso-bookmark:literature'><span
-style='mso-bookmark:schwamberger'><span lang=EN-US style='font-size:13.5pt;line-height:120%'> 
-<b>CARNOT/<span lang="de-at">B</span>asic</b></span><b><span style='font-size:13.5pt;line-height:120%'>/Pressure_Drop</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></span>&nbsp;<br clear=all style='mso-special-character:line-break'>
+line-height:120%'> drop</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+<b>Path: CARNOT/basics</b> <br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -93,51 +90,73 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-The block calculates the pressure drop </span>
-<span style='font-size:13.5pt;line-height:120%'> of a diameter change in a pipe</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>. </span><span
+The block calculates the pressure drop in a pipe. </span><span
 lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></span></p>
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-The block calculates the pressure drop 
-<span style='font-size:13.5pt;line-height:120%'> of a diameter change
-<span lang="de-at">at the inlet of </span>a pipe</span>.<br />
-</span><span style='font-size:13.5pt;line-height:120%'> The pressure drop is 
-included in the pressure of the THB. The pressure coefficients clq are aslo 
-adapted. </span></span></span></p>
-<p><font size="4">The calculation is done only for Flow_ID in the THB &gt; 10000. 
-See <a href="Pump_Main.html">Pump_Main</a> for Details.</font></p>
-<p><font size="4"><strong>Inputs</strong></font></p>
+The block calculates the pressure drop in a pipe according to the inputs: </span></span></span></p>
 
 <ul type=disc class="auto-style1">
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l272 level1 lfo145;tab-stops:list 36.0pt'>
- <font size="4">THB</font><span
+     margin-left:36.0pt;mso-list:l272 level1 lfo145;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'> </span><span
+     "Times New Roman"'>temperature [°C] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l272 level1 lfo145;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>velocity [m/s] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l272 level1 lfo145;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>pressure [Pa] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l272 level1 lfo145;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>fluid_ID (see below) </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l272 level1 lfo145;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>fluid_mix percentage </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l272 level1 lfo145;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>inner pipe diameter [m] </span><span
      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
 </ul>
 
-<p class="auto-style2"><strong>Outputs</strong></p>
+<p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>The equation for the
+pressure drop is: </span></span></span></p>
 
-<ul type=disc class="auto-style1">
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l272 level1 lfo145;tab-stops:list 36.0pt'>
- <font size="4">THB</font><span
-     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
-     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'> </span>
- <span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>(including the new pressure and clq values)</span></span></span></li>
-</ul>
+<p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+class=GramE>dp</span> = f (Reynolds) * r/2 * (velocity)2 </span></span></span></p>
 
-<p>&nbsp;</p>
-<p><font size="4"><strong>Parameters and Mask</strong></font></p>
-<p><img alt="" src="Figures/PressureDropChangeD_MASK.jpg" /></p>
-<p>&nbsp;</p>
+<p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>where</span></span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> the resistance f
+(Reynolds) is defined in the lookup-table in the subsystem &quot;resist&quot;. </span></span></span></p>
+
+<p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>For more information of
+the </span></span></span><a href="carnot_manual.htm#fluid_ID"><span style='mso-bookmark:literature'><span
+style='mso-bookmark:schwamberger'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>fluid types</span></span></span></a><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> see above definition </span></span></span></p>
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span

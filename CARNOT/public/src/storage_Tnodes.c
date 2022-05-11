@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 441 $
+ * $Author: carnot-hafner $
+ * $Date: 2018-09-15 19:23:16 +0200 (Sa, 15 Sep 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src/storage_Tnodes.c $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -692,8 +692,10 @@ static void mdlOutputs(SimStruct *S, int_T tid)
                 n--;
             } while (n > BOTTOM);
         } while (inverse); /* end do */
-    } /* end if elimthermocline */
-
+     /* end if elimthermocline */
+    }
+    
+   
     // printf("end mdlOutputs");   // *************
 } /* end mdlOutputs */
 

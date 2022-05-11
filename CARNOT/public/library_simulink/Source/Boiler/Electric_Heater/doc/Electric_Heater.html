@@ -69,12 +69,11 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
 </v:shape><![endif]--><![if !vml]>
 <img width=120 height=68
 src="Figures/electric_heating.jpg" align=right v:shapes="Bild_x0020_56"><![endif]><span class=GramE><span
-style='mso-bookmark:electric_heating'><span style='mso-bookmark:literature'><b><span style='font-size:18.0pt;line-height:120%'>E</span><span
-lang=EN-US style='font-size:18.0pt;line-height:120%'>lectric_</span><span style='font-size:18.0pt;line-height:120%'>Heater</span></b></span></span></span><span
+style='mso-bookmark:electric_heating'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'>electric_heating</span></b></span></span></span><span
 style='mso-bookmark:electric_heating'><span style='mso-bookmark:literature'><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
-<b>Path: CARNOT/ heat_source<span
-style='mso-bookmark:electric_heating'><span style='mso-bookmark:literature'><span style='font-size:13.5pt;line-height:120%'>/boiler</span> </span></span></b> &nbsp;<br clear=all style='mso-special-character:
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+<b>Path: CARNOT/ heat_source</b> <br clear=all style='mso-special-character:
 line-break'>
 <o:p></o:p></span></span></span></p>
 
@@ -89,122 +88,85 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Purpose</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-This block calculates the heat input from electrical heating. </span><o:p></o:p>
-</span></p>
-<p>
-<o:p></o:p></p>
+This block calculates the heat input from electrical heating. </span><span lang=EN-US style='font-size:12.0pt;
+line-height:120%'><o:p></o:p></span></span></p>
 
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'><b>Description</b> </span></span></p>
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'><br>
+<b>Description</b> </span></span></p>
 
 <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>The block symbolises electrical heating. It heats the
-entering flow which is defined by the </span></span>
-<a href="2_Basic_Concepts.html"><span
+entering flow which is defined by the </span></span><a href="carnot_manual#thv"><span
 style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Thermo-Hydraulic </span>
-<span style='font-size:13.5pt;
-line-height:120%'>Bus</span></span></a><span style='mso-bookmark:literature'><span lang=EN-US
+line-height:120%'>Thermo-Hydraulic Vector</span></span></a><span style='mso-bookmark:literature'><span lang=EN-US
 style='font-size:13.5pt;line-height:120%'> with electrical power entering the
 block. </span></span></p>
 
 <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>The calculation is performed using the equation for
-heat input to a fluid</span><span style='font-size:
-13.5pt;line-height:120%'>: </span></span></p>
-<p><font size="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-T(outlet) = T(inlet) + Pelectric/(mdot*cp)</font></p>
-<p><font size="4">with</font><span style='mso-bookmark:literature'>:</span></p>
+heat input to a fluid where </span></span></p>
 
 <ul type=disc class="auto-style1">
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
      line-height:120%;mso-fareast-font-family:"Times New Roman"'>T are the
-     temperatures in </span>
- <span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>in </span><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>degree Celsius </span><span lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+     temperatures in [degree Celsius], </span><span lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
      line-height:120%;mso-fareast-font-family:"Times New Roman"'>Pelectric is
-     the electric heating power in W </span><span lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+     the electric heating power in [W], </span><span lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>m</span><span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>dot </span><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>is the massflow 
- in kg/s </span><span
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>m<sub>dot</sub>
+     is the massflow in [kg/s] </span><span
      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span class=GramE><span lang=EN-US
      style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:"Times New Roman"'>and</span></span><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'> c</span><span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>p</span><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'> the heat 
- capacity in J/(kg</span><span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>*</span><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>K)</span></span></li>
-</ul>
-
-<p><font size="4">To avoid a division by zero the massflow is limited to values 
-above 1e-5 kg/s. </font></p>
-<p><font size="4">A PT1 transfer function with a time-constant of 60 s is used 
-the model the thermal inertial of the electric heater.</font></p>
-
-<p>&nbsp;</p>
-<p><span style='mso-bookmark:literature'><b>
-<span style='font-size:
-13.5pt;line-height:120%'>Parameters</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> 
-<br />
-</span><span style='font-size:13.5pt;line-height:120%'> - none -</span></span></p>
-<p><span style='mso-bookmark:literature'><b>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>Inputs</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
-
-<ul type=disc class="auto-style1">
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l203 level1 lfo75;tab-stops:list 36.0pt'><span
-     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>&nbsp;</span></span><a href="2_Basic_Concepts.html"><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Thermo-Hydraulic </span>
- <span style='font-size:13.5pt;
-line-height:120%'>Bus</span></a></span></span></li>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l203 level1 lfo75;tab-stops:list 36.0pt'><span
-     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>Pelectric </span><span
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'> c the heat
+     capacity in [J/(kgK)]. </span><span
      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
 </ul>
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>Outputs</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
+13.5pt;line-height:120%'>Inputs:</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
 
 <ul type=disc class="auto-style1">
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l212 level1 lfo76;tab-stops:list 36.0pt'><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>&nbsp;</span></span><a href="2_Basic_Concepts.html"><span
-style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Thermo-Hydraulic </span>
- <span style='font-size:13.5pt;
-line-height:120%'>Bus</span></span></a><span
+     margin-left:36.0pt;mso-list:l203 level1 lfo75;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'> </span><span
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>Thermo-Hydraulic
+     Vector </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l203 level1 lfo75;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>electric
+     heating power in [W] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+</ul>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Outputs:</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
+
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l212 level1 lfo76;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>Thermo-Hydraulic
+     Vector </span><span
      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
 </ul>
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Characteristics</span></b><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
-Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes </span>
-<span style='font-size:13.5pt;
-line-height:120%'> (all inputs except temperature)</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'><br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>
 Sample
 time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
 line-height:120%'>&nbsp;

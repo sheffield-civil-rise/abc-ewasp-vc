@@ -1,11 +1,6 @@
 function blkStruct = slblocks
 % function to include the CARNOT library in the simulink library browser
 % for details see 'slblocks' in the Matlab Simulink help.
-Browser.Library = 'carnot'; % name of the library
-Browser.Name = 'Carnot';  % library name that appears in the Library Browser
-blkStruct.Browser = Browser;
-
-% blkStruct.OpenFcn = 'carnot';
 
 % ***********************************************************************
 % This file is part of the CARNOT Blockset.
@@ -40,10 +35,10 @@ blkStruct.Browser = Browser;
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/carnot_library_tools/slblocks/src_m/slblocks.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -55,5 +50,8 @@ blkStruct.Browser = Browser;
 % Version   Author  Changes                                     Date
 % 1.0.0     tw      created                                     1999
 % 6.1.0     hf      updated help text and editor warnings       03oct2014
-% 7.1.0     hf      update to Matlab R2018b from Matlab help    20nov2019
 
+
+blkStruct.Name = 'Carnot';
+blkStruct.OpenFcn = 'carnot';
+%blkStruct.MaskDisplay = '';%any display for the mask.

@@ -46,7 +46,10 @@ ul
 	font-family:"Calibri","sans-serif";
 	color:#5A5A5A;
 	}
- .auto-style2 {
+ .auto-style1 {
+	margin-left: 120px;
+}
+.auto-style2 {
 	font-size: 18pt;
 }
 .auto-style3 {
@@ -55,9 +58,6 @@ ul
 .auto-style4 {
 	font-weight: bold;
 	text-align: left;
-}
-.auto-style5 {
-	font-size: 13.5pt;
 }
 </style>
 </head>
@@ -82,14 +82,12 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
  o:allowoverlap="f">
  <v:imagedata src="Figures/furnace.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><![if !vml]>
-<img
-src="Figures/CondensingBoiler.jpg" align=right v:shapes="Bild_x0020_90"><![endif]><a name=furnace><span style='mso-bookmark:
+</v:shape><![endif]--><![if !vml]><img width=118 height=113
+src="Figures/furnace.jpg" align=right v:shapes="Bild_x0020_90"><![endif]><a name=furnace><span style='mso-bookmark:
 literature' class="auto-style2"><strong>C</strong></span><font size="5"><strong>ondensing_Boiler</strong></font></a><span
 style='mso-bookmark:furnace'><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-<b>Path: CARNOT/<span lang="de-at">S</span>ource</b></span><b><span style='font-size:13.5pt;line-height:120%'>/Boiler</span></b><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> <br clear=all style='mso-special-character:
+<b>Path: CARNOT/heat_source</b> <br clear=all style='mso-special-character:
 line-break'>
 <o:p></o:p></span></span></span></p>
 
@@ -130,16 +128,11 @@ conditions. The differential equation for the water temperature </span></span></
 
 <p><span style='mso-bookmark:literature'><span class=GramE><span lang=EN-US
 style='font-size:13.5pt;line-height:120%'>characteristic</span></span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> of a node in the </span>
-<span style='font-size:13.5pt;
-line-height:120%'> boiler</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> is &nbsp;&nbsp;</span></span></p>
+line-height:120%'> of a node in the furnace is &nbsp;&nbsp;</span></span></p>
 <p><span style='mso-bookmark:literature'>
 <span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> (m*c/N)*dT<sub>Node</sub>/dt
-= U</span><span style='font-size:13.5pt;
-line-height:120%'>A</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>/N*(T<sub>amb</sub>-T<sub>node</sub>) + m<sub>dot</sub>*cf(T<sub>in</sub>-T<sub>node</sub>)+P<sub><span lang="de-at">act</span></sub>/N
+= U1/N*(T<sub>amb</sub>-T<sub>node</sub>) + m<sub>dot</sub>*cf(T<sub>in</sub>-T<sub>node</sub>)+P<sub><span lang="de-at">act</span></sub>/N
 </span></span></p>
 <p><font size="4">the actual power is</font></p>
 <p><font size="4">Pact = eta_lookup_table(Tm, ctrl) * Pgas * ctrl</font></p>
@@ -166,24 +159,35 @@ line-height:120%'> the variables </span></span></p>
   style='font-size:13.5pt;line-height:120%'>Unit</span><span lang=EN-US><o:p></o:p></span></b></span></p>
   </td>
  </tr>
-    <tr>
+ <tr style='mso-yfti-irow:1'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>m<sub>node</sub></span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>mass of the furnace</span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[kg]</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
   13.5pt;line-height:120%'>c</span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>heat capacity </span>
-  <span style='font-size:
-  13.5pt;line-height:120%'>boiler</span></span></p>
+  13.5pt;line-height:120%'>heat capacity furnace</span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>J/(kg K)</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[J/(kg K)]</span></span></p>
   </td>
-    </tr>
-	<tr>
+ </tr>
+    <tr>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
   13.5pt;line-height:120%'>c</span><span style='font-size:
@@ -193,12 +197,12 @@ line-height:120%'> the variables </span></span></p>
   <p><font size="4">control signal in [0...1]</font></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span style='font-size:
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[</span><span style='font-size:
   13.5pt;line-height:120%'>-</span></span></p>
   </td>
     </tr>
-	<tr>
+ <tr style='mso-yfti-irow:3'>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
   13.5pt;line-height:120%'>cf</span></span></p>
@@ -208,92 +212,27 @@ line-height:120%'> the variables </span></span></p>
   13.5pt;line-height:120%'>heat capacity of fluid</span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>J/(kg K)</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[J/(kg K)]</span></span></p>
   </td>
-    </tr>
-	<tr>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>m</span></span></p>
+  13.5pt;line-height:120%'>T</span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>mass of the </span></span><font size="4">boiler</font></p>
-  </td>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>kg</span></span></p>
-  </td>
-    </tr>
-	<tr>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>m<sub>dot</sub></span></span></p>
-  </td>
-  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
-  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>Mass flow rate</span></span></p>
-  </td>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>kg/s</span></span></p>
-  </td>
-    </tr>
-	<tr>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>N</span></span></p>
-  </td>
-  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
-  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>Number of nodes</span></span></p>
-  </td>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p>-</p>
-  </td>
-    </tr>
-	<tr>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>P<sub><span lang="de-at">act</span></sub></span></span></p>
-  </td>
-  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
-  <p><font size="4">Actual</font><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'> power of the </span>
+  13.5pt;line-height:120%'>Temperature of </span>
   <span style='font-size:
-  13.5pt;line-height:120%'>boier</span></span></p>
+  13.5pt;line-height:120%'>boiler</span><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'> water</span></span></p>
   </td>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>W</span></span></p>
-  </td>
-    </tr>
-	<tr>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>P<sub><span lang="de-at">gas</span></sub></span></span></p>
+  13.5pt;line-height:120%'>[K]</span></span></p>
   </td>
-  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
-  <p><font size="4">Heat input</font><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'> of the </span>
-  <span style='font-size:
-  13.5pt;line-height:120%'>boiler
-  <span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>(= 
- net caloric value * gas massflow) </span>
-  </span></span></p>
-  </td>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>W</span></span></p>
-  </td>
-    </tr>
+ </tr>
     <tr>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
@@ -309,9 +248,8 @@ line-height:120%'> the variables </span></span></p>
   mean of inlet</span></span><font size="4">and outlet temperature)</font></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>K</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[K]</span></span></p>
   </td>
     </tr>
  <tr style='mso-yfti-irow:5'>
@@ -324,9 +262,22 @@ line-height:120%'> the variables </span></span></p>
   13.5pt;line-height:120%'>Time</span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>s</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[s]</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>U<sub>1</sub></span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>heat loss coefficient to ambient </span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[W/ K]</span></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:7'>
@@ -339,9 +290,8 @@ line-height:120%'> the variables </span></span></p>
   13.5pt;line-height:120%'>Ambient temperature</span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>°C</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[°C]</span></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:8'>
@@ -350,14 +300,12 @@ line-height:120%'> the variables </span></span></p>
   13.5pt;line-height:120%'>T<sub>node</sub></span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
-  <p><span style='mso-bookmark:literature'><font size="4">Fluid t</font><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>emperature</span><span style='font-size:
-  13.5pt;line-height:120%'> of the node in the boiler</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>Node temperature</span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>°C</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[°C]</span></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:9'>
@@ -366,44 +314,87 @@ line-height:120%'> the variables </span></span></p>
   13.5pt;line-height:120%'>T<sub>in</sub></span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
-  <p>T<span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>emperature of fluid entering node</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>temperature of fluid entering node</span></span></p>
   </td>
-  <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>°C</span></span></p>
-  </td>
- </tr>
-    <tr>
   <td style='padding:.75pt .75pt .75pt .75pt'>
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>U</span><span style='font-size:
-  13.5pt;line-height:120%'>A</span></span></p>
+  13.5pt;line-height:120%'>[°C]</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>m<sub>dot</sub></span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
   <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>heat loss coefficient to ambient </span></span></p>
+  13.5pt;line-height:120%'>Mass flow rate</span></span></p>
   </td>
   <td style='padding:.75pt .75pt .75pt .75pt'>
-  <p><span style='mso-bookmark:literature'>
-  <span lang=EN-US style='font-size:
-  13.5pt;line-height:120%'>W/K</span></span></p>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[kg/s]</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:11'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>N</span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>Number of nodes</span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[-]</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:12;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>P<sub><span lang="de-at">act</span></sub></span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
+  <p><font size="4">Actual</font><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'> power of the </span>
+  <span style='font-size:
+  13.5pt;line-height:120%'>boier</span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[W]</span></span></p>
+  </td>
+ </tr>
+	<tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>P<sub><span lang="de-at">gas</span></sub></span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt' class="auto-style3">
+  <p><font size="4">Heat input</font><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'> of the </span>
+  <span style='font-size:
+  13.5pt;line-height:120%'>boiler</span></span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+  13.5pt;line-height:120%'>[W]</span></span></p>
   </td>
     </tr>
 </table>
 
-<p>&nbsp;</p>
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Creating the underlying S-function of the furnace
+block is described in </span></span><a href="carnot_manual.htm#creating_s_functions"><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>chapter 3.3</span></span></a><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> </span></span></p>
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> 
-</span></span></p>
-<p><font size="4">Choose the boiler parameter set in the mask from carnot public 
-data files, internal data files or any other selected path. <br />
-You may edit a parameter set and save it under a new name. Typically these new 
-parameter sets are stored in the carnot internal data path or your project path.</font><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'><br>
+line-height:120%'> <br>
 </span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_91" o:spid="_x0000_s1554"
  type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
  margin-left:0;margin-top:0;width:282pt;height:280.5pt;z-index:89;visibility:visible;
@@ -414,25 +405,49 @@ line-height:120%'><br>
  o:allowoverlap="f">
  <v:imagedata src="Figures/furnaceSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><![if !vml]>
-<img width=731 height=800
-src="Figures/CondensingBoilerConf4.jpg" align=left v:shapes="Bild_x0020_91"><![endif]><span style='mso-bookmark:literature'><span
+</v:shape><![endif]--><![if !vml]><img width=376 height=374
+src="Figures/furnaceSHOT.jpg" align=left v:shapes="Bild_x0020_91"><![endif]><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
 style='mso-special-character:line-break'>
 </span></span></p>
-<p>&nbsp;</p>
-<p><font size="4">The parameters are saved as a structure in the folder "parameter_sets":</font></p>
-<p>
-<img alt="" height="218" src="Figures/CondensingBoilerConf3.jpg" width="504" /></p>
-<p class="auto-style5">
-For details see chapter 
-<a href="2_Basic_Concepts.html#Choosing_parameter_sets_for_configurated_models">
-<font
- size="4">2.2.1 Choosing parameter sets for configurated models</font></a></p>
-<p>&nbsp;</p>
 
-<p><span style='mso-bookmark:literature'><b>
-<span lang=EN-US style='font-size:
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l233 level1 lfo99;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'>
+ <span style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>heat input (= 
+ net caloric value * gas massflow) </span>
+ <span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>&nbsp;[W] </span><span lang=EN-US
+     style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l233 level1 lfo99;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>heat loss
+     coefficient (k*A) [W/(m<sup>2</sup>*K)] </span><span lang=EN-US style='mso-fareast-font-family:
+     "Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l233 level1 lfo99;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>pressure drop
+     coefficient [lin qua] [Pa] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l233 level1 lfo99;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>initial
+     temperature [°C] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l233 level1 lfo99;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>number of
+     nodes </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+</ul>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Characteristics</span></b><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
 Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>
@@ -449,8 +464,8 @@ line-height:120%'> corresponding
 to the number of nodes <br>
 Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
 line-height:120%'>&nbsp;&nbsp;
-No</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> 
+</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> Yes
 </span></span></p>
 
 </body>

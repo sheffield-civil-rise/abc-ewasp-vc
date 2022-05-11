@@ -1,45 +1,12 @@
-%% searches a type of files in a directory in a subbranch of a parentdirectory
-% SearchFiles(directory, extension, parentdirectory)
+function foundfiles = SearchFiles(directory, extension, parentdirectory)
+
+
+% function SearchFiles
 % Parameters:
 % directory: Directory, where files shall be seached for
 % extension: look only for files with this extension
 % parentdirectory: Only in this sub-directory is searched for the files
 % This function searches for all files subfolders recursively.
-
-function foundfiles = SearchFiles(directory, extension, parentdirectory)
-foundfiles={};
-ThisDirectory = pwd;
-cd(directory);
-DirContent = dir;
-for Count = 1:numel(DirContent)
-    if ~strcmp(DirContent(Count).name, '..') ...
-            && ~strcmp(DirContent(Count).name,'.') ...
-            && DirContent(Count).isdir
-        Here = pwd;
-        cd(ThisDirectory)
-        foundfiles1 = SearchFiles(fullfile(directory, DirContent(Count).name), ...
-            extension, parentdirectory);
-        cd(Here);
-        for Count1 = 1:numel(foundfiles1)
-            foundfiles(numel(foundfiles)+1)=foundfiles1(Count1); %#ok<AGROW>
-        end
-    elseif length(DirContent(Count).name) > length(extension)+1 %+1: '.'
-        Here = pwd;
-        if (DirContent(Count).name(end-length(extension))=='.') ...
-                && (strcmpi(Here(end-length(parentdirectory)+1:end), ...
-                parentdirectory))
-            if strcmpi(DirContent(Count).name(end-length(extension)+1:end), ...
-                    extension)
-                foundfiles{numel(foundfiles)+1} = ...
-                    fullfile(directory, DirContent(Count).name); %#ok<AGROW>
-            end
-        end
-    else
-        %nothing to do
-    end
-end
-cd(ThisDirectory);
-end
 
 
 % This file is part of the CARNOT Blockset.
@@ -74,10 +41,10 @@ end
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/version_manager/SearchFiles.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -87,5 +54,34 @@ end
 %
 % Version   Author  Changes                                     Date
 % 6.1.0     aw      created                                     oct2015
-% 7.1.0     hf      rearranged comments                         18aug2020
-%                   suppressed  editor warnings
+
+
+    foundfiles={};
+    
+    ThisDirectory = pwd;
+    
+    cd(directory);
+    DirContent = dir;
+    for Count = 1:numel(DirContent)
+        if ~strcmp(DirContent(Count).name, '..') && ~strcmp(DirContent(Count).name,'.') && DirContent(Count).isdir
+            Here = pwd;
+            cd(ThisDirectory)
+            foundfiles1 = SearchFiles(fullfile(directory, DirContent(Count).name), extension, parentdirectory);
+            cd(Here);
+            for Count1 = 1:numel(foundfiles1)
+                foundfiles(numel(foundfiles)+1)=foundfiles1(Count1);
+            end
+        elseif length(DirContent(Count).name) > length(extension)+1 %+1: '.'
+            Here = pwd;
+            if (DirContent(Count).name(end-length(extension))=='.') && (strcmpi(Here(end-length(parentdirectory)+1:end), parentdirectory))
+                if strcmpi(DirContent(Count).name(end-length(extension)+1:end), extension)
+                    foundfiles{numel(foundfiles)+1} = fullfile(directory, DirContent(Count).name);
+                end
+            end
+        else
+            %nothing to do
+        end
+    end
+
+    cd(ThisDirectory);
+end

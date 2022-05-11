@@ -14,9 +14,7 @@
 %% Description
 %  verification of the Solar_Declination_Angle block in the Carnot Toolbox
 %                                                                          
-%  Literature:
-%   Duffie, Beckman: Solar Engineering of Thermal Processes, 1988
-% 
+%  Literature:   --
 %  see also template_verify_mFunction, template_verify_SimulinkBlock,
 %  verification_carnot, solar_declination
 
@@ -37,11 +35,14 @@ end
 
 %% ---------- set your specific model or function parameters here ---------
 % ----- set error tolerances ----------------------------------------------
-max_error = 1.5;         % max error between simulation and reference
+max_error = 1e-7;        % max error between simulation and reference
 max_simu_error = 1e-7;   % max error between initial and current simu
 
 % ---------- set model file or function name ------------------------------
 functionname = 'verify_Solar_Declination_Angle_mdl';
+
+% % reference time vector
+% t0 = 0:100:24*365*3600;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
@@ -68,10 +69,8 @@ else
 end
 
 % ----------------- set the literature reference values -------------------
-% equation from Duffie 1988
-nday = t0/24/3600 + 1;        % add 1 because counting of days starts with 1 (not with 0)
-del = 23.45*sin((360*(nday+284)/365)*(pi/180));  % solar declination angle in °
-y0 = del;
+y0 = y1;
+disp('verify_Solar_Declination_Angle.m: using simulation data as reference data')
 
 %% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
@@ -159,7 +158,7 @@ end
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -199,5 +198,4 @@ end
 %  6.1.0    ts      created                                     20jul2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  7.1.0    hf      added reference equation                    25jan2020
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

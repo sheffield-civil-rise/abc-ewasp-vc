@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 372 $
+ * $Author: carnot-wohlfeil $
+ * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Toolbox/RealTime/src/systemtime.c $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -44,8 +44,8 @@
  *                          casts,
  *                          unused function mdlUpdate and
  *                          mdlDerivatives deleted
- * 7.1.0    hf              leap year has 29 days in feb, not 24    02mar2020
- * Copyright (c) 1998-2020 Solar-Institut Juelich, Germany
+ *
+ * Copyright (c) 1998-2014 Solar-Institut Juelich, Germany
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *  D E S C R I P T I O N
@@ -207,7 +207,7 @@ int countseconds(int year, int month,int day, int hour,int minute, int second)
       else if (imonth==2)
       {
          if (year%4==0)
-           iday += 29;
+           iday += 24;
          else 
            iday += 28;
       }

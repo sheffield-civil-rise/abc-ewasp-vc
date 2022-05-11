@@ -51,27 +51,6 @@ y2 = simOut.get('yout'); % get the whole output vector (one value per simulation
 u0 = simOut.get('tout')/3600; % get the whole time vector from simu
 close_system(modelfile, 0)   % close system, but do not save it
 
-% data columns in weather data bus, description from file "wdb_format.m"
-%  1        time in s, this data is not copied to y2
-%  2        timevalue (comment line) format YYYYMMDDHHMM; Y is the year, M the month, D the day, H the hour
-%  3        zenith angle of sun (at time, not averaged)         degree       (continue at night to get time of sunrise by   linear interpolation)
-%  4        azimuth angle of sun (0°=south, east negative)      degree      (at time, not average in timestep)
-%  5        direct beam solar radiation on a normal surface     W/m^2
-%  6        diffuse solar radiation on a horizontal surface     W/m^2
-%  7        ambient temperature                                 degree Celsius
-%  8        radiation temperature of sky                        degree Celsius
-%  9        relative humidity                                   percent
-% 10        precipitation                                       m/s
-% 11        cloud index (0=no cloud, 1=covered sky)             -
-% 12        station pressure                                    Pa
-% 13        mean wind speed                                     m/s
-% 14        wind direction (north=0° west=270°)                 degree
-% 15        incidence angle on surface (0° = vertical)          degree
-% 16        incidence angle in a vertical plane on the collecor degree  orientation of the plane is parallel to the risers,   referred as longitudinal plane in EN 12975
-% 17        incidence angle in a vertical plane on the collecor degree   orientation of the plane is parallel to the headers, referred as transversal plane in EN 12975%           (= -9999, if surface orientation is unknown)
-% 18        direct solar radiation on surface                   W/m^2
-% 19        diffuse solar radiation on surface                  W/m^2
-
 %% set the reference values
 % ----------------- set reference values initial simulation ---------------
 % result from call at creation of function if required it can be determined
@@ -130,63 +109,22 @@ if (show)
     st = 'Simulink block verification';   % title
     sy1 = 'Outputs';                     % y-axis label in the upper plot
     sy2 = 'Difference';                     % y-axis label in the lower plot
-    %   x - vector with x values for the plot
-    x = reshape(u0,length(u0),1);
     % upper legend
     sleg1 = {'reference data','initial simulation','current simulation'};
     % lower legend
     sleg2 = {'ref. vs initial simu','ref. vs current simu','initial simu vs current'};
-
-    %  7        ambient temperature                                 degree Celsius
-    %  8        radiation temperature of sky                        degree Celsius
-    %  9        relative humidity                                   percent
-    % 10        precipitation                                       m/s
-    % 11        cloud index (0=no cloud, 1=covered sky)             -
-    % 13        mean wind speed                                     m/s
-    % 14        wind direction (north=0° west=270°)                 degree
-    co = [7:11 13, 14]-1;
+    %   x - vector with x values for the plot
+    x = reshape(u0,length(u0),1);
     %   y - matrix with y-values (reference values and result of the function call)
-    y = [y0(:,co), y1(:,co), y2(:,co)]; 
+    y = [y0, y1, y2]; 
     %   ye - matrix with error values for each y-value
-    ye = [ye1(:,co), ye2(:,co), ye3(:,co)]; 
-    display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, s)
-
-    %  3        zenith angle of sun (at time, not averaged)         degree       (continue at night to get time of sunrise by   linear interpolation)
-    %  4        azimuth angle of sun (0°=south, east negative)      degree      (at time, not average in timestep)
-    % 15        incidence angle on surface (0° = vertical)          degree
-    % 16        incidence angle in a vertical plane on the collecor degree  orientation of the plane is parallel to the risers,   referred as longitudinal plane in EN 12975
-    % 17        incidence angle in a vertical plane on the collecor degree   orientation of the plane is parallel to the headers, referred as transversal plane in EN 12975%           (= -9999, if surface orientation is unknown)
-    co = [3, 4, 15:17]-1;
-    %   y - matrix with y-values (reference values and result of the function call)
-    y = [y0(:,co), y1(:,co), y2(:,co)]; 
-    %   ye - matrix with error values for each y-value
-    ye = [ye1(:,co), ye2(:,co), ye3(:,co)]; 
-    display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, s)
-
-    %  5        direct beam solar radiation on a normal surface     W/m^2
-    %  6        diffuse solar radiation on a horizontal surface     W/m^2
-    % 18        direct solar radiation on surface                   W/m^2
-    % 19        diffuse solar radiation on surface                  W/m^2
-    co = [5, 6, 18, 19]-1;
-    %   y - matrix with y-values (reference values and result of the function call)
-    y = [y0(:,co), y1(:,co), y2(:,co)]; 
-    %   ye - matrix with error values for each y-value
-    ye = [ye1(:,co), ye2(:,co), ye3(:,co)]; 
-    display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, s)
-    
-    %  2        timevalue (comment line) format YYYYMMDDHHMM; Y is the year, M the month, D the day, H the hour
-    % 12        station pressure                                    Pa
-    co = [2, 12]-1;
-    %   y - matrix with y-values (reference values and result of the function call)
-    y = [y0(:,co), y1(:,co), y2(:,co)]; 
-    %   ye - matrix with error values for each y-value
-    ye = [ye1(:,co), ye2(:,co), ye3(:,co)]; 
+    ye = [ye1, ye2, ye3]; 
     display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, s)
 end
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -214,10 +152,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision$
-%  $Author$
-%  $Date$
-%  $HeadURL$
+%  $Revision: 372 $
+%  $Author: carnot-wohlfeil $
+%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Weather/Weather_Simple_Model/verification/verify_WeatherSimpleModel.m $
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
@@ -228,5 +166,4 @@ end
 %  6.2.2    hf      close system without saving it              16may2016
 %  6.1.1    hf      comments adapted to publish function        09nov2017
 %                   reference y1 does not overwrite y2
-%  7.1.0    hf      new reference with 24 h calculation         17apr2019
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

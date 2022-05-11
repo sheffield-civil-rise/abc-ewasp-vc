@@ -8,7 +8,6 @@
 <style type="text/css">
 .ms-column5-main {
 	border: 1.5pt solid gray;
-	margin-left:108.0pt;
 }
 .ms-column5-tl {
 	font-weight: bold;
@@ -18,14 +17,11 @@
 	border-top-style: none;
 	border-bottom: .75pt solid gray;
 	background-color: #E5E5E5;
-	color:#5A5A5A;
 }
 .ms-column5-left {
 	font-weight: bold;
 	color: black;
 	border-style: none;
-	text-align:center;
-	color:#5A5A5A;
 }
 .ms-column5-top {
 	font-weight: bold;
@@ -34,35 +30,18 @@
 	border-right-style: none;
 	border-top-style: none;
 	border-bottom: 1.5pt solid gray;
-	color:#5A5A5A;
-}
-.ms-column5-topleft {
-	font-weight: bold;
-	color: black;
-	border-left-style: none;
-	border-right-style: none;
-	border-top-style: none;
-	border-bottom: 1.5pt solid gray;
-	text-align: center;
-	width: 50pt;
-	color:#5A5A5A;
 }
 .ms-column5-even {
 	font-weight: normal;
 	color: black;
 	border-style: none;
 	background-color: #E5E5E5;
-	background-color: white;
-	color:#5A5A5A;
-
 }
 .ms-column5-odd {
 	font-weight: normal;
 	color: black;
 	border-style: none;
 	background-color: white;
-	color:#5A5A5A;
-
 }
 div.MsoNormal
 	{margin-top:0cm;
@@ -150,8 +129,6 @@ a:link
 	{line-height:120%;
 	font-size:12.0pt;
 	font-family:"Calibri","sans-serif";
-	color:#5A5A5A;
-
 	}
 tt
 	{font-family:"Courier New";
@@ -200,7 +177,6 @@ ol
 */ 
 	font-family: "Calibri","sans-serif";
 	font-size: large;
-	color:#5A5A5A;
 }
 .auto-style9 {
 	text-align: right;
@@ -211,34 +187,45 @@ ol
 }
 .auto-style11 {
 	margin-left: 144px;
-	color:#5A5A5A;
 }
 .auto-style12 {
 	font-size: large;
-	color:#5A5A5A;
 }
 .auto-style13 {
 	margin-top: 0px;
-	color:#5A5A5A;
 }
 .auto-style14 {
 	margin-left: 0;
-	color:#5A5A5A;
+}
+.auto-style15 {
+	font-weight: normal;
+	color: black;
+	text-align: left;
+	border-style: none;
+	background-color: #E5E5E5;
 }
 .auto-style16 {
 	font-family: Calibri;
-	color:#5A5A5A;
+}
+.auto-style17 {
+	font-weight: normal;
+	color: black;
+	font-family: Calibri;
+	border-style: none;
+	background-color: #E5E5E5;
+}
+.auto-style18 {
+	font-weight: bold;
+	color: black;
+	font-family: Calibri;
+	border-left-style: none;
+	border-right-style: none;
+	border-top-style: none;
+	border-bottom: 1.5pt solid gray;
 }
 .auto-style19 {
 	color: #0000FF;
 	text-decoration: underline;
-}
-.auto-style20 {
-	margin-left: 108pt;
-	color:#5A5A5A;
-}
-.auto-style21 {
-	font-family: "Courier New", Courier, monospace;
 }
 </style>
 </head>
@@ -253,14 +240,13 @@ ol
 Vector Definitions</a></p>
 <p> <a href="#carnot_vectors"> </a>
 &nbsp;&nbsp;2.1.1 <a href="#THB"> Thermo Hydraulic Bus (THB)</a> <br>
-&nbsp;&nbsp;2.1.2 <a href="#electric_bus"> Electric Bus (EB)</a> <br>
-&nbsp;&nbsp;2.1.3 <a href="#weather_data_vector"> Weather 
-Data Bus </a> <br>
-&nbsp;&nbsp;2.1.4 <a href="#fuel_vector"> Fuel Vector </a><font
+&nbsp;&nbsp;2.1.2 <a href="#weather_data_vector"> Weather 
+Data Vector </a> <br>
+&nbsp;&nbsp;2.1.3 <a href="#fuel_vector"> Fuel Vector </a><font
  size="4"> <br>
-&nbsp;&nbsp;2.1.5 <a href="#eco_vector"> The Eco Vector </a><font
+&nbsp;&nbsp;2.1.4 <a href="#eco_vector"> The Eco Vector </a><font
  size="4"> <br>
-&nbsp;&nbsp;2.1.6 <a href="#building_vector"> The Building 
+&nbsp;&nbsp;2.1.5 <a href="#building_vector"> The Building 
 Vectors </a> </p>
 <p>2.2 <a href="#specifying_components"> Specifying 
 Components from the Subsystem</a> </p>
@@ -275,9 +261,6 @@ for the Models </a>  <br>
 &nbsp;&nbsp;2.4.1  <a href="#pressure_calc"> Pressure Drop 
 and Massflow Calculation </a><font
  size="4">  </p>
- <p> 2.5  <a href="#other_tools"> List of useful open source tools </a>  <br>
-&nbsp;&nbsp;2.5.1  <a href="#pvlib"> PVLIB Toolbox </a>  </p>
-<p> 2.6<a href="#weather_data_records"> Weather Data Records</a></p>
 <a name="Basic_concepts"> <hr class="auto-style11">  </a></p>
 <h1><a name="Basic_concepts"><b>2 Basic concepts</b> </a>
 <a name="Basic_concepts">   </a></h1>
@@ -308,12 +291,12 @@ the bus can be used as a structure.<br>
 
 <p> The structure of the Thermo-Hydraulic Bus is shown in the 
 following table.  </p>
-<p> <b>T H B - bus definition</b> </p>    
+<p> <b>T H B - bus definition</b>    
 <table border="0" class="ms-column5-main">
     <!-- fpstyle: 15,011111100 -->
     <tr>
-        <th align="left" class="ms-column5-top" style="width: 126px"><p> <u>No.</u> </th>
-		<th align="left" class="ms-column5-top"><u>name in the bus</u> </th>
+        <th align="left" class="ms-column5-tl" style="width: 126px"><p> <u>No.</u> </th>
+		<th align="left" class="auto-style18"><u>name in the bus</u> </th>
         <th align="left" class="ms-column5-top"><u>description&nbsp;</u> </th>
         <th align="left" class="ms-column5-top"><u>abbreviation&nbsp;</u> </th>
         <th align="left" class="ms-column5-top"><u>physical unit&nbsp;</u> </th>
@@ -321,7 +304,7 @@ following table.  </p>
     </tr>
     <tr>
         <td valign="top" class="ms-column5-left" style="width: 126px"><p> 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
-		<td valign="top" class="ms-column5-even"><span class="auto-style16">ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+		<td valign="top" class="auto-style15"><span class="auto-style16">ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
         <td valign="top" class="ms-column5-odd"><a href="#flow_ID">flow identifier 
 		</a></td>
         <td valign="top" class="ms-column5-even">ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
@@ -331,7 +314,7 @@ following table.  </p>
     </tr>
     <tr>
         <td style="height: 21px; width: 126px;" class="ms-column5-left"><p> 2 </td>
-		<td style="height: 21px" class="ms-column5-even">
+		<td style="height: 21px" class="auto-style15">
 		<span class="auto-style16">Temperature </td>
         <td style="height: 21px" class="ms-column5-odd">temperature </td>
         <td style="height: 21px" class="ms-column5-even">T </td>
@@ -341,18 +324,18 @@ following table.  </p>
 		</td>
     </tr>
     <tr>
-        <td class="ms-column5-left" style="width: 126px; height: 30px;"><p> 3 </td>
-		<td class="ms-column5-even" style="height: 30px"><span class="auto-style16">MassFlow </td>
-        <td class="ms-column5-odd" style="height: 30px">massflow </td>
-        <td class="ms-column5-even" style="height: 30px">m  <sub>dot</sub> </td>
-        <td class="ms-column5-odd" style="height: 30px">[kg/s] </span> </td>
-        <td class="ms-column5-even" style="height: 30px">
+        <td class="ms-column5-left" style="width: 126px"><p> 3 </td>
+		<td class="auto-style15"><span class="auto-style16">MassFlow </td>
+        <td class="ms-column5-odd">massflow </td>
+        <td class="ms-column5-even">m  <sub>dot</sub> </td>
+        <td class="ms-column5-odd">[kg/s] </span> </td>
+        <td class="ms-column5-even">
 		<p>&nbsp;</p>
 		</td>
     </tr>
     <tr>
         <td class="ms-column5-left" style="width: 126px"><p> 4 </td>
-		<td class="ms-column5-even"><span class="auto-style16">Pressure </td>
+		<td class="auto-style15"><span class="auto-style16">Pressure </td>
         <td class="ms-column5-odd">pressure </td>
         <td class="ms-column5-even">p </td>
         <td class="ms-column5-odd">[Pa] </span> </td>
@@ -362,7 +345,7 @@ following table.  </p>
     </tr>
     <tr>
         <td class="ms-column5-left" style="width: 126px"><p> 5 </td>
-		<td class="ms-column5-even"><span class="auto-style16">FluidType </td>
+		<td class="auto-style15"><span class="auto-style16">FluidType </td>
         <td class="ms-column5-odd"><a href="#fluid ID">fluid type </a></td>
         <td class="ms-column5-even">fluid_ID </td>
         <td class="ms-column5-odd">none </td>
@@ -370,7 +353,7 @@ following table.  </p>
     </tr>
     <tr>
         <td class="ms-column5-left" style="width: 126px"><p> 6 </td>
-		<td class="ms-column5-even"><span class="auto-style16">FluidMix </td>
+		<td class="auto-style15"><span class="auto-style16">FluidMix </td>
         <td class="ms-column5-odd">mixture of fluid (fraction of 2nd mixture 
 		component</td>
         <td class="ms-column5-even"><a href="#fluid ID">fluid_mix </a></td>
@@ -381,29 +364,29 @@ following table.  </p>
         <font
  size="4">  
         <td class="ms-column5-left" style="width: 126px"><p> 7</td>
-		<td class="ms-column5-even"><span class="auto-style16">FluidMix2</td>
+		<td class="auto-style15"><span class="auto-style16">FluidMix2</td>
         <td style="height: 21px" class="ms-column5-odd">mixture of fluid (3rd 
 		mixture&nbsp; component)</td>
         <td class="ms-column5-even">fluid_mix2</td>
         <td class="ms-column5-odd">depends on fluid_type</span></td>
         </font>
-        <td class="ms-column5-even">&nbsp;</td>
+        <td class="auto-style17">&nbsp;</td>
     </tr>
     <tr>
         <font
  size="4">  
         <td class="ms-column5-left" style="width: 126px"><p> 8</td>
-		<td class="ms-column5-even"><span class="auto-style16">FluidMix3</td>
+		<td class="auto-style15"><span class="auto-style16">FluidMix3</td>
         <td class="ms-column5-odd">mixture of fluid (4rd mixture&nbsp; 
 		component)</td>
         <td class="ms-column5-even">fluid_mix3</td>
         <td class="ms-column5-odd">depends on fluid_type</span></td>
         </font>
-        <td class="ms-column5-even">&nbsp;</td>
+        <td class="auto-style17">&nbsp;</td>
     </tr>
     <tr>
         <td class="ms-column5-left" style="width: 126px"><p> 9 </td>
-		<td class="ms-column5-even"><span class="auto-style16">DiameterLastPiece </td>
+		<td class="auto-style15"><span class="auto-style16">DiameterLastPiece </td>
         <td class="ms-column5-odd">diameter last piece </td>
         <td class="ms-column5-even">d_last </td>
         <td class="ms-column5-odd">[m] </span> </td>
@@ -413,7 +396,7 @@ following table.  </p>
     </tr>
     <tr>
         <td class="ms-column5-left" style="width: 126px"><p> 10</td>
-		<td class="ms-column5-even"><span class="auto-style16">DPConstant </td>
+		<td class="auto-style15"><span class="auto-style16">DPConstant </td>
         <td class="ms-column5-odd"><a href="#pressure_calc">constant coefficient 
             of pressure drop </a></td>
         <td class="ms-column5-even">c </td>
@@ -424,7 +407,7 @@ following table.  </p>
     </tr>
     <tr>
         <td class="ms-column5-left" style="width: 126px"><p> 11</td>
-		<td class="ms-column5-even"><span class="auto-style16">DPLinear </td>
+		<td class="auto-style15"><span class="auto-style16">DPLinear </td>
         <td class="ms-column5-odd"><a href="#pressure_calc">linear coefficient of 
             pressure drop </a></td>
         <td class="ms-column5-even">l </td>
@@ -435,7 +418,7 @@ following table.  </p>
     </tr>
     <tr>
         <td class="ms-column5-left" style="width: 126px"><p> 10 </td>
-		<td class="ms-column5-even"><span class="auto-style16">DPQuadratic </td>
+		<td class="auto-style15"><span class="auto-style16">DPQuadratic </td>
         <td class="ms-column5-odd"><a href="#pressure_calc">quadratic coefficient 
             of pressure drop </a></td>
         <td class="ms-column5-even">q </td>
@@ -447,7 +430,7 @@ following table.  </p>
     </tr>
     <tr>
         <td class="ms-column5-left" style="width: 126px"><p> 11 </td>
-        <td class="ms-column5-even"><span class="auto-style16">HydraulicInductance </td>
+        <td class="auto-style15"><span class="auto-style16">HydraulicInductance </td>
         <td class="ms-column5-odd">hydraulic inductance</td>
         <td class="ms-column5-even">L</td>
         <td class="ms-column5-odd">[1/m]</span></td>
@@ -457,7 +440,7 @@ following table.  </p>
     </tr>
 	<tr>
         <td class="ms-column5-left" style="width: 126px"><p> 12 </td>
-        <td class="ms-column5-even"><span class="auto-style16">GeodeticHeight </td>
+        <td class="auto-style15"><span class="auto-style16">GeodeticHeight </td>
         <td class="ms-column5-odd">geodetic height</td>
         <td class="ms-column5-even">H</td>
         <td class="ms-column5-odd">[m]</span></td>
@@ -468,7 +451,7 @@ following table.  </p>
 </table></p>
 <br>
 
-<p>The structure of the old THV is described in the following table. The vector consists of the first 10 elements of the THB
+<p>The structure of the old THV is descibed in the following table. The vector consists of the first 10 elements of the THB
 and additional 10 elements, which were designated for enhancements. Normally, the last 10 elements were set to zero.
 </p>
 <br>
@@ -624,8 +607,8 @@ no mass flow through this branch (see &quot; <a href="#pressure_calc"><font
 use of the flow_ID is to control the pressure drop calculation. So  
 <table border="0">
     <tr>
-        <th align="left" style="height: 25px"><p> <u>if</u> </th>
-        <th align="left" style="height: 25px"><p> <u>then</u> </th>
+        <th align="left"><p> <u>if</u> </th>
+        <th align="left"><p> <u>then</u> </th>
     </tr>
     <tr>
         <td><p> ID &lt; 0 </td>
@@ -657,14 +640,14 @@ in degree Celsius and not in Kelvin.) <o:p></o:p></span></p>
 <div align="center" class="MsoNormal">
 	<span lang="EN-US" style="font-size: 13.5pt; line-height: 120%; mso-fareast-font-family: &quot;Times New Roman&quot;">
 	<hr align="center" size="2" width="100%" /></span></div>
- 
-<table border="0" class="auto-style20">
+<p>&nbsp; 
+<table border="0">
     <tr>
-        <th align="left" style="height: 24px"><u>fluid_ID</u> </th>
-        <th align="left" style="width: 108px; height: 24px;"><u>fluid</u> </th>
-		<th align="left" style="height: 24px"><u>name in FluidEnum.m</u> </th>
-		<th align="left" style="height: 24px"><u>name in carlib.h</u> </th>
-        <th align="left" style="height: 24px"><u>remarks</u> </th>
+        <th align="left"><u>fluid_ID</u> </th>
+        <th align="left" style="width: 108px"><u>fluid</u> </th>
+		<th align="left"><u>name in FluidEnum.m</u> </th>
+		<th align="left"><u>name in carlib.h</u> </th>
+        <th align="left"><u>remarks</u> </th>
     </tr>
     <tr>
         <td style="height: 67px">1 </td>
@@ -917,146 +900,8 @@ like the  <a href="#fluid ID"> fluid type </a><font
  size="4"> or the  <a href="#property_ID"> property_ID </a><font
  size="4"> .  </p>
 <p>&nbsp;</p>
-<h3> <b>2.1.2 The <a name="electric_bus">Electric Bus</b> </a>   </h3>
-<p>
-The Electric Bus (EB) is the common data structur for electric systems. It can be used to calculate energy demand, controller design and detailed modelling of 
-electric sources and loads.<br />
-The ID of the EB can be used to eliminate errors due to conenections with imcompatible electric energy types
-(f.e. AC sources driving DC devices). This kind of error handling is no automatic process, instead has to considered by the designer of a new model.<br/>
-Since the Bus structure won't be modified by the electric ID, the user is responsible to select the correct bus signals according to the electric ID
-(f.e. there is no physical interpretation for Voltage2 in DC-Signals).  
-</p>
-<p>
-The structure of the Electric Bus is shown in the following table:
-</p>
-<p><b>Electric Bus definition</b></p>
-<table border="0"class="ms-column5-main">    
-    <tr>
-        <th align="left" class="ms-column5-topleft" style="height: 26px" ><u>No.</u></th>
-        <th align="left" class="ms-column5-top" style="width: 200px; height: 26px;"><u>description</u></th>
-        <th align="left" class="ms-column5-top" style="width: 126px; height: 26px;"><u>abbreviation</u></th>
-        <th align="left" class="ms-column5-top" style="width: 126px; height: 26px;text-align:center;" ><u>physical unit</u></th>
-        <th align="left" class="ms-column5-top" style="width: 300px; height: 26px;"><u>remarks</u></th>
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left">1</td>
-        <td valign="top" class="ms-column5-even">electric identifier</td>
-        <td valign="top" class="ms-column5-odd">ID</td>
-        <td valign="top" class="ms-column5-even" align="center">none</td>
-        <td valign="top" class="ms-column5-odd"></td>
-    </tr>  
- <tr>
-        <td valign="top" class="ms-column5-left" >2</td>
-        <td valign="top" class="ms-column5-even">frequency</td>
-		<td valign="top" class="ms-column5-odd">Freq</td>
- 	    <td valign="top" class="ms-column5-even" align="center">[Hz]</td>
-		<td valign="top" class="ms-column5-odd"></td>
-    </tr>
-	<tr>
-        <td valign="top" class="ms-column5-left" style="height: 24px">3</td>
-        <td valign="top" class="ms-column5-even" style="height: 24px">voltage line 1</td>
-        <td valign="top" class="ms-column5-odd" style="height: 24px">Voltage1</td>
-        <td valign="top" class="ms-column5-even" align="center" style="height: 24px">[V]</td>
-        <td valign="top" class="ms-column5-odd" style="height: 24px" >voltage line 1 to ground</td>
-    </tr>	
-    <tr>
-        <td valign="top" class="ms-column5-left" >4</td>
-        <td valign="top" class="ms-column5-even">active power line 1</td>
-        <td valign="top" class="ms-column5-odd">ActPower1</td>
-        <td valign="top" class="ms-column5-even" align="center">[W]</td>
-        <td valign="top" class="ms-column5-odd"></td>
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left" >5</td>
-        <td valign="top" class="ms-column5-even">power factor line 1</td>
-        <td valign="top" class="ms-column5-odd">PowerFactor1</td>
-        <td valign="top" class="ms-column5-even" align="center">[1]</td>
-        <td valign="top" class="ms-column5-odd"></td>
-    </tr>   
-    <tr>
-        <td valign="top" class="ms-column5-left" style="height: 24px">6</td>
-        <td valign="top" class="ms-column5-even" style="height: 24px">voltage line 2</td>
-        <td valign="top" class="ms-column5-odd" style="height: 24px">Voltage2</td>
-        <td valign="top" class="ms-column5-even" align="center" style="height: 24px">[V]</td>
-        <td valign="top" class="ms-column5-odd" style="height: 24px" >voltage line 2 to ground</td>
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left" >7</td>
-        <td valign="top" class="ms-column5-even">active power line 2</td>
-        <td valign="top" class="ms-column5-odd">ActPower2</td>
-        <td valign="top" class="ms-column5-even" align="center">[W]</td>
-        <td valign="top" class="ms-column5-odd"></td>
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left" >8</td>
-        <td valign="top" class="ms-column5-even">power factor line 2</td>
-        <td valign="top" class="ms-column5-odd">PowerFactor2</td>
-        <td valign="top" class="ms-column5-even" align="center">[1]</td>
-        <td valign="top" class="ms-column5-odd"></td>
-    </tr>    
- 	<tr>
-        <td valign="top" class="ms-column5-left">9</td>
-        <td valign="top" class="ms-column5-even">voltage line 3</td>
-        <td valign="top" class="ms-column5-odd">Voltage3</td>
-        <td valign="top" class="ms-column5-even" align="center" >[V]</td>
-        <td valign="top" class="ms-column5-odd" >voltage line 3 to ground</td> 
-	</tr>
-    <tr>
-        <td valign="top" class="ms-column5-left" >10</td>
-        <td valign="top" class="ms-column5-even">active power line 3</td>
-        <td valign="top" class="ms-column5-odd">ActPower3</td>
-        <td valign="top" class="ms-column5-even" align="center">[W]</td>       
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left" >11</td>
-        <td valign="top" class="ms-column5-even">power factor line 3</td>
-        <td valign="top" class="ms-column5-odd">PowerFactor3</td>
-        <td valign="top" class="ms-column5-even" align="center">[1]</td>
-        <td valign="top" class="ms-column5-odd"></td>
-    </tr>    	
-</table>
-<p>All Voltages are assumed to be measured against ground.</p>
-<p><b>The electric_ID</b></p>
-<p>The Elecric ID is used to determine the type of electric energy transmission.</p>
-<table border="0"class="ms-column5-main">    
-    <tr>
-        <th align="left" class="ms-column5-topleft" style="height: 26px" ><u>No.</u></th>
-        <th align="left" class="ms-column5-top" style="width: 200px; height: 26px;"><u>description</u></th>
-        <th align="left" class="ms-column5-top" style="width: 126px; height: 26px;"><u>abbreviation</u></th>
-        <th align="left" class="ms-column5-top" style="width: 426px; height: 26px;"><u>remarks</u></th>
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left" style="height: 24px" >1</td>
-        <td valign="top" class="ms-column5-even" style="height: 24px">Power</td>
-        <td valign="top" class="ms-column5-odd" style="height: 24px">ID</td>
-        <td valign="top" class="ms-column5-even" style="height: 24px">only power, 
-		no extra information</td>        
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left">2</td>
-        <td valign="top" class="ms-column5-even">DC</td>
-        <td valign="top" class="ms-column5-odd">DC</td>
-        <td valign="top" class="ms-column5-even">only data for Line 1 are used, Freq1 = 0</td>
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left" >3</td>
-        <td valign="top" class="ms-column5-even">AC 1 phase</td>
-        <td valign="top" class="ms-column5-odd">AC_1P</td>
-        <td valign="top" class="ms-column5-even">only data for Line 1 are used</td>
-    </tr>
-    <tr>
-        <td valign="top" class="ms-column5-left" >4</td>
-        <td valign="top" class="ms-column5-even">AC 3 phase</td>
-        <td valign="top" class="ms-column5-odd">AC_3P</td>
-        <td valign="top" class="ms-column5-even">all Bus elements are used</td>      
-    </tr>
-</table>
-<p>The electric_ID can be accessed via enumerations in Matlab/Simulink and C. They 
-are defined in ElectricEnum.m and carlib.h, respectively. Please consider that 
-enumerations are of type integer, whereas in Carnot double types are used.
-</p>
-<h3> <b>2.1.3 The </b> <font
- size="4"><a name="weather_data_vector"><b>Weather Data Bus</b> </a>   </h3>
+<h3> <b>2.1.2 The </b> W<font
+ size="4"><a name="weather_data_vector"><b>eather Data Bus</b> </a>   </h3>
 <p> The weather data bus contains the weather conditions for 
 the calculation period. <br>
 It is calculated from measurements over a long period of time. Averaged data 
@@ -1064,8 +909,13 @@ of monthly measurements are pre-processed discretely to generate hourly values
 of the relevant weather data. Correlations for the temperature, the radiation, 
 the relative humidity and the wind speed are used to generate the hourly values. 
  </p>
-<p> The weather data is specified in a certain format (see also &quot;wformat.m&quot;)<font
- size="4">. Each row contains a dataset for a specific time. Column limiter 
+<p> The weather data is specified in a certain format (see also 
+&quot;wformat.txt&quot;) that is created by the preprocessing of the weather 
+data in the M-files &quot;Wprepro&quot; (for test reference year) and  <a href="#Meteonorm2wformat"><font
+ size="4">&quot;Meteonorm2wformat&quot; </a>  and  <a href="#MeteonormMinute2wformat"><font
+ size="4">&quot;MeteonormMinute2wformat&quot; </a>  (for 
+Meteonorm data) :  </p>
+<p> Each row contains a dataset for a specific time. Column limiter 
 is a tabulator or a space. <br>  </p>
 <p> Information on the dataset <br> station name: country: <br>
 geographical position: longitude: , latitude: <br>
@@ -1201,38 +1051,31 @@ mark type of data collection: measured/calculated/satellite  </p>
     </tr>
 </table>
 <p>&nbsp;</p>
-<p> External Data, particularly the  <font
- size="4">  <a href="#weather_data_vector">weather data </a>  in the  <font
- size="4">  <a href="#CARNOT">CARNOT Library </a> , are stored in ASCII-datafiles.</font></font></p>
-<p> &nbsp;</p>
-<p> <br> 
+<p> External Data, particularly the  <a href="#weather_data_vector"><font
+ size="4">weather data </a>  in the  <a href="#CARNOT"><font
+ size="4">CARNOT Library </a> , are stored in ASCII-datafiles.<br> 
 Load them to MATLAB Workspace with  </p>
 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <tt>load 
 &lt;filename&gt;.dat</tt>    </p>
 <p> where &lt;filename is the name of the external datafile, in 
 the MATLAB command window.<br>
 Use in Simulink with the &quot;from Workspace&quot; block (if previously load 
-in MATLAB Workspace) or the &quot;from File&quot; block. 
-<p> <font size="4"><strong><a name="weather_data_import_functions">Weather Data</a></strong></font><p> 
-Import functions for different datasets like German TRY, Meteonorm or Energy 
-Plus are available (see Meteonorm2wformat.m, MeteonormMinute2wformat.m, 
-tmy2wdb.m, try2wdb.m, dwd2wdb.m, epw2wdb.m). For details see the help of the 
-functions (e.g. <font
- size="4">  <tt>help dwd2wdb).</tt></font><p> <font size="4">More information on 
-available data is given in chapter <a href="#weather_data_records">2.6 Weather 
-Data Records</a>.</font> <br> 
+in MATLAB Workspace) or the &quot;from File&quot; block. <br> 
 <div class="auto-style1"><hr>
 <b>NOTE:</b>  Physical units in CARNOT are conform 
 to SI, the international standard. (One small difference is the temperature, which is given in degree Celsius and not in Kelvin.)  
 <hr>
-	<b>NOTE:<br>
+<b>IMPORTANT NOTE:<br>
 </b>  The format of the weather data vector and weather 
-data file has been changed during the development of Carnot. <font
- size="4"><br>
-To convert your old data weather files, use  
-	<a href="4_Block_and_Function_Reference.html#convert_weather">convert_weather</a>.m.
+data file have been recently changed. The compatibility with the old format 
+is still maintain but will be remained in the future. Use the block  <a href="#select_weather"><font
+ size="4">select_weather </a>  in place of the Simulink 
+block &quot;Selector&quot; in your models and blocks if you want to maintain 
+compatibility or use old weather data vectors and files.<br>
+To convert your old data weather files, use  <a href="#convert_weather"><font
+ size="4">convert_weather </a>.
 <hr></div>
- <h3><a name="fuel_vector"> <b>2.1.4 The Fuel vector</b> </a><a
+ <h3><a name="fuel_vector"> <b>2.1.3 The Fuel vector</b> </a><a
  name="fuel_vector">   </a></h3>
 <p> The fuel block is a collection of constants characterising 
 the different types of fuel. </p>
@@ -1387,8 +1230,8 @@ etc.  </p>
         <td><p> solid</td>
     </tr>
     </table>
-<p>You may use the predefined parameter sets in the Fuel block (see ).<br>
-<h3><a name="eco_vector"> <b>2.1.5 The Eco vector</b> </a><a
+<p>You may use the Fuel_CONF block which gives a choice of pre-defined fuels.<br>
+<h3><a name="eco_vector"> <b>2.1.4 The Eco vector</b> </a><a
  name="eco_vector">   </a></h3>
 <p> The Eco (economy-ecology) vector defines the output of a fuel 
 consuming system component like massflow of  <a href="#Fuel-ID"> fuel </a><font
@@ -1547,7 +1390,7 @@ bilancing of combustion systems.  </p>
         <td></td>
     </tr>
 </table>
-<h3><a name="building_vector"> <b>2.1.6 Building-Vectors</b> </a><a
+<h3><a name="building_vector"> <b>2.1.5 Building-Vectors</b> </a><a
  name="building_vector">   </a></h3>
 <p> In the Building model two further vectors are used.  </p>
 <p> The  <a href="#s_vector"> <b>S-vector</b> </a><font
@@ -1739,33 +1582,6 @@ The S vector may be used to visualize to energy flows (see  <a href="#S_Selector
 </table>
 <h2><a name="specifying_components"> <b>2.2 Specifying Components 
 in the Subsystem </b> </a></h2>
-<p> <strong><a name="Choosing_parameter_sets_for_configurated_models">2.2.1 
-Choosing parameter sets for configurated models</a></strong></p>
-<p> Many models in Carnot use predefined parameter sets which you may edit or 
-change.</p>
-<p> <img alt="" src="Figures/heatpumpSHOT.jpg"></p>
-<p> The button &quot;Carnot public data&quot; will open a user input window to select the 
-available parameter sets for this model from the public data path of the model. 
-This path is the result of the matlab command <br>&nbsp;&nbsp;&nbsp;
-<span class="auto-style21">fullfile(path_carnot('libsl'), 
-'Source','Heat_Pump','HeatPump','parameter_set')</span><br>&quot;Carnot internal 
-data&quot; will open a selection window with the internal path<br>&nbsp;&nbsp;&nbsp;
-<span class="auto-style21">fullfile(path_carnot('intlibsl'), 
-'Source','Heat_Pump','HeatPump','parameter_set').<br></span>Selected path will 
-open the window with the current string in the Path. Valid Pathnames are:<br>&nbsp;&nbsp;&nbsp;
-<span class="auto-style21">'c:\myFiles\'</span> - a valid path on your computer<br>&nbsp;&nbsp;&nbsp; 
-Matlab commands with a path as a result (e.g. <font
- size="4"><span class="auto-style21">fullfile(path_carnot('libsl'), 
-'Source','Heat_Pump','HeatPump','parameter_set') </span>&nbsp;)</font><br>&nbsp;&nbsp;&nbsp;
-<span class="auto-style21">'current' </span>- selects the current working 
-directory as the path</p>
-<p> You may change the path and filename directly when activating the &quot;Edit path 
-and name of the parameter set&quot; option.</p>
-<p> Changing some parameter values is possible when acitivating the &quot;user 
-defined parameter&quot; option. User defined parameter may be saved in the current 
-path or in the Carnot internal path.</p>
-<p> &nbsp;</p>
-<p> <strong>2.2.2 Adapting models by using available subsystems</strong></p>
 <p> To enhance the possibility of adapting one block for different 
 types of the respective component, a kind of variable block has been introduced 
 in the subsystem. A sublibrary of blocks has been created from which a suitable 
@@ -1826,14 +1642,14 @@ can be found here:</p>
  size="4">
     <li class="MsoNormal"><font
  size="4">
-		<a href="../../../../../../../../../repos/carnot_svn/trunk/public/tutorial/guidelines/Carnot_Filenames_and_Folders.txt">
+	<a href="file:///C:/repos/carnot_svn/trunk/public/tutorial/guidelines/Carnot_Filenames_and_Folders.txt">
 	Carnot_Filenames_and_Folders</a></font><li class="MsoNormal"><font
      size="4">  
-    <a href="../../../../../../../../../repos/carnot_svn/trunk/public/tutorial/guidelines/Carnot_S_functions.txt">
-	Carnot_S_functions</a><a href="../../../../../../../../../repos/carnot_svn/trunk/public/tutorial/guidelines/Carnot_Simulink_Models.txt"> 
+    <a href="file:///C:/repos/carnot_svn/trunk/public/tutorial/guidelines/Carnot_S_functions.txt">
+	Carnot_S_functions</a><a href="file:///C:/repos/carnot_svn/trunk/public/tutorial/guidelines/Carnot_Simulink_Models.txt"> 
 	Carnot</a><li class="MsoNormal"><font
  size="4">
-	<a href="../../../../../../../../../repos/carnot_svn/trunk/public/tutorial/guidelines/Carnot_Simulink_Models.txt">
+	<a href="file:///C:/repos/carnot_svn/trunk/public/tutorial/guidelines/Carnot_Simulink_Models.txt">
 	<span class="auto-style19">C</span>arnot Models</a></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></font></ul>
 <h2><a name="utility_functions"> <b>2.3 Utility Functions</b> </a><a
  name="utility_functions">   </a></h2>
@@ -2613,70 +2429,6 @@ its mass_flow_1 in branch_1 and branch_2. In branch_1 a second diverter_B feeds
 branch_3 and branch_4. Now the first mixer_A takes mass flow from branch_1 and 
 branch_3, the second mixer_B takes the mass flow from branch_4 and mixer_A.)<br>
 </span>  </p>
-
-<h2><a name="other_tools"other_tools"><b> 2.5 List of useful open source tools </a></b></span></h2>
-<h3><a name="pvlib"><b> 2.5.1 PVLib Toolbox</b>&nbsp;  </a></h3>
-<p class="auto-style1"> PVLib is a toolbox provided by Sandia National Laboratories <a href="https://pvpmc.sandia.gov/"> ( https://pvpmc.sandia.gov/ ) </a>as result of the PV Performance Modeling Corporative development group.
-It contains an extensive library of models and datasets of pv panels and inverters as well as weather models. It's available as Matlab and Python Toolbox.<br>
-Since all models are available as m-file integration in Simulink is relatively straight forward by using "Embedded Matlab Function". Although this is mainly for convenience
-because in most cases the results of the PV-Simulations could as well be used as input for the thermal simulation in Carnot-Toolbox.</p>
-<p>GridPV Toolbox is a variant of the PVLib which comes with a COM interface to OpenDSS (Power Distribution System Simulator, also open source) to simulate the integration of
-PV-Systems to the public power grid.</p>
-<h3><a name="pvlib"><b> 2.5.2 Coolprop</b>&nbsp;  </a></h3>
-<p class="auto-style1"> Coolprop <a href="http://www.coolprop.org/"> www.coolprop.org </a>is a c++ shared library that provides fluid and mixture properties. It contains interfaces for several 
-programming languages including Matlab. Usage in m-files is straight forward with an included wrapper function. Integration into Simulink, considering calculation efficiency will require knowledge about integration 
-of shared libraries.</p>
-<p class="auto-style1"> &nbsp;</p>
-
-<h2><b> <a name="weather_data_records" other_tools"="">2.6 Weather Data Records
-</a></b></span></h2>
-<p class="auto-style3">
-<strong>Timestep in the Data</strong><p class="auto-style3">
-The following informations regarding a suitable timestep for the simulation of a 
-component are an indication not a requriement. Please check carefully the 
-required timestep in the weather data for your application and simulation model.<p class="auto-style3">
-Solar thermal collectors: 1 Minute data is required for an accurate energy 
-balance, controller design, especially for vacuum tube collectors<br>&nbsp;&nbsp;&nbsp; 
-1 hour timestep data can be sufficient for <font
-     size="4">annual energy balance and thermal storage design</font> 
-<p class="auto-style3">
-PV-Generators: 1 Minute timestep is required for an accurate energy balance, 
-inverter and battery <font
-     size="4">design </font><br>&nbsp;&nbsp;&nbsp; 1 hour timestep data can be 
-sufficient for annual energy balance and battery sizing 
-<p class="auto-style3">
-Buildings: 1 hour timestep data is sufficient for most building simulations.<p class="auto-style3">
-&nbsp;<p>
-<strong>Energy Plus Dataset</strong><p>
-The e+ (Energy Plus) weather datasets .epw are available for download at 
-[<a href="6_Literature.html#Energy_Plus_2020">Energyplus 2020</a>].<br>The data 
-can easily be imported by using the import filter function epw2wdb.m<p>
-&nbsp;<p>
-<strong>German TRY Dataset 2011</strong><p>
-The 2011 datasets of the test reference years for Germany [<a href="6_Literature.html#DWD_2014">DWD 2014</a>] are 
-available in the Carnot public\data folder. The datasets have been processed to 
-fit to the Carnot weather data format (see wformat.m). The processing has been 
-done with try2wdb.m.<p>
-The test reference years represent the following regions:<p>
-<img alt="" src="Figures/TRYtable.jpg" height="333" width="939"><br>Table: TRY 
-regions in Germany (source <font
-     size="4">[<a href="6_Literature.html#DWD_2014">DWD 2014</a>])</font><p>
-The TRY are available for a standard year, a hot summer and a cold winter. Keep 
-in mind that according to [<a href="6_Literature.html#DWD_2014">DWD 2014</a>] the TRY are designed for thermal building 
-simulation and that they may not be suitable for other puposes including solar 
-thermal collector simulation. The topic is discussed by [<a href="6_Literature.html#Schaefer_Hiller_2015">Schäfer, Hiller 2015</a>].<p>
-&nbsp;<p>
-<strong>German TRY Dataset 2016</strong><p>
-The 2016 Datasets are available form DWD and BBS (see [<a href="6_Literature.html#DWD_2017">DWD 2017</a>]). The datasets 
-have a high spacial resolution. The import with the data processing function 
-dwd2wdb.m has been done for one example (DE_TRY2016_Potsdam_averageYear.mat) 
-available in the public\data folder.<p>
-&nbsp;<h3>Meteonorm Data</h3>
-<p>The data records can be created with the Meteonorm Software [<a href="6_Literature.html#Meteonorm_2019">Meteonorm 
-2019</a>] and imported to Carnot with the import function Metenorm2wdb.m and 
-MeteonormMinute2wdb.m. Meteonorm is a quite unique source for records with a 1 
-minute timestep.</p>
-<p class="auto-style1"> &nbsp;</p>
 </span>  <hr> &nbsp; </p>
 <p>&nbsp;</p>
 </body>

@@ -37,7 +37,7 @@ else
 end
 
 % path definitions
-blockpath = fullfile('Source','Energy','Fuel','parameter_set');
+blockpath = fullfile('Source','Energy','Fuel_CONF','parameter_set');
 
 % switch for command line calls
 switch command      % switch for command line calls
@@ -102,7 +102,6 @@ end     % end of function
 %  6.2.1    hf      revised for pubish function                 19oct2017
 %  6.3.0    hf      adapted to new mask concept                 23oct2017
 %  6.4.0    hf      adapted to new callback concept             18feb2017
-%  7.1.0    hf      block Fuel_CONF renamed to Fuel             09mar2019
 % *************************************************************************
 % $Revision: 315 $
 % $Author: carnot-hafner $

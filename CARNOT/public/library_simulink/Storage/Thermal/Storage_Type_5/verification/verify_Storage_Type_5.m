@@ -12,10 +12,7 @@
 %  v - true if verification passed, false otherwise
 %  s - text string with verification result
 %% Description
-%  Validation of the Storage_Type_5 block in the Carnot Toolbox by
-%  comparing the current simulation with an initial simulation. In the
-%  simulation model the internal energy balance of the storage is compared
-%  to the external energy balance at the ports.
+%  verification of the Storage_Type_5 block in the Carnot Toolbox
 %                                                                          
 %  Literature:   --
 %  see also template_verify_mFunction, template_verify_SimulinkBlock, verification_carnot
@@ -44,30 +41,20 @@ max_simu_error = 1e-7;   % max error between initial and current simu
 functionname = 'verify_Storage_Type_5_mdl';
 
 % % reference time vector
-t0 = 0:900:6*3600;
-y2 = zeros(length(t0),3,3);
-namelist = {'StorageType5_600_L.mat','StorageType5_800_L.mat','StorageType5_1000_L.mat'};
+t0 = 0:1800:24*3600;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
 %  ------------------------------------------------------------------------
 load_system(functionname)
-for n = 1:3
-    set_param('verify_Storage_Type_5_mdl/Storage_Type_5', ...
-        'FileName',mat2str(namelist{n}));
-    simOut = sim(functionname, 'SrcWorkspace','current', ...
-        'SaveOutput','on','OutputSaveName','yout');
-    yy = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
-    tt = simOut.get('tout');        % get the whole time vector from simu
-    tsy = timeseries(yy,tt);        % timeseries for the columns
-    tx = resample(tsy,t0);          % resample with t0
-    y2(:,:,n) = tx.data;
-    denom = y2(:,3,n);
-    idx = logical(abs(denom) < 1e-5);
-    denom(idx) = 0.1;
-    y2(:,3,n) = (y2(:,2,n)-y2(:,3,n))./denom;  % relative error of internal energy balance
-end
-close_system(functionname, 0)   % close system, but do not save it
+simOut = sim(functionname, 'SrcWorkspace','current', ...
+    'SaveOutput','on','OutputSaveName','yout');
+yy = simOut.get('yout');       % get the whole output vector (one value per simulation timestep)
+tt = simOut.get('tout');       % get the whole time vector from simu
+yt = timeseries(yy,tt);        % timeseries for the columns
+yt = resample(yt,t0);          % resample with t0
+y2 = yt.data;
+close_system(functionname, 0)  % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
 % ----------------- set reference values initial simulation ---------------
@@ -94,132 +81,155 @@ r = 'absolute';
 s = 'max';
 % s = 'sum';
 % s = 'mean';
-v = true;
-for n = 1:3
-    % error between reference and initial simu
-    [e1, ye1] = calculate_verification_error(y0(:,:,n), y1(:,:,n), r, s);
-    % error between reference and current simu
-    [e2, ye2] = calculate_verification_error(y0(:,:,n), y2(:,:,n), r, s);
-    % error between initial and current simu
-    [e3, ye3] = calculate_verification_error(y1(:,:,n), y2(:,:,n), r, s);
+
+% error between reference and initial simu 
+[e1, ye1] = calculate_verification_error(y0, y1, r, s);
+% error between reference and current simu
+[e2, ye2] = calculate_verification_error(y0, y2, r, s);
+% error between initial and current simu
+[e3, ye3] = calculate_verification_error(y1, y2, r, s);
+
+% ------------- decide if verification is ok ------------------------------
+if e2 > max_error
+    v = false;
+    s = sprintf('verification %s with reference FAILED: error %3.3f > allowed error %3.3f', ...
+        functionname, e2, max_error);
+    show = true;
+elseif e3 > max_simu_error
+    v = false;
+    s = sprintf('verification %s with 1st calculation FAILED: error %3.3f > allowed error %3.3f', ...
+        functionname, e3, max_simu_error);
+    show = true;
+else
+    v = true;
+    s = sprintf('%s OK: error %3.3f', functionname, e2);
+end
+
+%% ------------ display and plot results if required ----------------------
+if (show)
+    disp(s)
+    disp(['Initial error = ', num2str(e1)])
     
-    % ------------- decide if verification is ok ------------------------------
-    if e2 > max_error
-        v = false;
-        s = sprintf('verification %s with reference FAILED: error %3.3f > allowed error %3.3f', ...
-            functionname, e2, max_error);
-        show = true;
-    elseif e3 > max_simu_error
-        v = false;
-        s = sprintf('verification %s with 1st calculation FAILED: error %3.3f > allowed error %3.3f', ...
-            functionname, e3, max_simu_error);
-        show = true;
+    st = 'Simulink block verification';     % title
+    sx = '';                                % x-axis label
+    
+    % upper legend
+    sleg1 = {'reference data','initial simulation','current simulation'};
+    % lower legend
+    sleg2 = {'ref. vs initial simu','ref. vs current simu','initial simu vs current'};
+    
+    %   y - matrix with y-values (reference values and result of the function call)
+    y_Tdhw   = [y0(:,1), y1(:,1), y2(:,1)];
+    y_Q  = [y0(:,2), y1(:,2), y2(:,2)]/36e5;
+    y_Qhx    = [y0(:,3), y1(:,3), y2(:,3)];
+    y_Qdis   = [y0(:,4), y1(:,4), y2(:,4)];
+    
+    %   x - vector with x values for the plot
+    x = t0;
+    
+    %   ye - matrix with error values for each y-value
+    ye_Tdhw   = [ye1(:,1), ye2(:,1), ye3(:,1)];
+    ye_Q  = [ye1(:,2), ye2(:,2), ye3(:,2)]/36e5; 
+    ye_Qhx    = [ye1(:,3), ye2(:,3), ye3(:,3)]; 
+    ye_Qdis   = [ye1(:,4), ye2(:,4), ye3(:,4)];
+   
+    sz = strrep(s,'_',' ');
+    
+% ----------------------- Combining plots ---------------------------------
+    figure              % open a new figure
+    
+    % internal energy plots
+    subplot(2,4,1)      % divide in subplots (lower and upper one)
+    if size(y_Q,2) == 3
+        plot(x,y_Q(:,1),'x',x,y_Q(:,2),'o',x,y_Q(:,3),'-')
     else
-        s = sprintf('%s OK: error %3.3f', functionname, e2);
+        plot(x,y_Q,'-')
     end
+    title(st)
+    ylabel('Q in kWh')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
     
-    %% ------------ display and plot results if required ----------------------
-    if (show)
-        disp(s)
-        disp(['Initial error = ', num2str(e1)])
-        
-        st = 'Simulink block verification';     % title
-        sx = '';                                % x-axis label
-        
-        % upper legend
-        sleg1 = {'reference data','initial simulation','current simulation'};
-        % lower legend
-        sleg2 = {'ref. vs initial simu','ref. vs current simu','initial simu vs current'};
-        
-        %   y - matrix with y-values (reference values and result of the function call)
-        y_Tmean  = [y0(:,1,n), y1(:,1,n), y2(:,1,n)];
-        y_Qint   = [y0(:,2,n), y1(:,2,n), y2(:,2,n)];
-        y_Qext   = [y0(:,3,n), y1(:,3,n), y2(:,3,n)];
-        
-        %   x - vector with x values for the plot
-        x = t0;
-        
-        %   ye - matrix with error values for each y-value
-        ye_Tmean = [ye1(:,1), ye2(:,1), ye3(:,1)];
-        ye_Qint  = [ye1(:,2), ye2(:,2), ye3(:,2)];
-        ye_Qext  = [ye1(:,3), ye2(:,3), ye3(:,3)];
-        
-        sz = strrep(s,'_',' ');
-        
-        % ----------------------- Combining plots ---------------------------------
-        figure              % open a new figure
-        
-        % Internal energy plots
-        subplot(2,3,1)      % divide in subplots (lower and upper one)
-        if size(y_Qint,2) == 3
-            plot(x,y_Qint(:,1),'x',x,y_Qint(:,2),'o',x,y_Qint(:,3),'-')
-        else
-            plot(x,y_Qint,'-')
-        end
-        title(st)
-        ylabel('Qinternal in J')
-        legend(sleg1,'Location','best')
-        text(0,-0.2,sz,'Units','normalized')  % display valiation text
-        
-        subplot(2,3,4)      % choose lower window
-        if size(ye_Qint,2) == 3
-            plot(x,ye_Qint(:,1),'x',x,ye_Qint(:,2),'o',x,ye_Qint(:,3),'-')
-        else
-            plot(x,ye_Qint,'-')
-        end
-        legend(sleg2,'Location','best')
-        xlabel(sx)
-        ylabel('Difference in J')
-        
-        % Energy error plots
-        subplot(2,3,2)      % divide in subplots (lower and upper one)
-        if size(y_Qext,2) == 3
-            plot(x,y_Qext(:,1),'x',x,y_Qext(:,2),'o',x,y_Qext(:,3),'-')
-        else
-            plot(x,y_Qext,'-')
-        end
-        title(st)
-        ylabel('relative energy error')
-        legend(sleg1,'Location','best')
-        text(0,-0.2,sz,'Units','normalized')  % display valiation text
-        
-        subplot(2,3,5)      % choose lower window
-        if size(ye_Qext,2) == 3
-            plot(x,ye_Qext(:,1),'x',x,ye_Qext(:,2),'o',x,ye_Qext(:,3),'-')
-        else
-            plot(x,ye_Qext,'-')
-        end
-        legend(sleg2,'Location','best')
-        xlabel(sx)
-        ylabel('Difference in W')
-        
-        % Temperature DHW plots
-        subplot(2,3,3)      % divide in subplots (lower and upper one)
-        if size(y_Tmean,2) == 3
-            plot(x,y_Tmean(:,1),'x',x,y_Tmean(:,2),'o',x,y_Tmean(:,3),'-')
-        else
-            plot(x,y_Tmean,'-')
-        end
-        title(st)
-        ylabel('Temperature in °C')
-        legend(sleg1,'Location','best')
-        text(0,-0.2,sz,'Units','normalized')  % display valiation text
-        
-        subplot(2,3,6)      % choose lower window
-        if size(ye_Tmean,2) == 3
-            plot(x,ye_Tmean(:,1),'x',x,ye_Tmean(:,2),'o',x,ye_Tmean(:,3),'-')
-        else
-            plot(x,ye_Tmean,'-')
-        end
-        legend(sleg2,'Location','best')
-        xlabel(sx)
-        ylabel('Difference in °C')
+    subplot(2,4,5)      % choose lower window
+    if size(ye_Q,2) == 3
+        plot(x,ye_Q(:,1),'x',x,ye_Q(:,2),'o',x,ye_Q(:,3),'-')
+    else
+        plot(x,ye_Q,'-')
     end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in kWh')
+    
+    % Power Hx plots
+    subplot(2,4,2)      % divide in subplots (lower and upper one)
+    if size(y_Qhx,2) == 3
+        plot(x,y_Qhx(:,1),'x',x,y_Qhx(:,2),'o',x,y_Qhx(:,3),'-')
+    else
+        plot(x,y_Qhx,'-')
+    end
+    title(st)
+    ylabel('Qdot in W')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,4,6)      % choose lower window
+    if size(ye_Qhx,2) == 3
+        plot(x,ye_Qhx(:,1),'x',x,ye_Qhx(:,2),'o',x,ye_Qhx(:,3),'-')
+    else
+        plot(x,ye_Qhx,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in W')
+    
+    % Power Dis plots
+    subplot(2,4,3)      % divide in subplots (lower and upper one)
+    if size(y_Qdis,2) == 3
+        plot(x,y_Qdis(:,1),'x',x,y_Qdis(:,2),'o',x,y_Qdis(:,3),'-')
+    else
+        plot(x,y_Qdis,'-')
+    end
+    title(st)
+    ylabel('Qdot in W')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,4,7)      % choose lower window
+    if size(ye_Qdis,2) == 3
+        plot(x,ye_Qdis(:,1),'x',x,ye_Qdis(:,2),'o',x,ye_Qdis(:,3),'-')
+    else
+        plot(x,ye_Qdis,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in W')
+    
+    % Temperature DHW plots
+    subplot(2,4,4)      % divide in subplots (lower and upper one)
+    if size(y_Tdhw,2) == 3
+        plot(x,y_Tdhw(:,1),'x',x,y_Tdhw(:,2),'o',x,y_Tdhw(:,3),'-')
+    else
+        plot(x,y_Tdhw,'-')
+    end
+    title(st)
+    ylabel('Temperature in °C')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,4,8)      % choose lower window
+    if size(ye_Tdhw,2) == 3
+        plot(x,ye_Tdhw(:,1),'x',x,ye_Tdhw(:,2),'o',x,ye_Tdhw(:,3),'-')
+    else
+        plot(x,ye_Tdhw,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in °C')
 end
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -257,10 +267,7 @@ end
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
 %  Version  Author  Changes                                     Date
 %  6.1.0    ts      created                                     10aug2017
-%  6.1.1    hf      comments adapted to publish function        07nov2017
+%  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  6.1.2    hf      compare internal and external energy balance 05mar2018
-%  7.1.0    hf      new block name Storage_Type_5               23mar2019
-%                   (old name Storage_Type_5_CONF)
-%                   v is false if one of the validation fails
+%  6.1.2    hf      internal energy y_Q in kWh (not in J)       09oct2018
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

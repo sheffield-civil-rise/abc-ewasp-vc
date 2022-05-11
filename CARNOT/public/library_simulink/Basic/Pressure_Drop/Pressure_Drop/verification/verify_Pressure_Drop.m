@@ -49,7 +49,7 @@ y2(:,:,2) = y2(:,:,1);
 %% simulate the model or call the function -----------------
 load_system(functionname)
 for n = 1:length(u0)
-    set_param([functionname '/Constant'], 'Value', num2str(u0(n)));
+    set_param([gcs, '/Constant'], 'Value', num2str(u0(n)));
     simOut = sim(functionname, 'SrcWorkspace','current', ...
         'SaveOutput','on','OutputSaveName','yout');
     yy = simOut.get('yout');       % get the whole output vector (one value per simulation timestep)

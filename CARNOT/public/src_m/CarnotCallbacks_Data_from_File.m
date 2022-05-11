@@ -18,7 +18,7 @@
 % 
 %% References and Literature
 %  function is used by: Data_from_File, Weather_from_File
- 
+
 function varargout = CarnotCallbacks_Data_from_File(varargin)
 % Switch for command line calls
 if nargin >= 1 && ischar(varargin{1})
@@ -33,7 +33,7 @@ else
     error('CarnotCallbacks_Load_from_File: First argument must be a valid function name. Second argument must be the blockhandle.')
 end
 end
- 
+
 function ok = UserMaskEnable(bhandle)  %#ok<DEFNU>
 %% function UserMaskEnable enables editing of filename and pathname
 userparam = get_param(bhandle, 'UserParam');
@@ -50,56 +50,41 @@ switch userparam
 end
 set_param(bhandle, 'MaskEnables', me);
 end
- 
+
 function ok = GetFilename(bhandle,folder)
 %% function GetFilename opens a user interface to choose a filename
 switch folder
     case 'selected'
-        ps = get_param(bhandle, 'PathName');
+        path = eval(get_param(bhandle, 'PathName'));
     case 'public'
-        ps = 'path_carnot(''data'')';
+        path = path_carnot('data');
     case 'internal'
-        ps = 'path_carnot(''intdata'')';
+        path = path_carnot('intdata');
     otherwise
-        ps = get_param(bhandle, 'PathName');
+        path = eval(get_param(bhandle, 'PathName'));
 end
-pname = eval(ps);
-fname = erase(get_param(bhandle, 'FileName'),'''');
+file = erase(get_param(bhandle, 'FileName'),'''');
 oldpath = pwd;
- 
-% path is 'current' : user selected current working directory only
-if ~strcmp(pname,'current')     % not 'current' 
-    cd(pname)                   % change to directory given by folder
-end
-[fname,pname2,ok] = ...
+cd(path)
+[file,path,ok] = ...
     uigetfile({'*.mat';'*.dat';'*.txt';'*.csv';'*.*'}, ...
-    'Pick a data file',fname);
- 
-if ok
-    set_param(bhandle, 'FileName', mat2str(fname));
-    if ~strcmp(pname,'current')                 % not 'current' : user selected current working directory only
-        if ~strcmpi(pname,pname2(1:end-1))      % if pathes are not the same
-            ps = mat2str(pname2(1:end-1));   % new path is one from uigetfile
-        end
-        set_param(bhandle, 'PathName', ps);  % set new path in mask
-    end
-end
+    'Pick a data file',file);
 cd(oldpath)
+if ok
+    set_param(bhandle, 'FileName', mat2str(file));
+    set_param(bhandle, 'PathName', mat2str(path));
 end
- 
- 
-function [ok,data,t_sample] = LoadData(bhandle,pathname,filename) %#ok<DEFNU>
+end
+
+
+function [ok,data] = LoadData(bhandle,pathname,filename) %#ok<DEFNU>
 %% function LoadData loads the data to a variable in the base workspace
 ok = false;             % default value
 data = [0 0; 3600 0];   % default data
-t_sample = 60;          % default sample time
 if ~BlockIsInCarnotLibrary          % not in carnot library any more
     [~,file,ext] = fileparts(filename);
-    if strcmp(pathname,'current')   % 'current' : user selected current working directory only
-        pathname = pwd;
-    end
     fullname = fullfile(pathname,filename);
- 
+
     if exist(fullname,'file')    % search on given path
         ok = true;
     else
@@ -118,7 +103,7 @@ if ~BlockIsInCarnotLibrary          % not in carnot library any more
         end
         filename = eval(get_param(bhandle, 'FileName'));
         pathname = eval(get_param(bhandle, 'PathName'));
-        [~,~,ext] = fileparts(filename);
+        [~,file,ext] = fileparts(filename);
         fullname = fullfile(pathname,filename);
     end
     
@@ -135,16 +120,20 @@ if ~BlockIsInCarnotLibrary          % not in carnot library any more
         else                                    % else: variable is a timeseries
             t_sample = data.Time(2) - data.Time(1);
         end
-        % extend Data to full simulation time (from negative to postive ex-
-        % tensions)
-        [data] = extendData(data);
+        
+        % assign data to the base workspace for the From_Workspace block
+        %         assignin('base',file,data)  
+        %         clear data
     else
         % assignin('base',file,[0 0; 3600 0]) % no data available: assign a flat line of zeros  
         t_sample = 3600;
     end
+    
+    set_param(bhandle, 'VariableName', file);
+    set_param(bhandle, 'SampleTime', num2str(t_sample));
 end
 end
- 
+
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
 %  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
@@ -181,15 +170,7 @@ end
 %  **********************************************************************
 %  VERSIONS
 %  author list:      hf -> Bernd Hafner
-%                    tob --> Tobias Blanke    
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
 %  Version  Author  Changes                                     Date
 %  6.1.0    hf      created on base of CarnotCallbacks_GetFile  23dec2017
 %  6.1.1    hf      added questdlg if file does not exist       04mar2018
-%  7.1.0    hf      added 'current' option for path             27jan2019
-%  7.1.1    hf      removed VariableName in block mask, data    03feb2019
-%                   ia nOw assigned to variable DataName        
-%                   t_sample is output parameter
-%  7.1.2    tob     ExtendData is added to have data the intire 
-%                   simulation time from negative to postive ex-
-%                   tensions

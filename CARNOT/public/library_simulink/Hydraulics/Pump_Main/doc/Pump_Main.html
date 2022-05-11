@@ -46,7 +46,10 @@ ul
 	font-family:"Calibri","sans-serif";
 	color:#5A5A5A;
 	}
- </style>
+ .auto-style1 {
+	margin-left: 120px;
+}
+</style>
 </head>
 
 <body>
@@ -70,20 +73,15 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
  o:allowoverlap="f">
  <v:imagedata src="Figures/pump.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><![if !vml]>
-<img
+</v:shape><![endif]--><![if !vml]><img width=101 height=75
 src="Figures/pump.jpg" align=right v:shapes="Bild_x0020_169"><![endif]><span
 class=GramE><span style='mso-bookmark:Pump'><span style='mso-bookmark:literature'><span
-style='mso-bookmark:schwamberger'><b><span style='font-size:18.0pt;
-line-height:120%'>P</span><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'>ump</span><span style='font-size:18.0pt;
-line-height:120%'>_Main and Pump_Additional</span></b></span></span></span></span><span
+style='mso-bookmark:schwamberger'><b><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'>pump</span></b></span></span></span></span><span
 style='mso-bookmark:Pump'><span style='mso-bookmark:literature'><span
 style='mso-bookmark:schwamberger'><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
-<b>Path: CARNOT/</b></span><b><span style='font-size:13.5pt;
-line-height:120%'>Hydraulics</span></b><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> <br clear=all style='mso-special-character:line-break'>
+<b>Path: CARNOT/Pumps</b> <br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -103,106 +101,142 @@ lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span>
-<font size="4"><br />
-Pump_Main and Pump_Additional are the pump models calculating the massflow based 
-on the pressure drop equation. Every circuit must have exactly ONE 'Pump_Main' 
-but it may have several 'Pump_Additional' blocks in series or in parallel. See 
-examples 'Example_Hydraulic*.slx in the folder carnot\tutorial\examples (or use 
-the 'double click to load examples' button in the Carnot library).</font></p>
-<p><font size="4">The control signal Ctrl is (more or less) linear to the 
-rotation speed n.It has a quadratic influence on the pump head since h1 / h2 = 
-(n1 / n2)² and a linear influence on the linear coefficient since V1 / V2 = n1 / 
-n2. The quadratic coefficient of the pump is not influenced by the control 
-singal.</font></p>
-<p><font size="4">The Pump_Main calculates massflow by setting pressure drop in 
-the circuit (dp_circuit) equal to the pressure increase of the pump (dp_pump) 
-and solving the equation analytically.</font></p>
-<p><font size="4">&nbsp; dp_circuit = c + l*mdot + q*mdot² </font></p>
-<p><font size="4">&nbsp; dp_pump_ = a0*Ctrl² + a1*Ctrl*mdot +a2*mdot² </font></p>
-<p><font size="4">with </font></p>
-<p><font size="4">&nbsp; mdot : massflow in kg/s</font></p>
-<p><font size="4">&nbsp; Ctrl&nbsp;&nbsp; : Control signal input [0..1] </font></p>
-<p><font size="4">&nbsp; a0&nbsp;&nbsp;&nbsp;&nbsp; : constant pump coefficient in Pa</font></p>
-<p><font size="4">&nbsp; a1&nbsp;&nbsp;&nbsp;&nbsp; : linear pump coefficient in 
-Pa/(kg/s)</font></p>
-<p><font size="4">&nbsp; a0&nbsp;&nbsp;&nbsp;&nbsp; : quadratic pump coefficient in 
-Pa/(kg/s)²</font></p>
-<p><span style='mso-bookmark:literature'>
-<span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> &nbsp; c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-: constant coefficient in Pa (DPConstant
-<span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> in the TH</span><span style='font-size:13.5pt;line-height:120%'>B)</span></span></span></span></p>
-<p><font size="4">&nbsp; l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
-</font><span style='mso-bookmark:literature'>
-<span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> constant coefficient in Pa*s/kg 
-(DPLinear <span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> in the TH</span><span style='font-size:13.5pt;line-height:120%'>B)</span></span></span></span></p>
-<p><span style='mso-bookmark:literature'>
-<span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> &nbsp; q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-: quadratic coefficient in Pa*(s/kg)² (DPQuadratic
-<span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> in the TH</span><span style='font-size:13.5pt;line-height:120%'>B)</span></span></span></span></p>
-<p><font size="4">The Pump_Additional calculates no massflow but the pump 
-characteric coefficients are substracted from the pressure drop of the circuit.</font></p>
-<p><font size="4">&nbsp; dp_total = dp_circuit + dp_pump_additional </font></p>
-<p><font size="4">&nbsp; dp_total = (a0*Ctrl² - c) + (a1*Ctrl - l) * mdot + (a2-q)*mdot²
-</font></p>
-<p><span style='mso-bookmark:literature'>
-<span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> The electric power consumption 
-of the pump is given by a quadradic polynom: </span></span></span></p>
-<p><font size="4">&nbsp; </font><span style='mso-bookmark:literature'>
-<span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> Pel = e0 + e1*mdot + e2*mdot² </span></span></span></p>
-<p><span style='mso-bookmark:literature'>
-<span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> Y</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>ou may specify your own 
-pump specifications </span><span style='font-size:13.5pt;line-height:120%'> by 
-activating the 'user parameters' checkbox</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>.<br />
-</span></span></span></p>
-<p><font size="4"><strong>Remark<br />
-</strong>Be aware that different pumps react differently on the control signal 
-input. Typically a linear signal (e.g. 0-10 V) is the input. But the reaction 
-can be:<br />
-&nbsp; 0 V&nbsp; is interpreted as pump off, 2 V is the minimum speed and 10 V 
-the maximum speed<br />
-&nbsp; 0 V is interpreted as minimum speed and 10 V the maximum speed<br />
-&nbsp; 0 V is interpreted as maximum speed and 10 V is minumum speed</font><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
-</span><span style='font-size:13.5pt;line-height:120%'>When simulating one 
-specific pump you should refer to the data sheet how the specific model is 
-reacting.</span></span></span></p>
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+You may specify your own pump specifications by entering the three coefficients
+a0, a1, a2 of a quadratic <span class=GramE>polynomial, that</span>
+approximates the characteristics of the pump. <br>
+With the coefficients the pump sets the massflow as a result of the pressures.
+The pressure drop in the system is given by [con <span class=GramE>lin</span>
+qua] in the THV: <br>
+The two pressures must be the same. The resulting equation is solved
+analytically in the pump. The direct feedthrough in the temperature is broken
+by a transfer function with a time-constant of 100 s. To get the electrical
+power consumption, you have to specify a pump efficiency characteristic in a
+look-up table. The calculation is carried out in an S-function. <o:p></o:p></span></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></div>
+
+<p class=MsoNormal><span style='mso-bookmark:literature'><span
+style='mso-bookmark:schwamberger'><b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>NOTE<span
+class=GramE>:<span style='font-weight:normal'>If</span></span></span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'> you use a control-signal less than 1, the pump is still
+working. But the pump characteristic does not represent the real pump any more!
+<o:p></o:p></span></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></div>
+
+<p class=MsoNormal><span style='mso-bookmark:literature'><span
+style='mso-bookmark:schwamberger'><b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>NOTE<span
+class=GramE>:<span style='font-weight:normal'>If</span></span></span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'> you use free components of the THV, you have to change the
+Pumps. To avoid algebraic loops, unused components of the THV are not fed
+through. <o:p></o:p></span></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></div>
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_170" o:spid="_x0000_s1475"
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
+</span></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_170" o:spid="_x0000_s1475"
  type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
  margin-left:0;margin-top:0;width:282pt;height:354pt;z-index:168;visibility:visible;
  mso-wrap-style:square;mso-wrap-distance-left:0;mso-wrap-distance-top:0;
  mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
  mso-position-horizontal:left;mso-position-horizontal-relative:text;
  mso-position-vertical:absolute;mso-position-vertical-relative:line'
- o:allowoverlap="f"><v:imagedata src="Figures/pumpSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/><w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/></v:shape><![endif]--></p>
-<p><img alt="" src="Figures/PumpMainMASK.jpg" /></p>
-<p>&nbsp;</p>
-<p><img alt="" src="Figures/PumpAdditionlMASK.jpg" /></p>
-<p>&nbsp;</p>
-<p><font size="4">Different parameter sets are available. See
-<a href="Figures/data_fit_pump_characteristic.html">description</a> for details.</font></p>
-<p>&nbsp;</p>
+ o:allowoverlap="f">
+ <v:imagedata src="Figures/pumpSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
+ <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
+</v:shape><![endif]--><![if !vml]><img width=376 height=472
+src="Figures/pumpSHOT.jpg" align=left v:shapes="Bild_x0020_170"><![endif]><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
+style='mso-special-character:line-break'>
+</span><span lang=EN-US style='font-size:12.0pt;
+line-height:120%'><o:p></o:p></span></span></span></p>
+
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l39 level1 lfo159;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>diameter at in and outlet [m] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l39 level1 lfo159;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>fluid [water,air,cotton oil, silicone oil, water
+     glycol] </span><span lang=EN-US style='mso-fareast-font-family:
+     "Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l39 level1 lfo159;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>percentage of fluid mixture [0..1] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l39 level1 lfo159;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>pump constant coefficient [Pa] (must be &gt; 0) </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l39 level1 lfo159;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>pump constant coefficient [Pa] (usually &lt; 0) </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l39 level1 lfo159;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>pump constant coefficient [Pa] (must be &lt; 0) </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l39 level1 lfo159;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>system pressure [Pa] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l39 level1 lfo159;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>level of pressure calculation [only friction, friction
+     and thermal head] </span><span lang=EN-US style='mso-fareast-font-family:
+     "Times New Roman"'><o:p></o:p></span></span></span></li>
+</ul>
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-Direct Feedthrough&nbsp;&nbsp;&nbsp;No </span>
-<span style='font-size:13.5pt;line-height:120%'> (Pump_Main), Yes 
-(Pump_Additional)</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;No <br>
 Sample
 time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;
 </span><span

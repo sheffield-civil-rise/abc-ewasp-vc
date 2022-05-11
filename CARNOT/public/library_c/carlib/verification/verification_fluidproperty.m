@@ -101,7 +101,7 @@ switch fluid
 end
 if isnan(y0)
     v = true;
-    s = ['property ' functionname ' not available for fluid: ' sfluid];
+    s = ['property ' functionname ' not available for fluid' fluid];
     return
 end
 
@@ -175,6 +175,10 @@ end
 
 %% ---------- validate Simulink block   -----------------------------------
 % check if the function is avaible in carnot library
+if strcmp(functionname, 'temperature_conductivity')
+    disp('function temperature_conductivity not available as Simulink block')
+    return
+end
 % loop over temperatures, pressure and mixtures
 modelname = ['verify_' functionname '_mdl']; % create modelname from functionname
 for n = 1:length(mix)
@@ -271,9 +275,8 @@ end
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
-%  Version  Author  Changes                                     Date
-%  6.1.0    hf      created                                     13nov2016
-%  6.1.1    hf      comments adapted to publish function        01nov2017
-%                   save_sim_ref as additional parameter
-%  6.1.2    hf      temperature_conductivity as Simlink block   27oct2018
+%  Version   Author  Changes                                     Date
+%  6.1.0     hf      created                                     13nov2016
+%  6.1.1     hf      comments adapted to publish function        01nov2017
+%                    save_sim_ref as additional parameter
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

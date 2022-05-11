@@ -75,17 +75,15 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
  mso-position-vertical-relative:line' o:allowoverlap="f">
  <v:imagedata src="Figures/energy_meter.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><span class=GramE>
-<span
-style='mso-bookmark:energy_meter'><span style='mso-bookmark:literature'><b>
-<span style='font-size:18.0pt;line-height:120%'>
-<img alt="" src="Figures/powermeter.gif" style="float: right" />Power</span></b></span></span></span><span
+</v:shape><![endif]--><![if !vml]>
+<img width=108 height=60
+src="Figures/energy_meter.jpg" align=right v:shapes="Bild_x0020_59"><![endif]><span class=GramE><span
 style='mso-bookmark:energy_meter'><span style='mso-bookmark:literature'><b><span
-lang=EN-US style='font-size:18.0pt;line-height:120%'> </span>
-<span style='font-size:18.0pt;line-height:120%'> M</span><span
-lang=EN-US style='font-size:18.0pt;line-height:120%'>eter</span></b><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'>energy</span></b></span></span></span><span
+style='mso-bookmark:energy_meter'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'> meter</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-<b>Path: CARNOT/<span lang="de">Control</span></b> <br clear=all style='mso-special-character:line-break'>
+<b>Path: CARNOT/outputs</b> <br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -99,25 +97,42 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Purpose</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-The block </span><span style='font-size:13.5pt;line-height:120%'> calculates</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> the </span>
-<span style='font-size:13.5pt;line-height:120%'> thermal </span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> power between inlet and outlet of a
+The block shows the power and energy gain or loss between inlet and outlet of a
 component. </span><span
 lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></p>
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Description</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-<span style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;line-height:120%'> The block shows the power [W] in one&nbsp;
-<a href="../../EnergyMeter/doc/2_Basic_Concepts.html">Thermo-Hydraulic 
-<span style='font-size:13.5pt;
-line-height:120%'>Bus</span></a> </span>
-<span style='font-size:13.5pt;line-height:120%'> (THB) </span>between the inlet and the outlet of one component. Connect TH<span style='font-size:13.5pt;line-height:120%'>B_in</span> to the 
-<span style='font-size:13.5pt;line-height:120%'> THB</span> 
-entering the component and TH<span style='font-size:13.5pt;line-height:120%'>B_out</span> to the 
-<span style='font-size:13.5pt;line-height:120%'> THB</span> at the outlet.<o:p></o:p></span></span></span></p>
+The block shows the power [W] and energy [J] gain or loss in one </span></span><a
+href="carnot_manual#thv"><span style='mso-bookmark:literature'><span lang=EN-US
+style='font-size:13.5pt;line-height:120%'>Thermo-Hydraulic Vector</span></span></a><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> between the inlet and the
+outlet of one component. Connect THV1 to the vector entering the component and
+THV2 to the vector at the outlet.<o:p></o:p></span></span></p>
 
-<div class=MsoNormal align=center style='text-align:center'></div>
-<p><span style='mso-bookmark:literature'><b>
-<span lang=EN-US style='font-size:
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></div>
+
+<p class=MsoNormal><span style='mso-bookmark:literature'><b><span lang=EN-US
+style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:"Times New Roman"'>NOTE:</span></b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'> In SIMULINK
+version 2.0 scopes do not open when starting the simulation. You have to open
+the subsystem and double-click on the scope to see the graph. <o:p></o:p></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></div>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Inputs:</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span><span lang=EN-US style='font-size:12.0pt;
 line-height:120%'><o:p></o:p></span></span></p>
 
@@ -126,20 +141,13 @@ line-height:120%'><o:p></o:p></span></span></p>
      margin-left:36.0pt;mso-list:l181 level1 lfo80;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
      line-height:120%;mso-fareast-font-family:"Times New Roman"'>Thermo-Hydraulic
-     </span>
- <span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>Bus </span>
- <span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>at component inlet </span><span
+     Vector at component inlet </span><span
      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l181 level1 lfo80;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
      line-height:120%;mso-fareast-font-family:"Times New Roman"'>Thermo-Hydraulic
-     </span>
- <span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>Bus</span><span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'> at component outlet </span><span
+     Vector at component outlet </span><span
      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
 </ul>
 
@@ -149,30 +157,23 @@ line-height:120%'><o:p></o:p></span></span></p>
 <ul type=disc class="auto-style1">
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l42 level1 lfo81;tab-stops:list 36.0pt'><span
-     style='mso-bookmark:literature'>
- <span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>thermal </span><span lang=EN-US style='font-size:13.5pt;
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
      line-height:120%;mso-fareast-font-family:"Times New Roman"'>power in [W] </span><span lang=EN-US style='mso-fareast-font-family:
      "Times New Roman"'><o:p></o:p></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l42 level1 lfo81;tab-stops:list 36.0pt'><span
-     style='mso-bookmark:literature'>
- <span style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>thermal </span><span lang=EN-US style='font-size:13.5pt;
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
      line-height:120%;mso-fareast-font-family:"Times New Roman"'>energy in [J] </span><span lang=EN-US style='mso-fareast-font-family:
      "Times New Roman"'><o:p></o:p></span></span></li>
 </ul>
 
-<p>&nbsp;</p>
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US
-style='font-size:13.5pt;line-height:120%'> <span class=GramE>see</span> </span>
-<span
-style='font-size:13.5pt;line-height:120%'> also: </span><font size="4">
-<a href="../../EnergyMeter/doc/THB_format.html">THB format </a>&nbsp;and examples. </font></span></p>
+<p><a href="carnot_manual#thv"><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>Thermo-Hydraulic Vector</span></span></a><span style='mso-bookmark:literature'><span lang=EN-US
+style='font-size:13.5pt;line-height:120%'> <span class=GramE>see</span> storage
+demos of CARNOT </span></span></p>
 
-<p><span style='mso-bookmark:literature'><b>
-<span lang=EN-US style='font-size:
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Characteristics</span></b><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
 Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>

@@ -1,24 +1,23 @@
-function ratiograph(month,latitude,longitude,longitude0,ClearIndex,Skymodel,Greflect,location)
+function ratiograph(month, latitude, longitude, longitude0, ClearIndex, ...
+    Skymodel, Greflect, location)
 % ratiograph plots a graph to show the ratio of direct radiation on tilted
 % surface to that on horizontal surface depending on slope and surface
 % azimuth angle.
 % Syntax:
-%    ratiograph(month,latitude,longitude,longitude0, ...
-%       ClearIndex,Skymodel,Greflect,[location])
+% ratiograph(month,lat,long,long0,ClearIndex,Sky,Greflect,[location])
 % 
 % Input:
-%   1. month         :  [1..12]
-%   2. latitude      :  [-90,90],North positive
-%   3. longitude     :  [-180,180],West positive
-%   4. longitude0    :  reference longitude (timezone)
-%   5. ClearIndex    :  [0..1], index of clearness 
-%                       = ratio of extraterrestrial radiation to global 
-%                       radiation on horizontal
-%   6. Skymodel      :   1 - isotropic sky
-%                        2 - Hay-Davies sky model
-%   7. Greflect      :   reflection of ground [0..1]
-%                        0.2 for usual ground, 0.3 .. 0.5 for sand or snow
-%   8. location      :   optional descriptive name of location
+%   1. month      : [1..12]
+%   2. lat        : gegraphical latitude [-90,90], North positive
+%   3. long       : geographical longitude [-180,180], West positive
+%   4. long0      : reference longitude (timezone)
+%   5. ClearIndex : [0..1], clearness index (ratio of extraterrestrial
+%                     radiation to global radiation on horizontal)
+%   6. Sky        : Skymodel 1 - isotropic
+%                            2 - Hay-Davies
+%   7. Greflect   : reflection of ground [0..1]
+%                     0.2 for usual ground, 0.3 .. 0.5 for sand or snow
+%   8. location   :   optional descriptive name of location
  
 % ***********************************************************************
 % This file is part of the CARNOT Blockset.
@@ -53,16 +52,19 @@ function ratiograph(month,latitude,longitude,longitude0,ClearIndex,Skymodel,Gref
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/ratiograph.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-% Version Author        Changes                                 Date
-% 0.01.0  Thomas Wenzel created                                 11apr00
-% 4.1.0   Bernd Hafner  adaptation to Carnot 4                  26jan2009
+% Authors   tw -> Thomas Wenzel
+%           hf -> Bernd Hafner
+% Version author    Changes                                         Date
+% 0.01.0  tw        created                                         11apr2000
+% 4.1.0   hf        adaptation to Carnot 4                          26jan2009
+% 6.1.0   hf        adaptation to Carnot 6                          26jan2009
 %
 % Copyright (c) 1998-2014 Solar-Institut Juelich, Germany
 % All Rights Reserved
@@ -90,16 +92,10 @@ end
 
 % ----------------------- program code ------------------------------------
 
-%
-% calculate all ratios of radiation for various slopes and surface azimuth angles
-%
-
+% calculate all ratios of radiation for various slopes and azimuth angles
 R = radiationratio(month,latitude,longitude,longitude0,ClearIndex,Skymodel,Greflect);
 
-%
 % set some initial variables
-%
-
 s = size(R);
 max_slope = s(1);
 max_angle = s(2);
@@ -108,17 +104,9 @@ x_move_diagram = -300;
 y_move_diagram = +200;
 DEG2RAD = pi/180;
 
-%
-% set the classwidth 
-% 
-% from 40% to max. percentage in steps of 10 or 20 %
-%
-
-%V = [0.2 .4 .5 .6 .7 0.8 0.85 0.9 0.92 0.94 .96 .98 .99]*max(max(R))
-
+% set the classwidth from 40% to max. percentage in steps of 10 or 20%
 maxR = (max(max(R))*100);
-% minR = floor(min(min(R))*100);
-if maxR>200
+if maxR > 200
    V_step = 20;
 else
    V_step = 10;
@@ -126,24 +114,16 @@ end
 V = (40:V_step:(max(max(R))*100)+1*V_step)./100;
 
 class_number =  length(V)-1;
-% class_width = (max(max(R))-min(min(R)))/class_number;
-%M = hsv(class_number+1);
 M = hsv(round((class_number+1)*1.3)); % create more colors than used
                                       % -> no use of magenta
 
-%
 % plot contour lines and save their coordinates
-%
-
 [con,h] = contour(R,V);
-
 if (h == -9999)         % just to avoid warnings
     disp(h);
 end
 
-%
 % plot the title and other description 
-%
 diagram_title(month,location,latitude,longitude,ClearIndex,Skymodel,Greflect);
 
 %

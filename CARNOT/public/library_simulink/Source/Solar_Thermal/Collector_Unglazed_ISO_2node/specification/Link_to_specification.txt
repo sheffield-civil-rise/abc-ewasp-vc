@@ -1,2 +1,0 @@
-for more details and documents see:
-Carnot\public\library_simulink\Source\Solar_Thermal\Collector_Unglazed_ISO9806\specification

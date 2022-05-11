@@ -1,4 +1,5 @@
-%% converts a temperature from a unit to another
+function temp_conv = unitconv_temperature(init_unit, final_unit, value)
+% This m-function converts a temperature form a unit to another.
 % 
 % Syntax : temp_conv = conv_temperatur(init_unit, final_unit, value)
 %   where :
@@ -11,38 +12,8 @@
 %  - 'K' : Kelvin
 %  - 'F' : Farenheit
 % 
-% Hint : temperature difference doesn't need to be convert from Kelvin to Celsius
-
-function temp_conv = unitconv_temperature(init_unit, final_unit, value)
-if nargin ~= 3              % check for correct input
-    help unitconv_temperature
-    error('unitconv_temperature: number of input arguments must be 3')
-end
-
-if (strcmp(init_unit,'C'))
-    %     conversion : C -> K
-    temp_conv = value + 273.15;
-elseif (strcmp(init_unit,'F'))
-    %     conversion : F -> K
-    temp_conv = (value + 459.67) * 5/9;
-elseif (strcmp(init_unit,'K'))
-    temp_conv = value;
-else
-    error('The initial unit must be : C, K or F.');
-end
-
-% Here, temp_conv is in Kelvins
-
-if (strcmp(final_unit,'C'))
-    %     conversion : K -> C
-    temp_conv = temp_conv - 273.15;
-elseif (strcmp(final_unit,'F'))
-    %     conversion : K -> F
-    temp_conv = (temp_conv * 9/5) - 459.67;
-elseif (~strcmp(final_unit,'K'))
-    error('The final unit must be : C, K or F.');
-end
-
+% Warning : a difference of temperature doesn't need to be convert from
+% Kelvin to Celsius.
 
 % ***********************************************************************
 % This file is part of the CARNOT Blockset.
@@ -77,16 +48,42 @@ end
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/physical_units/unit_conversion/src_m/unitconv_temperature.m $
 % ********************************************************************** 
-%  authors      gf -> Gaelle Faure
-%               hf -> Bernd Hafner
-% Version  Author   Changes                                     Date
-% 0.1.0    gf       created                                     13jan2011
-% 6.1.0    hf       check number of input arguments             27nov2014
-% 7.1.0    hf       rearranged for publish                      09aug2020
-% 7.1.1    hf       corrected help if nargin ~= 3 				02jul2021
-% ********************************************************************** 
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% Version  Author              Changes                             Date
+% 0.1.0    Gaelle Faure        created                            13jan11
+% 6.1.0    Bernd Hafner        check number of input arguments    27nov2014
+
+if nargin ~= 3              % check for correct input
+    help unitconv_temperatur
+    error('unitconv_temperatur: number of input arguments must be 3')
+end
+
+if (strcmp(init_unit,'C'))
+    %     conversion : C -> K
+    temp_conv = value + 273.15;
+elseif (strcmp(init_unit,'F'))
+    %     conversion : F -> K
+    temp_conv = (value + 459.67) * 5/9;
+elseif (strcmp(init_unit,'K'))
+    temp_conv = value;
+else
+    error('The initial unit must be : C, K or F.');
+end
+
+% Here, temp_conv is in Kelvins
+
+if (strcmp(final_unit,'C'))
+    %     conversion : K -> C
+    temp_conv = temp_conv - 273.15;
+elseif (strcmp(final_unit,'F'))
+    %     conversion : K -> F
+    temp_conv = (temp_conv * 9/5) - 459.67;
+elseif (~strcmp(final_unit,'K'))
+    error('The final unit must be : C, K or F.');
+end
+
+end

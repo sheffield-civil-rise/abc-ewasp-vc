@@ -1,4 +1,4 @@
-%% CarnotCallbacks_CollectorUnglazedConf Callback for Carnot model Collector_Unglazed
+%% CarnotCallbacks_CollectorUnglazedConf Callback for Carnot model Collector_Unglazed_CONF
 %% Function Call
 %  [ok, param] = CarnotCallbacks_CollectorUnglazedConf(fname, bhandle)
 %% Inputs   
@@ -46,7 +46,7 @@ else
         'a valid function name. Second argument must be the blockhandle.'])
 end
 
-blockpath = fullfile('Source','Solar_Thermal','Collector_Unglazed',...
+blockpath = fullfile('Source','Solar_Thermal','Collector_Unglazed_CONF',...
     'parameter_set');
 
 switch command      % switch for command line calls
@@ -107,8 +107,6 @@ end     % end of function CarnotCallbacks_CollectorUnglazedConf
 %  6.1.0    hf      created                                     27oct2017
 %  6.2.0    hf      implemented the use of functions in         27dec2017
 %                   CarnotCallbacks_CONFblocks 
-%  7.1.0    hf      block renamed to Collector_Unglazed         16mar2019
-%                   (old name collector_unglazed_conf)
 % *************************************************************************
 % $Revision: 1 $
 % $Author: carnot-hafner $

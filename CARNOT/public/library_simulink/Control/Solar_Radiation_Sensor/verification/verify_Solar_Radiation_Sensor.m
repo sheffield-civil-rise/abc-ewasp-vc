@@ -41,7 +41,7 @@ max_simu_error = 1e-7;   % max error between initial and current simu
 functionname = 'verify_Solar_Radiation_Sensor_mdl';
 
 % % reference time vector
-t0 = 0:900:24*3600;
+% t0 = 0:100:24*365*3600;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
@@ -49,11 +49,11 @@ t0 = 0:900:24*3600;
 load_system(functionname)
 simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
-yy = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
-tt = simOut.get('tout');        % get the whole time vector from simu
-tsy = timeseries(yy,tt);        % timeseries for the columns
-tx = resample(tsy,t0);          % resample with t0
-y2 = tx.data;
+y2 = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
+t0 = simOut.get('tout');        % get the whole time vector from simu
+% tsy = timeseries(yy,tt);        % timeseries for the columns
+% tx = resample(tsy,t0);          % resample with t0
+% y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -197,5 +197,4 @@ end
 %  6.1.0    ts      created                                     21jul2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  7.1.0    hf      t0 as reference time with 900 s timestep    01mar2020
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

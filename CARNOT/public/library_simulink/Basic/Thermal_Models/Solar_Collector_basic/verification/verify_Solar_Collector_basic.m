@@ -12,12 +12,9 @@
 %  v - true if verification passed, false otherwise
 %  s - text string with verification result
 %% Description
-%  Verification of the Solar_Collector_basic block in the Carnot Toolbox by
-%  comparing the current simulation to the initial simulation and the
-%  collector outlet temperature to a simulink block model of the EN12975
-%  collector model.
+%  verification of the Solar_Collector_basic block in the Carnot Toolbox
 %                                                                          
-%  Literature:   EN 12975, ISO 9806
+%  Literature:   --
 %  see also template_verify_mFunction, template_verify_SimulinkBlock, verification_carnot
 
 function [v, s] = verify_Solar_Collector_basic(varargin)
@@ -56,8 +53,7 @@ yy = simOut.get('yout');        % get the whole output vector (one value per sim
 tt = simOut.get('tout');        % get the whole time vector from simu
 tsy = timeseries(yy,tt);        % timeseries for the columns
 tx = resample(tsy,t0);          % resample with t0
-y2 = tx.data(:,1:3);
-Toutlet = tx.data(:,4);         % outlet temperature of the reference model
+y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -73,7 +69,7 @@ end
 
 % ----------------- set the literature reference values -------------------
 y0 = y1;
-y0(:,1) = Toutlet;
+disp('verify_Solar_Collector_basic.m: using simulation data as reference data')
 
 %% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
@@ -209,7 +205,7 @@ end
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -249,5 +245,4 @@ end
 %  6.1.0    ts      created                                     20jul2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  7.1.0    hf      added data from simulink reference model    10mar2019
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

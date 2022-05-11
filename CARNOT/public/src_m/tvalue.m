@@ -1,34 +1,10 @@
-%% converts a date in seconds to the carnot time comment 
-%% function call
+function erg = tvalue(time)
+%Functions   converts a date in seconds to the time comment format 
+%            YYYYMMDDHHMM
 %
-%% Input     
-%   time        is the time in seconds
-%   refyear     is the reference year for the output YYYY
+% Input       date in seconds
 %
-%% Output      
-%   date (integer value) in the format YYYYMMDDHHMM
-
-function erg = tvalue(varargin)
-if nargin == 0
-    help tvalue
-    return
-end
-time = varargin{1};
-if nargin > 1 
-    refyear = varargin{2};
-else
-    refyear = 2005;
-end
-if nargin > 2
-    warning('tvalue accepts 2 input parameters. Ignoring additional inputs.')
-    help tvalue
-end
-
-ergstr = datestr(time/(3600*24)+datenum(refyear,1,1),'yyyymmddHHMM'); % 2-dim string
-erg = zeros(size(ergstr,1),1);
-for i = 1:size(ergstr,1)
-    erg(i) = str2double(ergstr(i,:));
-end
+% Output      date (integer value)
 
 % ***********************************************************************
 % This file is part of the CARNOT Blockset.
@@ -63,10 +39,10 @@ end
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/tvalue.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -77,4 +53,15 @@ end
 % version   author  changes                                     date
 % 1.0.0     hf      created                                     20th century
 % 4.1.0     hf      vectorized version                          04jan2011
-% 7.1.0     hf      input changed to varargin                   10nov2021
+
+if nargin ~= 1
+  help tvalue
+  return
+end
+
+ergstr = datestr(time/(3600*24)+datenum(2005,1,1),'yyyymmddHHMM'); % 2-dim string
+erg = nan(size(ergstr,1),1);
+for i=1:size(ergstr,1)
+    erg(i) = str2double(ergstr(i,:));
+end
+

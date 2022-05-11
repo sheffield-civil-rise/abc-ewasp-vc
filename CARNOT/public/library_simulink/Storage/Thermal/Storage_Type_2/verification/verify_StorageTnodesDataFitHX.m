@@ -37,30 +37,28 @@ else
 end
 
 %% set your specific model or function parameters here
-%  set error tolerances from EN 12977-3:2012 Annex A
-max_error = 0.2;            % max error for temperature between simulation and reference is 0.2 K
-max_rerror = 0.03;          % max relative error for energy between simulation and reference is 3 %
-max_simu_error = 0.001;     % max error between initial and current simu
+% ----- set error tolerances ----------------------------------------------
+max_error = 0.03;           % max error for temperature between simulation and reference (no criteria in EN12977)
+max_rerror = 0.03;          % max relative error for energy between simulation and reference (limit in EN12977 is 3%)
+max_simu_error = eps(100);  % max error between initial and current simu
 
 %% set model file or functi0n name ------------------------------
 functionname = 'verify_StorageTnodesDataFitHX_mdl';
 functionnamedisp = strrep(functionname(1:end-4),'_','');
 
-%% set the literature reference values -------------------
-% parameters for benchmark according to EN 12977-3:2012 Annex A
+% parameters for benchmark according to EN 12977-3 Annex A
 % cp = 4181.0;    % heat capacity of fluid (water, constant)
 % T1in = 90;      % °C
 % mdot1 = 200;    % kg/h
 % T2in = 20;      % °C
 % mdot2 = 600;    % kg/h
-% UA = 1667;      % W/K heat transfer coefficient of the heat exchanger
-% expected result is given by EN 12977-3:2012 Annex A, table A.1
+
+%% set the literature reference values -------------------
 t0 = 0:3600:24*3600;
-y0t = [43.202, 20.391];             % reference results temperature 
+y0t = [43.202, 20.391];             % reference results temperature
 y0q = 16165;                        % reference results power
 y0t = repmat(y0t,length(t0),1);
 y0q = repmat(y0q,length(t0),1);
-
 
 %%  simulate the model or call the function -----------------
 load_system(functionname)
@@ -81,7 +79,7 @@ if (save_sim_ref)
     y1q = y2q;
     save('simRef_StorageTnodesDataFitHX.mat','y1t','y1q');
 else
-    load('simRef_StorageTnodesDataFitHX.mat','y1t','y1q');  % result from call at creation of function
+    load('simRef_StorageTnodesDataFitHX.mat');  % result from call at creation of function
 end
 
 %% -------- calculate the errors -------------------------------------------
@@ -208,10 +206,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision$
-%  $Author$
-%  $Date$
-%  $HeadURL$
+%  $Revision: 372 $
+%  $Author: carnot-wohlfeil $
+%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Storage/Thermal/Storage_Type_2/verification/verify_StorageTnodesDataFitHX.m $
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder

@@ -1,2 +1,0 @@
-Html file of the model is in the folder:
-\public\library_simulink\Basic\Thermal_Models\sfun_storage_heatexchanger\doc

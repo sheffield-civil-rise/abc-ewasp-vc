@@ -1,79 +1,73 @@
-%% calculates the Prandtl number of fluids using Carlib 
-%% Function Call
-%  Pr = prandtl(t, p, ft, fm)
-%% Inputs   
-%  (scalar or vector)
-%  t    :   temperature [°C] 
-%  p    :   pressure [Pa]  
-%  ft   :   fluid_ID (see link to FluidEnum below)
-%  fm   :   fluid_mix 
-%% Outputs
-%  Pr : Prandtl number [-]
-% 
-%% Description
-%  The function calls the function "Prandtl" in the CARNOT library Carlib.
-%  The Carlib function is also used by the "Prandtl"-block in CARNOT library.
-%   Pr = cp*rho*nue/cond                                                             
-%   with:
-%     cp - heat capacity  
+function p = prandtl(t, p, ft, fm)
+% prandtl(temperature, pressure, fluid_ID, fluid_mix)
+% calculates the Prandtl number [-] according to the inputs 
+% (scalar or vector): 
+%    * temperature [°C]
+%    * pressure [Pa]  
+%    * fluid_ID (link below)
+%    * fluid_mix 
+%                                                                              
+% Pr = cp*eta/cond                                                             
+% with:
+%     cp - heat capacity                                                           
+%     eta - dynamic viscosity                                                              
 %     cond - thermal conductivity                                                     
-%     nue - kinematic viscosity      
-%     rho - density
+%                                                                          
+% See also Carnot_Fluid_Types, CARLIB, 
+%   prandtl, grashof, reynolds,
+%   density, kinematic_viscosity
+
+% ***********************************************************************
+% This file is part of the CARNOT Blockset.
 % 
-%% References and Literature
-%  Function is used by: Carnot blocks in basic/material_properties
-%  See also Carnot_Fluid_Types, FluidEnum, Carlib, 
-%   density, heat_capacity, kinematic_viscosity, thermal_conductivity, 
-%   grashof, reynolds
-
-function Pr = prandtl(t, p, ft, fm)
-if (nargin ~= 4)
-    help prandtl
-    error('4 input arguments required: prandtl(t, p, ft, fm)')
-end
-Pr = fluidprop (t, p, ft, fm, 7);
-
-
-%% Copyright and Versions
-%  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
-%  Additional Copyright for this file see list auf authors.
-%  All rights reserved.
-%  Redistribution and use in source and binary forms, with or without 
-%  modification, are permitted provided that the following conditions are 
-%  met:
-%  1. Redistributions of source code must retain the above copyright notice, 
+% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+% Additional Copyright for this file see list auf authors.
+% All rights reserved.
+% 
+% Redistribution and use in source and binary forms, with or without 
+% modification, are permitted provided that the following conditions are 
+% met:
+% 
+% 1. Redistributions of source code must retain the above copyright notice, 
 %    this list of conditions and the following disclaimer.
-%  2. Redistributions in binary form must reproduce the above copyright 
+% 
+% 2. Redistributions in binary form must reproduce the above copyright 
 %    notice, this list of conditions and the following disclaimer in the 
 %    documentation and/or other materials provided with the distribution.
-%  3. Neither the name of the copyright holder nor the names of its 
+% 
+% 3. Neither the name of the copyright holder nor the names of its 
 %    contributors may be used to endorse or promote products derived from 
 %    this software without specific prior written permission.
-%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
-%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
-%  THE POSSIBILITY OF SUCH DAMAGE.
-%  **********************************************************************
-%  D O C U M E N T A T I O N
-%  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-%  author list:     hf -> Bernd Hafner
-%
-%  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
-%
-%  Version  Author  Changes                                     Date
-%  1.0.0    hf      created                                     1999
-%  6.1.0    hf      updated help text and error handling        03oct2014
-%  7.1.0    hf      updated comments for publish                12aug2020
+% 
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+% THE POSSIBILITY OF SUCH DAMAGE.
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/prandtl.m $
 % **********************************************************************
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% D O C U M E N T A T I O N
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+% author list:     hf -> Bernd Hafner
+%
+% version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+%
+% Version   Author  Changes                                     Date
+% 1.0.0     hf      created                                     1999
+% 6.1.0     hf      updated help text and error handling        03oct2014
+
+if (nargin ~= 4)
+  help prandtl
+  error('4 input arguments required: prandtl(t, p, ID, mix)')
+end
+
+p = fluidprop (t, p, ft, fm, 7);

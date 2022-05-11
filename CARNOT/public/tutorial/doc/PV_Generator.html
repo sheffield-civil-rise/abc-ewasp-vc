@@ -70,9 +70,7 @@ style='mso-bookmark:schwamberger'><b><span lang=EN-US style='font-size:18.0pt;
 line-height:120%'>PV generator</span></b></span></span></a><span style='mso-bookmark:literature'><span
 style='mso-bookmark:schwamberger'><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'><br>
-<b>Path: CARNOT/<span lang="de-at">Source/</span>Electric</b></span><b><span style='font-size:13.5pt;
-line-height:120%'>_Generator</span></b><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'><br clear=all style='mso-special-character:line-break'>
+<b>Path: CARNOT/Electricity</b><br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -87,46 +85,15 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-Simulate a PV </span><span style='font-size:13.5pt;line-height:120%'> module</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>. </span><span lang=EN-US style='font-size:12.0pt;
+Simulate a PV panel. </span><span lang=EN-US style='font-size:12.0pt;
 line-height:120%'><o:p></o:p></span></span></span></p>
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-This block simultes a </span><span style='font-size:13.5pt;line-height:120%'> PV 
-genertor </span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> and calculates the output of the module in W</span><span style='font-size:13.5pt;line-height:120%'> 
-based on the module characteristic</span>
-<span style='font-size:13.5pt;line-height:120%'> p</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>arameters</span><span style='font-size:13.5pt;line-height:120%'>:<br />
-<span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'>
-<span style='font-size:13.5pt;line-height:120%'> Pmax: </span></span></span>Peak 
-Power&nbsp; (</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>Wp</span><span style='font-size:13.5pt;line-height:120%'>)</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> </span>
-<span style='font-size:13.5pt;line-height:120%'> at Standard Test Conditions (</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>STC</span><span style='font-size:13.5pt;line-height:120%'>)</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> </span>
-<span style='font-size:13.5pt;line-height:120%'> in </span>
-<span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> W<br />
-</span><span style='font-size:13.5pt;line-height:120%'> <span lang="en-us">
-delta_Wp_K</span>: T</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>emperature coefficient
-</span><span style='font-size:13.5pt;line-height:120%'> for power drop from </span>
-<span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> of Pmax </span>
-<span style='font-size:13.5pt;line-height:120%'> in 1/K</span></span></span></p>
-<p><font size="4">P = Solar_Radiation/1000 * Incidence_Angle_Modifier * Pmax * 
-(1 -&nbsp; (Tamb + 40*Solar_Power/1000) - 25°C )</font></p>
-<p><font size="4">The temperature model of the module has the following 
-assumptions:<br />
-25°C module temperature at STC<br />
-40 K temperature difference to ambient at full solar radiation (1000 W/m²)</font></p>
-<p><font size="4">The Incidence_Angle_Modifier is 1 for vertical direct solar 
-radiation. It follows the reflection law of Fresnel.</font></p>
-<p>&nbsp;</p>
+This block simultes a pv panel and calculates the output of the module in Ws
+based on the parameters - Wp of one panel at STC [W] - temperature coefficient
+of Pmax [1/K] - number of panels [1] </span></span></span></p>
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Inputs:</span></b><span
@@ -137,12 +104,8 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
      margin-left:36.0pt;mso-list:l197 level1 lfo163;tab-stops:list 36.0pt'><span
      style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>weather </span>
- <span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>data bus</span></span></span></li>
-	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l197 level1 lfo163;tab-stops:list 36.0pt; font-size: 13.5pt;'>
-	position (azimuth and inclination) of the module</li>
+     "Times New Roman"'>weather inclined </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
 </ul>
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span

@@ -1,4 +1,4 @@
-%% Callback for Carnot model SolarCollector
+%% Callback for Carnot model Collector_EN12975_CONF
 %% Function Call
 %  [ok, param] = CarnotCallbacks_CollectorEN12975Conf(fname, bhandle)
 %% Inputs   
@@ -23,10 +23,11 @@
 %  by the user.
 % 
 %% References and Literature
-%  Function is used by: Carnot block Collector_EN12975
+%  Function is used by: Carnot block Collector_EN12975_CONF
 %  see also CarnotCallbacks_CONFblocks
 
 function varargout = CarnotCallbacks_CollectorEN12975Conf(varargin)
+%% Main function CarnotCallbacks_CondensingBoilerConf
 % check correct number of input arguments
 if nargin >= 2 && ischar(varargin{1})
     command = varargin{1};
@@ -35,11 +36,10 @@ else
         'a valid function name. Second argument must be the blockhandle.'])
 end
 
-blockpath = fullfile('Source','Solar_Thermal', 'SolarCollector','parameter_set');
+blockpath = fullfile('Source','Solar_Thermal', 'Collector_EN12975_CONF','parameter_set');
 
-%% Main function CarnotCallbacks_CollectorEN12975Conf
 % switch for command line calls
-switch command
+switch command      % switch for command line calls
     case 'UserEdit'
         % switch to edit mode for file and path
         [ok, param] = CarnotCallbacks_CONFblocks('UserEdit', varargin{2});
@@ -64,7 +64,7 @@ end     % end of function
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -98,8 +98,6 @@ end     % end of function
 %  Version  Author  Changes                                     Date
 %  6.1.0    hf      created                                     27oct2017
 %  6.2.0    hf      adapted to new callback concept             18feb2017
-%  7.1.0    hf      new name of the model is SolarCollector 
-%                   (old name Collector_EN12975)
 % *************************************************************************
 % $Revision: 1 $
 % $Author: carnot-hafner $

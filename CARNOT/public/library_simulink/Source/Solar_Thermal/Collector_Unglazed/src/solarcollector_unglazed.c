@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 372 $
+ * $Author: carnot-wohlfeil $
+ * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Source/Solar_Thermal/Collector_Unglazed/src/solarcollector_unglazed.c $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -61,7 +61,6 @@
  *					enabled
  * 6.1.2    aw      implicit casts replaced by explicit         10sep2015
  *                  casts
- * 7.1.0    hf      radiative loss temperature in K (not °C)    11feb2020
  *
  *
  * The collector is devided into two thermal nodes :
@@ -492,7 +491,7 @@ static void mdlDerivatives(SimStruct *S)
     real_T ccond, r, cp_air;
     real_T Taprec, Tasuiv, Tacond, cp, flow, Tfprec, fcond, fconv;
     real_T ugain, uloss, ucond, Tdew, psTacond, psTdew, xwater;
-
+    // real_T b;
     int    nodes = (int)NODES;
     int    n;
     
@@ -519,8 +518,11 @@ static void mdlDerivatives(SimStruct *S)
     {
         Tasuiv = 2*Ta(n) - Taprec;
 
-        if (fabs(Tasuiv - Taprec) < 1e-6) 
-        {
+        // if (Taprec > Tasuiv)
+        //     ssPrintf("Taprec > Tasuiv\n");
+        
+        if (fabs(Tasuiv - Taprec) < 1e-6) {
+            //  ssPrintf("abs(Tasuiv - Taprec) < 1e-6\n");
             if (Tasuiv < TAMB && Taprec < TAMB) {
                 fconv = 1.0;
             } else if (Tasuiv > TAMB && Taprec > TAMB) {
@@ -547,15 +549,35 @@ static void mdlDerivatives(SimStruct *S)
             }
         }
   
+        //if (fconv != 1) {
+        //    printf("node %i: fconv = %0.5e, Taprec = %0.5e, Tasuiv = %0.5e Tamb = %0.5e \n",n,fconv,Taprec,Tasuiv,TAMB);
+        //}
+        //printf("fcond = %f\n",fcond);
+        // fcond = (TAMB > Ta(n)) ? 1 : 0;
+        // fconv = (Tdew > Ta(n)) ? 1 : 0;
+        
         Tacond = Taprec + fcond * ( Ta(n) - Taprec );
         psTacond = vapourpressure((double)AIR,xwater,Tacond,PSTATION);
+        
+        // radiative heat exchange over backside
+        // b = (pow(Ta(n)+273.15,4) - pow(TAMB+273.15,4))/(Ta(n)-TAMB); //temperaturefactor for linearisation
+        //printf("b: %0.5e  b*sigma: %0.5e\n",b,b*SIGMA_STEFAN_BOLTZMANN);
+        //printf("QDOTSOLAR = %0.5e\n",QDOTSOLAR);
+        //printf("qdotgain = %0.5e , fconv= %f\n",fconv * ugain * (Taprec + fconv * (Ta(n) - Taprec) - TAMB),fconv);
+        //printf("qdotloss = %0.5e , 1-fconv= %f\n",(1 - fconv) * uloss * (Tasuiv + (1 - fconv) * (Ta(n) - Tasuiv) - TAMB),1-fconv);
+        //printf("qdotloss2 = %0.5e \n",uloss * (Ta(n) - TAMB));
+        //printf("qdotcond = %0.5e , fcond= %f\n",fcond * ucond * ccond * (psTdew - psTacond),fcond);
+        //printf("qdotcond = %0.5e %0.5e %0.5e %0.5e\n",ucond,ccond,psTdew,psTacond);
+        //printf("qdotlw = %0.5e\n",epsilon * SIGMA_STEFAN_BOLTZMANN * (pow(Ta(n),4) - pow(TSKY,4)));
+        //printf("qdotback = %0.5e\n",uback * (Ta(n) - TAMB));
+        //printf("qdotfluid = %0.5e\n\n",hi * (Ta(n) - (Tf(n) + Tfprec)*0.5 ));
         
         // Calculus for absorber nodes
         DTaDT(n) = invcapabs * (QDOTSOLAR
                   - fconv * ugain * (Taprec + fconv * (Ta(n) - Taprec) - TAMB)
                   - (1 - fconv) * uloss * (Tasuiv + (1 - fconv) * (Ta(n) - Tasuiv) - TAMB)
                   - fcond * ucond * ccond * (psTdew - psTacond)
-                  - epsilon * SIGMA_STEFAN_BOLTZMANN * (pow((Ta(n)+273.15),4) - pow((TSKY+273.15),4))
+                  - epsilon * SIGMA_STEFAN_BOLTZMANN * (pow(Ta(n),4) - pow(TSKY,4))
                   - uc1eta0 * (IDFU+IDIR) * VWIND
                   - hi * (Ta(n) - Tf(n)));
         Taprec = Ta(n);

@@ -43,13 +43,15 @@ p
  o:allowoverlap="f">
  <v:imagedata src="Figures/collector_en12975.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]-->
-<img alt="" src="Figures/SolarCollector.jpg" style="float: right" /><span class=GramE><span
-style='mso-bookmark:collector_en12975'><span style='mso-bookmark:literature'><b><span style='font-size:18.0pt;line-height:120%'>SolarC</span><span
-lang=EN-US style='font-size:18.0pt;line-height:120%'>ollector</span></b></span></span></span><span
-style='mso-bookmark:collector_en12975'><span style='mso-bookmark:literature'><span
+</v:shape><![endif]--><![if !vml]>
+<img width=157 height=150
+src="Figures/collector_en12975.jpg" align=right v:shapes="Bild_x0020_22"><![endif]><span class=GramE><span
+style='mso-bookmark:collector_en12975'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'>collector</span></b></span></span></span><span
+style='mso-bookmark:collector_en12975'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'> EN12975</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-<b>Path: CARNOT/<span lang="de">Source/Solar_Thermal</span></b> <br clear=all style='mso-special-character:
+<b>Path: CARNOT/heat_source</b> <br clear=all style='mso-special-character:
 line-break'>
 <o:p></o:p></span></span></span></p>
 
@@ -66,157 +68,35 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 13.5pt;line-height:120%'>Purpose</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span><span lang=EN-US style='font-size:12.0pt;
 line-height:120%'><o:p></o:p></span></span></p>
 
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>Model for glazed solar thermal collectors ac</span><span style='font-size:
-13.5pt;line-height:120%'>cording to ISO 9806.</span><span lang=EN-US style='font-size:
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Collector model according to EN 12975 standard.</span></span></p>
+
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>&nbsp;</span></span></p>
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Description</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
 
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>Dynamic 1-node solar thermal collector model according 
-to <span style='font-size:13.5pt;
-line-height:120%'> ISO 9806:2017</span></span><span style='font-size:13.5pt;
-line-height:120%'> </span>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>standard. Collector optics use a lookup table for the incidence 
-angle modifier.</span></span></p>
-<p><font size="4">Equations: </font></p>
-<p><font size="4">Tout = 2*Tm - 
-Tin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-(1) </font></p>
-<p><span style='mso-bookmark:literature'><span class=GramE>
-<span lang=EN-US
-style='font-size:13.5pt;line-height:120%'>mdot</span></span>*<span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>cp</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(Tout-Tin) /A = F'(TauAlfa)</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Kdir</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Idir + F'(TauAlfa)</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Kdfu</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Idfu </span><span style='font-size:13.5pt;
-line-height:120%'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-(2)</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
-line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> - c1</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(Tm-Tamb) - c2</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(Tm-Tamb)² - c3</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>v_wind</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(Tm-Ta</span><span style='font-size:13.5pt;
-line-height:120%'>mb</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>) - c6</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>v_wind</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Iglb &nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
-line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> + c4</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(ELongwave -
-sigmaSB*(Tamb+273.15)<sup>4</sup>) - c5</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>dTm/dt</span></span></p>
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Energy balance:</span></span></p>
 
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>Problem of the equation</span><span style='font-size:
-13.5pt;line-height:120%'>:</span></span></p>
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>The ISO 9806 equation violates the energy conservation 
-if the inlet temperature is not constant. To see this replace Tout in (2) with 
-(1) : </span></span></p>
-<p><span style='mso-bookmark:literature'><span class=GramE>
-<span lang=EN-US
-style='font-size:13.5pt;line-height:120%'>mdot</span></span>*<span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>cp</span><span style='font-size:13.5pt;
-line-height:120%'>*2*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(T</span><span style='font-size:13.5pt;
-line-height:120%'>m</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>-Tin) /A = F'(TauAlfa)</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Kdir</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Idir + F'(TauAlfa)</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Kdfu</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Idfu </span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> <br>
+<p><span style='mso-bookmark:literature'><span class=GramE><span lang=EN-US
+style='font-size:13.5pt;line-height:120%'>mdot</span></span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> cp (Tout-Tin) /A = F'(TauAlfa) Kdir Idir + F'(TauAlfa) Kdfu
+Idfu <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
 line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> - c1</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(Tm-Tamb) - c2</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(Tm-Tamb)² - c3</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>v_wind</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(Tm-Ta</span><span style='font-size:13.5pt;
-line-height:120%'>mb</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>) - c6</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>v_wind</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Iglb &nbsp;<br>
+line-height:120%'> - c1 (Tm-Tamb) - c2 (Tm-Tamb)² - c3
+v_wind (Tm-Ta) - c6 v_wind Iglb &nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
 line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> + c4</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(ELongwave -
-sigmaSB*(Tamb+273.15)<sup>4</sup>) - c5</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>dTm/dt</span></span></p>
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>for simplicity set Tm = Tamb, </span>
-<span style='font-size:
-13.5pt;line-height:120%'>Idir</span><span lang=EN-US style='font-size:
-13.5pt;line-height:120%'> = 0</span><span style='font-size:
-13.5pt;line-height:120%'>, Idfu = 0, Iglb = 0, c4 = 0, c6 = 0 </span>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>and mdot = 0.1 kg/s :</span></span></p>
-<p><span style='mso-bookmark:literature'><span class=GramE>
-<span lang=EN-US
-style='font-size:13.5pt;line-height:120%'>mdot</span></span>*<span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>cp</span><span style='font-size:13.5pt;
-line-height:120%'>*2*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>(T</span><span style='font-size:13.5pt;
-line-height:120%'>m</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>-Tin) /A =</span><span style='font-size:13.5pt;
-line-height:120%'> </span>
-<span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> &nbsp;- c5</span><span style='font-size:13.5pt;
-line-height:120%'>*</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>dTm/dt</span></span></p>
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>The model takes 2 times the energy from the capacity 
-when inlet temperature varies which results in an invented outlet temperature 
-increase just by reducing the inlet temperature. IT IS RECOMMENDED TO USE THIS 
-MODEL OLNY FOR STEADY STATE CONDITIONS AT THE INLET. Use
-<a href="Collector_ISO_2node.html">Collector_<span lang="de">I</span>SO_2node</a> 
-model for system simulation. </span></span></p>
+line-height:120%'> + c4 (ELongwave -
+sigmaSB*(Tamb+273.15)<sup>4</sup>) - c5 dTm/dt</span></span></p>
 
-<p>&nbsp;</p>
-<p><font size="4"><strong>Eta0 Equation</strong></font></p>
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>&nbsp;</span></span></p>
+
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Often in test reports the optical efficiency or
 conversion factor eta0 is given.</span></span></p>
 
@@ -235,7 +115,6 @@ line-height:120%'>
 
 <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>&nbsp;</span></span></p>
-<p><font size="4"><strong>Optics</strong></font></p>
 
 <p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>The incidence angle modifier Kdir is dependant on the
@@ -639,17 +518,7 @@ teta(L) and teta(T).</span></span></p>
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> 
-</span></span></p>
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> <img alt="" src="Figures/SolarCollectorMask1.jpg" /></span></span></p>
-<p><img alt="" src="Figures/SolarCollectorMask2.jpg" /></p>
-<p><span style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> <img alt="" src="Figures/SolarCollectorMask3.jpg" /></span></span></p>
-<p><img alt="" src="Figures/SolarCollectorMask4.jpg" /><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'><br>
+line-height:120%'> <br>
 </span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_23" o:spid="_x0000_s1622"
  type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
  margin-left:0;margin-top:0;width:500.25pt;height:727.5pt;z-index:21;
@@ -660,32 +529,15 @@ line-height:120%'><br>
  o:allowoverlap="f">
  <v:imagedata src="Figures/collector_en12975SHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><span style='mso-bookmark:literature'><span
+</v:shape><![endif]--><![if !vml]>
+<img width=667 height=970
+src="Figures/collector_en12975SHOT.jpg" align=left v:shapes="Bild_x0020_23"><![endif]><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
 style='mso-special-character:line-break'>
 </span><span lang=EN-US
 style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></p>
 
-<p><span style='mso-bookmark:literature'><b>
-<span style='font-size:
-13.5pt;line-height:120%'>Literature</span></b><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> 
-</span></span></p>
-<p><span style='mso-bookmark:literature'><span style='font-size:13.5pt;
-line-height:120%'> ISO 9806: Solar energy – Solar thermal collectors – Test 
-methods (ISO 9806:2017)</span></span></p>
-<p>&nbsp;</p>
-<p><font size="4"><strong>Validation</strong></font></p>
-<p><span style='mso-bookmark:literature'>
-<span style='font-size:13.5pt;
-line-height:120%'><a href="pdf/Faure_SolarThermal_FlatPlateCollectors_2011.pdf">
-Faure : Validation of the blocks for flat collector with measured data for power 
-tests (EN 12975), 2011 </a>
-</span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'><br>
-</span></span></p>
-<p><span style='mso-bookmark:literature'><b>
-<span lang=EN-US style='font-size:
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Characteristics</span></b><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
 Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>

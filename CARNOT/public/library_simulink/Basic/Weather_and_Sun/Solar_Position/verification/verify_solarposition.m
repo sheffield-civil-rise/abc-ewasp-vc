@@ -12,14 +12,11 @@
 %  v - true if verification passed, false otherwise
 %  s - text string with verification result
 %% Description
-%  Verification of the Solar_Position block in the Carnot Toolbox by
-%  comparing the results to the initial simulation and the solar position
-%  calculated with [Meteonorm 2013]. 
+%  verification of the Solar_Position block in the Carnot Toolbox
 %                                                                          
-%  Literature: 
-%   Meteonorm 2013 : Version 7.0, Meteotest 
+%  Literature: Meteonorm Version 7.0
 %  see also template_verify_mFunction, template_verify_SimulinkBlock,
-%  verification_carnot, sunangles, WDB
+%  verification_carnot, sunangles
 
 function [v, s] = verify_solarposition(varargin)
 %% check input arguments ----------------------------------------------
@@ -176,10 +173,10 @@ end
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Weather_and_Sun/Solar_Position/verification/verify_solarposition.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -196,7 +193,7 @@ end
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2017, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -224,10 +221,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision$
-%  $Author$
-%  $Date$
-%  $HeadURL$
+%  $Revision: 372 $
+%  $Author: carnot-wohlfeil $
+%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Weather_and_Sun/Solar_Position/verification/verify_solarposition.m $
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder
@@ -236,6 +233,4 @@ end
 %  6.1.0    ts      created                                     08aug2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  7.1.0    hf      added comments                              24mar2019
-%  7.1.1    hf      assignment of y0 adapted to R2018b          06apr2019
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

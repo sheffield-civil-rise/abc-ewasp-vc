@@ -35,14 +35,14 @@ end
 
 %% ---------- set your specific model or function parameters here ---------
 % ----- set error tolerances ----------------------------------------------
-max_error = 0.07;        % max error between simulation and reference
+max_error = 1e-7;        % max error between simulation and reference
 max_simu_error = 1e-7;   % max error between initial and current simu
 
 % ---------- set model file or function name ------------------------------
 functionname = 'verify_Ventilation_mdl';
 
 % % reference time vector
-t0 = 0:5:100;
+% t0 = 0:100:24*365*3600;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
@@ -50,11 +50,11 @@ t0 = 0:5:100;
 load_system(functionname)
 simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
-yy = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
-tt = simOut.get('tout');        % get the whole time vector from simu
-tsy = timeseries(yy,tt);        % timeseries for the columns
-tx = resample(tsy,t0);          % resample with t0
-y2 = tx.data;
+y2 = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
+t0 = simOut.get('tout');        % get the whole time vector from simu
+% tsy = timeseries(yy,tt);        % timeseries for the columns
+% tx = resample(tsy,t0);          % resample with t0
+% y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -69,35 +69,16 @@ else
 end
 
 % ----------------- set the literature reference values -------------------
-y0 = y1;        % initialize reference with simulation result
-hrec = 0.6;
-Tamb = 0;
-Troom = 20;
-Tm = hrec*Troom+(1-hrec)*Tamb;
-dT = Tamb-Troom;            % temperature difference room to ambient
-p0 = 1013e2;
-x = rel_hum2x(Tamb,1013e2,50);
-rhoR = density(Troom,p0,2,0.01);
-cpR = heat_capacity(Troom,p0,2,0.01);
-rhoA = density(Tm,p0,2,x);
-Vdot_vmc = 50*2*0.6/3600;   % mechanical ventilation flowrate in m³/s is 50 m² * 2 m * 0.6 1/h / 3600 s/h
-mdot_win = y0(:,3)-Vdot_vmc*rhoA;   % get flowrate of window from simulation
-Qdot_vmc = dT * Vdot_vmc * rhoR*cpR * (1-hrec);
-Qdot_win = dT*mdot_win*cpR;
-Tin = Tamb*mdot_win./(mdot_win+Vdot_vmc*rhoR) + (Tamb - dT.*Vdot_vmc*rhoR*hrec./(mdot_win+Vdot_vmc*rhoR));  % reference temperature
-y0(:,1) = Qdot_vmc+Qdot_win;
-y0(:,2) = Tin;
-y0(:,4) = p0;   % reference pressure
-y0(:,5) = x;    % reference absolute humidity
-
+y0 = y1;
+disp('verify_Ventilation.m: using simulation data as reference data')
 
 %% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
 %   s    - 'sum' - e is the sum of the individual errors of ysim 
 %          'mean' - e is the mean of the individual errors of ysim
 %          'max' - e is the maximum of the individual errors of ysim
-% r = 'absolute'; 
-r = 'relative'; 
+r = 'absolute'; 
+% r = 'relative'; 
 s = 'max';
 % s = 'sum';
 % s = 'mean';
@@ -131,50 +112,48 @@ if (show)
     disp(['Initial error = ', num2str(e1)])
     
     st = 'Simulink block verification';     % title
-    sx = 'time in s';                       % x-axis label
+    sx = '';                                % x-axis label
     
     % upper legend
     sleg1 = {'reference data','initial simulation','current simulation'};
     % lower legend
     sleg2 = {'ref. vs initial simu','ref. vs current simu','initial simu vs current'};
     
-    for n = 1:size(y0,2)
-        %   y - matrix with y-values (reference values and result of the function call)
-        y  = [y0(:,n), y1(:,n), y2(:,n)];
-        
-        %   x - vector with x values for the plot
-        x = t0;
-        
-        %   ye - matrix with error values for each y-value
-        ye_Qdot = [ye1(:,n), ye2(:,n), ye3(:,n)];
-        
-        sz = strrep(s,'_',' ');
-        
-        % ----------------------- Combining plots ---------------------------------
-        figure              % open a new figure
-        
-        % power plots
-        subplot(2,1,1)      % divide in subplots (lower and upper one)
-        if size(y,2) == 3
-            plot(x,y(:,1),'x',x,y(:,2),'o',x,y(:,3),'-')
-        else
-            plot(x,y,'-')
-        end
-        title(st)
-        ylabel('value')
-        legend(sleg1,'Location','best')
-        text(0,-0.2,sz,'Units','normalized')  % display valiation text
-        
-        subplot(2,1,2)      % choose lower window
-        if size(ye_Qdot,2) == 3
-            plot(x,ye_Qdot(:,1),'x',x,ye_Qdot(:,2),'o',x,ye_Qdot(:,3),'-')
-        else
-            plot(x,ye_Qdot,'-')
-        end
-        legend(sleg2,'Location','best')
-        xlabel(sx)
-        ylabel('Difference')
+    %   y - matrix with y-values (reference values and result of the function call)
+    y_Qdot  = [y0(:,1), y1(:,1), y2(:,1)];
+    
+    %   x - vector with x values for the plot
+    x = t0;
+    
+    %   ye - matrix with error values for each y-value
+    ye_Qdot = [ye1(:,1), ye2(:,1), ye3(:,1)]; 
+   
+    sz = strrep(s,'_',' ');
+    
+% ----------------------- Combining plots ---------------------------------
+    figure              % open a new figure
+    
+    % power plots
+    subplot(2,1,1)      % divide in subplots (lower and upper one)
+    if size(y_Qdot,2) == 3
+        plot(x,y_Qdot(:,1),'x',x,y_Qdot(:,2),'o',x,y_Qdot(:,3),'-')
+    else
+        plot(x,y_Qdot,'-')
     end
+    title(st)
+    ylabel('Qdot in W')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,1,2)      % choose lower window
+    if size(ye_Qdot,2) == 3
+        plot(x,ye_Qdot(:,1),'x',x,ye_Qdot(:,2),'o',x,ye_Qdot(:,3),'-')
+    else
+        plot(x,ye_Qdot,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in W')
 end
 
 %% Copyright and Versions
@@ -219,5 +198,4 @@ end
 %  6.1.0    ts      created                                     08aug2017
 %  6.1.1    hf      comments adapted to publish function        09nov2017
 %                   reference y1 does not overwrite y2
-%  7.1.0    hf      calculate literature reference              06jul2020
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

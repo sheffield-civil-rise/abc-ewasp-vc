@@ -1,4 +1,4 @@
-%% CarnotCallbacks_StorageConf - Callback for Carnot model Storage_TypeN
+%% CarnotCallbacks_StorageConf - Callback for Carnot model Storage_TypeN_CONF
 %% Function Call
 %  [ok, param] = CarnotCallbacks_StorageConf(fname, bhandle, storagetype)
 %% Inputs   
@@ -34,7 +34,7 @@ function varargout = CarnotCallbacks_StorageConf(varargin)
 % check correct number of input arguments
 if nargin >= 3 && ischar(varargin{1})
     command = varargin{1};
-    % storagetype = varargin{2}; -> dummy argument, not used any more
+    storagetype = varargin{2};
 else
     error(['CarnotCallbacks_StorageConf: First argument must be ', ...
         'a valid function name. Second argument must be the blockhandle.' ...
@@ -42,11 +42,25 @@ else
 end
 
 % set relative path in carnot to the block
-stgtype = get_param(gcb,'stgtype');   % get storagetype from the calling block
-foldername = ['Storage_Type_', num2str(stgtype)];
-if (~exist(fullfile(path_carnot('libsl'),'Storage','Thermal',foldername,'parameter_set'), 'file')) ...
-        && (~exist(fullfile(path_carnot('intlibsl'),'Storage','Thermal',foldername,'parameter_set'), 'file'))
-    error('Storage_CONF: Unknown storage type')
+switch storagetype
+    case 0
+        foldername = 'Storage_Type_0'; 
+    case 1
+        foldername = 'Storage_Type_1_CONF'; 
+    case 2
+        foldername = 'Storage_Type_2_CONF';
+    case 3
+        foldername = 'Storage_Type_3_CONF';
+    case 4
+        foldername = 'Storage_Type_4_CONF';
+    case 5
+        foldername = 'Storage_Type_5_CONF';
+    otherwise
+        stgtype = get_param(gcb,'stgtype');
+        foldername = ['Storage_Type_', num2str(stgtype)];
+        if ~exist(fullfile(path_carnot('intlibsl'),'Storage','Thermal',foldername,'parameter_set'), 'file')
+            error('Storage_CONF: Unknown storage type')
+        end
 end
 blockpath = fullfile('Storage','Thermal',foldername,'parameter_set');
 
@@ -61,34 +75,29 @@ switch command
     case 'SaveFilename'
         % save parameter set with new filename and pathname
         [ok, param] = CarnotCallbacks_CONFblocks('SaveFilename', varargin{3:end}, blockpath);
-    case {'SetParam', 'SetParameters'}
+    case 'SetParameters'
+        disp('CarnotCallbacks_StorageConf: option ''SetParameters'' is obsolete and will be removed in future version. Use ''SetParam'' instead.')
+        % load parameterfile and set parameters automatically
+        [ok, param] = CarnotCallbacks_CONFblocks('SetParameters', varargin{3:end}, blockpath);
+        pos = get_param(gcb,'pos');
+        dia = eval(get_param(gcb,'dia'));
+        if strcmp(pos,'standing cylinder')
+            volume = eval(get_param(gcb,'volume'));
+            h = volume/(0.25*dia.^2*pi);
+        else
+            h = dia;
+        end
+        set_param(gcb,'hgt',num2str(h));
+    case 'SetParam'
         % load parameterfile and set parameters automatically
         [ok, param] = CarnotCallbacks_CONFblocks('SetParameters', varargin{3:end}, blockpath);
         
         % set height according to position 
         % (height is not stored in parameter set)
         pos = get_param(gcb,'standing');
-        x = get_param(gcb,'dia');
-        if ischar(x)       % if value is a char array (assume that its a variable name)
-            try
-                dia = evalin('caller', x);
-            catch
-                dia = evalin('base', x);
-            end
-        else
-            error('parameter ''diameter'' is not numeric and not a variable name')
-        end
-        x = get_param(gcb,'volume');
-        if ischar(x)       % if value is a char array (assume that its a variable name)
-            try
-                volume = evalin('caller', x);
-            catch
-                volume = evalin('base', x);
-            end
-        else
-            error('parameter ''volume'' is not numeric and not a variable name')
-        end
+        dia = eval(get_param(gcb,'dia'));
         if strcmp(pos,'standing cylinder')
+            volume = eval(get_param(gcb,'volume'));
             h = volume/(0.25*dia.^2*pi);
         else
             h = dia;
@@ -97,41 +106,14 @@ switch command
 
         % set indices to measurement points 
         % (only number of sensors is stored in parameter set)
-        x = get_param(gcb,'mpoints');
-        if ischar(x)       % if value is a char array (assume that its a variable name)
-            try
-                mpoints = evalin('caller', x);
-            catch
-                mpoints = evalin('base', x);
-            end
-        else
-            error('parameter ''number of node temperatures'' is not numeric and not a variable name')
-        end
-        x = get_param(gcb,'nodes');
-        if ischar(x)       % if value is a char array (assume that its a variable name)
-            try
-                nodes = evalin('caller', x);
-            catch
-                nodes = evalin('base', x);
-            end
-        else
-            error('parameter ''number of nodes'' is not numeric and not a variable name')
-        end
+        mpoints = eval(get_param(gcb,'mpoints'));
+        nodes = eval(get_param(gcb,'nodes'));
         mpoints = max(mpoints,1);
         mpts = round(nodes/mpoints/2:nodes/mpoints:nodes);
         set_param(gcb,'mpts',mat2str(mpts));
         
         % set initial temperature (value is not in parameter set)
-        x = get_param(gcb,'t0');
-        if ischar(x)       % if value is a char array (assume that its a variable name)
-            try
-                t0 = evalin('caller', x);
-            catch
-                t0 = evalin('base', x);
-            end
-        else
-            error('parameter ''initial temperature'' is not numeric and not a variable name')
-        end
+        t0 = eval(get_param(gcb,'t0'));
         n0 = length(t0);
         if n0 > 1
             x = linspace(0,1,n0);
@@ -149,15 +131,15 @@ switch command
     otherwise
         % something went wrong
         ok = false;
-        param = [];
 end
 varargout{1} = ok;
 varargout{2} = param;
 end     % end of function CarnotCallbacks_StorageConf
 
+
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -198,7 +180,7 @@ end     % end of function CarnotCallbacks_StorageConf
 %                   is no longer a top mask parameter
 %  6.2.1    hf      revised for pubish function,                19oct2017
 %                   replace function call to getConfNamelist
-%                   by _CarnotCallbacks_getConfNamelist
+%                   by CarnotCallbacks_getConfNamelist
 %  6.3.0    hf      adapted to new callback concept             27oct2017
 %  6.4.0    hf      implemented the use of functions in         03jan2018
 %                   CarnotCallbacks_CONFblocks 
@@ -207,18 +189,9 @@ end     % end of function CarnotCallbacks_StorageConf
 %  6.4.3    hf      added case 'SetParam' for new CONF model    14sep2018
 %  6.4.4    hf      added Storage_Type_0                        03oct2018
 %  6.4.5    hf      additional otherwise in switch storagetype  08oct2018
-%  6.5.0    hf      'SetParam' and 'SetParameters' use          23nov2018
-%                   the same case 
-%                   changed evaluation of dia, nodes, mpoints, t0
-%  7.1.0    hf      new block name Storage_TypeN                20mar2019
-%                   (old name Storage_TypeN_CONF)
-%  7.1.1    hf      general functionality for storagetypes in   13mar2021
-%                   public and internal carnot folders
-%                   parameter storagetype of the function call
-%                   has become a dummy argument
 % *************************************************************************
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 449 $
+% $Author: carnot-hafner $
+% $Date: 2018-10-09 21:32:17 +0200 (Di, 09 Okt 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/CarnotCallbacks_StorageConf.m $
 % *************************************************************************

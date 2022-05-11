@@ -51,9 +51,7 @@ load_system(functionname)
 simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
 y2 = simOut.get('yout');       % get the whole output vector (one value per simulation timestep)
-time = simOut.get('tout');        % get the whole time vector from simu
-T = y2(:,1);
-mdot = y2(:,2);
+t = simOut.get('tout');        % get the whole time vector from simu
 close_system(functionname, 0)  % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -69,11 +67,12 @@ end
 
 % literature reference values
 h = 1.0 * sin(30*pi/180);  % collector of length 1 m with inclination 30° from horizontal
-pstat = 2e5 - 9.81*density(T,2e5,1,0)*h;
-lin = 100;
-qua = 100;
+pstat = 2e5 - 9.81*density(20,2e5,1,0)*h;
+mdot = [0; 300; 900; 0]/3600;
+lin = 10;
+qua = 10;
 pdyn = lin.*mdot + qua.*(mdot.^2);
-y0 = [y2(:,1:2), (pstat-pdyn), ones(size(mdot))*h];
+y0 = [(pstat-pdyn), ones(4,1)*h];
 
 %% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
@@ -123,15 +122,15 @@ if (show)
     sleg2 = {'ref. vs initial simu','ref. vs current simu','initial simu vs current'};
     
     %   y - matrix with y-values (reference values and result of the function call)
-    y_P          = [y0(:,3), y1(:,3), y2(:,3)];
-    y_Geo_Height = [y0(:,4), y1(:,4), y2(:,4)];
+    y_P          = [y0(:,1), y1(:,1), y2(:,1)];
+    y_Geo_Height = [y0(:,2), y1(:,2), y2(:,2)];
     
     %   x - vector with x values for the plot
-    x = time;
+    x = t;
     
     %   ye - matrix with error values for each y-value
-    ye_P          = [ye1(:,3), ye2(:,3), ye3(:,3)]; 
-    ye_Geo_Height = [ye1(:,4), ye2(:,4), ye3(:,4)]; 
+    ye_P          = [ye1(:,1), ye2(:,1), ye3(:,1)]; 
+    ye_Geo_Height = [ye1(:,2), ye2(:,2), ye3(:,2)]; 
     
     sz = strrep(s,'_',' ');
     

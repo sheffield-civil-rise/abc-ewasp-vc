@@ -1,4 +1,9 @@
 function [A,ffn,numHeader,repChar,hl,fpos] = txt2mat(varargin)
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
+
 % TXT2MAT read an ascii file and convert a data table to matrix
 %
 % Syntax:
@@ -537,7 +542,7 @@ function [A,ffn,numHeader,repChar,hl,fpos] = txt2mat(varargin)
 
 % --- Author: -------------------------------------------------------------
 %   Copyright 2005-2012 Andres
-%   $Revision$  $Date$
+%   $Revision:   1.3  $  $Date:   Mar 15 2013 09:55:56  $
 % Redistribution and use in source and binary forms, with or without
 % modification, are permitted provided that the following conditions are
 % met:
@@ -1700,7 +1705,7 @@ function [anaNumHeader, anaNumColon, anaFormat, anaRepChar, anaReadMode, ...
 % arg           txt2mat's input argument struct
 
 %   Copyright 2006-2012 Andres
-%   $Revision$  $Date$
+%   $Revision:   1.3  $  $Date:   Mar 15 2013 09:55:56  $
 
 % some preparations
 ffn             = arg.val.FileName;
@@ -2222,7 +2227,7 @@ function [w, newidcoi, vi] = cutvec(v,li,hi,doKeep,varargin)
 % 
 % [w, newidcoi, vi] = cutvec(v,li,hi,doKeep,idcoi)
 
-%   $Revision$ 
+%   $Revision:   1.3  $ 
 
 lenV   = numel(v);
 has_idcoi = false;
@@ -2602,7 +2607,7 @@ function [idcLb, cntLb, secLbIdc, idcBad, idcGood] = FindLineBreaks(f8, uintLb, 
 %               badStrings(1:numBad) 
 % goodStrings   cell array containing the good line marker strings.
 
-%   $Revision$ 
+%   $Revision:   1.3  $ 
 
 lenF8   = numel(f8);
 idxLo 	= 1;   % init., start index of a section processed in a loop
@@ -2795,9 +2800,3 @@ while is_ws_at_end  % step through the endmost characters
         is_ws_at_end = false;
     end
 end % while
-
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
-

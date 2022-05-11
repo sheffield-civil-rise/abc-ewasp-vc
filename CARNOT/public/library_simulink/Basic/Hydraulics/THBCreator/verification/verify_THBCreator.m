@@ -48,13 +48,13 @@ functionname = 'verify_THBCreator_mdl';
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
 %  ------------------------------------------------------------------------
-evalin('base','clear THB')      % clear THB bus object from base workspace
 load_system(functionname)
 simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
 yy = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
 y2 = yy(end,:);                 % only the last timestep is interesting
 close_system(functionname, 0)   % close system, but do not save it
+% evalin('base', 'clear THB')
 
 %% set the reference values
 % ----------------- set the literature reference values -------------------

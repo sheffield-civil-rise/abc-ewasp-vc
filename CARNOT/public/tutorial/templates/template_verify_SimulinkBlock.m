@@ -59,7 +59,7 @@ y0 = 11:20;                 % reference results
 y2 = zeros(1,length(u0));
 load_system(functionname)
 for n = 1:length(u0)
-    set_param([functionname, '/Constant'], 'Value', num2str(u0(n)));
+    set_param([gcs, '/Constant'], 'Value', num2str(u0(n)));
     simOut = sim(functionname, 'SrcWorkspace','current', ...
          'SaveOutput','on','OutputSaveName','yout');
     yy = simOut.get('yout'); % get the whole output vector (one value per simulation timestep)
@@ -101,17 +101,17 @@ s = 'max';
 % ------------- decide if verification is ok --------------------------------
 if e2 > max_error
     v = false;
-    s = sprintf('verification %s with reference FAILED: error %3.5g > allowed error %3.5g', ...
+    s = sprintf('verification %s with reference FAILED: error %3.5f > allowed error %3.5f', ...
         functionname, e2, max_error);
     show = true;
 elseif e3 > max_simu_error
     v = false;
-    s = sprintf('verification %s with 1st calculation FAILED: error %3.5g > allowed error %3.5g', ...
+    s = sprintf('verification %s with 1st calculation FAILED: error %3.5e > allowed error %3.5e', ...
         functionname, e3, max_simu_error);
     show = true;
 else
     v = true;
-    s = sprintf('%s OK: error %3.5g', functionname, e2);
+    s = sprintf('%s OK: error %3.5f', functionname, e2);
 end
 
 %% diplay and plot options if required ------------------------
@@ -190,5 +190,4 @@ end
 %  6.2.4    hf      close system without saving it              16may2016
 %  6.3.0    hf      added save_sim_ref as 2nd input argument    10oct2017
 %  6.3.1    hf      comments adapted to publish function        01nov2017
-%  7.1.0  	hf      replaced print format 3.5f by 3.5g			11jun2020
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

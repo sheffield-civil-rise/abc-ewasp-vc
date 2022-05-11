@@ -1,194 +1,206 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <!--
-This HTML was auto-generated from MATLAB code.
-To make changes, update the MATLAB code and republish this document.
-      --><title>calculates the evaporation enthalpy [J/kg] of fluids using Carlib</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-05"><meta name="DC.source" content="evaporation_enthalpy.m"><style type="text/css">
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>evaporation ethalpy</title>
+<style type="text/css">
+ div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+p
+	{margin-right:0cm;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+ul
+	{margin-bottom:0cm;}
+ li.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+a:link
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;
+}
+tt
+	{font-family:"Courier New";
+	}
+.auto-style1 {
+	margin-left: 120px;
+}
+</style>
+</head>
 
-html { min-height:100%; margin-bottom:1px; }
-html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
-html body td { vertical-align:top; text-align:left; }
+<body>
 
-h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
-h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
-h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
 
-a { color:#005fce; text-decoration:none; }
-a:hover { color:#005fce; text-decoration:underline; }
-a:visited { color:#004aa0; text-decoration:none; }
+<hr size=10 width="100%" noshade style='color:#A0A0A0' align=center>
 
-p { padding:0px; margin:0px 0px 20px; }
-img { padding:0px; margin:0px 0px 20px; border:none; }
-p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+</span></span></div>
 
-ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
-ul li { padding:0px; margin:0px 0px 7px 0px; }
-ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
-ul li ol li { list-style:decimal; }
-ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
-ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
-ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
-ol li ol li { list-style-type:lower-alpha; }
-ol li ul { padding-top:7px; }
-ol li ul li { list-style:square; }
+<p><!--[if gte vml 1]><v:shape id="Bild_x0020_62" o:spid="_x0000_s1583" type="#_x0000_t75"
+ style='position:absolute;left:0;text-align:left;margin-left:92pt;margin-top:0;
+ width:132pt;height:72.75pt;z-index:60;visibility:visible;mso-wrap-style:square;
+ mso-wrap-distance-left:0;mso-wrap-distance-top:0;mso-wrap-distance-right:0;
+ mso-wrap-distance-bottom:0;mso-position-horizontal:right;
+ mso-position-horizontal-relative:text;mso-position-vertical:absolute;
+ mso-position-vertical-relative:line' o:allowoverlap="f">
+ <v:imagedata src="Figures/evaporation_enthalpy.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
+ <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
+</v:shape><![endif]--><![if !vml]>
+<img width=176 height=97
+src="Figures/evaporation_enthalpy.jpg" align=right v:shapes="Bild_x0020_62"><![endif]><span class=GramE><span
+style='mso-bookmark:evaporation_enthalpy'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'>evaporation</span></b></span></span></span><span
+style='mso-bookmark:evaporation_enthalpy'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'> enthalpy</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+<b>Path: CARNOT/materials</b> <br clear=all style='mso-special-character:line-break'>
+<o:p></o:p></span></span></span></p>
 
-.content { font-size:1.2em; line-height:140%; padding: 20px; }
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:evaporation_enthalpy'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
 
-pre, code { font-size:12px; }
-tt { font-size: 1.2em; }
-pre { margin:0px 0px 20px; }
-pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
-pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
-pre.error { color:red; }
+<hr size=2 width="100%" align=center>
 
-@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+</span></span></span></div>
 
-span.keyword { color:#0000FF }
-span.comment { color:#228B22 }
-span.string { color:#A020F0 }
-span.untermstring { color:#B20000 }
-span.syscmd { color:#B28C00 }
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Purpose</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+This block calculates the evaporation enthalpy [J/kg] of the specified
+material. </span><span lang=EN-US
+style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></p>
 
-.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
-.footer p { margin:0px; }
-.footer a { color:#878787; }
-.footer a:hover { color:#878787; text-decoration:underline; }
-.footer a:visited { color:#878787; }
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Description</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+This block calculates the specific evaporation enthalpy r in [J/kg] according
+to the </span></span></p>
 
-table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
-table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Inputs:</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
 
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l75 level1 lfo84;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>temperature[°C]
+     </span><span lang=EN-US
+     style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l75 level1 lfo84;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>pressure </span><span lang=EN-US style='mso-fareast-font-family:
+     "Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l75 level1 lfo84;tab-stops:list 36.0pt'><a href="carnot_manual#fluid_ID"><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>fluid types</span></span></a><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'> see above definition </span><span lang=EN-US style='mso-fareast-font-family:
+     "Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l75 level1 lfo84;tab-stops:list 36.0pt'><a href="carnot_manual.htm#fluid_ID"><span
+     style='mso-bookmark:literature'><span class=GramE><span lang=EN-US
+     style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:"Times New Roman"'>fluid</span></span><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'> mix</span></span></a><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'> percentage [0 ..1] </span><span lang=EN-US style='mso-fareast-font-family:
+     "Times New Roman"'><o:p></o:p></span></span></li>
+</ul>
 
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>The evaporation enthalpy r is the enthalpy that is
+necessary to evaporate the material. It is calculated by the difference of the
+saturation properties of liquid (' state) and vapourous phase (&quot; state) at
+the saturation point. At the saturation point, the liquid phase is boiling
+fluid and the vapourous phase is saturated steam: <br>
+The block calls the function &quot;</span></span><a href="carnot_manual.htm#evaporation_enthalpy"><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>evaporation enthalpy</span></span></a><span style='mso-bookmark:literature'><span lang=EN-US
+style='font-size:13.5pt;line-height:120%'>&quot; in the CARNOT </span></span><a
+href="carnot_manual.htm#Carlib"><span style='mso-bookmark:literature'><span lang=EN-US
+style='font-size:13.5pt;line-height:120%'>Carlib Library</span></span></a><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> where the calculation is
+carried out. The material properties functions can also be called directly from
+the command window by typing </span></span></p>
 
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><tt><span lang=EN-US style='font-size:10.0pt;
+line-height:120%'>evaporation_<span class=GramE>enthalpy(</span>temperature,
+pressure, fluidtype, fluidmix)</span></tt></span></p>
 
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Instead of the italic variables the actual value of
+the respective property has to be entered. This is possible for the Carlib
+functions density, thermal_conductivity, heat_capacity, kinematic_viscosity,
+prandtl, vapourpressure, saturationtemperature, enthalpy, entropy,
+evaporation_enthalpy and specific_volume. </span></span></p>
 
-  </style></head><body><div class="content"><h1>calculates the evaporation enthalpy [J/kg] of fluids using Carlib</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Function Call</a></li><li><a href="#2">Inputs</a></li><li><a href="#3">Outputs</a></li><li><a href="#4">Description</a></li><li><a href="#5">References and Literature</a></li><li><a href="#7">Copyright and Versions</a></li></ul></div><h2 id="1">Function Call</h2><pre>r = evaporation_enthalpy(t, p, ft, fm)</pre><h2 id="2">Inputs</h2><pre>(scalar or vector)
-t    :   temperature [&deg;C], range 0&deg;C to 374.15
-p    :   pressure [Pa]
-ft   :   fluid_ID = 1 (water) - not available for other fluids
-fm   :   fluid_mix</pre><h2 id="3">Outputs</h2><pre class="language-matlab">r   :   evaporation enthalpy <span class="string">[J/kg]</span>
-</pre><h2 id="4">Description</h2><pre>The block calls the function "evaporation_enthalpy" in the CARNOT library Carlib where
-the calculation is effectuated. The function evaporation_enthalpy may be used in m-files.
-The carlib function evaporation_enthalpy is also used by the "evaporation_enthalpy"-block in CARNOT.</pre><h2 id="5">References and Literature</h2><pre>Function is used by: Carnot blocks in basic/material_properties
-See also Carnot_Fluid_Types, FluidEnum, Carlib,
- density, enthalpy, enthalpy2temperature, entropy, heat_capacity,
- kinematic_viscosity, saturationtemperature, specific_volume,
- temperature_conductivity, thermal_conductivity, vapourpressure</pre><h2 id="7">Copyright and Versions</h2><pre>This file is part of the CARNOT Blockset.
-Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
-Additional Copyright for this file see list auf authors.
-All rights reserved.
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-1. Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
-2. Redistributions in binary form must reproduce the above copyright
-  notice, this list of conditions and the following disclaimer in the
-  documentation and/or other materials provided with the distribution.
-3. Neither the name of the copyright holder nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
-THE POSSIBILITY OF SUCH DAMAGE.
-**********************************************************************
-D O C U M E N T A T I O N
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-author list:     hf -&gt; Bernd Hafner</pre><pre>version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction</pre><pre>Version  Author  Changes                                     Date
-1.0.0    hf      created                                     1999
-6.1.0    hf      updated help text and error handling        03oct2014
-7.1.0    hf      updated comments for publish                12aug2020
-**********************************************************************</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
-##### SOURCE BEGIN #####
-%% calculates the evaporation enthalpy [J/kg] of fluids using Carlib 
-%% Function Call
-%  r = evaporation_enthalpy(t, p, ft, fm)
-%% Inputs   
-%  (scalar or vector)
-%  t    :   temperature [°C], range 0°C to 374.15
-%  p    :   pressure [Pa]  
-%  ft   :   fluid_ID = 1 (water) - not available for other fluids
-%  fm   :   fluid_mix 
-%% Outputs
-%   r   :   evaporation enthalpy [J/kg]
-% 
-%% Description
-%  The block calls the function "evaporation_enthalpy" in the CARNOT library Carlib where
-%  the calculation is effectuated. The function evaporation_enthalpy may be used in m-files.
-%  The carlib function evaporation_enthalpy is also used by the "evaporation_enthalpy"-block in CARNOT.
-% 
-%% References and Literature
-%  Function is used by: Carnot blocks in basic/material_properties
-%  See also Carnot_Fluid_Types, FluidEnum, Carlib, 
-%   density, enthalpy, enthalpy2temperature, entropy, heat_capacity,  
-%   kinematic_viscosity, saturationtemperature, specific_volume, 
-%   temperature_conductivity, thermal_conductivity, vapourpressure  
-                                                               
-function r = evaporation_enthalpy(t, p, ft, fm)
-if (nargin ~= 4)
-  help evaporation_enthalpy
-  return
-end
-if ft ~= 1 && ft ~= 7
-    error('evaporation_enthalpy only available for water (ft = 1)')
-end
-r = fluidprop (t, p, ft, fm, 9);
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class=GramE><tt><span lang=EN-US
+style='font-size:10.0pt;line-height:120%'>help</span></tt></span><tt><span lang=EN-US style='font-size:10.0pt;
+line-height:120%'> evaporation_enthalpy</span></tt></span></p>
 
-%% Copyright and Versions
-%  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
-%  Additional Copyright for this file see list auf authors.
-%  All rights reserved.
-%  Redistribution and use in source and binary forms, with or without 
-%  modification, are permitted provided that the following conditions are 
-%  met:
-%  1. Redistributions of source code must retain the above copyright notice, 
-%    this list of conditions and the following disclaimer.
-%  2. Redistributions in binary form must reproduce the above copyright 
-%    notice, this list of conditions and the following disclaimer in the 
-%    documentation and/or other materials provided with the distribution.
-%  3. Neither the name of the copyright holder nor the names of its 
-%    contributors may be used to endorse or promote products derived from 
-%    this software without specific prior written permission.
-%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
-%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
-%  THE POSSIBILITY OF SUCH DAMAGE.
-%  **********************************************************************
-%  D O C U M E N T A T I O N
-%  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-%  author list:     hf -> Bernd Hafner
-%
-%  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
-%
-%  Version  Author  Changes                                     Date
-%  1.0.0    hf      created                                     1999
-%  6.1.0    hf      updated help text and error handling        03oct2014
-%  7.1.0    hf      updated comments for publish                12aug2020
-% **********************************************************************
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+<p><span style='mso-bookmark:literature'><span class=GramE><span lang=EN-US
+style='font-size:13.5pt;line-height:120%'>to</span></span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> the workspace as for any other MATLAB function. <br>
+The calculation of the saturation states are performed with the polynomials
+from &quot; </span></span><a href="carnot_manual.htm#glueck"><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Bernd Glück: Zustands- und
+Stoffwerte</span></span></a><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>.&quot; </span></span></p>
 
-##### SOURCE END #####
---></body></html>
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>As the saturationvalues only exist for water the
+evaporation_enthalpy is also only available for the fluid water (</span></span><a
+href="carnot_manual.htm#fluid_ID"><span style='mso-bookmark:literature'><span lang=EN-US
+style='font-size:13.5pt;line-height:120%'>fluid_type 1</span></span></a><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>) </span></span></p>
+
+<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>The valid temperature range is up to from the
+temperature 10°C up to 370°C </span></span></p>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Characteristics</span></b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>
+Sample
+time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>&nbsp;
+</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> Inherited
+from driving block <br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>&nbsp;&nbsp;
+</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> No
+</span></span></p>
+
+</body>
+
+</html>

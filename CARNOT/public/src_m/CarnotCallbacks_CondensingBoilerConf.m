@@ -15,7 +15,10 @@
 %% Description
 %  Search for the parameterfile in the folders parameter_set of the model
 %  and load the parameter set. The function is used by the mask of the
-%  Carnot block and sets geometry values and sets the initial temperature. 
+%  Carnot Simlink block.
+%  Sets geometry values and sets the initial temperature 
+%  vector to a vector with the length of the storage nodes. 
+%  The input initial temperature vector can be of any size.
 %  The user can specify whether the parameters are read from file or edited
 %  by the user.
 % 
@@ -33,7 +36,7 @@ else
         'a valid function name. Second argument must be the blockhandle.'])
 end
 
-blockpath = fullfile('Source','Boiler','Condensing_Boiler','parameter_set');
+blockpath = fullfile('Source','Boiler','Condensing_Boiler_CONF','parameter_set');
 
 % switch for command line calls
 switch command      % switch for command line calls
@@ -98,11 +101,9 @@ end     % end of function
 %  6.2.1    hf      revised for pubish function                 19oct2017
 %  6.3.0    hf      adapted to new mask concept                 23oct2017
 %  6.4.0    hf      adapted to new callback concept             17feb2018
-%  7.1.0    hf      new pathname Condensing_Boiler,             20jan2019
-%                   old pathname Condensing_Boiler_CONF
 % *************************************************************************
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 417 $
+% $Author: carnot-hafner $
+% $Date: 2018-05-03 08:18:47 +0200 (Do, 03 Mai 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/CarnotCallbacks_CondensingBoilerConf.m $
 % *************************************************************************

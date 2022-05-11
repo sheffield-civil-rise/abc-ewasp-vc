@@ -35,7 +35,7 @@ end
 
 %% ---------- set your specific model or function parameters here
 % ----- set error tolerances ----------------------------------------------
-max_error = 0.075;      % max error between simulation and reference
+max_error = 0.07;      % max error between simulation and reference
 max_simu_error = 1e-7;  % max error between initial and current simu
 
 % ---------- set model file or functin name -------------------------------
@@ -170,10 +170,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision$
-%  $Author$
-%  $Date$
-%  $HeadURL$
+%  $Revision: 372 $
+%  $Author: carnot-wohlfeil $
+%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/airmass/verification/verify_airmass.m $
 %  Version  Author   Changes                                     Date
 %  6.1.0    hf       created                                     25mar2014
 %  6.1.1    hf       variable number of input arguments          02apr2014

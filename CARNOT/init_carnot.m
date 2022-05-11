@@ -1,45 +1,11 @@
-%% init_carnot adds the paths needed for Carnot to run to the MATLAB path
-% syntax init_carnot
-% inputs: -
-% outputs: -
-% see also: carnot, init_carnot_savepath
+function init_carnot()
+% init_carnot() adds the paths needed for carnot to run to your MATLAB path
+% see also: init_carnot_savepath
 
-function init_carnot(varargin)
-%% main function
-fprintf('#################################################\n');
-fprintf('###        Initializing CARNOT Toolbox        ###\n')
-fprintf('#################################################\n');
-
-cpath = pwd;
-cd([fileparts(mfilename('fullpath')) filesep 'public' filesep 'src_m'])
-path_carnot('setpaths')
-rehash;
-fprintf('\n*done\n\n')
-
-% get names of compiled S-functions
-cd(path_carnot('bin'))
-binfiles = dir;
-binfiles = struct2cell(binfiles);
-binfiles = binfiles(1,:)';
-% check OS
-if ~contains(computer,'PCWIN') % non-Windows OS
-    disp('It seems you are running MATLAB on a non-Windows OS. Please make sure you have got all S-functions recompiled for your platform (Linux, Mac).')
-elseif  strcmp(computer,'PCWIN') && isempty(cell2mat(strfind(binfiles,'mexw32'))) % running 32bit MATLAB without mexw32-files
-    warning('It seems you are running a 32bit MATLAB session without appropriate mex-files (compiled S-functions). Please use 64bit MATLAB or get a matching set of mexw32 files.')
-end
-
-% return
-cd(cpath)
-% hint on doc
-fprintf('#################################################\n');
-fprintf('Type "helpcarnot" to access the CARNOT documentation.\n');
-fprintf('See ...\\<CARNOT>\\public\\tutorial\\guidelines to check guidelines applicable to CARNOT.\n');
-fprintf('#################################################\n');
-
-%% Copyright and Versions
+% ***********************************************************************
 % This file is part of the CARNOT Blockset.
 % 
-% Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
+% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
 % Additional Copyright for this file see list auf authors.
 % All rights reserved.
 % 
@@ -69,10 +35,10 @@ fprintf('#################################################\n');
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/init_carnot.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -88,4 +54,28 @@ fprintf('#################################################\n');
 % 6.1.3     pahm    added fprintf commands                      2016-01-12
 % 6.1.4     hf      update of file documentation                2016-01-26
 % 6.1.5     pahm    added OS check and 32bit check              2016-08-09
-% 7.1.0     hf      replaced if conditions (editor hint)        02feb2020
+
+fprintf('################################################\n*Initializing CARNOT Toolbox\n\n')
+
+cpath = pwd;
+cd([fileparts(mfilename('fullpath')) filesep 'public' filesep 'src_m'])
+path_carnot('setpaths')
+rehash;
+fprintf('\n*done\n\n')
+
+% get names of compiled S-functions
+cd(path_carnot('bin'))
+binfiles = dir;
+binfiles = struct2cell(binfiles);
+binfiles = binfiles(1,:)';
+% check OS
+if isempty(strfind(computer,'PCWIN')) % non-Windows OS
+    disp('It seems you are running MATLAB on a non-Windows OS. Please make sure you have got all S-functions recompiled for your platform (Linux, Mac).')
+elseif  strcmp(computer,'PCWIN') && isempty(cell2mat(strfind(binfiles,'mexw32'))) % running 32bit MATLAB without mexw32-files
+    warning('It seems you are running a 32bit MATLAB session without appropriate mex-files (compiled S-functions). Please use 64bit MATLAB or get a matching set of mexw32 files.')
+end
+
+% return
+cd(cpath)
+% hint on doc
+fprintf('\nType "helpcarnot" to access the CARNOT documentation.\nSee ...\\<CARNOT>\\public\\tutorial\\guidelines to check guidelines applicable to CARNOT.\n################################################\n')

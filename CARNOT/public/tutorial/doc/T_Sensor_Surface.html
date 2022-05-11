@@ -67,13 +67,11 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 src="Figures/measure_T_surface.jpg" align=right v:shapes="Bild_x0020_130"><![endif]><span class=GramE><span
 style='mso-bookmark:measure_T_surface'><span style='mso-bookmark:schwamberger'><span
 style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'>T</span> <span style='font-size:18.0pt;
-line-height:120%'>Sensor S</span><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'>urface</span></b></span></span></span></span><span
+line-height:120%'>measure_T_surface</span></b></span></span></span></span><span
 style='mso-bookmark:measure_T_surface'><span style='mso-bookmark:schwamberger'><span
 style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
-<b>Path: CARNOT/<span lang="de-at">C</span>ontrol</b> <br clear=all style='mso-special-character:line-break'>
+<b>Path: CARNOT/control</b> <br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -88,23 +86,12 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-Measurement sensor for temperatures </span>
-<span style='font-size:13.5pt;line-height:120%'> in a </span><font size="4">
-storage tank</font><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>. </span><span
+Measurement sensor for temperatures with time constant. </span><span
 lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></span></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
-<p><font size="4">The block takes the node temperatures of a
-<a href="Storage_Type_N.html">storage</a> and determines the correct temperature 
-according to the specified postion.</font></p>
-<p><font size="4">The position can be a scalar or vector. If you enter a vector 
-as a parameter the output will be the temperatures at several positions.</font></p>
-<p><font size="4">The temperature is filtered by a PT-1 transfer function with a 
-defined time constant. The value measured at the start of the simulation can be 
-given.</font></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Input</span></b><span
@@ -112,11 +99,10 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
 
 <ul type=disc class="auto-style1">
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l107 level1 lfo130;tab-stops:list 36.0pt'>
- <font size="4">Node temperatures of a storage</font><span
+     margin-left:36.0pt;mso-list:l107 level1 lfo130;tab-stops:list 36.0pt'><span
      style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'> </span><span lang=EN-US
+     "Times New Roman"'>THV </span><span lang=EN-US
      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
 </ul>
 
@@ -126,27 +112,20 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
 
 <ul type=disc class="auto-style1">
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l192 level1 lfo131;tab-stops:list 36.0pt'>
- <span
-     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'>
- <span
+     margin-left:36.0pt;mso-list:l192 level1 lfo131;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>temperature </span>
- <span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>of one or several nodes </span>
- <span
+     "Times New Roman"'>THV </span><span lang=EN-US
+     style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l192 level1 lfo131;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>in [°C] </span>
- <span
-     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'>
- <o:p></o:p>
- </span></span></span></li>
+     "Times New Roman"'>temperature in [°C] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
 </ul>
 
-<p>&nbsp;</p>
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'><b>
-<span
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
 </span></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_131" o:spid="_x0000_s1514"
@@ -165,14 +144,26 @@ style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
 style='mso-special-character:line-break'>
 </span></span></span></p>
-<p>&nbsp;</p>
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'><b>
-<span
+
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l270 level1 lfo132;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>time constant of the sensor [s] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l270 level1 lfo132;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>initial temperature of sensor [°C] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+</ul>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-Direct Feedthrough&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>No</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>
 Sample
 time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;
 </span><span

@@ -54,10 +54,10 @@ function display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, st
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/carnot_library_tools/display_verification_error/src_m/display_verification_error.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -65,62 +65,33 @@ function display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, st
 %
 % version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
 %
-% Version   Author  Changes                                         Date
-% 6.1.0     hf      created                                         17nov2013
-% 6.2.1     hf      name _verification_ replaced by verification    09jan2015
-% 6.2.2     hf      correct help text                               28jul2015
-% 7.1.0     hf      added Nx3 matrix plots                          dec2019
-% 7.1.1     hf      corrected Nx3 matrix plots                      03feb2020
+% Version   Author  Changes                                       Date
+% 6.1.0     hf      created                                       17nov2013
+% 6.2.1     hf      name _verification_ replaced by verification  09jan2015
+% 6.2.2     hf      correct help text                             28jul2015
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-nc = size(y,2)/3;
+figure              % open a new figure
 
-if nc == 1                  % matrix has exactly 3 columns
-        figure                      % open a new figure
-        ax1 = subplot(2,1,1);       % divide in subplots (lower and upper one)
-        plot(x(:),y(:,1),'x',x(:),y(:,2),'o',x(:),y(:,3),'-')
-        title(st)
-        ylabel(sy1)
-        legend(sleg1,'Location','BestOutside')
-        text(0,-0.2,stxt,'Units','normalized')  % display valiation text
-        ax2 = subplot(2,1,2);       % choose lower window
-        plot(x,ye(:,1),'x',x,ye(:,2),'o',x,ye(:,3),'-')
-        legend(sleg2,'Location','BestOutside')
-        xlabel(sx)
-        ylabel(sy2)
-        linkaxes([ax1, ax2], 'x')
-elseif nc == floor(nc)      % matrix has a multiple of 3 columns
-        for n = 1:nc
-            figure                      % open a new figure
-            ax1 = subplot(2,1,1);       % divide in subplots (lower and upper one)
-            hold on
-            plot(x(:),y(:,n),'x',x(:),y(:,n+nc),'o',x(:),y(:,n+2*nc),'-')
-            title(st)
-            ylabel(sy1)
-            legend(sleg1,'Location','BestOutside')
-            text(0,-0.2,stxt,'Units','normalized')  % display valiation text
-            ax2 = subplot(2,1,2);       % choose lower window
-            plot(x,ye(:,n),'x',x,ye(:,n+nc),'o',x,ye(:,n+2*nc),'-')
-            legend(sleg2,'Location','BestOutside')
-            xlabel(sx)
-            ylabel(sy2)
-            linkaxes([ax1, ax2], 'x')
-            hold off
-        end
-else                        % matrix has any other number of columns
-        figure                      % open a new figure
-        ax1 = subplot(2,1,1);       % divide in subplots (lower and upper one)
-        plot(x(:),y,'-')
-        title(st)
-        ylabel(sy1)
-        legend(sleg1,'Location','BestOutside')
-        text(0,-0.2,stxt,'Units','normalized')  % display valiation text
-        ax2 = subplot(2,1,2);       % choose lower window
-        plot(x,ye,'-')
-        legend(sleg2,'Location','BestOutside')
-        xlabel(sx)
-        ylabel(sy2)
-        linkaxes([ax1, ax2], 'x')
+ax1 = subplot(2,1,1);      % divide in subplots (lower and upper one)
+if size(y,2) == 3
+    plot(x,y(:,1),'x',x,y(:,2),'o',x,y(:,3),'-')
+else
+    plot(x,y,'-')
 end
+title(st)          
+ylabel(sy1)
+legend(sleg1,'Location','BestOutside')
+text(0,-0.2,stxt,'Units','normalized')  % display valiation text
 
+ax2 = subplot(2,1,2);      % choose lower window
+if size(y,2) == 3
+    plot(x,ye(:,1),'x',x,ye(:,2),'o',x,ye(:,3),'-')
+else
+    plot(x,ye,'-')
+end
+legend(sleg2,'Location','BestOutside')
+xlabel(sx)
+ylabel(sy2)
 
+linkaxes([ax1, ax2], 'x')

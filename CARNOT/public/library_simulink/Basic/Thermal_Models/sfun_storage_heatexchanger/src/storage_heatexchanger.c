@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 372 $
+ * $Author: carnot-wohlfeil $
+ * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Thermal_Models/sfun_storage_heatexchanger/src/storage_heatexchanger.c $
  ***********************************************************************
  *                         M O D E L 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -56,8 +56,7 @@
  *                  MultipleInstancesExec activated
  * 6.2.2    aw      implicit casts replaced by explicit casts,  10sep2015
  *                  unused variables deleted
- * 7.1.0    hf      added UA_T2 for EN12077 equation            19mar2021
- * 7.1.1    hf      now pow of negative values in EN12077       26mar2021
+ *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                    D E S C R I P T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -114,11 +113,6 @@
  *          2                   pressure                        Pa
  *          3                   fluid ID (defined in CARNOT.h)
  *          4                   mixture  (defined in CARNOT.h)
- *
- *
- *  Literature
- *  TRNSYS Type 340 https://www.trnsys.de/static/788c19e80e1b4e690b35e44b05c8b164/ts_type_340_de.pdf
- *  Wagner: Waermeuebertragung, Vogel-Verlag, 1991
  */
 
 
@@ -132,40 +126,28 @@
 
 /*  general parameters  */
 #define PORT_ID     *mxGetPr(ssGetSFcnParam(S,0 ))  /* portID */
-#define NODES       *mxGetPr(ssGetSFcnParam(S,1 ))  /* number of nodes                                  */
-#define START_NODE  *mxGetPr(ssGetSFcnParam(S,2 ))  /* start node                                       */
-#define END_NODE    *mxGetPr(ssGetSFcnParam(S,3 ))  /* end node                                         */
+#define NODES       *mxGetPr(ssGetSFcnParam(S,1 ))  /* number of nodes                                      */
+#define START_NODE  *mxGetPr(ssGetSFcnParam(S,2 ))  /* start node                                           */
+#define END_NODE    *mxGetPr(ssGetSFcnParam(S,3 ))  /* end node                                             */
 
-/*  smooth tube heat exchanger (theoretical model)     portID 201, 301 for stratified charging          */
-#define DIA_PIPE    *mxGetPr(ssGetSFcnParam(S,4 ))  /* outer diameter of heat exchanger pipe    m       */
-#define S_WALL      *mxGetPr(ssGetSFcnParam(S,5 ))  /* wall thickness                           m       */
-#define LENGTH      *mxGetPr(ssGetSFcnParam(S,6 ))  /* length of pipe                           m       */
-#define COND_WALL   *mxGetPr(ssGetSFcnParam(S,7 ))  /* conductivity heat exch. material         W/m/K   */
+/*  smooth tube heat exchanger (theoretical model)     portID = 201, = 301 for stratified charging          */
+#define DIA_PIPE    *mxGetPr(ssGetSFcnParam(S,4 ))  /* outer diameter of heat exchanger pipe       m        */
+#define S_WALL      *mxGetPr(ssGetSFcnParam(S,5 ))  /* wall thickness                              m        */
+#define LENGTH      *mxGetPr(ssGetSFcnParam(S,6 ))  /* length of pipe                              m        */
+#define COND_WALL   *mxGetPr(ssGetSFcnParam(S,7 ))  /* conductivity  heat exch. material           W/(m²*K) */
 
-/*  finned tube heat exchanger (theoretical model)     portID 202, 302 for stratified charging          */
-#define DIA_FIN     *mxGetPr(ssGetSFcnParam(S,8 ))  /* total diameter of pipe with fins         m       */
-#define S_WALL_FIN  *mxGetPr(ssGetSFcnParam(S,9 ))  /* wallthickness fin                        m       */
-#define N_FIN       *mxGetPr(ssGetSFcnParam(S,10))  /* number of fins per meter                 1/m     */
+/*  finned tube heat exchanger (theoretical model)     portID = 202, = 302 for stratified charging          */
+#define DIA_FIN     *mxGetPr(ssGetSFcnParam(S,8 ))  /* total diameter of pipe with fins            m        */
+#define S_WALL_FIN  *mxGetPr(ssGetSFcnParam(S,9 ))  /* wallthickness fin                           m        */
+#define N_FIN       *mxGetPr(ssGetSFcnParam(S,10))  /* number of fins per meter                    1/m      */
 
-/* heat exchanger, heat transfer fitted to measurement portID 203, 303 for stratified charging         
- *  UA = uac+mdot*uam+(Theatexchanger-Tstorage)*uat                                                    
- *  UA_C        constant heat transfer rate        W/K  
- *  UA_M        massflow dependant heat transfer      W*s/(kg*K) 
- *  UA_T        temperature dependant heat transfer   W/K/°C     
- *  UA_T2       temperature difference dependant heat transfer   W/K/K     
- */
-/* EN 12977 heat exchanger, heat transfer fitted to measurement, portID 204,304 for stratified charging 
- *  UA = uac * mdot^uam * ((Theatexchanger+Tstorage)/2)^uat * (Theatexchanger-Tstorage)^uat2           
- *  UA_C        constant heat transfer rate        W/K  
- *  uam : massflow dependant heat transfer    -      
- *  uat : temperature dependant heat transfer -     
- *  uat2 : temperature difference dependant heat transfer                                               
- *  source: TRNSYS Type 340                                                                            
- */
-#define UA_C        *mxGetPr(ssGetSFcnParam(S,4 ))  
-#define UA_M        *mxGetPr(ssGetSFcnParam(S,5 ))  
-#define UA_T        *mxGetPr(ssGetSFcnParam(S,6 ))  
-#define UA_T2       *mxGetPr(ssGetSFcnParam(S,7 ))  
+/* heat exchanger, heat transfer fitted to measurement   */
+/*   UA = uac+mdot*uam+(Theatexchanger-Tstorage)*uat   portID = 203, = 303 for stratified charging     */
+/* EN 12977 heat exchanger, heat transfer fitted to measurement    */
+/*   UA = uac * mdot^uam * ((Theatexchanger+Tstorage)/2)^uat     portID = 204, = 304 for stratified charging    */
+#define UA_C        *mxGetPr(ssGetSFcnParam(S,4 ))  /* uac : constant heat transfer rate           W/K          */
+#define UA_M        *mxGetPr(ssGetSFcnParam(S,5 ))  /* uam : massflow dependant heat transfer      W*s/(kg*K)   */
+#define UA_T        *mxGetPr(ssGetSFcnParam(S,6 ))  /* uat : temperature dependant heat transfer   W/K/°C       */
 
 #define NPARAMS     11                              /* longest parameter list */
 
@@ -253,31 +235,33 @@ real_T calculate_power_for_heatex(double mdot, double cphx, double *thx,
       int_T start_node = (int_T)START_NODE;
       int_T end_node   = (int_T)END_NODE;
       
-      /* check port ID */
-      {
-          if (port_id  != 201 && port_id  != 301 && port_id  != 202 && port_id  != 302
-                  && port_id  != 203 && port_id  != 303 && port_id  != 204 && port_id  != 304)
-          {
-              ssSetErrorStatus(S,"storage_heatexchanger: unknown port");
-              return;
-          }
-      }
-      /* */
-      {
-          if (start_node < 1)
-          {
-              ssSetErrorStatus(S,"storage_heatexchanger: start node must be > 0");
-              return;
-          }
-      }
-      /* */
-      {
-          if (end_node < 1)
-          {
-              ssSetErrorStatus(S,"storage_heatexchanger: end node must be > 0");
-              return;
-          }
-      }
+      
+        /* check port ID */
+        {
+            if (port_id  != 201 && port_id  != 301 && port_id  != 202 && port_id  != 302 
+                && port_id  != 203 && port_id  != 303 && port_id  != 204 && port_id  != 304) 
+            {
+                ssSetErrorStatus(S,"storage_heatexchanger: unknown port");
+                return;
+            }
+        }
+        /* */
+        {
+            if (start_node < 1) 
+            {
+                ssSetErrorStatus(S,"storage_heatexchanger: start node must be > 0");
+                return;
+            }
+        }
+        /* */
+        {
+            if (end_node < 1) 
+            {
+                ssSetErrorStatus(S,"storage_heatexchanger: end node must be > 0");
+                return;
+            }
+        }
+        
   }
 #endif /* MDL_CHECK_PARAMETERS */
 
@@ -446,16 +430,15 @@ static void mdlInitializeSampleTimes(SimStruct *S)
  */
 static void mdlOutputs(SimStruct *S, int_T tid)
 {
-    real_T             *qdot = ssGetOutputPortRealSignal(S,0);
-    real_T             *thx  = ssGetOutputPortRealSignal(S,1);
+    real_T              *qdot = ssGetOutputPortRealSignal(S,0);
+    real_T              *thx  = ssGetOutputPortRealSignal(S,1);
     InputRealPtrsType    u0  = ssGetInputPortRealSignalPtrs(S,0);
     InputRealPtrsType    u1  = ssGetInputPortRealSignalPtrs(S,1);
     real_T *dwork_ts_old     = (real_T *)ssGetDWork(S, DWORK_TS_OLD_NR);
     real_T *dwork_a_hx       = (real_T *)ssGetDWork(S, DWORK_A_HX_NR);
     
-    real_T dpipe, swall, lpipe, conwall, dfin, sfin, uac, uam, uat, uat2;
+    real_T dpipe, swall, lpipe, conwall, dfin, sfin, uac, uam, uat, re, pr;
     real_T xnfin, heatex, xnodes, tin, cp, nuss, m, v, nu_in, u_in, u_out;
-    real_T re, pr, mdot, p1, p2, p3, xt;
     int_T  inc, n;
 
     int_T  port_id = (int_T)PORT_ID;        /* portID           */
@@ -464,80 +447,20 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     int_T  nend    = (int_T)END_NODE-1;     /* end node         */
 
 
-    /* set parameters */
+    /* start calculation */
     xnodes = (real_T)(abs(nstart-nend)+1);  /* number of nodes concerned by heat exchanger  */
     inc = (nend > nstart)? +1 : -1;         /* increment positive or negative */
-    mdot = MDOT;                            /* massflow in kg/s */
     
-    switch (port_id)
-    {
-        case 201: case 301: case 202: case 302:
-            /*  smooth tube heat exchanger (theoretical model) portID = 201, = 301 stratified charging */
-            /*  finned tube heat exchanger (theoretical model) portID = 202, = 302 stratified charging */
-            dpipe   = DIA_PIPE;         /* outer diameter of heat exchanger pipe       m        */
-            swall   = S_WALL;           /* wall thickness                              m        */
-            lpipe   = LENGTH;           /* length of pipe                              m        */
-            conwall = COND_WALL;        /* conductivity  heat exch. material           W/(m²*K) */
-            dfin    = DIA_FIN;          /* total diameter of pipe with fins            m        */
-            sfin    = S_WALL_FIN;       /* wallthickness fin                           m        */
-            xnfin   = N_FIN;            /* number of fins per meter                    1/m      */
-            break;
-            
-        case 203: case 303:     /* portID = 203, = 303 for stratified charging */
-            /* heat exchanger, heat transfer fitted to measurement:
-             * UA = uac+mdot*uam+(Thx-Tstore)*uat */
-            uac = UA_C;         /* uac : constant heat transfer rate           W/K      */
-            uam = UA_M;         /* uam : massflow dependant heat transfer      W*s/kg/K */
-            uat = UA_T;         /* uat : temperature dependant heat transfer   W/K/°C   */
-            break;
-            
-            
-        case 204: case 304:     /* portID = 204, = 304 for stratified charging      */
-            /* EN 12977 heat exchanger, heat transfer fitted to measurement         *
-             * UA = uac * mdot^uam * ((Thx+Tstore)/2)^uat * (Thx-Tstore)^uat2       */
-            uac = UA_C;         /* uac : constant heat transfer rate           W/K      */
-            uam = UA_M;         /* uam : massflow dependant heat transfer      W*s/kg/K */
-            uat = UA_T;         /* uat : temperature dependant heat transfer   W/K/°C   */
-            uat2 = UA_T2;       /* uat : temperature dependant heat transfer   W/K/°C   */
-            
-            /* heat transfer calculation */
-            if (uam == 0.0)    /* massflow dependant exponent */
-            {
-                p1 = 1.0;
-            }
-            else
-            {
-                if (mdot > 0.0)
-                {
-                    p1 = pow(mdot,uam);
-                }
-                else
-                {
-                    p1 = 0.0;
-                }
-            }
-            break;
-            
-        default:
-            /* nop */
-            break;
-    } /* end switch */
-
-    /* initial values */
     for (n = 0; n < nodes; n++)
     {
         thx[n] = 0.0;
         qdot[n] = 0.0;
     }
-
-    /* start calculation */
     tin = T_IN;                             /* heat exchanger temperature at inlet */
     
-    /* loop over all nodes from inlet to outlet */
     for (n = nstart; n != nend+inc; n+=inc)
     {
-        /* initialize heat transfer coefficient for every n */
-        heatex = 0.0;   /* heat transfer coeff is in W/K */
+        heatex = 0.0;
         
         if (port_id < 300                   	/* if not stratified charging */
             || ((tin > TS_OLD(n)) && inc < 0)   /* or inlet temperature above node temperature and statified charging */
@@ -548,79 +471,70 @@ static void mdlOutputs(SimStruct *S, int_T tid)
                 case 201: case 301: case 202: case 302:
                     /*  smooth tube heat exchanger (theoretical model) portID = 201, = 301 stratified charging */
                     /*  finned tube heat exchanger (theoretical model) portID = 202, = 302 stratified charging */
+                    dpipe   = DIA_PIPE;         /* outer diameter of heat exchanger pipe       m        */
+                    swall   = S_WALL;           /* wall thickness                              m        */
+                    lpipe   = LENGTH;           /* length of pipe                              m        */
+                    conwall = COND_WALL;        /* conductivity  heat exch. material           W/(m²*K) */
+                    dfin    = DIA_FIN;          /* total diameter of pipe with fins            m        */
+                    sfin    = S_WALL_FIN;       /* wallthickness fin                           m        */
+                    xnfin   = N_FIN;            /* number of fins per meter                    1/m      */
 
-                    /* equation from Wagner: Waermeuebertragung, Vogel-Verlag, 1991 */
-                    v = mdot/density(1.0,0.0,tin,PRESS)*4.0/(PI*square(dpipe-2.0*swall));
+                    /* heat transfer calculation */
+                    /* from Wagner: Waermeuebertragung, Vogel-Verlag, 1991 */
+                    v = MDOT/density(1.0,0.0,tin,PRESS)*4.0/(PI*square(dpipe-2.0*swall));
                     re = reynolds(1.0,0.0,tin,PRESS,v,dpipe-2.0*swall);
                     pr = prandtl(1.0, 0.0, (tin+TS(n))*0.5, PRESS);
                     nu_in = 0.0235*(pow(re,0.8)-230)*pow(pr,0.48); /* equation from Wagner */
                     nuss = 0.5 * pow(grashof(1.0, 0.0, tin, TS(n), PRESS, dpipe*PI/2)*pr,0.25); /* nusselt for water */
-                    /* outer heat transfer in W/(m^2*K) */
-                    u_out = (nuss*thermal_conductivity(1.0,0.0,TS(n),PRESS))/(dpipe*PI/2);            
-                    /* inner heat transfer in W/(m^2*K) */
-                    u_in = (nu_in*thermal_conductivity(1.0,0.0,tin,PRESS))/dpipe; 
+                    u_out = (nuss*thermal_conductivity(1.0,0.0,TS(n),PRESS))
+                        /(dpipe*PI/2);            /* outer heat transfer in W/(m^2*K) */
+                    u_in = (nu_in*thermal_conductivity(1.0,0.0,tin,PRESS))/dpipe; /* inner heat transfer in W/(m^2*K) */
 
-                    if (port_id == 202 || port_id == 302)   /* finned tube, see Wagner 1991: page 83 */
+                    if (port_id == 202 || port_id == 302)       /* finned tube, see Wagner 1991: page 83 */
                     {
                         m = sqrt(2.0*u_out/(conwall*sfin));
-                        u_out = u_out*(1.0 - sfin*xnfin)    /* heat transfer remaining from the pipe */
-                            + sfin*xnfin * m * conwall      /* + heat transfer of the fin */
+                        u_out = u_out*(1.0 - sfin*xnfin)      /* heat transfer remaining from the pipe */
+                            + sfin*xnfin * m * conwall          /* + heat transfer of the fin */
                             *tanh(m*0.5*(dfin-dpipe));
                     }
                     heatex = A_HX/(1/u_out + swall/conwall + 1/u_in);
                     break;
 
                 case 203: case 303:     /* portID = 203, = 303 for stratified charging */
-                    /* heat exchanger, heat transfer fitted to measurement: 
-                     * UA = uac+mdot*uam+(Thx-Tstore)*uat */
-                    heatex = (uac+uam*mdot+uat*(tin-TS(n)))/xnodes;
+                    /* heat exchanger, heat transfer fitted to measurement: UA = uac+mdot*uam+(Thx-Tstore)*uat */
+                    uac = UA_C;                 /* uac : constant heat transfer rate           W/K      */
+                    uam = UA_M;                 /* uam : massflow dependant heat transfer      W*s/kg/K */
+                    uat = UA_T;                 /* uat : temperature dependant heat transfer   W/K/°C   */
+            
+                    /* heat transfer calculation */
+                    heatex = (uac+uam*MDOT+uat*(tin-TS(n)))/xnodes;
                     break;            
 
 
-                case 204: case 304:     /* portID = 204, = 304 for stratified charging      */
-                    /* EN 12977 heat exchanger, heat transfer fitted to measurement         *
-                     * UA = uac * mdot^uam * ((Thx+Tstore)/2)^uat * (Thx-Tstore)^uat2       */
-                    if (uat == 0.0)     /* temperature dependent exponent */
-                    {
-                        p2 = 1.0;
-                    }
-                    else
-                    {
-                        xt = 0.5*(tin+TS(n));
-                        if (xt > 1.0)
-                        {
-                            p2 = pow(xt,uat);
-                        }
-                        else
-                        {
-                            p2 = 1.0;
-                        }
-                    }
-                    if (uat2 == 0.0)    /* temperature difference dependent exponent */
-                    {
-                        p3 = 1.0;
-                    }
-                    else
-                    {
-                        xt = fabs(tin-TS(n));
-                        p3 = pow(xt,uat2);
-                    }
-                    heatex = (uac*p1*p2*p3)/xnodes;    
+                case 204: case 304:     /* portID = 204, = 304 for stratified charging    */
+                    /* EN 12977 heat exchanger, heat transfer fitted to measurement UA = uac * mdot^uam * t^uat */
+                    uac = UA_C;                 /* uac : constant heat transfer rate           W/K      */
+                    uam = UA_M;                 /* uam : massflow dependant heat transfer      W*s/kg/K */
+                    uat = UA_T;                 /* uat : temperature dependant heat transfer   W/K/°C   */
+
+                    /* heat transfer calculation */
+                    heatex = (uac*pow(MDOT,uam)
+                        *pow((TS(n)+tin)/2,uat))/xnodes;    /* mdot is in fact in kg/s */
                     break;            
                               
                 default: 
-                    heatex = 500.0/xnodes;  /* heat transfer is 500 W/K */
+                    heatex = 500.0/xnodes;                      /* heat transfer is 500 W/K */
                     break;
             } /* end switch */
         } /* end if */
 
         if (heatex > 0.0)
         {
-            cp = heat_capacity(FLUID, MIX, tin, PRESS);     /* heat capacity of fluid in the heat exchanger */
-            /* attention: inlet temperature is modified by function calculate_power_for_heatex */
-            qdot[n] = calculate_power_for_heatex(mdot, cp, &tin, TS(n), heatex);
+            cp = heat_capacity(FLUID, MIX, tin, PRESS);         /* heat capacity of fluid in the heat exchanger */
+            qdot[n] = calculate_power_for_heatex
+                (MDOT, cp, &tin, TS(n), heatex);                /* inlet temperature is modified by function ! */
         }
-        thx[n] = tin;                           /* new inlet temperature is heat exchanger node temperature */
+        thx[n] = tin;                                           /* new inlet temperature is heat exchanger node temperature */
         /* printf("thx[%i]  %3.3f   TS[%i]  %3.3f   heatex %3.1f \n", n, thx[n], n, TS(n), heatex); */
     } /* end for n */
 

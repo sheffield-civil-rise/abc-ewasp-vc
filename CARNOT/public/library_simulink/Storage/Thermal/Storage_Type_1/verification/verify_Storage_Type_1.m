@@ -48,8 +48,8 @@ functionname = 'verify_Storage_Type_1_mdl';
 %  -------------- simulate the model or call the function -----------------
 %  ------------------------------------------------------------------------
 load_system(functionname)
-evalin('base','load data_EN12977_sequence_V')
-simOut = sim(functionname, 'SaveOutput','on','OutputSaveName','yout');
+simOut = sim(functionname, 'SrcWorkspace','current', ...
+    'SaveOutput','on','OutputSaveName','yout');
 y = simOut.get('yout');     % get the whole output vector (one value per simulation timestep)
 t = simOut.get('tout');     % get the whole time vector from simu
 t0 = t(1):120:t(end);       % reference time vector
@@ -184,7 +184,6 @@ if (show)
     xlabel(sx)
     ylabel('relative error')
 end
-evalin('base', 'clear')
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.

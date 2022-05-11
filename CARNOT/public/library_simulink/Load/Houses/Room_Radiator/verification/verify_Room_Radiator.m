@@ -34,8 +34,8 @@ end
 
 %% ---------- set your specific model or function parameters here ---------
 % ----- set error tolerances ----------------------------------------------
-max_error = 5e-4;        % max error between simulation and reference
-max_simu_error = 5e-4;   % max error between initial and current simu
+max_error = 1e-7;        % max error between simulation and reference
+max_simu_error = 1e-7;   % max error between initial and current simu
 
 % ---------- set model file or function name ------------------------------
 functionname = 'verify_Room_Radiator_mdl';
@@ -92,17 +92,17 @@ s = 'max';
 % ------------- decide if verification is ok ------------------------------
 if e2 > max_error
     v = false;
-    s = sprintf('verification %s with reference FAILED: error %3.3g > allowed error %3.3g', ...
+    s = sprintf('verification %s with reference FAILED: error %3.3f > allowed error %3.3f', ...
         functionname, e2, max_error);
     show = true;
 elseif e3 > max_simu_error
     v = false;
-    s = sprintf('verification %s with 1st calculation FAILED: error %3.3g > allowed error %3.3g', ...
+    s = sprintf('verification %s with 1st calculation FAILED: error %3.3f > allowed error %3.3f', ...
         functionname, e3, max_simu_error);
     show = true;
 else
     v = true;
-    s = sprintf('%s OK: error %3.3g', functionname, e2);
+    s = sprintf('%s OK: error %3.3f', functionname, e2);
 end
 
 %% ------------ display and plot results if required ----------------------
@@ -249,6 +249,12 @@ end
 %  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 %  THE POSSIBILITY OF SUCH DAMAGE.
 %  
+%  ************************************************************************
+%  VERSIONS
+%  $Revision: 81 $
+%  $Author: goettsche $
+%  $Date: 2016-11-02 14:10:23 +0100 (Mi, 02 Nov 2016) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/airmass/verification/verify_airmass.m $
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder
@@ -257,13 +263,4 @@ end
 %  6.1.0    ts      created                                     08aug2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  7.1.0    hf      changed power from W to kW                  17jul2020
-%  7.1.1    hf      max_error set to 5e-4                       14aug2020
-%                   printf format changed to %3.3g
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-%  ************************************************************************
-%  VERSIONS
-%  $Revision: 81 $
-%  $Author: goettsche $
-%  $Date: 2016-11-02 14:10:23 +0100 (Mi, 02 Nov 2016) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/airmass/verification/verify_Room_Radiator.m $

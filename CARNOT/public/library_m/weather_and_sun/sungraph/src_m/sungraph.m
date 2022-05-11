@@ -10,6 +10,54 @@ function sungraph(lat,long,long0,location)
 % long0    : reference longitude (timezone)
 % location : optional descriptive string
 
+% ***********************************************************************
+% This file is part of the CARNOT Blockset.
+% 
+% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+% Additional Copyright for this file see list auf authors.
+% All rights reserved.
+% 
+% Redistribution and use in source and binary forms, with or without 
+% modification, are permitted provided that the following conditions are 
+% met:
+% 
+% 1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+% 
+% 2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+% 
+% 3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+% 
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+% THE POSSIBILITY OF SUCH DAMAGE.
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/sungraph/src_m/sungraph.m $
+% **********************************************************************
+% D O C U M E N T A T I O N
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+% Carnot model and function m-files should use a name which gives a 
+% hint to the model of function (avoid names like testfunction1.m).
+%
+%  Version   Author         Changes                             Date
+%  0.1       Thomas Wenzel  created                             14mar2000
+%  3.0       Bernd Hafner   blue dotted line removed            01jan2009
+%  4.0       hf             include time equation               06jan2009
+%
 
 
 % check number of input arguments
@@ -159,24 +207,24 @@ for d = 1:number_of_dates
     fertig = 0;
     t = datum(d);
     while (t < datum(d)+24*3600) && (fertig == 0)
-        [~,~,zenith,azimuth,hourangle] = sunangles(t,lat,long,long0);
+        [decl,sunangle,zenith,azimuth,hourangle] = sunangles(t,lat,long,long0);
         %while zenith is larger than 90°, find where graph enters/leaves diagramm at 90°
         if (zenith >= 90)
             if t < datum(d)+12*3600                         % before sunrise
                 while zenith>=90                            % large steps until after
                     t = t+3600;                             % sunrise
-                    [~,~,zenith,azimuth,hourangle] = ...
+                    [decl,sunangle,zenith,azimuth,hourangle] = ...
                         sunangles(t,lat,long,long0);
                 end        
                 while zenith < 90                           % small steps back until
                     t = t-300;                              % before sunrise
-                    [~,~,zenith,azimuth,hourangle] = ...
+                    [decl,sunangle,zenith,azimuth,hourangle] = ...
                         sunangles(t,lat,long,long0);
                 end
             elseif t > datum(d)+12*3600                     % after sunset
                 while zenith >= 90                          % small steps back until
                     t = t-300;                              % sunset
-                    [~,~,zenith,azimuth,hourangle] = ...
+                    [decl,sunangle,zenith,azimuth,hourangle] = ...
                         sunangles(t,lat,long,long0);
                 end        
                 fertig = 1;
@@ -214,7 +262,7 @@ for h = hour_start:hour_end
     j = 1;
     for d=1:step_of_days:182
         t = d*24*3600+h*3600;
-        [~,~,zenith,azimuth,hourangle] = sunangles(t,lat,long,long0);
+        [decl,sunangle,zenith,azimuth,hourangle] = sunangles(t,lat,long,long0);
         a = azimuth+180;  % south : 0° -> 180°
         if (zenith<90)
             X2(h,j) = sin(a/180*pi)*zenith*10; % radian coordinates to cartesian
@@ -231,7 +279,7 @@ for h = hour_start:hour_end
     for d=183:step_of_days:365
         t = d*24*3600+h*3600;
         %      x  = radiationdivision(t,100,lat,long,long0);
-        [~,~,zenith,azimuth,hourangle] = sunangles(t,lat,long,long0);
+        [decl,sunangle,zenith,azimuth,hourangle] = sunangles(t,lat,long,long0);
         a = azimuth+180;  % south : 0° -> 180°C      
         if (zenith<90)
             X3(h,j) = sin(a/180*pi)*zenith*10; % radian coordinates to cartesian
@@ -284,47 +332,3 @@ if hourangle < -999
 end
 
 end % of function
-
-%% Copyright and Versions
-%  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
-%  Additional Copyright for this file see list auf authors.
-%  All rights reserved.
-%  Redistribution and use in source and binary forms, with or without 
-%  modification, are permitted provided that the following conditions are 
-%  met:
-%  1. Redistributions of source code must retain the above copyright notice, 
-%    this list of conditions and the following disclaimer.
-%  2. Redistributions in binary form must reproduce the above copyright 
-%    notice, this list of conditions and the following disclaimer in the 
-%    documentation and/or other materials provided with the distribution.
-%  3. Neither the name of the copyright holder nor the names of its 
-%    contributors may be used to endorse or promote products derived from 
-%    this software without specific prior written permission.
-%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
-%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
-%  THE POSSIBILITY OF SUCH DAMAGE.
-%  
-% **********************************************************************
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
-%
-%  author list:     tw -> Thomas Wenzel
-%                   hf -> Bernd Hafner
-%
-%  Version  Author      Changes                                 Date
-%  0.1      tw          created                                 14mar2000
-%  3.0      hf          blue dotted line removed                01jan2009
-%  4.0      hf          include time equation                   06jan2009
-%  7.1.0    hf          rearranged format,                      25jan2020
-%                       corrected editor warnings

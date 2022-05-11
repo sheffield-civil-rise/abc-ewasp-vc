@@ -1,12 +1,14 @@
-% MakeMEX_development is used to programmatically compile all of CARNOT's s-Functions.
-% It is supposed for development purposes as in its quality to copy the
-% carlib (and other libraries?) from public\library_c\carlib\src to the
-% public\src\libraries folder so they can be included for each s-Functions'
-% individual mex operation.
+function MakeMEX
+    
+% function MakeMex
+% MakeMex is used to programmatically compile all of CARNOT's s-Functions.
+% It moves the carlib library (and other libraries) from public\library_c\
+% to the public\src\libraries folder so they can be included for each
+% s-Functions' individual mex operation.
 % The function works for both public and internal s-Functions.
 % Compiled s-Functions will be placed as mexw64/32 in the respective bin folder.
 
-% ***********************************************************************
+
 % This file is part of the CARNOT Blockset.
 % 
 % Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
@@ -39,24 +41,21 @@
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision$
-% $Author$
-% $Date$
-% $HeadURL$
+% $Revision: 372 $
+% $Author: carnot-wohlfeil $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/version_manager/MakeMEX.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-% Carnot model and function m-files should use a name which gives a 
-% hint to the model of function (avoid names like testfunction1.m).
-% 
-% Author    Date        Description
-% aw        2015        created
-% PahM      2015-08-19  header added
-% aw	    2015-10-13	library_m added
-% aw	    2016-11-16	call of mex changed for Linux gcc compability
-% jg        2020-12-03  mex command for Linux corrected
+% author list:     aw -> Arnold Wohlfeil
 %
-function MakeMEX
+% version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+%
+% Version   Author  Changes                                     Date
+% 6.1.0     aw      created                                     oct2015
+% 6.1.1		aw		changed call of mex for Linux gcc			16nov2016
+%					compability
 
     
     %%save currentdirectory
@@ -65,6 +64,8 @@ function MakeMEX
     cd('..');
     
     %% public
+    
+    %get directory names
     mexdirectory_public = fullfile(path_carnot('root'), 'public', 'bin');
     srcdirectory_public = fullfile(path_carnot('root'), 'public', 'src');
     libdirectory_public = fullfile(path_carnot('root'), 'public', 'src', 'libraries');
@@ -72,14 +73,14 @@ function MakeMEX
         mkdir(libdirectory_public);
     end
     
-    %copy all library_m-files to src
+    %move all library_m-files to src
     cfiles = SearchFiles(fullfile(path_carnot('root'), 'public', 'library_m'), 'c', 'src');
     for Count=1:numel(cfiles)
-        copyfile(cfiles{Count},srcdirectory_public);
+        movefile(cfiles{Count},srcdirectory_public);
     end
     
     
-    %get all C - Files
+    %get all C - Files from the directories
     clibfiles_public = SearchFiles(fullfile(path_carnot('root'), 'public', 'library_c'), 'c', 'src');
     hlibfiles_public = SearchFiles(fullfile(path_carnot('root'), 'public', 'library_c'), 'h', 'src');
     cfiles_simulink = SearchFiles(fullfile(path_carnot('root'), 'public', 'library_simulink'), 'c', 'src');
@@ -97,24 +98,24 @@ function MakeMEX
     %compile all C-files
     CompileCFiles(cfiles, clibfiles_public, hfiles_all, mexdirectory_public);
     
-    %copy all C-files to src
+    %move all C-files to src
     for Count=1:numel(cfiles_simulink)
-        copyfile(cfiles_simulink{Count},srcdirectory_public);
+        movefile(cfiles_simulink{Count},srcdirectory_public);
     end
     
-    %copy all H-files to src
+    %move all H-files to src
     for Count=1:numel(hfiles_simulink)
-        copyfile(hfiles_simulink{Count},srcdirectory_public);
+        movefile(hfiles_simulink{Count},srcdirectory_public);
     end
     
-    %copy all library C-files
+    %move all library C-files
     for Count=1:numel(clibfiles_public)
-        copyfile(clibfiles_public{Count},libdirectory_public);
+        movefile(clibfiles_public{Count},libdirectory_public);
     end
     
-    %copy all library H-files
+    %move all library H-files
     for Count=1:numel(hlibfiles_public)
-        copyfile(hlibfiles_public{Count},libdirectory_public);
+        movefile(hlibfiles_public{Count},libdirectory_public);
     end
     
     %create rtwmakecfg.m
@@ -155,11 +156,12 @@ function MakeMEX
             mkdir(libdirectory_internal);
         end
         
-        %copy all library_m-files to src
+        
+        %move all library_m-files to src
         if exist(fullfile(path_carnot('root'), 'internal', 'library_m'), 'dir')
             cfiles = SearchFiles(fullfile(path_carnot('root'), 'internal', 'library_m'), 'c', 'src');
             for Count=1:numel(cfiles)
-                copyfile(cfiles{Count},srcdirectory_internal);
+                movefile(cfiles{Count},srcdirectory_internal);
             end
         end
 
@@ -192,22 +194,22 @@ function MakeMEX
 
         %move all C-files to src
         for Count=1:numel(cfiles_simulink)
-            copyfile(cfiles_simulink{Count},srcdirectory_internal);
+            movefile(cfiles_simulink{Count},srcdirectory_internal);
         end
 
         %move all H-files to src
         for Count=1:numel(hfiles_simulink)
-            copyfile(hfiles_simulink{Count},srcdirectory_internal);
+            movefile(hfiles_simulink{Count},srcdirectory_internal);
         end
 
         %move all library C-files
         for Count=1:numel(clibfiles_internal)
-            copyfile(clibfiles_internal{Count},libdirectory_internal);
+            movefile(clibfiles_internal{Count},libdirectory_internal);
         end
 
         %move all library H-files
         for Count=1:numel(hlibfiles_internal)
-            copyfile(hlibfiles_internal{Count},libdirectory_internal);
+            movefile(hlibfiles_internal{Count},libdirectory_internal);
         end
 
         %create rtwmakeconfig.m
@@ -253,7 +255,7 @@ function CompileCFiles(cfiles, clibfiles, hlibfiles, mexdirectory)
             end
         elseif isunix
             try
-                eval(['mex CFLAGS="\$CFLAGS -std=c99" ', cfiles{Count}, ' ', LibraryFiles, ' -v -largeArrayDims -outdir ', mexdirectory, IncludeDirectories]);
+                eval(['mex CFLAGS="\$CFLAGS -std=c99"', cfiles{Count}, ' ', LibraryFiles, ' -v -largeArrayDims -outdir ', mexdirectory, IncludeDirectories]);
             catch
                 warning(['Unable to build mex file for ' cfiles{Count}]);
             end

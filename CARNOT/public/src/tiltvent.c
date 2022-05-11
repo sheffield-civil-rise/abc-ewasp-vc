@@ -1,6 +1,6 @@
 /***********************************************************************
  * This file is part of the CARNOT Blockset.
- * Copyright (c) 1998-2022, Solar-Institute Juelich of the FH Aachen.
+ * Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
  * Additional Copyright for this file see list auf authors.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without 
@@ -28,7 +28,7 @@
  * $Revision: 372 $
  * $Author: carnot-wohlfeil $
  * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
- * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Source/Ventilation/Ventilation_Window/src/tiltvent.c $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src/tiltvent.c $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -37,18 +37,17 @@
  *
  * Syntax  [sys, x0] = tiltvent(t,x,u,flag)
  *
- * Copyright (c) 2011 Institute of Energy in Building, Switzerland
  * Version  Author          Changes                                 Date
- * 0.1.0    Philipp Eller   created                                 04jan2011
- * 0.1.1    Ralf Dott       corrected to abs(deltaT)                23apr2012
+ * 0.1.0    Philipp Eller   created                                 04jan11
+ * 0.1.1    Ralf Dott       corrected to abs(deltaT)                23apr12
  *                          in     ventrate=Cd*Ck*height*sqrt(fabs(deltaT)*gm*height);
- * 6.0.0    Arnold Wohlfeil changed to level 2 S-function           10aug2015
+ * 6.0.0    Arnold Wohlfeil changed to level 2 S-function           10aug15
  *                          Simstate compiliance
  *                          MultipleExecInstances activated
  *                          include of carlib.h deleted
- * 6.0.1    Arnold Wohlfeil unused functions deleted                10sep2015
- * 7.1.0    Mara Magni      Coefficient cd modified to 0.68         08mar2022
+ * 6.0.1    Arnold Wohlfeil unused functions deleted                10sep15
  *
+ * Copyright (c) 2011 Institute of Energy in Building, Switzerland
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *  D E S C R I P T I O N
@@ -64,7 +63,7 @@
  *
  * structure of y (output vector)
  * index   use
- *  0       Volume flow rate                            m3/s
+ *  0       Volume flow rate                            m3/h
  *
  * parameters
  * index    use
@@ -171,7 +170,7 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     
     double alpha = ALPHA;
     double height = HEIGHT;
-    //double width = WIDTH;
+    double width = WIDTH;
     
     double t1 = T1 + 273.15;
     double t2 = T2 + 273.15;
@@ -183,8 +182,7 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     
     angle = ctrl * alpha;
     deltaT = 2.0*(t1 - t2)/(t1 + t2);
-    Cd = 0.68; 
-    //     Cd = 0.0174*angle*width - 0.0928*height + 0.4116*width;
+    Cd = 0.0174*angle*width - 0.0928*height + 0.4116*width;
     Ck = 0.0186*angle - 0.000119*angle*angle + 0.00000026*angle*angle*angle;
     ventrate=Cd*Ck*height*sqrt(fabs(deltaT)*gm*height);
     

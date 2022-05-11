@@ -59,8 +59,8 @@ ul
 	font-family:"Calibri","sans-serif";
 	color:#5A5A5A;
 	}
- .auto-style2 {
-	font-size: medium;
+ .auto-style1 {
+	margin-left: 120px;
 }
 </style>
 </head>
@@ -79,13 +79,12 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 <p><span class=GramE><span style='mso-bookmark:Pipe'>
 <span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b>
-<span style='font-size:18.0pt;line-height:120%'>
-<img alt="" src="Figures/Pipe_basic.gif" style="float: right" />P</span><span
+<span style='font-size:18.0pt;line-height:120%'>P</span><span
 lang=EN-US style='font-size:18.0pt;line-height:120%'>ip</span><span style='font-size:18.0pt;line-height:120%'>e_basic</span></b></span></span></span></span><span
 style='mso-bookmark:Pipe'><span style='mso-bookmark:schwamberger'><span
 style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
-<b>Path: CARNOT/<span lang="de-at">Basic/Thermal_Models</span></b> <br clear=all style='mso-special-character:line-break'>
+<b>Path: CARNOT/<span lang="de-at">Basic/</span>hydraulics</b> <br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -98,24 +97,17 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
 </span></span></span></span></div>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
-class=GramE><b><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b></span></span></span></p>
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'><span
-class=GramE><span style='font-size:13.5pt;line-height:120%'> M</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>odel a pipe connection between two components including consideration of
+class=GramE><b><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+To model a pipe connection between two components including consideration of
 the wall capacity and other transfer mechanisms.</span></span><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> </span><span
 lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></span></p>
 
-<p>&nbsp;</p>
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'><b>
-<span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b></span></span></p>
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'>
-<span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> The pipe is a one-dimensional mulitnode model. It includes heat capacity of the
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+The pipe is a one-dimensional mulitnode model. It includes heat capacity of the
 wall, heat losses to the environment, thermal conductivity between nodes and
 heat transfer by mass flow. The basic differential equation for the heat and
 mass transfer is solved by the finite volume method (</span></span></span><a
@@ -128,26 +120,12 @@ convection is calculated by the upwind scheme (the flow only comes from the
 last node in flow direction). Thermal conductivity is calculated by central
 differences. The resulting differential equation for one node is: </span></span></span></p>
 
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'><tt>
-<span
-lang=EN-US style='line-height:120%' class="auto-style2"> (<span class=GramE>c<sub>wall</sub>*</span>length/V<sub>node</sub>)
-* <span class=GramE>dT/dt</span> = <br />
-</span><span style='line-height:120%' class="auto-style2"> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-<span
-lang=EN-US style='line-height:120%' class="auto-style2"> U * A<sub>loss</sub> / V<sub>node</sub> * (T<sub>amb</sub>
-- T<sub>node</sub>) <br />
-</span><span style='line-height:120%' class="auto-style2"> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-<span
-lang=EN-US style='line-height:120%' class="auto-style2"> + cond / dh<sup>2</sup> * (T<sub>nextnode</sub> - T<sub>node</sub>)
-<br />
-</span><span style='line-height:120%' class="auto-style2"> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-<span
-lang=EN-US style='line-height:120%' class="auto-style2"> + cond / dh<sup>2</sup> * (T<sub>lastnode</sub> - T<sub>node</sub>) 
-<br />
-</span><span style='line-height:120%' class="auto-style2"> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-<span
-lang=EN-US style='line-height:120%' class="auto-style2"> + m<sub>dot</sub>
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><tt><span
+lang=EN-US style='font-size:10.0pt;line-height:120%'> (<span class=GramE>c<sub>wall</sub>*</span>length/V<sub>node</sub>)
+* <span class=GramE>dT/dt</span> = U * A<sub>loss</sub> / V<sub>node</sub> * (T<sub>amb</sub>
+- T<sub>node</sub>) + cond / dh<sup>2</sup> * (T<sub>nextnode</sub> - T<sub>node</sub>)
++ cond / dh<sup>2</sup> * (T<sub>lastnode</sub> - T<sub>node</sub>) + m<sub>dot</sub>
 * c<sub>p</sub> / V<sub>node</sub> * (T<sub>lastnode</sub> - T<sub>node</sub>) </span></tt></span></span></p>
 
 <table class=MsoNormalTable border=0 cellpadding=0 style='mso-cellspacing:1.5pt;
@@ -362,35 +340,95 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 
 </span></span></span></div>
 
-<p><span style='mso-bookmark:schwamberger'>
-<span style='mso-bookmark:literature'><b>
-<span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_145" o:spid="_x0000_s1500"
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Example:</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span><a
+href="carnot_manual.htm#example3"><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:
+literature'><span lang=EN-US style='font-size:13.5pt;line-height:120%'>see
+parallel.mdl</span></span></span></a><span style='mso-bookmark:
+schwamberger'><span style='mso-bookmark:literature'><span lang=EN-US
+style='font-size:13.5pt;line-height:120%'>, </span><span
+lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></span></p>
+
+<p><a
+href="carnot_manual.htm#Literature"><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>Literature:</span></span></span></a><span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span><a
+href="carnot_manual.htm#patankar"><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>Patankar, 1980</span></span></span></a><span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
+</span></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_145" o:spid="_x0000_s1500"
  type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
  margin-left:0;margin-top:0;width:282pt;height:428.25pt;z-index:143;
  visibility:visible;mso-wrap-style:square;mso-wrap-distance-left:0;
  mso-wrap-distance-top:0;mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
  mso-position-horizontal:left;mso-position-horizontal-relative:text;
  mso-position-vertical:absolute;mso-position-vertical-relative:line'
- o:allowoverlap="f"><v:imagedata src="Figures/pipeSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/><w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/></v:shape><![endif]--></p>
-<p><img alt="" src="Figures/Pipe_basic_MASK_1.jpg" /></p>
-
-<p><img alt="" src="Figures/Pipe_basic_MASK_2.jpg" /></p>
-<p><img alt="" src="Figures/Pipe_basic_MASK_3.jpg" /></p>
-<p>&nbsp;</p>
-<p><span style='mso-bookmark:schwamberger'>
-<span
-style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:13.5pt;
-line-height:120%'><strong>Literature</strong></span></span></span></p>
-<p><a href="6_Literature.html"><span style='mso-bookmark:schwamberger'><span
-style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>Patankar, 1980</span></span></span></a><span
+ o:allowoverlap="f">
+ <v:imagedata src="Figures/pipeSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
+ <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
+</v:shape><![endif]--><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
+style='mso-special-character:line-break'>
+</span></span></span></p>
 
-<p>&nbsp;</p>
-
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l168 level1 lfo141;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>inner diameter of the pipe [m] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l168 level1 lfo141;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>length [m] </span><span lang=EN-US
+     style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l168 level1 lfo141;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>heat loss coefficient in [W/(m<sup>2</sup>K)]
+     (reference is inner pipe surface) </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l168 level1 lfo141;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>effective axial heat conduction [W/(mK)] ( =
+     A(cross-section of wall) / PI*(d<sup>2</sup>/4)*lambda<sub>Wall</sub>) </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l168 level1 lfo141;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>heat capacity of pipe per length [J/(mK)] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l168 level1 lfo141;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>initial temperature [°C] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l168 level1 lfo141;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>number of nodes (for numerics, a reasonable value is one
+     node per meter of pipe length) </span></span></span>
+ <o:p></o:p>
+	</li>
+</ul>
 <p>&nbsp;</p>
 <p><span style='mso-bookmark:schwamberger'>
 <span style='mso-bookmark:literature'><b>

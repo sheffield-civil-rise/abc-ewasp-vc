@@ -42,7 +42,7 @@ functionname = 'AddSolarPosition';
 modelfile = 'verify_AddSolarPosition_mdl';
 
 % ----------------- set the literature reference values -------------------
-lat = 45;               % reference input values for latitude
+lat = 45;                % reference input values for latitude
 lst = 0;                % reference meridian
 local = 0;              % local meridian
 n = 1;                  % day 1
@@ -54,21 +54,10 @@ E = (9.87*sin(2*b)-7.53*cos(b)-1.5*sin(b))/60;
 solartime = standardtime+E+(lst-local)/15;
 del = 23.45*sin((360*(n+284)/365)*pi/180);
 delrad = del*pi/180;
-
-wdegree = (solartime-12)*15;    % houranlge of the sun in degree
-% limit hourangle to -180..180
-idx = find(wdegree < -180);
-wdegree(idx) = 360+wdegree(idx);
-idx = find(wdegree > 180);
-wdegree(idx) = wdegree(idx)-360;
-
-wrad = wdegree*(pi/180);        % hourangle in radian
-
-% calculation of the zenith angle
+wdegree = (solartime-12)*15;
+wrad = wdegree*(pi/180);
 zenrad = acos(sin(delrad)*sin(latirad)+cos(delrad)*cos(latirad)*cos(wrad));
 zenith = zenrad*(180/pi);
-
-% calculation of the azimuth angle
 azimuth = sign(wrad).*(180/pi).*acos((sin(latirad)*cos(zenrad)-sin(delrad))./ ...
     (cos(latirad)*sin(zenrad)));
 azimuth(25)=azimuth(1);  % at midnight, azimut is same as at 0 h
@@ -141,13 +130,17 @@ if (show)
     disp(s)
     disp(['Initial error = ', num2str(e1)])
     sx = 'Time in h';                       % x-axis label
-    st = 'Simulink block verification';     % title
+    st = 'Simulink block verification';       % title
     sy1 = 'Angles in °';                    % y-axis label in the upper plot
     sy2 = 'Difference';                     % y-axis label in the lower plot
     % upper legend
-    sleg1 = {'reference data','initial simulation','current simulation'};
+    sleg1 = {'reference data zenith','reference data azimut', ...
+        'initial simulation zenith', 'initial simulation azimut', ...
+        'current simulation zenith', 'current simulation azimut'};
     % lower legend
-    sleg2 = {'ref. vs initial simu', 'ref. vs current simu', 'initial simu vs current'};
+    sleg2 = {'ref. vs initial simu zenith', 'ref. vs initial simu azimut', ...
+        'ref. vs current simu zenith', 'ref. vs current simu azimut',...
+        'initial simu vs current zenith', 'initial simu vs current azimut'};
     %   x - vector with x values for the plot
     x = reshape(u0,length(u0),1);
     %   y - matrix with y-values (reference values and result of the function call)
@@ -187,18 +180,16 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision$
-%  $Author$
-%  $Date$
-%  $HeadURL$
+%  $Revision: 372 $
+%  $Author: carnot-wohlfeil $
+%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Weather/Add_Solar_Position/verification/verify_AddSolarPosition.m $
 %  author list:      hf -> Bernd Hafner
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
-%  Version   Author Changes                                     Date
-%  6.1.0     hf     created                                     03jun2014
-%  6.2.0     hf     return argument is [v, s]                   03oct2014
-%  6.2.1     hf     filename validate_ replaced by verify_      09jan2015
-%  6.2.2     hf     close system without saving it              16may2016
-%  6.3.1     hf     comments adapted to publish function        01nov2017
-%                   added parameter save_sim_ref
-%  7.1.0     hf     houranlge wdegree limited to -180..180      18sep2021
-%                   corrected legend entries for plots
+%  Version   Author  Changes                                     Date
+%  6.1.0     hf      created                                     03jun2014
+%  6.2.0     hf      return argument is [v, s]                   03oct2014
+%  6.2.1     hf      filename validate_ replaced by verify_      09jan2015
+%  6.2.2     hf      close system without saving it              16may2016
+%  6.3.1     hf      comments adapted to publish function        01nov2017
+%                    added parameter save_sim_ref

@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 372 $
+ * $Author: carnot-wohlfeil $
+ * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src/heatexch.c $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -82,7 +82,6 @@
  *                          keep only thermal inputs
  * 6.2.0   hf               changed denom==0 to (fabs(denom) < 1.0e-10)    03oct2016
  *                          changed NO_MASSFLOW conditions
- * 7.1.0   hf               remove restriction (> 0) for UA_EXPH, UA_EXPC  20nov2019
  * Copyright (c) 1998-2016 Solar-Institut Juelich, Germany
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -193,28 +192,36 @@
   {
       /* */
       {
-          if (FLOWTYPE < 0.0 || FLOWTYPE > 1.0) {
+          if (FLOWTYPE < 0 || FLOWTYPE > 1) {
               ssSetErrorStatus(S,"Error in heatexchanger: flowtype must be in range 0..1");
               return;
           }
       }
       /* */
       {
-          if (UA_0 <= 0.0) {
+          if (UA_0 <= 0) {
               ssSetErrorStatus(S,"Error in heatexchanger: heat transfer must be > 0");
               return;
           }
       }
       /* */
       {
-          if (MDOTNOMH <= 0.0 || MDOTNOMC <= 0.0) {
+          if (MDOTNOMH <= 0 || MDOTNOMC <= 0) {
               ssSetErrorStatus(S,"Error in heatexchanger: nominal massflow must be > 0");
               return;
           }
       }
       /* */
       {
-          if (UALOSS < 0.0) {
+          if (UA_EXPH < 0 || UA_EXPC < 0) {
+              ssSetErrorStatus(S,"Error in heatexchanger: "
+                    "exponent for heat transfer correction must be >= 0");
+              return;
+          }
+      }
+      /* */
+      {
+          if (UALOSS < 0) {
               ssSetErrorStatus(S,"Error in heatexchanger: heat loss coefficient must be >= 0");
               return;
           }

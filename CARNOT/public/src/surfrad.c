@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 372 $
+ * $Author: carnot-wohlfeil $
+ * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src/surfrad.c $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -37,7 +37,6 @@
  * author list:     gf -> Gaelle Faure
  *                  hf -> Bernd Hafner
  *                  wec -> Carsten Wemhoener
- *                  jg -> Joachim Göttsche
  *
  * version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
  * Version  Author  Changes                                         Date
@@ -68,16 +67,6 @@
  * 6.1.2    aw      implicite casts replaced by explicite casts     10sep2015
  *                  unused variables deleted
  * 6.1.3    hf      modified no-sun condition                       23sep2016
- * 7.1.0    hf      corrected calculation of longitudinal and       24mar2019
- *                  transversal incidence angle according to ISO
- * 7.1.1    hf      if (teta < 90) for calculation of tetalong      29nov2019
- * 7.1.2    hf      corrected initialisation of teta, tetalong      30nov2019
- * 7.1.3    hf      changed condition                               07dec2019
- *                  new: if(ZENITH == -9999.0 || AZIMUT == -9999.0) 
- *                  old: if(ZENITH < -9998.0 || AZIMUT < -9998.0) 
- * 7.1.4    jg      angular calculation corrected, now based on 
- *                  3 vector rotations                              19dec2019
- *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * parameters                                                           
  * index    use                                             units       
@@ -126,8 +115,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *  L I T E R A T U R E
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Duffie, Beckman: Solar Engineering of Thermal Processes, 2006
- * ISO 9806:2017 : Solar thermal collectors – Test methods
+ * /1/  Duffie, Beckman: Solar Engineering of Thermal Processes, 2006
  */
 
 #define S_FUNCTION_NAME surfrad
@@ -141,8 +129,6 @@
 
 #define ZENITH          (*uPtrs0[1])
 #define AZIMUT          (*uPtrs0[2])
-#define IDIRSUNNRM      (*uPtrs0[3])
-#define IDFUSUNHOR      (*uPtrs0[4])
 #define COLANGLE        (*u1[0])
 #define COLAZIMUT       (*u1[1])
 #define COLROTATE       (*u1[2])
@@ -312,48 +298,33 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     real_T *y16= ssGetOutputPortRealSignal(S, 16);
     real_T *y17= ssGetOutputPortRealSignal(S, 17);
 
-    real_T time = TIME;     /* time for sun position in s, 0 s = 01jan, 00:00:00 hh:mm:ss */
+    real_T time = TIME;
     int_T skymodel = (int_T)SKYMODEL;
-
-    real_T idir_sun_h;      /* direct solar radiation on horizontal */
-    real_T idir_sun_n;      /* direct solar radiation on normal (vertical to radiation) */
-    real_T idfu_sun_h;      /* diffuse solar radiation on horizontal */
-    real_T tetatrans;       /* incidence angle transversal coll. plane */
-    real_T tetalong;        /* incidence angle longitudinal coll. plane */
-    real_T teta;            /* incidence angle */
-    real_T costeta;         /* incidence angle collector plane */
-    real_T idir_t;          /* direct radiation on surface */
-    real_T idfu_t;          /* diffuse radiation on surface */
-    real_T iextra_n;        /* extraterrestrial radiation on horizontal */
+    real_T idir_sun_h, idir_sun_n, idfu_sun_h;
     
-    real_T as, zs, rc, zc, ac, rb, tt;
+    real_T tetatrans = -9999.0; /* incidence angle transversal coll. plane */
+    real_T tetalong  = -9999.0; /* incidence angle longitudinal coll. plane */
+    real_T costeta   = 0.0;     /* incidence angle collector plane */
+    real_T idir_t    = 0.0;     /* direct radiation on surface */
+    real_T idfu_t    = 0.0;     /* diffuse radiation on surface */
+    real_T iextra_n  = 0.0;     /* extraterrestrial radiation on horizontal */
+    
+    real_T as, zs, rc, zc, ac, rb;
     real_T szc, czs, szs, czc, src, crc, sda, cda;
-    real_T sas, cas, sac, cac, sun0x, sun0y, sun0z, sun1x, sun1y, sun1z;
-    real_T sun2x, sun2y, sun2z, sun3x, sun3y, sun3z;    /* variables for vector rotation */
-    real_T clearness, brightness;                       /* parameters Perez model */
-    real_T F1, F2, a, b, f11, f12, f13, f21, f22, f23;  /* parameters Perez model */
-    real_T z3;                                          /* dummy for zenith^3 */
+    
+    real_T clearness, F1, F2, a, b, f11, f12, f13, f21, f22, f23, brightness; 	/* parameters Perez model */
+    real_T z3;                  /* dummy for zenith^3 */
  	
-    /* check if angles are set to -9999° in weather data input (solar position is not calculated) */
-    if(ZENITH == -9999.0 || AZIMUT == -9999.0)   
+    /* initialisation of variables */
+    idir_sun_n = *uPtrs0[3];    /* direct normal beam radiation */
+    idfu_sun_h = *uPtrs0[4];    /* diffuse radiation on horizontal */
+    
+    if(ZENITH == -9999.0 || AZIMUT == -9999.0) 
     {
         ssSetErrorStatus(S,"surfrad: weather data does not include sunposition.");
         return;
     }
     
-    /* initialisation of variables */
-    tetatrans = DEG2RAD * 90.0; /* incidence angle transversal coll. plane */
-    tetalong  = DEG2RAD * 90.0; /* incidence angle longitudinal coll. plane */
-    teta      = DEG2RAD * 90.0; /* incidence angle */
-    costeta   = 0.0;            /* incidence angle collector plane */
-    real_T eps       = 0.00000001;
-    
-    idir_t    = 0.0;            /* direct radiation on surface */
-    idfu_t    = 0.0;            /* diffuse radiation on surface */
-    iextra_n  = 0.0;            /* extraterrestrial radiation on horizontal */
-    idir_sun_n = IDIRSUNNRM;    /* direct normal beam radiation */
-    idfu_sun_h = IDFUSUNHOR;    /* diffuse radiation on horizontal */
-
     as = DEG2RAD * AZIMUT;
     zs = DEG2RAD * ZENITH;
     zc = DEG2RAD * COLANGLE;
@@ -362,55 +333,30 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     
     szs = sin(zs);      /* sine ZENITH angle of sun */
     czs = cos(zs);      /* cosine ZENITH angle of sun */
-    sas = sin(as);      /* sine AZIMUTH angle of sun */
-    cas = cos(as);      /* cosine AZIMUTH angle of sun */
+    sda = sin(as-ac);   /* difference of azimut */
+    cda = cos(as-ac);
     szc = sin(zc);      /* sine ZENITH angle of collector (inclination) */
     czc = cos(zc);      /* cosine ZENITH angle of collector (inclination) */
-    sac = sin(ac);      /* sine AZIMUTH angle of collector */
-    cac = cos(ac);      /* cosine AZIMUTH angle of collector */
     src = sin(rc);      /* sine rotation angle of collector */
     crc = cos(rc);      /* cosine rotation angle of collector */
     
-    if (czs >= 1.0e-4)  /* sun is there */
+    if (czs < 1.0e-3)   /* no sun */
+    {
+        tetalong = 90.0;
+        tetatrans = 90.0;
+    } 
+    else                /* sun is there */
     {
         /* extraterrestrial radiation on normal (from carlib function) */
         iextra_n = extraterrestrial_radiation(time);
-       
-        /* incidence angle on surface, equations based on vector rotations */
         
-        sun0x=szs*cas;
-        sun0y=-szs*sas;
-        sun0z=czs;
-        /* sun vector after first rotation around z axis */
-        sun1x = cac*sun0x - sac*sun0y;
-        sun1y = sac*sun0x + cac*sun0y;
-        sun1z = sun0z;
-        /* sun vector after second rotation around rotated y axis */
-        sun2x = czc*sun1x -szc*sun1z;
-        sun2y = sun1y;
-        sun2z = szc*sun1x + czc*sun1z;
-        /* sun vector after third rotation around (tilted) x axis */
-        sun3x = sun2x;
-        sun3y = crc*sun2y + src*sun2z;
-        sun3z = -src*sun2y + crc*sun2z;
-               
-        costeta = sun3z;
-        /*   costeta = czs*czc + szs*szc*cda; */
-        if (costeta >= 1.0e-5)  /* sun is on the collector surface */
-        {
-            teta=min(acos(costeta),PI/2-eps);
-            /* old version: 6.2 */
-            /* incidence angle in longitudinal collector plane (direction riser - vertical on window) */
-            /*   tetalong = acos(costeta/sqrt(square(czc*cda*szs-szc*czs)+square(costeta))); */
-            tetalong = atan(sun3x/sun3z);  /*       projection on x-z plane */
-            /* incidence angle in transversal collector plane (direction header - vertical on window) */
-            /*   tetatrans = acos(costeta/sqrt(square(crc*sda*szs-src*(szc*cda*szs+czc*czs))+square(costeta)));
-            /*   tetatrans = (as < 0.0)? -tetatrans : tetatrans;	 negative in the morning */
-            tetatrans = -atan(sun3y/sun3z);       /* projection on y-z plane */
-        }
-        /* old equation: tetalong = acos(costeta/sqrt(square(czc*cda*szs-szc*czs)+square(costeta))); */
-        /* old equation: tetatrans = acos(costeta/sqrt(square(crc*sda*szs-src*(szc*cda*szs+czc*czs))+square(costeta))); */
-
+        /* cos of incidence angle on surface */
+        costeta = src*sda*szs+crc*(szc*cda*szs+czc*czs);
+        /* incidence angle in longitudinal collector plane (direction riser - vertical on window) */
+        tetalong = acos(costeta/sqrt(square(czc*cda*szs-szc*czs)+square(costeta)));
+        /* incidence angle in transversal collector plane (direction header - vertical on window) */
+        tetatrans = acos(costeta/sqrt(square(crc*sda*szs-src*(szc*cda*szs+czc*czs))+square(costeta)));
+    
         /* ---- radiation on tilted surface ----- */
         rb = costeta/czs;                                           /* ratio of direct radiation */
         idir_sun_h = idir_sun_n*czs;                                /* direct radiation on horizontal */
@@ -471,7 +417,7 @@ static void mdlOutputs(SimStruct *S, int_T tid)
         /* direct radiation on surface  */
         idir_t = min(iextra_n, idir_sun_n*costeta);
         
-    } /* end if csz, check for sunset */
+    } /* end if csz > 1e-5, check for sunset */
     
     /* ----- set outputs ----- */
     y0[0]  = *uPtrs0[0];                        /*  1   timevalue (comment line) format YYYYMMDDHHMM        -               */
@@ -487,7 +433,7 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     y10[0] = *uPtrs0[10];                       /* 11   station pressure                                    Pa              */    
     y11[0] = *uPtrs0[11];                       /* 12   mean wind speed                                     m/s             */
     y12[0] = *uPtrs0[12];                       /* 13   wind direction (north=0° west=270°)                 degree          */
-    y13[0] = min(90.0, RAD2DEG*teta);           /* 14   incidence angle on surface (0° = vertical)          degree          */
+    y13[0] = min(90.0, RAD2DEG*acos(costeta));  /* 14   incidence angle on surface (0° = vertical)          degree          */
     y14[0] = min(RAD2DEG*tetalong, 90.0);       /* 15   longitudinal incidence angle                        degree          */
     y15[0] = min(RAD2DEG*tetatrans, 90.0);      /* 16   transversal incidence angle                         degree          */
     y16[0] = max(0.0, idir_t);                  /* 17   direct solar radiation on surface                   W/m^2           */

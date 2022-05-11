@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 372 $
+ * $Author: carnot-wohlfeil $
+ * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src/libraries/carlib.h $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -78,7 +78,6 @@
  *                  cs_energy_cogen commented out
  *  6.3.1   hf      cs_energy_cogen removed                       29nov2015
  *                  added declaration of solve_quadratic_equation 
- *  7.1.0   hf      added EPS_ANGLE                               29nov2019
  */
  
 
@@ -98,9 +97,7 @@
 #define EXCEPTION_FREE_CODE
 
 
-#define NO_MASSFLOW             1.0e-9              /* check for massflow = 0: mdot < NO_MASSFLOW   */
-#define EPS_ANGLE               1.0e-3              /* an angle below this value in rad is assumed 
-                                                     * to be 0 (1.0e-3 rad is approx. 0.06°)        */
+#define NO_MASSFLOW             1.0e-9             /* check for massflow = 0: mdot < NO_MASSFLOW   */
 #define DEG2RAD                 0.017453292519943   /* Matlab value for long pi/180                 */
 #define RAD2DEG                 57.29577951308232   /* Matlab value for long 180/pi                 */
 #define C_GRAVITATION           9.81                /* m/s²                                         */
@@ -134,15 +131,6 @@ enum FLUID
     TYFOCOR_LS,
     WATER_CONSTANT,
     AIR_CONSTANT
-};
-
-/* definition of electric_types (electric ID) */
-enum ELECTRIC
-{
-    POWER = 1,
-    DC,
-    AC_1P,
-    AC_3P
 };
 
 /* definition of property_types (property ID) */

@@ -26,10 +26,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
 ************************************************************************
- * $Revision$
- * $Author$
- * $Date$
- * $HeadURL$
+ * $Revision: 437 $
+ * $Author: carnot-wohlfeil $
+ * $Date: 2018-08-20 08:58:13 +0200 (Mo, 20 Aug 2018) $
+ * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_c/carlib/src/carlib.c $
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -157,13 +157,8 @@
  * 6.3.5	aw		comments changed								05jan2018
  * 6.3.6    aw      added warning in heat_capacity()                20aug2018
  *                  if air is oversaturated
- * 7.1.0    hf      changed precision in solar_position:            10dec2019
- *                  new: EPS_ANGLE, old: DBL_EPSILON					
- * 7.2.0    jg/hf   void solar_position correction of azimut        22dec2019
- *                  calculation for solar position in zenith 
- *                  or north/south pole
- *                  EPS_ANGLE not uses, its always DBL_EPSILON
- * 7.2.1    hf 		limit hourangle to -180..180 ° = -12..12 h)     20jul2021
+ *					
+ *
  *
  * 2do:
  *    - include pressure in properties of air
@@ -285,26 +280,14 @@ void solve_quadratic_equation(double *x12, double a, double b, double c)
 void solar_position(real_T *solpos, real_T time, real_T latitude, 
         real_T longitude, real_T longitudenull)
 {
-    real_T xx, yy, delta, woz, hourangle, azi, costetaz, tetaz, lati;
+    real_T xx, delta, woz, hourangle, costetaz, tetaz, lati;
 
     lati = DEG2RAD*latitude;         /* latitude in radian */
     delta = solar_declination(time); /* declination of the sun in radian */
     /* solar time 0 .. 24*3600 s, function in carlib */
     woz = solar_time(time, longitudenull, longitude);
-    /* solar hour angle in radian (noon = 0,  6 a.m. = -pi/2) */
-    /* hourangle = (woz - 43200.0)*7.272205216643040e-5; */
-    /* added 20jul2021: limit hourangle to -pi..pi = -180..180 ° = -12..12 h */
-    hourangle = (woz - 43200.0);
-    if (hourangle < -43200.0)       /* if hourangle is smaller than -12 h * 3600 s/h */
-    {
-        hourangle += 86400.0;       /* add 24 h * 3600 s/h */
-    }
-    else if (hourangle > 43200.0)   /* if hourangle is bigger than 12 h * 3600 s/h */
-    {
-        hourangle -= 86400.0;       /* substract 24 h * 3600 s/h */
-    }
-    /* mulitply with 15 °/h = 15/3600 °/s and with pi/180 */
-    hourangle *= 7.27220521664304e-05;
+    /* solar hour angle in radian (noon = 0,  6 a.m. = -PI) */
+    hourangle = (woz - 43200.0)*7.272205216643040e-5;
 
     /* solar zenith angle in degrees (0° = zenith position, 90° = horizont) */
     costetaz = (sin(lati)*sin(delta) + cos(lati)*cos(delta)*cos(hourangle));
@@ -312,32 +295,16 @@ void solar_position(real_T *solpos, real_T time, real_T latitude,
 
     /* set solar azimuth angle */
     xx = cos(lati)*sin(tetaz);
-    
-    if (fabs(xx) < 10.0*DBL_EPSILON) /* cannot calculate azimut for solar position in zenith or north/south pole*/
+    if (fabs(xx) > DBL_EPSILON)
     {
-        azi = 0.0;
+        solpos[1] = acos((sin(lati)*costetaz-sin(delta))/xx);
+        solpos[1] = (hourangle < 0.0)? -solpos[1] : solpos[1]; /* szimuth has same sign as hourangle */
     }
     else
     {
-        yy = (sin(lati)*costetaz-sin(delta))/xx;
-        
-        if ((yy+10.0*DBL_EPSILON) >= 1.0)      /* result is close to 0 */
-        {
-            azi = 0.0;
-        }
-        else if ((yy-10.0*DBL_EPSILON) <= -1.0)     /* result is close to PI */
-        {
-            azi = PI;
-        }
-        else                                        /* calculation should be ok now */
-        {
-            azi = acos(yy);
-            azi = (hourangle < 0.0)? -azi : azi;    /* azimuth has same sign as hourangle */
-        }
+        solpos[1] = 0.0;
     }
-
     solpos[0] = tetaz;          /* set zenith angle */
-    solpos[1] = azi;            /* set azimut angle */    
     solpos[2] = delta;
     solpos[3] = hourangle;
     solpos[4] = woz;
@@ -405,8 +372,7 @@ double saturationtemperature(double id, double xi, double t, double p)
                 /* max. deviation < 0.02 K */
 				/* valid between 50 K to 273.16 K (2*10^(-40) Pa to 611.657 Pa) */
                 lnp = log(p/611.657); /* log(pi) */
-				ts = (((((3.8288459961E-13*lnp + 1.1717377096E-10)*lnp + 0.000000013588513109)*lnp 
-                        + 0.00000067893402502)*lnp - 0.000001589015468)*lnp + 0.044375182202)*lnp - 1.0000557801;
+				ts = (((((3.8288459961E-13*lnp + 1.1717377096E-10)*lnp + 0.000000013588513109)*lnp + 0.00000067893402502)*lnp - 0.000001589015468)*lnp + 0.044375182202)*lnp - 1.0000557801;
 				ts = -273.16/ts - 273.15;
 			}
 			else

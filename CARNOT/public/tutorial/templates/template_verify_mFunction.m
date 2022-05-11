@@ -80,17 +80,17 @@ s = 'max';
 % ------------- decide if verification is ok --------------------------------
 if e2 > max_error
     v = false;
-    s = sprintf('verification %s with reference FAILED: error %3.5g > allowed error %3.5g', ...
+    s = sprintf('verification %s with reference FAILED: error %3.5f > allowed error %3.5f', ...
         functionname, e2, max_error);
     show = true;
 elseif e3 > max_simu_error
     v = false;
-    s = sprintf('verification %s with 1st calculation FAILED: error %3.5g > allowed error %3.5g', ...
+    s = sprintf('verification %s with 1st calculation FAILED: error %3.5f > allowed error %3.5f', ...
         functionname, e3, max_simu_error);
     show = true;
 else
     v = true;
-    s = sprintf('%s OK: error %3.5g', functionname, e2);
+    s = sprintf('%s OK: error %3.5f', functionname, e2);
 end
 
 %% diplay and plot options if required ------------------------
@@ -175,5 +175,4 @@ end
 % 6.2.3     hf      added resampling of timeseries              27nov2015
 % 6.2.4     hf      close system without saving it              16may2016
 % 6.3.0     hf      added save_sim_ref as 2nd input argument    10oct2017
-% 7.1.0  	hf      replaced print format 3.5f by 3.5g			11jun2020
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

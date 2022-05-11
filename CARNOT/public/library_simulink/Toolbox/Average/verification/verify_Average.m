@@ -93,12 +93,12 @@ s = 'max';
 % ------------- decide if verification is ok ------------------------------
 if e2 > max_error
     v = false;
-    s = sprintf('verification %s with reference FAILED: error %3.3g > allowed error %3.3g', ...
+    s = sprintf('verification %s with reference FAILED: error %3.3f > allowed error %3.3f', ...
         functionname, e2, max_error);
     show = true;
 elseif e3 > max_simu_error
     v = false;
-    s = sprintf('verification %s with 1st calculation FAILED: error %3.3g > allowed error %3.3g', ...
+    s = sprintf('verification %s with 1st calculation FAILED: error %3.3f > allowed error %3.3f', ...
         functionname, e3, max_simu_error);
     show = true;
 else

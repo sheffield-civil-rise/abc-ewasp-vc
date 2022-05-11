@@ -1,2 +1,0 @@
-see 
-\public\library_simulink\Load\Hot_Water_Tapping\EU_Tapping_Cycle\doc\pdf
