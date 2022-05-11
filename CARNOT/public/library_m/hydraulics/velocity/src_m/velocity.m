@@ -53,10 +53,10 @@ function v = velocity(t,p,fluid,mix,d,mdot)
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/hydraulics/velocity/src_m/velocity.m $
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
 % **********************************************************************
 
 v = mdot./(density(t,p,fluid,mix).*pi.*(d./2).^2);

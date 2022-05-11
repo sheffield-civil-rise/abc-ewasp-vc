@@ -8,6 +8,7 @@
  *  Bernd Hafner -> hf
  *  Christian Winteler -> wic
  *  Arnold Wohlfeil -> aw
+ *  Patrick Kefer -> pk
  *
  * Version  Author  Changes                                     Date
  * 0.9.0    hf      created                                     19jul1998
@@ -35,7 +36,7 @@
  * 6.2.2	aw		unused parameter deleted					01jul2016
  *					SPLint warnings checked
  * 6.2.3    hf      NODES replaced by NDNODE                    02jul2016
- *
+ * 7.0.1    pk      dont create dummy continuous states         15Feb2019   
  ***********************************************************************
  * This file is part of the CARNOT Blockset.
  * Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
@@ -63,10 +64,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision: 372 $
- * $Author: carnot-wohlfeil $
- * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
- * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Thermal_Models/Wall_basic/src/layerwall.c $
+ * $Revision$
+ * $Author$
+ * $Date$
+ * $HeadURL$
  ***********************************************************************
  
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -179,7 +180,7 @@ static void mdlCheckParameters(SimStruct *S)
 {
 	uint16_T i;
 	double sum = 0.0;
-	
+   	    
 	/* check sizes of vectos */
 	if ( (NDNODE!=NCOND) || (NDNODE!=NCWALL) || (NDNODE!=NRHO) )
 	{
@@ -299,8 +300,54 @@ static void mdlInitializeSizes(SimStruct *S)
         return; /* Parameter mismatch will be reported by Simulink */
     }
 #endif
+    
+	/* ------------- NEW FASTER VERSION --------------------------------------*/
+	uint16_T numlayer, nonodes, numactive,
+			 j, i;
 
-    ssSetNumContStates(S, MAX_L);  /* number of continuous states */
+	uint16_T m[MAX_L]; 			/* number of sub layers per layer */
+
+	numlayer = (uint16_T)NDNODE; /* number of major layers */
+
+	real_T   *dnode    = mxGetPr(S_DNODE);
+	real_T   *cond = mxGetPr(S_COND);
+	real_T   *cwall = mxGetPr(S_CWALL);
+	real_T   *rho = mxGetPr(S_RHO);
+    real_T   *depth    = mxGetPr(S_DEPTH);
+	/* calculate necessary number of states*/
+	
+    /* no active layer if depth of active layer < 0*/
+    if (depth[0] < 0.0)
+	{
+        numactive = 0;
+	}
+	else
+	{
+		numactive = (uint16_T)NDEPTH;
+	}
+    
+    nonodes = 0;
+	for (j = 0; j<numlayer; j++)
+	{
+		/* m is the number of nodes per layer, equation from Feist */
+		m[j] = (uint16_T)(ceil(sqrt(rho[j] * cwall[j] / (2.0*cond[j] * TAU)) * dnode[j]) + 0.1);
+		if (m[j] < 1)
+		{
+			m[j] = 1;
+		}
+		else if (m[j] > MAX_LAYERS)
+		{
+			m[j] = MAX_LAYERS;
+		}
+		nonodes = nonodes + m[j];							/* number of nodes increase by number of sublayers per layer */
+	}
+	nonodes = nonodes + 1; /* we have one node more than layers */
+    
+    nonodes = nonodes + numactive; // add states for active layer nodes
+	/* -------------  NEW FASTER VERSION --------------------------------------*/
+
+	ssSetNumContStates(S, nonodes);  /* NEW VERSION number of continuous states = exactly neede states*/
+    // ssSetNumContStates(S, MAX_L);  /* OLD VERSION number of continuous states = maximum possible states */
     ssSetNumDiscStates(S, 0);      /* number of discrete states */
 
     if (!ssSetNumInputPorts(S, 3))
@@ -401,7 +448,8 @@ static void mdlInitializeConditions(SimStruct *S)
 			 j, i, n;
           
     real_T delx,				/* distance between two nodes */
-           celldepth[MAXNODES], /* position of the cell */
+//            celldepth[MAXNODES], /* position of the cell */
+           celldepth[MAX_L], /* position of the cell */
            k[MAX_L],			/* heat transfer by conduction in W/m²/K */
            c[MAX_L],			/* heat capacity of a layer per surface in J/m²*/
            MatLambda1[MAX_L],	/* thermal conductivity of each node; beginning and ending with 0.0 for the boundary */
@@ -568,7 +616,8 @@ static void mdlInitializeConditions(SimStruct *S)
 	}
 	COND(NONODES) = MatLambda1[NONODES];
 
-    for (n = 0; n <NDNODE*MAX_LAYERS; n++)
+    //for (n = 0; n <NDNODE*MAX_LAYERS; n++)
+	for (n = 0; n < NONODES; n++)
 	{
         x0[n] = t0;             /* state-vector is initialized with TINI */ 
 	}		
@@ -621,6 +670,8 @@ static void mdlDerivatives(SimStruct *S)
 	real_T   *dwork_cap        = (real_T   *)ssGetDWork(S, DWORK_CAP_NO);
 	real_T   *dwork_cond       = (real_T   *)ssGetDWork(S, DWORK_COND_NO);
     
+    int_T numstates = ssGetNumContStates(S);
+            
     real_T qinside   = Q_INSIDE;
     real_T qoutside  = Q_OUTSIDE;
     uint16_T  n;
@@ -657,10 +708,9 @@ static void mdlDerivatives(SimStruct *S)
 	{
 		dTdt[ACTIVE(n)] = dTdt[ACTIVE(n)] + POWER_PER_NODE(n)/CAP(ACTIVE(n));
 	}
-	
-	
+		
 	/* set the other derivatives to zero */
-    for (n=NONODES; n<MAX_L; n++)
+    for (n=NONODES; n<numstates; n++)
 	{
         dTdt[n] = 0.0;
 	}

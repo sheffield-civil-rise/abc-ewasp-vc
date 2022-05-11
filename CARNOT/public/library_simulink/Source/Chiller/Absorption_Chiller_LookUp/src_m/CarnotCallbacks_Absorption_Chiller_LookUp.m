@@ -1,6 +1,17 @@
 %% CarnotCallbacks_Absorption_Chiller_LookUp is used by the Carnot Absorption_Chiller_LookUp 
-% The file contains also other subfunctions:
-% function CreateMaskAnnotations(block)
+%% Function Call
+%  tsn = template_carnot_m_function(ts)
+%% Inputs
+%  variable number of input arguments, first argument is the function name
+%% Outputs
+%  variable number of outputs, the parameters for the model
+% 
+%% Description
+%  The file is called from the mask initialisation of the
+%  Absorption_Chiller_LookUp model in Carnot.
+% 
+%% References and Literature
+%  see also Absorption_Chiller_LookUp model
 
 function varargout = CarnotCallbacks_Absorption_Chiller_LookUp(varargin)
 % Switch for command line calls

@@ -57,11 +57,15 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 style='mso-bookmark:valve_thermostatic'><span style='mso-bookmark:schwamberger'><span
 style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:18.0pt;
 line-height:120%'>
-<img alt="" height="88" src="Figures/valve_thermostatic.JPG" style="float: right" width="94" />valve_thermostatic</span></b></span></span></span></span><span
+<img alt="" height="88" src="Figures/valve_thermostatic.JPG" style="float: right" width="94" /></span><span style='font-size:18.0pt;
+line-height:120%'>V</span><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'>alve_</span><span style='font-size:18.0pt;
+line-height:120%'>T</span><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'>hermostatic</span></b></span></span></span></span><span
 style='mso-bookmark:valve_thermostatic'><span style='mso-bookmark:schwamberger'><span
 style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
-<b>Path: CARNOT/hydraulics</b> <br clear=all style='mso-special-character:line-break'>
+<b>Path: CARNOT/<span lang="de-at">H</span>ydraulics</b> <br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -76,20 +80,24 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-Regulation element for room heating system. </span><span
+</span><span style='font-size:13.5pt;line-height:120%'> Thermostatic control 
+valve for</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> room heating system. </span><span
 lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></span></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-The thermostatic valve is used to reduce the mass flow in a space heating
-system when temperature of the sensor reaches its desired value. The
-characteristics of a typical valve are used for the pressure drop. The
-temperature of the sensor is delayed by the heat capacity from the incoming
-temperature. The position of the valve is calculated by <br>
-Position = -Slope * (T<sub>sensor</sub>-T<sub>set</sub>) <br>
-The working point is the position of the valve if the sensor temperature is the
-same as the set temperature. </span></span></span></p>
+The thermostatic valve is used to reduce the mass flow in a space heating system 
+when temperature of the sensor reaches its desired value. The characteristics of 
+a typical valve are used for the pressure drop. The temperature of the sensor is 
+delayed by </span><span style='font-size:13.5pt;line-height:120%'> its</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span>
+<span style='font-size:13.5pt;line-height:120%'> thermal intertia</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> from the incoming
+temperature.</span><font size="4"> </font></span></span></p>
+<p><font size="4">The model uses <a href="Valve_fn.html">Valve_fn</a> and
+<a href="Thermostat_Proportional.html">Thermostat_Proportional</a>.</font></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Inputs:</span></b><span
@@ -100,14 +108,21 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
      margin-left:36.0pt;mso-list:l202 level1 lfo218;tab-stops:list 36.0pt'><span
      style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>THV inlet </span><span lang=EN-US
+     "Times New Roman"'>TH</span><span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>B</span><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'> inlet </span><span lang=EN-US
      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      margin-left:36.0pt;mso-list:l202 level1 lfo218;tab-stops:list 36.0pt'><span
-     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'>
+ <span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>(Room) </span><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>Temperature for the sensor </span><span
-     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+     "Times New Roman"'>Temperature for the sensor</span></span></span></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l202 level1 lfo218;tab-stops:list 36.0pt; font-size: 13.5pt;'>
+	Room temperature setpoint</li>
 </ul>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
@@ -118,7 +133,16 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'>Output: </span></span></spa
      margin-left:36.0pt;mso-list:l29 level1 lfo219;tab-stops:list 36.0pt'><span
      style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>THV outlet </span><span lang=EN-US
+     "Times New Roman"'>TH</span><span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>B</span><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'> outlet</span></span></span></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l29 level1 lfo219;tab-stops:list 36.0pt'>
+	<font size="4">Current valve position in [0..1]</font><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'> </span><span lang=EN-US
      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
 </ul>
 

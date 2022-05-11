@@ -41,7 +41,7 @@ max_simu_error = 1e-7;   % max error between initial and current simu
 functionname = 'verify_House_OneNodeModel_mdl';
 
 % reference time vector
-t0 = 0:600:2*24*3600;
+t0 = 0:1800:2*24*3600;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------

@@ -1,0 +1,75 @@
+<p><hr size="10" noshade> </p>
+
+<p><img alt="" src="Figures/absorptionchillerddt.jpg" style="float: right"><a name="absorption chiller Yazaki WFC-SC5"><font size="5"><b>Absorption Chiller 
+ddT</b></font></a><br>
+<b>Path: CARNOT/New Blocks</b><p>
+<p>
+<p>&nbsp;<p><br clear="all"><hr></p>
+
+
+
+<p><b>Purpose</b> <br>
+
+This block calculates the capacities and cop of the absorption chiller with the 
+delta-delta-T model.
+
+
+</p>
+
+<p><b>Description</b> <br>
+
+</p>
+<p>Empirical model of an absorption chiller based on the fitted deltadelta_t' 
+model from A. Kühn (2005) :
+
+</p>
+<p>Linear model:
+
+</p>
+<p>deltadelta_t'=t_G - A*t_AC + E*t_E
+
+</p>
+<p>Qdot_E = s_e * deltadelta_t' + r_e
+
+</p>
+<p>Qdot_G = s_g * deltadelta_t' + r_g
+
+</p>
+<p>Use acm_param.m to determine A, E, s_e, r_e, s_g and r_g with 
+characterisitics of the absorption chiller.
+
+</p>
+
+<p><b>Inputs:</b> 
+
+<ul><li>THBload_in: Thermo-hydraulic bus of the load (return of the cooling 
+	circuit)</li>
+<li>THBhot_in : Thermo-hydraulic bus of the driving source (high temperature 
+side)</li>
+<li>THBcool_in : Thermo-hydraulic bus of the waste heat (return pipe from air 
+convector)</li>
+<li>control: 0/1</li></ul>
+
+</p>
+
+<p><b>Outputs:</b> 
+
+<ul><li>THBload: Thermo-hydraulic bus of the load (flow line of the cooling 
+	circuit)</li>
+<li>THBhot : Thermo-hydraulic bus of the driving source (high temperature side)</li>
+<li>THBcool : Thermo-hydraulic bus of the waste heat (flow line to the air 
+convector)</li>
+<li>control: 0/1</li>
+	<li>electrical power of the pumps in W</li>
+	<li>thermal power in W</li>
+</ul>
+&nbsp;</p>
+<p><strong>Parameters and Dialog Box</strong></p>
+<p><img alt="" src="Figures/absorptionchillerddt_MASK.jpg"></p>
+
+<p align="left">
+<p><b>Characteristics</b> <br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>
+Sample time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inherited from driving block <br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No 
+</p>

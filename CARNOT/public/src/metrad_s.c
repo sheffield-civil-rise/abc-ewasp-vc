@@ -1,6 +1,6 @@
 /***********************************************************************
  * This file is part of the CARNOT Blockset.
- * Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+ * Copyright (c) 1998-2022, Solar-Institute Juelich of the FH Aachen.
  * Additional Copyright for this file see list auf authors.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without 
@@ -25,63 +25,71 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision: 372 $
- * $Author: carnot-wohlfeil $
- * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
- * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src/metrad_s.c $
  ***********************************************************************
- *  M O D E L    O R    F U N C T I O N
+ * list of authors
+ *      tw : Thomas Wenzel
+ *      hf : Bernd Hafner
+ *
+ * Version  Author  Changes                                     Date
+ * 0.01.0   tw      created M-script                            18oct1999
+ *                  based on the M-Skripte metcalc.m of Markus Werner
+ * 0.02.0   tw      created S-function                          25nov1999
+ * 4.1.0    hf      using carlib functions for solar position   02dec2008
+ * 5.1.0    hf      changed unknown global-diffuse correlation  01jun2012
+ *                  to the Orgill and Hollands Model (1977) 
+ * 7.1.0    hf      solar position from carlib function         23apr2022
+ * 7.1.1    hf      changed number of inports and outports      23apr2022
+ *                  added clearness index as output
+ ***********************************************************************
+ *  F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Syntax  [Idir Idfu SunAngel Zenith Azimuth] = metrad_s[time Iglob, lat, long, long0]
- *
- * Version  Author      Changes                                     Date
- * 0.01.0   Th. Wenzel  created M-script                            18oct1999
- * 0.02.0   tw          created S-function                          25nov1999
- * 4.1.0    hf          using carlib functions for solar position   02dec2008
- * 5.1.0    hf          changed unknown global-diffuse correlation  01jun2012
- *                      to the Orgill and Hollands Model (1977) 
- *
- * Copyright (c) 1999 Solar-Institut Juelich, Germany
- * 
+ * [Idir Idfu SunAngle Zenith Azimuth Clearness] = 
+ *       metrad_s(Iglob, lat, long, long0)
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *  D E S C R I P T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * FUNCTION:		Berechnung von direkter und diffuser Strahlung auf die Horizontale
-            
-              INPUT
-         
-			  1. time		    :	Stunde eines Jahres, 1, [1,8760]
-			  2. IGLOB	   	    :	Globalstrahlung auf eine HORIZONTALE Fläche, W/m2
-			  3. latitude      :   Breitengrad ([-90,90],Nord positiv)
-              4. longitude     :   Längengrad ([-180,180],West positiv)
-              5. longitudenull :   Referenzlängengrad (Zeitzone)
-					
-              OUTPUT
-
-			  1. Idir			:	direkte Strahlung auf Horizontale, W/m2
-			  2. Idfu			:	diffuse Strahlung auf Horizontale, W/m2
-              3. SunAngle      :   Sonnenhöhenwinkel
-              4. Zenith        
-              5. Azimuth
-
-  Modifizierung des M-Skriptes metcalc.m von Markus Werner, Solar-Institut Juelich
-
-  Thomas Wenzel, 25.11.1999
-
-
-  Berechnung des Sonnenstandes aus sunpos.c übernommen:
-  
- * The model calculates the sun_position described by the three sun-angles zenit-angle,
- * azimuth-angle and the angle between collector normal and the sun. The calculation is 
- * carried out based on the formulas of the "Deutscher Wetterdienst". The input data are 
- * taken from the Test reference year (TRY).
+ * FUNCTION: 
+ * Calculate direct and diffuse solar radiation with the input of the global
+ * solar radiaton. The model uses the Orgill & Hollands correlation, 
+ * published by Duffie, Beckmann Solar Engineering 2006
+ * INPUT
+ *  Iglob    : global solar radiation on the horizontal surface in W/m²
+ *  lat      : geographical latitude in degree (-90..90,North positiv)
+ *  long     : longitude in degree (-180..180, West positiv)
+ *  long0    : longitude of the timezone in degree (CET = -15)
+ * 
+ * OUTPUT
+ *
+ *  Idir     : direct solar radiation on the horizontal in W/m²
+ *  Idfu     : diffuse solar radiation on the horizontal in W/m²
+ *  SunAngle : solar height in degree (0° = at horizon)
+ *  Zenith   : zenith angle of the sun in degree
+ *  Azimuth  : azimuth anlge of the sun in degree (0 = south, west positive)
+ *  Clearness: clearness index of the sky, ratio of global to
+ *             extraterrestrial radiaton on the horizontal
  */
 
-
+/*some defines for access to the parameters */
+/*define PARA1 (*mxGetPr(ssGetSFcnParam(S,0))) */
+#define N_PARA                              0
+/*some defines for access to the input vector */
+#define IGLOB          (*u0Ptrs[0])
+#define LATITUDE       (*u1Ptrs[0])
+#define LONGITUDE      (*u2Ptrs[0])    
+#define LONGITUDENULL  (*u3Ptrs[0])    
+#define N_INPORT          4         /* number of input ports */
+/*some defines for access to the output vector */
+#define IDIR       y0[0]    
+#define IDFU       y1[0]    
+#define SUNANGLE   y2[0]    
+#define ZENITH     y3[0]    
+#define AZIMUTH    y4[0]    
+#define CLEARNESS  y5[0]    
+#define N_OUTPORT   6               /* number of output ports */
+/* other defines */
+#define TIME     ssGetT(S)  /* simulation time */
 #define S_FUNCTION_LEVEL 2
 #define S_FUNCTION_NAME metrad_s
-
-
 /*
  * Need to include simstruc.h for the definition of the SimStruct and
  * its associated macro definitions. math.h is for function sqrt
@@ -90,43 +98,9 @@
 #include <math.h>
 #include "carlib.h"
 
-
-/*
- * some defines for access to the parameters
- */
-/*define DIAMETER (*mxGetPr(ssGetSFcnParam(S,0))) *//* diameter of inlet and outlet */
-#define N_PARA                              0
-
-/*
- * some defines for access to the input vector
- */
-#define IGLOB          (*u1Ptrs[0])    /* Month  1..12   */
-#define LATITUDE       (*u1Ptrs[1])    /* Day   1..31    */
-#define LONGITUDE      (*u1Ptrs[2])    
-#define LONGITUDENULL  (*u1Ptrs[3])    
-#define IN_WIDTH                4      /* number of inputs per port */
-
-
-/*
- * some defines for access to the output vector
- */
-#define IDIR       y1[0]    
-#define IDFU       y1[1]    
-#define SUNANGLE   y1[2]    
-#define ZENITH     y1[3]    
-#define AZIMUTH    y1[4]    
-#define OUT_WIDTH     5     /* number of outputs per port */
-
-
-#define TIME     ssGetT(S)
-//#define DeclDayAmpl   -0.40927970959267   /* = -23.45 * pi/180;  */
-//#define HourAngleAmpl  0.261799387799149  /* = 15 * pi/180;      */
-
-
 /*====================*
  * S-function methods *
  *====================*/
-
 /* Function: mdlInitializeSizes ===============================================
  * Abstract:
  *    The sizes information is used by Simulink to determine the S-function
@@ -134,36 +108,40 @@
  */
 static void mdlInitializeSizes(SimStruct *S)
 {
+    int_T n;
+    
     ssSetNumSFcnParams(S, N_PARA);  /* Number of expected parameters */
-    if (ssGetNumSFcnParams(S) != ssGetSFcnParamsCount(S)) {
-        /* Return if number of expected != number of actual parameters */
+    if (ssGetNumSFcnParams(S) != ssGetSFcnParamsCount(S))
+    {   /* Return if number of expected != number of actual parameters */
         return;
     }
-
     ssSetNumContStates(S, 0);
     ssSetNumDiscStates(S, 0);
 
-    if (!ssSetNumInputPorts(S, 1)) return;  
-    ssSetInputPortWidth(S, 0, IN_WIDTH);
-    ssSetInputPortDirectFeedThrough(S, 0, 1);
-
-    if (!ssSetNumOutputPorts(S, 1)) return;
-    ssSetOutputPortWidth(S, 0, OUT_WIDTH);
-
+    if (!ssSetNumInputPorts(S, N_INPORT)) return;  
+    for (n = 0; n < N_INPORT; n++)
+    {
+        ssSetInputPortWidth(S, n, 1);
+        ssSetInputPortDirectFeedThrough(S, n, 1);
+    }
+    
+    if (!ssSetNumOutputPorts(S, N_OUTPORT)) return;
+    for (n = 0; n < N_OUTPORT; n++)
+    {
+        ssSetOutputPortWidth(S, n, 1);
+    }
+    
     ssSetNumSampleTimes(S, 1);
     ssSetNumRWork(S, 0);
     ssSetNumIWork(S, 0);
     ssSetNumPWork(S, 0);
     ssSetNumModes(S, 0);
     ssSetNumNonsampledZCs(S, 0);
-
     /* Take care when specifying exception free code - see sfuntmpl.doc */
 #ifdef  EXCEPTION_FREE_CODE
     ssSetOptions(S, SS_OPTION_EXCEPTION_FREE_CODE);
 #endif
 }
-
-
 
 /* Function: mdlInitializeSampleTimes =========================================
  * Abstract:
@@ -175,10 +153,7 @@ static void mdlInitializeSampleTimes(SimStruct *S)
 {
     ssSetSampleTime(S, 0, CONTINUOUS_SAMPLE_TIME);
     ssSetOffsetTime(S, 0, 0.0);
-
 }
-
-
 
 #undef MDL_INITIALIZE_CONDITIONS   /* Change to #undef to remove function */
 #if defined(MDL_INITIALIZE_CONDITIONS)
@@ -195,12 +170,8 @@ static void mdlInitializeSampleTimes(SimStruct *S)
    */
   static void mdlInitializeConditions(SimStruct *S)
   {
-
-
   }
 #endif /* MDL_INITIALIZE_CONDITIONS */
-
-
 
 #undef MDL_START  /* Change to #undef to remove function */
 #if defined(MDL_START) 
@@ -215,8 +186,6 @@ static void mdlInitializeSampleTimes(SimStruct *S)
   }
 #endif /*  MDL_START */
 
-
-
 /* Function: mdlOutputs =======================================================
  * Abstract:
  *    In this function, you compute the outputs of your S-function
@@ -224,135 +193,72 @@ static void mdlInitializeSampleTimes(SimStruct *S)
  */
 static void mdlOutputs(SimStruct *S, int_T tid)
 {
-    InputRealPtrsType u1Ptrs = ssGetInputPortRealSignalPtrs(S,0);
-    real_T *y1 = ssGetOutputPortRealSignal(S,0);
+    InputRealPtrsType u0Ptrs = ssGetInputPortRealSignalPtrs(S,0);
+    InputRealPtrsType u1Ptrs = ssGetInputPortRealSignalPtrs(S,1);
+    InputRealPtrsType u2Ptrs = ssGetInputPortRealSignalPtrs(S,2);
+    InputRealPtrsType u3Ptrs = ssGetInputPortRealSignalPtrs(S,3);
+    
+    real_T *y0 = ssGetOutputPortRealSignal(S,0);
+    real_T *y1 = ssGetOutputPortRealSignal(S,1);
+    real_T *y2 = ssGetOutputPortRealSignal(S,2);
+    real_T *y3 = ssGetOutputPortRealSignal(S,3);
+    real_T *y4 = ssGetOutputPortRealSignal(S,4);
+    real_T *y5 = ssGetOutputPortRealSignal(S,5);
+    
     real_T time = TIME;
+    real_T Iglobal = IGLOB;             /* global radiation */
+    real_T latitude = LATITUDE;         /* latitude */
+    real_T longitude = LONGITUDE;       /* longitude */
+    real_T longitude0 = LONGITUDENULL;  /* timezone */
+    real_T solpos[5];
+    real_T ClearIndex = 0.0;            /* clearness index */
+    real_T zen, azi, sangle, Iextra;
+
+    /* get the solar position from carlib function solar_position */
+    solar_position(solpos, time, latitude, longitude, longitude0);
+    zen = solpos[0];                /* zenith angle */
+    azi = solpos[1];                /* azimut angle */
+    sangle = RAD2DEG*zen;           /* solar zenith in degree */
+    ZENITH = sangle;                /* output solar zenith angle */
+    sangle = 90.0-sangle;           /* solar height */
+    SUNANGLE = sangle;              /* output solar height */
+    AZIMUTH = RAD2DEG*azi;          /* output solar azimuth angle */
     
-    real_T Iglobal, SunHour, ClearIndex, 
-           delta, woz, HourAngle, coszenit,
-           latitude, Iextra, IextraDay;
-     
-    Iglobal = IGLOB;
-  
-    /* Besetzen diverser Variablen mit Default-Werten:*/
-    SunHour = 0;	/* Kennung für Tagesstunden; "0" = NACHTstunden*/
-    ClearIndex = -1; /* Erkennungsmarke für NACHT-Interpolation    */
-    
-    IDFU = 0;	/* Default: "0" = NACHT */
-    
-    latitude = DEG2RAD*LATITUDE;
-    
-    
-    SUNANGLE = 0;
-    ZENITH = 0;
-    AZIMUTH = 0;
-    
-    
-    if (Iglobal<0)       /* wenn negative Einstrahlung, dann Einstrahlungen = 0*/
+    /* calulate only if it is worthwhile to do it */
+    if (sangle > 1.0 && Iglobal > 0.01) /* if there is sun and global radiation */
     {
-       IDIR = 0;
-       IDFU = 0;
-    }
-    else
-    {
-       /* ------------------------------------------------------------------------------- 
-    	* 	"Decl"			Deklination der Sonne
-    	*	"HourAngle" 	Stundenwinkel der Sonne 
-    	*	"zenit"			Zenithwinkel 
-        *	"SunAngle"		Sonnenhöhenwinkel
-    	* 	"azimut"			Azimutwinkel 
-    	*	"Iextra"			Extraterrestrische Strahlung auf HORIZONTALE Fläche
-        *	"SunHour"		Tag-/Nachterkennung Êrkennung
-        *"dimness"		Trübungsfaktor der Atmosphäre
-        * 	"Idirclear"		direkte Strahlung auf der Erdoberfläche für KLAREN Himmel 
-    	* 	"Idfuclear"		diffuse Strahlung auf der Erdoberfläche für KLAREN Himmel 
-       /* -------------------------------------------------------------------------------*/ 
-
-        /* solar time 0 .. 24*3600 s */
-        woz = solar_time(time, LONGITUDENULL, LONGITUDE);      /* solar time from carlib */
-
-        /* determine solar hour angle in radian (noon = 0,  6 a.m. = -PI) */
-        HourAngle = (woz - 43200.0)*7.272205216643040e-5;
-
-        /* declination of the sun */
-        delta = solar_declination(time); 
-
-        /* solar zenith angle in degrees (0° = zenith position, 90° = horizont) */
-        coszenit = sin(latitude)*sin(delta) + cos(latitude)*cos(delta)*cos(HourAngle);
-        ZENITH  =  acos(coszenit)*RAD2DEG;   
-    
-        /* solar azimuth angle */
-        if (ZENITH != 0.0 && ZENITH != 180.0)  /* zenith angle not 0 and not 180 */ 
-        {
-           AZIMUTH = RAD2DEG*acos((sin(latitude)*coszenit 
-              -sin(delta))/(cos(latitude)*sin(acos(coszenit))));
-           if (HourAngle < 0)
-              AZIMUTH = -AZIMUTH;
-        }
-        else
-           AZIMUTH = 0.0;
-        
-        /* Sonnenhöhenwinkel "SunAngle":*/
-        SUNANGLE = 90 - ZENITH;
-        if (SUNANGLE < .01)
-           SUNANGLE = .01; /* da sonst Warnung "log(0)" (s.u.), falls SunAngle = 0.*/
-        
-        /* Auf eine HORIZONTALE (= der Erdoberfläche parallelen) Fläche unter dem  */
-        IextraDay = extraterrestrial_radiation(time);
-        /* Winkel "zenit" treffende extraterrestrische Strahlung "Iextra":         */
-        Iextra = IextraDay * coszenit;
-        
-        /* Kennung für Tagesstunden "SunHour":      */
-        if (Iextra > 0.0)
-           SunHour = 1;
-        else
-           SunHour = 0;
-        
-        /* Unterdrückung von nächtlichen Offset-Werten in "Iglobal":                         */
-        if (SunHour == 0 && Iglobal > 0.0)
-           Iglobal = 0.0;
-       	
-        /* ------------------------------------------------------------------------------- 
-         * 	"ClearIndex"	Klarheitsindex der Atmosphäre (TAG)
-         * 	"Idir"			direkte Strahlung auf der Erdoberfläche
-         * 	"Idfu"			diffuse Strahlung auf der Erdoberfläche
-         * ------------------------------------------------------------------------------- */
-        
-        IDFU = 0.0;
-        if (SunHour == 1)
+        /* extraterrestrial radiation is on normal surface */
+        /* clearness index is defined by the ratio of radiaton on 
+         * a horizontal surface so multiply with cos(zenith)
+         */
+        Iextra = extraterrestrial_radiation(time)*cos(zen);
+        /* determine radiation on horizontal surface */
+        if (Iextra > 0.01)      /* there extraterrestrial radiation */
         {
            ClearIndex = Iglobal/Iextra;
-           
-           if (ClearIndex > 1.0)           /* ggfs. Korrektur, damit "ClearIndex" <= 1 bleibt:*/
-              ClearIndex = 1.0;
-
-           
-           /* Diffuse Strahlung auf HORIZONTALE Fläche "Idfu" ...  */ /* unknown model */
-           /* if (ClearIndex <= 0.3)
-            *  IDFU = Iglobal * (1 - 0.2 * ClearIndex);
-            * else if (ClearIndex <= 0.79)
-            *  IDFU = Iglobal * (1.423-1.612 * ClearIndex);
-            * else
-            *  IDFU = Iglobal * 0.15;
-            */
-
-           /* diffuse radiation on horizontal surface
-            *  Orgill & Hollands correlation from Duffie, Beckmann Solar Engineering 2006 */
+           ClearIndex = min(1.0, ClearIndex);   /* upper limit is 1.0 */
+           /* Orgill & Hollands correlation 
+            * from Duffie, Beckmann Solar Engineering 2006 */
             if (ClearIndex <= 0.35)
                 IDFU = Iglobal * (1 - 0.249 * ClearIndex);
             else if (ClearIndex <= 0.75)
                 IDFU = Iglobal * (1.557 - 1.84 * ClearIndex);
             else
                 IDFU = Iglobal * 0.177;
-        }
-        
-        /* Direkte Strahlung auf HORIZONTALE Fläche "Idir"*/
-        IDIR = Iglobal - IDFU;
-    
-    } /* else if Iglobal>=0*/
-
+        } 
+        else                    /* no extraterrestrial radiaton */
+        {
+            IDFU = 0.0;
+        }   
+        IDIR = Iglobal - IDFU;  /* output direct radiation */
+    }
+    else                        /* (almost) no radiation or low sun */
+    {
+        IDFU = Iglobal;         /* diffuse radiation is the global rad. */
+        IDIR = 0.0;             /* direct radiation is 0 */
+    }
+    CLEARNESS = ClearIndex;
 } /* end mdloutputs */
-
 
 
 #undef MDL_UPDATE  /* Change to #undef to remove function */
@@ -370,7 +276,6 @@ static void mdlOutputs(SimStruct *S, int_T tid)
 #endif /* MDL_UPDATE */
 
 
-
 #undef MDL_DERIVATIVES  /* Change to #undef to remove function */
 #if defined(MDL_DERIVATIVES)
   /* Function: mdlDerivatives =================================================
@@ -383,8 +288,6 @@ static void mdlOutputs(SimStruct *S, int_T tid)
   }
 #endif /* MDL_DERIVATIVES */
 
-
-
 /* Function: mdlTerminate =====================================================
  * Abstract:
  *    In this function, you should perform any actions that are necessary
@@ -394,7 +297,6 @@ static void mdlOutputs(SimStruct *S, int_T tid)
 static void mdlTerminate(SimStruct *S)
 {
 }
-
 
 /*======================================================*
  * See sfuntmpl.doc for the optional S-function methods *

@@ -41,7 +41,7 @@ max_simu_error = 1e-7;   % max error between initial and current simu
 functionname = 'verify_Valve_Thermostatic_mdl';
 
 % % reference time vector
-% t0 = 0:100:24*365*3600;
+t0 = 0:5:100;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
@@ -49,11 +49,11 @@ functionname = 'verify_Valve_Thermostatic_mdl';
 load_system(functionname)
 simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
-y2 = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
-t0 = simOut.get('tout');        % get the whole time vector from simu
-% tsy = timeseries(yy,tt);        % timeseries for the columns
-% tx = resample(tsy,t0);          % resample with t0
-% y2 = tx.data;
+yy= simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
+tt = simOut.get('tout');        % get the whole time vector from simu
+tsy = timeseries(yy,tt);        % timeseries for the columns
+tx = resample(tsy,t0);          % resample with t0
+y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -223,4 +223,6 @@ end
 %  6.1.0    ts      created                                     07aug2017
 %  6.1.1    hf      comments adapted to publish function        09nov2017
 %                   reference y1 does not overwrite y2
+%  6.2.0    hf      new valve_thermostatic based                28dec2018
+%                   on Valve_ThermoTset_fn
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

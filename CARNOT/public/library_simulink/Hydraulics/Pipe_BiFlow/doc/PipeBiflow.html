@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="de-at" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>storage multiport</title>
+<style type="text/css">
+ div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+p
+	{margin-right:0cm;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+ a:link
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;
+}
+ table.MsoNormalTable
+	{line-height:120%;
+	font-size:10.0pt;
+	font-family:"Calibri","sans-serif";
+	}
+tt
+	{font-family:"Courier New";
+	}
+ ul
+	{margin-bottom:0cm;}
+ li.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+ .auto-style3 {
+	font-size: 18pt;
+}
+.auto-style4 {
+	line-height: 150%;
+	margin-top: 0;
+}
+.auto-style13 {
+	font-size: 13.5pt;
+}
+</style>
+</head>
+
+<body>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=10 width="100%" noshade style='color:#A0A0A0' align=center>
+
+</span></span></span></div>
+
+<p class="auto-style4"><span class=GramE>
+<span
+style='mso-bookmark:storage_multiport'><span style='mso-bookmark:schwamberger'>
+<span
+style='mso-bookmark:literature' class="auto-style3">Pipe Biflow
+<img alt="" height="107" src="Figures/PipeBiflow.jpg" style="float: right" width="235" /><br />
+</span></span></span></span><span
+style='mso-bookmark:storage_multiport'><span style='mso-bookmark:schwamberger'>
+<span
+style='mso-bookmark:literature'>
+<span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+<b>Path: CARNOT/</b></span><b><span style='font-size:13.5pt;
+line-height:120%'>Hydraulics&nbsp; </span></b></span></span></span></p>
+<p class="auto-style4">&nbsp;</p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:storage_multiport'><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></span></div>
+
+<p style="width: 595px"><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+class=GramE><b><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+</span><span style='font-size:13.5pt;line-height:120%'> Pipe with flow in both 
+directions</span></span>.</span></span></p>
+<p style="width: 595px"><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+Pipe model for flow in both directions. The model is based on a buffer storage 
+tank but has no calculation for inversed thermocline.</span></span></span></p>
+<p style="width: 595px"><font size="4">The model is based on
+<a href="Storage_Type_N.html">Storage_Type_N</a></font><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br />
+</span></span></span></p>
+<p style="width: 594px"><font size="4"><strong>Parameters and Dialog Box<br />
+</strong><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'>
+<span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>The parameters </span>
+<span style='font-size:13.5pt;line-height:120%'>represent</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> the
+geometric and thermodynamic data of the storage. </span>
+<span style='font-size:13.5pt;line-height:120%'>The top mask</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span>
+<span style='font-size:13.5pt;line-height:120%'>defines also </span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>the number of ports,
+the number of temperature sensors and the
+number of nodes. </span></span></span>
+</font></p>
+<p style="width: 594px"><img alt="" src="Figures/PipeBiflowMASK.jpg" /></p>
+<p style="width: 594px"><font size="4">The initial temperature can be a scalar value which means one temperature for 
+all nodes. It may also be a vector with the length “nodes”. In this case each 
+node is initialized with its individual temperature. The first element in the 
+vector is the temperature for the bottom node. <br />
+<br />
+Geometric values, intial temperatures and the positions of the connections are 
+determined in the callback function CarnotCallbacks_PipeBilfow.m<br />
+<br />
+</font></p>
+<span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'>
+<div class=MsoNormal align=center style='text-align:center'>
+	<span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'>
+	<span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></div>
+
+<p style="width: 594px"><span style='mso-bookmark:schwamberger'>
+<span
+style='mso-bookmark:literature'>
+<span lang=EN-US style='font-size:13.5pt;
+line-height:120%'><strong>Examplee</strong></span><span class=GramE><span style='font-size:13.5pt;
+line-height:120%'><strong>s</strong></span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'><strong>:</strong></span></span></span></span> <span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>see </span>
+<span style='font-size:13.5pt;line-height:120%'>example_Pipe_Biflow.slx</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><o:p><br />
+</o:p></span></span></span></p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristic</span><span style='font-size:13.5pt;line-height:120%'>s</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>Yes</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+Sample
+time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;
+</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> Inherited
+from driving block <br>
+States &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>corresponding to the number 
+of nodes<br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;
+</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> No
+<br />
+</span><span style='font-size:13.5pt;line-height:120%'> Solvers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+variable and fixed timestep<br />
+</span></span></span></p>
+<p class="auto-style13"><strong>Literature</strong><br />
+Patankar: Numerical Heat Tansfer and Fluid Flow, 1980</p>
+
+</body>
+
+</html>

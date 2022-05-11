@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision: 372 $
- * $Author: carnot-wohlfeil $
- * $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
- * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/sunangles/src/sunangles.c $
+ * $Revision$
+ * $Author$
+ * $Date$
+ * $HeadURL$
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -37,7 +37,7 @@
  *
  * version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
  * author list:  hf -> Bernd Hafner
- *               gf -> Gaelle Faure
+ *               aw -> Arnold Wohlfeil
  *               tw -> Thomas Wenzel
  * 
  * Version  Author  Changes                                     Date
@@ -48,39 +48,27 @@
  * 6.1.0    hf      call solar_position in carlib               18sep2015
  * 6.1.1    aw      unused variable coszenit in declination()   17jan2017
  *                  deleted
+ * 7.1.0    hf      commentstranslated to english               25jan2020
  *
- * Copyright (c) 1999-2015 Solar-Institut Juelich, Germany
- * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *  D E S C R I P T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-% FUNCTION:	  Calculates declination, angle, zenith and azimuth of sun
-%            
-%
-%              INPUT
-%         
-%			   1. time		    :	[s]
-%			   2. latitude      :   Breitengrad ([-90,90],Nord positiv)
-%              3. longitude     :   Längengrad ([-180,180],West positiv)
-%              4. longitudenull :   Referenzlängengrad (Zeitzone)
-%					
-%              OUTPUT
-%
-%			   1. declination   :   [-23.4°..23.4°]
-%              2. altitude of the sun
-%              3. Zenith        
-%              4. Azimuth
-%              5. hourangle
-%
-% 
-
-  Berechnung des Sonnenstandes aus sunpos.c übernommen:
-  
+ * FUNCTION:	  Calculates declination, angle, zenith and azimuth of sun
+ *            
+ *   INPUT   1. time		    :	[s]
+ *			 2. latitude      :   geographic latitude [-90,90], North positiv
+ *           3. longitude     :   geographic longitude [-180,180], West positiv
+ *           4. longitudenull :   longitude of timezome
+ *					
+ *   OUTPUT  1. declination   :   [-23.45 ° .. 23.45 °]
+ *           2. elevantion angle of the sun
+ *           3. Zenith angle of the sun
+ *           4. Azimuth angle of the sun
+ *           5. hour angle of the sun
+ *
  * The model calculates the sun_position described by the three sun-angles zenit-angle,
  * azimuth-angle and the angle between collector normal and the sun. The calculation is 
- * carried out based on the formulas of the "Deutscher Wetterdienst". The input data are 
- * taken from the Test reference year (TRY). 
-
+ * carried out based on the formulas in the Carnot function library carlib. 
 */
 
 
@@ -141,8 +129,6 @@ void declination(real_T *time, real_T *latitude, real_T *longitude,
         delta = solpos[2];          // solar declination angle in radian, North positive
         HourAngle = solpos[3];      // solar hour angle in radian, West positive
         woz = solpos[4];            // true local time in s
-        /* declination of the sun in radian */
-//         DeclDay = solar_declination(time[i]);
 
         /* Tagesmittelwert der extraterrestrischen Strahlung "IextraDay", die senkrecht*/
         /* auf eine zur Sonne orientierten Fläche fällt (nach Duffie/Beckman,1993,S.10):*/
@@ -162,36 +148,11 @@ void declination(real_T *time, real_T *latitude, real_T *longitude,
     	* 	"Idfuclear"		diffuse Strahlung auf der Erdoberfläche für KLAREN Himmel 
        /* -------------------------------------------------------------------------------*/ 
 
-        /* solar time 0 .. 24*3600 s */
-//         woz = solar_time(time[i], longitudenull[0], longitude[0]);      /* solar time from carlib */
-
-        /* determine solar hour angle in radian (noon = 0,  6 a.m. = -PI) */
-//         HourAngle = (woz - (real_T)43200.0)*(real_T)7.272205216643040e-5;
-
         /* declination of the sun */
-//         delta = solar_declination(time[i]); 
         deltaangle = RAD2DEG*delta;
-    
-        /* solar zenith angle in degrees (0° = zenith position, 90° = horizont) */
-//         coszenit = sin(lati)*sin(delta) + cos(lati)*cos(delta)*cos(HourAngle);
-//         zenith  =  acos(coszenit)*(real_T)RAD2DEG;   
-    
-        /* solar azimuth angle */
-//         if (zenith != (real_T)0.0)   /* for angles above 0 */
-//         {
-//             azimuth = (real_T)RAD2DEG*acos((sin(lati)*coszenit - sin(delta))
-//                 /(cos(lati)*sin(acos(coszenit))));
-//             if (HourAngle < (real_T)0.0)
-//                 azimuth = -azimuth;
-//         }
-//         else
-//             azimuth = (real_T)0.0;
-       
         /* Sonnenhöhenwinkel "SunAngle":*/
         sunangle = 90.0 - zenith;
-//         if (sunangle < (real_T)0.01)
-//             sunangle = (real_T)0.01; /* da sonst Warnung "log(0)" (s.u.), falls SunAngle = 0.*/
-        
+
         out_decl[i]      = deltaangle;
         out_azimuth[i]   = azimut;
         out_altitude[i]  = sunangle;

@@ -77,11 +77,13 @@ cp_out = heat_capacity(Tamb, 1013e2, 2, xH2O_out);
 Vair = 5*5*2.5;
 nair = 0.4/3600;
 Vdot = Vair*nair;
-mdot_air = rho_out*Vdot;
-Qdot_air = mdot_air*cp_out*(Tamb-Troom);
+mdot_air_out2in = rho_out*Vdot;
+mdot_air_in2out = mdot_air_out2in;
+D_mdot_air = mdot_air_out2in-mdot_air_in2out;
+Qdot_air = mdot_air_out2in*cp_out*(Tamb-Troom);
 Qdotc = Qdot_air;
-mdot_H2O = mdot_air*(xH2O_out-xH2O_in);
-mdot_CO2 = mdot_air*(xCO2_out-xCO2_in);
+D_mdot_H2O = mdot_air_out2in*(xH2O_out-xH2O_in);
+D_mdot_CO2 = mdot_air_out2in*(xCO2_out-xCO2_in);
 Qdot_sol = 0;
 Qdot_eqip = 0;
 Qdot_light = 0;
@@ -89,7 +91,7 @@ Qdot_pers = 0;
 Qdot_heat = 0;
 Qdotr = 0;
 y0 = [Qdot_sol; Qdot_eqip; Qdot_light; Qdot_pers; Qdot_heat; Qdot_air; ...
-    Qdotc; Qdotr; mdot_air; mdot_H2O; mdot_CO2; Vdot; Vdot];
+    Qdotc; Qdotr; D_mdot_air; D_mdot_H2O; D_mdot_CO2; Vdot; Vdot];
 
 %% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
@@ -220,7 +222,7 @@ end
 %  $Revision: 81 $
 %  $Author: goettsche $
 %  $Date: 2016-11-02 14:10:23 +0100 (Mi, 02 Nov 2016) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/airmass/verification/verify_airmass.m $
+%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/airmass/verification/verify_Ventilation_AIV.m $
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder
@@ -231,4 +233,5 @@ end
 %                   reference y1 does not overwrite y2
 %                   resample y2 with t0
 %  6.2.0    hf      validation with theoretical values          21jan2018
+%  7.1.0    hf      y0 with corrected values for D_mdot_air     22dec2019
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

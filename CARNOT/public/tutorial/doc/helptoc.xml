@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<toc version="2.0">
+<!-- First tocitem specifies top level in Help browser Contents pane -->
+<!-- This can be a roadmap page, as shown below, or a content page -->
+    <tocitem target="Manual.html">Carnot
+        <!-- Nest tocitems to create hierarchical entries in  Contents-->
+        <!-- To include icons, use the following syntax for tocitems: -->
+        <!-- <tocitem target="foo.html" image="HelpIcon.NAME"> -->
+        <!-- Title-of-Section </tocitem> -->
+        <!-- where NAME is one of the following (use capital letters): -->
+        <!-- FUNCTION, USER_GUIDE, EXAMPLES, BLOCK, GETTING_STARTED, -->
+        <!-- DEMOS, RELEASE_NOTES --> 
+        <!-- Icon images used for these entries are also stored in -->
+        <!-- matlabroot/toolbox/matlab/icons -->
+        <tocitem target="1_Tutorial.html" image="HelpIcon.GETTING_STARTED">
+            Tutorial and Getting Started
+        </tocitem>
+        <tocitem target="2_Basic_Concepts.html"> 
+            Basic Concepts
+        </tocitem>
+        <tocitem target="3_Advanced_Topics.html"> 
+            Advanced Topics
+        </tocitem>
+        <tocitem target="4_Block_and_Function_Reference.html"
+                 image="HelpIcon.FUNCTION">
+            Blocks and Functions
+            <tocitem target="CarnotBlocksOverview.html">
+                Blocks
+            </tocitem>
+            <tocitem target="CarnotMFunBlockOverview.html">
+                Block m-Functions
+            </tocitem>
+            <tocitem target="CarnotMFunOverview.html">
+                General m-Functions
+            </tocitem>
+            <tocitem target="CarnotCLibraryOverview.html">
+                C-Functions
+            </tocitem>
+        </tocitem>
+        <tocitem target="5_Verification.html"> 
+            Verification
+        </tocitem>
+        <tocitem target="6_Literature.html"> 
+            Literature
+        </tocitem>
+        <!-- Link or links to Web sites -->
+        <tocitem target="https://www.fh-aachen.de/forschung/solar-institut-juelich/carnot/">
+        Carnot Web Site
+        </tocitem>
+    </tocitem>
+</toc>

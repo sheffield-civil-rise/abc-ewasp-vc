@@ -24,6 +24,12 @@ p
 	font-family:"Calibri","sans-serif";
 	color:#5A5A5A;
 	}
+ .auto-style1 {
+	margin-left: 40px;
+}
+.auto-style2 {
+	border-width: 0px;
+}
  </style>
 </head>
 
@@ -41,11 +47,12 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 <p><span class=GramE><span style='mso-bookmark:Valve'><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:18.0pt;line-height:120%'>
-<img alt="" height="76" src="Figures/valve.JPG" style="float: right" width="89" />valve</span></b></span></span></span></span><span
+<img alt="" height="131" src="Figures/valve.jpg" style="float: right" width="159" class="auto-style2" /></span><span style='font-size:18.0pt;line-height:120%'>V</span><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'>alve</span></b></span></span></span></span><span
 style='mso-bookmark:Valve'><span style='mso-bookmark:schwamberger'><span
 style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
-<b>Path: CARNOT/hydraulics</b> <br />
+<b>Path: CARNOT/<span lang="de-at">H</span>ydraulics</b> <br />
 <br />
 </span></span></span></span></p>
 
@@ -61,38 +68,126 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-The block calculates the pressure drop at a valve. Keep a small pressure drop
-even if valve is completely open.</span><span lang=EN-US
-style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></span></p>
+</span><span style='font-size:13.5pt;line-height:120%'> C</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>alculate the pressure drop </span>
+<span style='font-size:13.5pt;line-height:120%'> of</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> a valve</span><span style='font-size:13.5pt;line-height:120%'> 
+with different flow coefficient characteristics</span><span
+style='font-size:12.0pt;line-height:120%'><o:p>.</o:p></span></span></span></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-The valve increases its pressure drop according to the position. One means
-completely open, zero means closed. A specific valve characteristic is used to
-compute the resistance coefficient f in: </span></span></span></p>
+The valve increases its pressure drop according to the </span>
+<span style='font-size:13.5pt;line-height:120%'> control input (opening). The 
+calculation is based on the flow coefficient <span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Kv</span><span style='font-size:13.5pt;line-height:120%'> 
+and its characteristics (model from [Braun, 2018])</span></span></span></span>. </span>
+<span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> &nbsp; </span></span></span></p>
 
-<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
-class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>dp</span></span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> = f (Reynolds) * </span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%;font-family:Symbol'>r</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>/2 * v<sup>2</sup> </span></span></span></p>
-
-<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
-class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>f</span></span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> increases at low Reynolds
-numbers. A maximum <span class=GramE>ceta</span> of 100 is set with a valve
-position close to 0. Minimum f is 1 at position = 1. Below valve position 0.01
-the valve sets the flow_ID to a negative value. The following flow mixer will
-interpret the branch to be closed. </span></span></span></p>
-
-<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>You may adapt the valve
-characteristics to your demand. See the look-up table &quot;valve
-characteristic&quot; in the subsystem valve/pressuredrop/c*</span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%;font-family:Symbol'>r</span><sup><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>2</span></sup><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>*v<sup>2</sup> </span></span></span></p>
+<p>&nbsp;<span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+class=GramE><span style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp; </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>Kv = Vdot * 
+sqrt(1e5Pa/dp * density/1000kg/m³) </span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Vdot is 
+the volumetric flow rate in m³/h</span><span style='font-size:13.5pt;line-height:120%'>.</span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span style='font-size:13.5pt;line-height:120%'>R</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'>esolv</span><span style='font-size:13.5pt;line-height:120%'>ing</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span>
+<span style='font-size:13.5pt;line-height:120%'>the </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>equation for </span>
+<span style='font-size:13.5pt;line-height:120%'>the </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>pressure drop dp</span><span style='font-size:13.5pt;line-height:120%'> 
+gives: </span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>
+(Kv/Vdot)² = 1e5Pa/dp * density/1000kg/m³ </span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>dp = (100 
+Pa*m³/kg) * density * (Vdot/Kv)² </span></span></span></span></p>
+<p><font size="4">and </font><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>with Vdot 
+= mdot/density </span><span style='font-size:13.5pt;line-height:120%'>the 
+pressure drop becomes</span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>dp = (100 
+Pa*m³/kg)/density * (mdot/Kv)² </span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>change 
+unit of mdot</span><span style='font-size:13.5pt;line-height:120%'> from</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> 
+kg/h </span><span style='font-size:13.5pt;line-height:120%'>to kg/s: 1 kg/h </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>= </span>
+<span style='font-size:13.5pt;line-height:120%'>1 </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>kg/(3600s) </span>
+<span style='font-size:13.5pt;line-height:120%'>we finally have</span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>dp = (100 
+Pa*m³/kg) * (3600 s/h)² / density * (mdot/Kv)² </span></span></span></span></p>
+<p><font size="4">The </font><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Carnot 
+equation</span><span style='font-size:13.5pt;line-height:120%'> for the pressure 
+drop is</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'>: dp = 
+qua * mdot² </span></span></span></span></p>
+<p><font size="4">Comparing the two equations for the pressure drop we get:</font></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>qua = 
+(100 Pa*m³/kg) * (3600 s/h)² / (density*Kv²) <br />
+</span></span></span></span></p>
+<p><font size="4"><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span style='font-size:13.5pt;line-height:120%'>Kvs is defined as 
+the flow coefficient of the fully opened valve. </span></span></span></span>The 
+relative flow coefficient psi is: </font></p>
+<p><font size="4">&nbsp;&nbsp;&nbsp;&nbsp; psi = Kv/Kvs</font></p>
+<p><font size="4">Two characteristics of the relative flow coefficient are 
+modelled:</font></p>
+<p><font size="4">1) Linear characteristic&nbsp;&nbsp;&nbsp;&nbsp; psi = psi_0 + 
+(1-psi_0)*h</font></p>
+<p><font size="4">2) Equal percentage characteristic&nbsp;&nbsp;&nbsp;&nbsp; psi 
+= psi_0 * (1/psi_0)^h)</font></p>
+<p><font size="4">with </font></p>
+<p><font size="4">&nbsp;&nbsp;&nbsp;&nbsp; h = H/H100 relative opening </font></p>
+<p><font size="4">&nbsp;&nbsp;&nbsp;&nbsp; psi_0 relative flow coefficient of 
+the closed valve (h = 0) </font></p>
+<p><font size="4">
+<img alt="" src="Figures/Valve_Fig1.jpg" height="460" width="473" /><br />
+Figure: Relative flow coefficient Kv/Kvs as a function of the relative opening 
+H/H100 <br />
+[VDMA 2015]<br />
+</font></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><b>
+<span style='font-size:13.5pt;line-height:120%'>Parameters ans Dialog Box</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> 
+</span></span></span></p>
+<p><img alt="" src="Figures/valveMASK.jpg" /></p>
+<p>&nbsp;</p>
+<p><font size="4"><strong>Literature</strong></font></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'>
+<a href="pdf/CARNOT_Nutzertreffen2018_HSBiberach_Volkmer_Hydraulik.pdf">
+<font size="4">Volkmer</font><span
+class=GramE><span style='font-size:13.5pt;line-height:120%'>: 
+Presentation of the </span>
+<span style='mso-bookmark:schwamberger'>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>
+<span style='mso-bookmark:literature'><span style='font-size:13.5pt;line-height:120%'> 
+FH Biberach</span></span></span><span style='mso-bookmark:literature'><span style='font-size:13.5pt;line-height:120%'><span style='font-size:13.5pt;line-height:120%'> </span></span></span></span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>Thamo_6x2</span><span style='font-size:13.5pt;line-height:120%'> 
+Library, Carnot User Meeting Darmstadt 2018</span></span></a></span></span></p>
+<p><span class="GramE"><font size="4">VDMA-Einheitsblatt 24199, 2015</font></span></p>
+<p>&nbsp;</p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span

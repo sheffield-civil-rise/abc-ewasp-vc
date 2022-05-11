@@ -1,0 +1,471 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pump_Main hydraulic and electric parameters</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-12-24"><meta name="DC.source" content="data_fit_pump_characteristic.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pump_Main hydraulic and electric parameters</h1><!--introduction--><pre>pressure - flow characteristics
+ dp = a0 - a1*mdot - a2*mdot^2
+ a0 is the pump head in Pa
+ a1 is the linear coefficient in Pa*s/kg
+ a2 is the quadratic coefficient in Pa*(s/kg)^2
+electric power consumption
+ Pel = e0 + e1*mdot + e2*mdot^2</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Parameter Set 'Pump2m.mat'</a></li><li><a href="#2">Parameter Set 'Pump4m.mat'</a></li><li><a href="#3">Parameter Set 'Pump5m.mat'</a></li><li><a href="#4">Parameter Set 'Pump6m.mat'</a></li><li><a href="#5">Parameter Set 'Pump8m.mat'</a></li><li><a href="#6">Parameter Set 'Pump10m.mat'</a></li><li><a href="#7">Literature</a></li></ul></div><h2 id="1">Parameter Set 'Pump2m.mat'</h2><pre>pump with 4 m head and linear hydraulic characteristic
+max flow with no pressure drop 3.5 m&sup3;/h
+electric power: 30 W (no flow), 40 W (1/2 max flow), 45 W (max flow)</pre><pre class="codeoutput">hydraulic parameters
+    a0 = 20000
+    a1 = -36000
+    a2 = 0
+pump head dp = 20000 + (-36000*mdot) + (0*mdot^2)
+ 
+electric parameters
+    e0 = 30
+    e1 = 45
+    e2 = -32.4
+electric power Pel = 30 + (45*mdot) + (-32.4*mdot^2)
+</pre><img vspace="5" hspace="5" src="data_fit_pump_characteristic_01.png" alt=""> <h2 id="2">Parameter Set 'Pump4m.mat'</h2><pre>pump with 4 m head and linear hydraulic characteristic
+max flow with no pressure drop 3.5 m&sup3;/h
+electric power: 30 W (no flow), 40 W (1/2 max flow), 45 W (max flow)</pre><pre class="codeoutput">hydraulic parameters
+    a0 = 40000
+    a1 = -40000
+    a2 = 0
+pump head dp = 40000 + (-40000*mdot) + (0*mdot^2)
+ 
+electric parameters
+    e0 = 30
+    e1 = 25
+    e2 = -10
+electric power Pel = 30 + (25*mdot) + (-10*mdot^2)
+</pre><img vspace="5" hspace="5" src="data_fit_pump_characteristic_02.png" alt=""> <h2 id="3">Parameter Set 'Pump5m.mat'</h2><pre>pump with 5 m head and linear hydraulic characteristic
+max flow with no pressure drop 3.5 m&sup3;/h
+electric power: 35 W (no flow), 45 W (1/2 max flow), 50 W (max flow)</pre><pre class="codeoutput">hydraulic parameters
+    a0 = 50000
+    a1 = -45000
+    a2 = 0
+pump head dp = 50000 + (-45000*mdot) + (0*mdot^2)
+ 
+electric parameters
+    e0 = 35
+    e1 = 22.5
+    e2 = -8.1
+electric power Pel = 35 + (22.5*mdot) + (-8.1*mdot^2)
+</pre><img vspace="5" hspace="5" src="data_fit_pump_characteristic_03.png" alt=""> <h2 id="4">Parameter Set 'Pump6m.mat'</h2><pre>pump with 6 m head and linear hydraulic characteristic
+max flow with no pressure drop 3.5 m&sup3;/h
+electric power: 50 W (no flow), 65 W (1/2 max flow), 70 W (max flow)</pre><pre class="codeoutput">hydraulic parameters
+    a0 = 60000
+    a1 = -43200
+    a2 = 0
+pump head dp = 60000 + (-43200*mdot) + (0*mdot^2)
+ 
+electric parameters
+    e0 = 50
+    e1 = 28.8
+    e2 = -10.368
+electric power Pel = 50 + (28.8*mdot) + (-10.368*mdot^2)
+</pre><img vspace="5" hspace="5" src="data_fit_pump_characteristic_04.png" alt=""> <h2 id="5">Parameter Set 'Pump8m.mat'</h2><pre>pump with 8 m head and linear hydraulic characteristic
+max flow with no pressure drop 3.5 m&sup3;/h
+electric power: 100 W (no flow), 135 W (1/2 max flow), 150 W (max flow)</pre><pre class="codeoutput">hydraulic parameters
+    a0 = 80000
+    a1 = -32000
+    a2 = 0
+pump head dp = 80000 + (-32000*mdot) + (0*mdot^2)
+ 
+electric parameters
+    e0 = 100
+    e1 = 36
+    e2 = -6.4
+electric power Pel = 100 + (36*mdot) + (-6.4*mdot^2)
+</pre><img vspace="5" hspace="5" src="data_fit_pump_characteristic_05.png" alt=""> <h2 id="6">Parameter Set 'Pump10m.mat'</h2><pre>pump with 8 m head and linear hydraulic characteristic
+max flow with no pressure drop 3.5 m&sup3;/h
+electric power: 200 W (no flow), 270 W (1/2 max flow), 300 W (max flow)</pre><pre class="codeoutput">hydraulic parameters
+    a0 = 100000
+    a1 = -20000
+    a2 = 0
+pump head dp = 100000 + (-20000*mdot) + (0*mdot^2)
+ 
+electric parameters
+    e0 = 200
+    e1 = 36
+    e2 = -3.2
+electric power Pel = 200 + (36*mdot) + (-3.2*mdot^2)
+</pre><img vspace="5" hspace="5" src="data_fit_pump_characteristic_06.png" alt=""> <h2 id="7">Literature</h2><p>/1/ Grundfos: GRUNDFOS DATA BOOKLET UP, UPS, UPSD Circulator Pumps     Grundfosliterature-6013408.pdf     <a href="http://net.grundfos.com/Appl/ccmsservices/public/literature/filedata/Grundfosliterature-6013408.pdf">http://net.grundfos.com/Appl/ccmsservices/public/literature/filedata/Grundfosliterature-6013408.pdf</a>     access on 24dec2018</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Pump_Main hydraulic and electric parameters
+%  pressure - flow characteristics
+%   dp = a0 - a1*mdot - a2*mdot^2
+%   a0 is the pump head in Pa
+%   a1 is the linear coefficient in Pa*s/kg
+%   a2 is the quadratic coefficient in Pa*(s/kg)^2
+%  electric power consumption
+%   Pel = e0 + e1*mdot + e2*mdot^2
+
+%% Parameter Set 'Pump2m.mat'
+%  pump with 4 m head and linear hydraulic characteristic
+%  max flow with no pressure drop 3.5 m³/h 
+%  electric power: 30 W (no flow), 40 W (1/2 max flow), 45 W (max flow)
+mdotmax = 2.0*1000/3600;
+p0 = 2e4;
+Pel = [30, 40, 45];
+% set variables and determine parameters
+mdot = (0:0.5:1)*mdotmax;
+a0 = p0;
+a1 = -p0/mdotmax;
+a2 = 0;
+e = polyfit(mdot, Pel, 2);
+e0 = e(3);
+e1 = e(2);
+e2 = e(1);
+% plot results and display parameters
+mdot_plot = linspace(min(mdot),max(mdot),20);
+figure('OuterPosition', [0,0,500,800])
+subplot(3,1,1)
+title('hydraulic characteristic')
+dp_plot = polyval([a2, a1, a0],mdot_plot);
+plot(mdot_plot,dp_plot)
+xlabel('massflow in kg/s')
+ylabel('pump head in Pa')
+title('Pump 2 m')
+subplot(3,1,2)
+e_plot = polyval(e,mdot_plot);
+plot(mdot_plot,e_plot)
+xlabel('massflow in kg/s')
+ylabel('electric power in W')
+subplot(3,1,3) % efficiency
+eta_plot = mdot_plot./1000.*dp_plot./e_plot;
+plot(mdot_plot,eta_plot)
+xlabel('massflow in kg/s')
+ylabel('efficiency')
+% show hydraulic params
+disp('hydraulic parameters')
+disp(['    a0 = ' num2str(a0)])
+disp(['    a1 = ' num2str(a1)])
+disp(['    a2 = ' num2str(a2)])
+disp(['pump head dp = ', num2str(a0), ' + (', num2str(a1), '*mdot) + (', num2str(a2), '*mdot^2)'])
+disp(' ')
+% show electric params
+disp('electric parameters')
+disp(['    e0 = ' num2str(e0)])
+disp(['    e1 = ' num2str(e1)])
+disp(['    e2 = ' num2str(e2)])
+disp(['electric power Pel = ', num2str(e0), ' + (', num2str(e1), '*mdot) + (', num2str(e2), '*mdot^2)'])
+
+%% Parameter Set 'Pump4m.mat'
+%  pump with 4 m head and linear hydraulic characteristic
+%  max flow with no pressure drop 3.5 m³/h 
+%  electric power: 30 W (no flow), 40 W (1/2 max flow), 45 W (max flow)
+mdotmax = 3.6*1000/3600;
+p0 = 4e4;
+Pel = [30, 40, 45];
+% set variables and determine parameters
+mdot = (0:0.5:1)*mdotmax;
+a0 = p0;
+a1 = -p0/mdotmax;
+a2 = 0;
+e = polyfit(mdot, Pel, 2);
+e0 = e(3);
+e1 = e(2);
+e2 = e(1);
+% plot results and display parameters
+mdot_plot = linspace(min(mdot),max(mdot),20);
+figure('OuterPosition', [0,0,500,800])
+subplot(3,1,1)
+title('hydraulic characteristic')
+dp_plot = polyval([a2, a1, a0],mdot_plot);
+plot(mdot_plot,dp_plot)
+xlabel('massflow in kg/s')
+ylabel('pump head in Pa')
+title('Pump 4 m')
+subplot(3,1,2)
+e_plot = polyval(e,mdot_plot);
+plot(mdot_plot,e_plot)
+xlabel('massflow in kg/s')
+ylabel('electric power in W')
+subplot(3,1,3) % efficiency
+eta_plot = mdot_plot./1000.*dp_plot./e_plot;
+plot(mdot_plot,eta_plot)
+xlabel('massflow in kg/s')
+ylabel('efficiency')
+% show hydraulic params
+disp('hydraulic parameters')
+disp(['    a0 = ' num2str(a0)])
+disp(['    a1 = ' num2str(a1)])
+disp(['    a2 = ' num2str(a2)])
+disp(['pump head dp = ', num2str(a0), ' + (', num2str(a1), '*mdot) + (', num2str(a2), '*mdot^2)'])
+disp(' ')
+% show electric params
+disp('electric parameters')
+disp(['    e0 = ' num2str(e0)])
+disp(['    e1 = ' num2str(e1)])
+disp(['    e2 = ' num2str(e2)])
+disp(['electric power Pel = ', num2str(e0), ' + (', num2str(e1), '*mdot) + (', num2str(e2), '*mdot^2)'])
+
+%% Parameter Set 'Pump5m.mat'
+%  pump with 5 m head and linear hydraulic characteristic
+%  max flow with no pressure drop 3.5 m³/h 
+%  electric power: 35 W (no flow), 45 W (1/2 max flow), 50 W (max flow)
+mdotmax = 4.0*1000/3600;
+p0 = 5e4;
+Pel = [35, 45, 50];
+% set variables and determine parameters
+mdot = (0:0.5:1)*mdotmax;
+a0 = p0;
+a1 = -p0/mdotmax;
+a2 = 0;
+e = polyfit(mdot, Pel, 2);
+e0 = e(3);
+e1 = e(2);
+e2 = e(1);
+% plot results and display parameters
+mdot_plot = linspace(min(mdot),max(mdot),20);
+figure('OuterPosition', [0,0,500,800])
+subplot(3,1,1)
+title('hydraulic characteristic')
+dp_plot = polyval([a2, a1, a0],mdot_plot);
+plot(mdot_plot,dp_plot)
+xlabel('massflow in kg/s')
+ylabel('pump head in Pa')
+title('Pump 5 m')
+subplot(3,1,2)
+e_plot = polyval(e,mdot_plot);
+plot(mdot_plot,e_plot)
+xlabel('massflow in kg/s')
+ylabel('electric power in W')
+subplot(3,1,3) % efficiency
+eta_plot = mdot_plot./1000.*dp_plot./e_plot;
+plot(mdot_plot,eta_plot)
+xlabel('massflow in kg/s')
+ylabel('efficiency')
+% show hydraulic params
+disp('hydraulic parameters')
+disp(['    a0 = ' num2str(a0)])
+disp(['    a1 = ' num2str(a1)])
+disp(['    a2 = ' num2str(a2)])
+disp(['pump head dp = ', num2str(a0), ' + (', num2str(a1), '*mdot) + (', num2str(a2), '*mdot^2)'])
+disp(' ')
+% show electric params
+disp('electric parameters')
+disp(['    e0 = ' num2str(e0)])
+disp(['    e1 = ' num2str(e1)])
+disp(['    e2 = ' num2str(e2)])
+disp(['electric power Pel = ', num2str(e0), ' + (', num2str(e1), '*mdot) + (', num2str(e2), '*mdot^2)'])
+
+%% Parameter Set 'Pump6m.mat'
+%  pump with 6 m head and linear hydraulic characteristic
+%  max flow with no pressure drop 3.5 m³/h 
+%  electric power: 50 W (no flow), 65 W (1/2 max flow), 70 W (max flow)
+mdotmax = 5.0*1000/3600;
+p0 = 6e4;
+Pel = [50, 65, 70];
+% set variables and determine parameters
+mdot = (0:0.5:1)*mdotmax;
+a0 = p0;
+a1 = -p0/mdotmax;
+a2 = 0;
+e = polyfit(mdot, Pel, 2);
+e0 = e(3);
+e1 = e(2);
+e2 = e(1);
+% plot results and display parameters
+mdot_plot = linspace(min(mdot),max(mdot),20);
+figure('OuterPosition', [0,0,500,800])
+subplot(3,1,1)
+title('hydraulic characteristic')
+dp_plot = polyval([a2, a1, a0],mdot_plot);
+plot(mdot_plot,dp_plot)
+xlabel('massflow in kg/s')
+ylabel('pump head in Pa')
+title('Pump 6 m')
+subplot(3,1,2)
+e_plot = polyval(e,mdot_plot);
+plot(mdot_plot,e_plot)
+xlabel('massflow in kg/s')
+ylabel('electric power in W')
+subplot(3,1,3) % efficiency
+eta_plot = mdot_plot./1000.*dp_plot./e_plot;
+plot(mdot_plot,eta_plot)
+xlabel('massflow in kg/s')
+ylabel('efficiency')
+% show hydraulic params
+disp('hydraulic parameters')
+disp(['    a0 = ' num2str(a0)])
+disp(['    a1 = ' num2str(a1)])
+disp(['    a2 = ' num2str(a2)])
+disp(['pump head dp = ', num2str(a0), ' + (', num2str(a1), '*mdot) + (', num2str(a2), '*mdot^2)'])
+disp(' ')
+% show electric params
+disp('electric parameters')
+disp(['    e0 = ' num2str(e0)])
+disp(['    e1 = ' num2str(e1)])
+disp(['    e2 = ' num2str(e2)])
+disp(['electric power Pel = ', num2str(e0), ' + (', num2str(e1), '*mdot) + (', num2str(e2), '*mdot^2)'])
+
+%% Parameter Set 'Pump8m.mat'
+%  pump with 8 m head and linear hydraulic characteristic
+%  max flow with no pressure drop 3.5 m³/h 
+%  electric power: 100 W (no flow), 135 W (1/2 max flow), 150 W (max flow)
+mdotmax = 9.0*1000/3600;
+p0 = 8e4;
+Pel = [100, 135, 150];
+% set variables and determine parameters
+mdot = (0:0.5:1)*mdotmax;
+a0 = p0;
+a1 = -p0/mdotmax;
+a2 = 0;
+e = polyfit(mdot, Pel, 2);
+e0 = e(3);
+e1 = e(2);
+e2 = e(1);
+% plot results and display parameters
+mdot_plot = linspace(min(mdot),max(mdot),20);
+figure('OuterPosition', [0,0,500,800])
+subplot(3,1,1)
+title('hydraulic characteristic')
+dp_plot = polyval([a2, a1, a0],mdot_plot);
+plot(mdot_plot,dp_plot)
+xlabel('massflow in kg/s')
+ylabel('pump head in Pa')
+title('Pump 8 m')
+subplot(3,1,2)
+e_plot = polyval(e,mdot_plot);
+plot(mdot_plot,e_plot)
+xlabel('massflow in kg/s')
+ylabel('electric power in W')
+subplot(3,1,3) % efficiency
+eta_plot = mdot_plot./1000.*dp_plot./e_plot;
+plot(mdot_plot,eta_plot)
+xlabel('massflow in kg/s')
+ylabel('efficiency')
+% show hydraulic params
+disp('hydraulic parameters')
+disp(['    a0 = ' num2str(a0)])
+disp(['    a1 = ' num2str(a1)])
+disp(['    a2 = ' num2str(a2)])
+disp(['pump head dp = ', num2str(a0), ' + (', num2str(a1), '*mdot) + (', num2str(a2), '*mdot^2)'])
+disp(' ')
+% show electric params
+disp('electric parameters')
+disp(['    e0 = ' num2str(e0)])
+disp(['    e1 = ' num2str(e1)])
+disp(['    e2 = ' num2str(e2)])
+disp(['electric power Pel = ', num2str(e0), ' + (', num2str(e1), '*mdot) + (', num2str(e2), '*mdot^2)'])
+
+%% Parameter Set 'Pump10m.mat'
+%  pump with 8 m head and linear hydraulic characteristic
+%  max flow with no pressure drop 3.5 m³/h 
+%  electric power: 200 W (no flow), 270 W (1/2 max flow), 300 W (max flow)
+mdotmax = 18.0*1000/3600;
+p0 = 10e4;
+Pel = [200, 270, 300];
+% set variables and determine parameters
+mdot = (0:0.5:1)*mdotmax;
+a0 = p0;
+a1 = -p0/mdotmax;
+a2 = 0;
+e = polyfit(mdot, Pel, 2);
+e0 = e(3);
+e1 = e(2);
+e2 = e(1);
+% plot results and display parameters
+mdot_plot = linspace(min(mdot),max(mdot),20);
+figure('OuterPosition', [0,0,500,800])
+subplot(3,1,1)
+title('hydraulic characteristic')
+dp_plot = polyval([a2, a1, a0],mdot_plot);
+plot(mdot_plot,dp_plot)
+xlabel('massflow in kg/s')
+ylabel('pump head in Pa')
+title('Pump 10 m')
+subplot(3,1,2)
+e_plot = polyval(e,mdot_plot);
+plot(mdot_plot,e_plot)
+xlabel('massflow in kg/s')
+ylabel('electric power in W')
+subplot(3,1,3) % efficiency
+eta_plot = mdot_plot./1000.*dp_plot./e_plot;
+plot(mdot_plot,eta_plot)
+xlabel('massflow in kg/s')
+ylabel('efficiency')
+% show hydraulic params
+disp('hydraulic parameters')
+disp(['    a0 = ' num2str(a0)])
+disp(['    a1 = ' num2str(a1)])
+disp(['    a2 = ' num2str(a2)])
+disp(['pump head dp = ', num2str(a0), ' + (', num2str(a1), '*mdot) + (', num2str(a2), '*mdot^2)'])
+disp(' ')
+% show electric params
+disp('electric parameters')
+disp(['    e0 = ' num2str(e0)])
+disp(['    e1 = ' num2str(e1)])
+disp(['    e2 = ' num2str(e2)])
+disp(['electric power Pel = ', num2str(e0), ' + (', num2str(e1), '*mdot) + (', num2str(e2), '*mdot^2)'])
+
+
+%% Literature
+% /1/ Grundfos: GRUNDFOS DATA BOOKLET UP, UPS, UPSD Circulator Pumps
+%     Grundfosliterature-6013408.pdf 
+%     http://net.grundfos.com/Appl/ccmsservices/public/literature/filedata/Grundfosliterature-6013408.pdf
+%     access on 24dec2018
+##### SOURCE END #####
+--></body></html>

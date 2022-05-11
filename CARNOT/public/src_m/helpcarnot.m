@@ -1,14 +1,24 @@
-function helpcarnot(varargin)
-% helpcarnot(brosertype) opens the CARNOT manual from the command line
+% helpcarnot opens the CARNOT manual from the command line
 % optional parameter
-%   browsertype     'browser' - opens help page in sytem web browser
+%   browsertype     'browser' - opens help page in your sytem web browser
 %                   no value  - Matlab help browser
 %                   'xx'      - any other string: Matlab help browser
 
-% ***********************************************************************
+
+function helpcarnot(varargin)
+if nargin == 0
+    web(fullfile(path_carnot('help'),'Manual.html'),'-helpbrowser')
+elseif strcmp(varargin{1},'browser')
+    web(fullfile(path_carnot('help'),'Manual.html'),'-browser')
+else
+    web(fullfile(path_carnot('help'),'Manual.html'),'-helpbrowser')
+end
+
+
+%% Copyright and Versions
 % This file is part of the CARNOT Blockset.
 % 
-% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+% Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
 % Additional Copyright for this file see list auf authors.
 % All rights reserved.
 % 
@@ -38,10 +48,10 @@ function helpcarnot(varargin)
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/helpcarnot.m $
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -56,11 +66,4 @@ function helpcarnot(varargin)
 % wic       2014-11-04  modified path to comply with carnot 6.0 folder
 %                       structure
 %  hf       2015-02-21  removed parameter 'page', use web command
-
-if nargin == 0
-    web(fullfile(path_carnot('help'),'Manual.html'),'-helpbrowser')
-elseif strcmp(varargin{1},'browser')
-    web(fullfile(path_carnot('help'),'Manual.html'),'-browser')
-else
-    web(fullfile(path_carnot('help'),'Manual.html'),'-helpbrowser')
-end
+%  hf       2020-07-17  optimized comments for publish

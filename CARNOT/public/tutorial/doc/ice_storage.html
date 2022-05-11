@@ -1,0 +1,358 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<meta name="author" content="AuthorXY">
+<title>CARNOT manual - Block Template</title>
+
+<style type="text/css">
+body{margin-left:108.0pt;}
+
+p	{
+	margin-right:0cm;
+	line-height:120%;
+	font-size:13.5pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+
+ul
+	{
+	margin-bottom:0cm;
+	list-style-position: outside;
+	}
+
+
+ol
+	{
+	margin-bottom:0cm;
+	list-style-position: outside;
+	}
+
+li
+	{
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	line-height:120%;
+	font-size:13.5pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+
+a:link
+	{
+	color:blue;
+	text-decoration:underline;
+	text-underline:single;
+	}
+
+
+p.toc1
+	{
+	margin-top: 1.0em;
+	margin-bottom: 0.0em;
+	}	
+
+
+p.toc2
+	{
+	margin-top: 0.0em;
+	margin-bottom: 0.0em;
+	margin-left:12.0pt;
+	}	
+
+p.toc3
+	{
+	margin-top: 0.0em;
+	margin-bottom: 0.0em;
+	margin-left:24.0pt;
+	}	
+
+p.blockname
+	{margin-top: 10px;
+	 margin-bottom: 0;
+	 font-size:18.0pt;
+	 line-height:120%;
+	 font-weight: bold;
+	}
+
+table
+	{
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:13.5pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+
+tt
+	{
+	font-family:"Courier New";
+	line-height:200%;
+	margin-left:20.0pt;
+	}
+
+
+h1
+	{
+	margin-right:0cm;
+	line-height:120%;
+	font-size: 18pt;
+	font-weight: bold;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+
+h2
+	{
+	margin-right:0cm;
+	line-height:120%;
+	font-size: 16pt;
+	font-weight: bold;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+
+h3
+	{
+	margin-right:0cm;
+	line-height:120%;
+	font-size: 13.5pt;
+	font-weight: bold;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+
+.eq 
+	{
+	width: 1000px;
+	margin-left:24.0pt;
+    font-family: "Times New Roman","sans-serif";
+	font-size: 13.5pt;
+	}
+
+.eq td 
+	{
+	width: 800px
+	text-align: left;
+	font-size: 13.5pt;
+	font-weight: normal;
+	color:#5A5A5A;
+	}
+
+hr	
+	{
+	border-width:0;
+	background-color:#A0A0A0;
+	color: #A0A0A0;
+	height: 2px;
+	}
+
+hr.large
+	{
+	height: 10px;
+	}
+
+.eq th 
+	{
+	width: 200px
+	text-align: right;
+	font-family: "Calibri","sans-serif";
+	font-size: 13.5pt;
+	font-weight: normal;
+	color:#5A5A5A;
+	}
+
+mathrm
+	{
+	font-family:"Times New Roman","sans-serif";
+	white-space: nowrap;
+	}
+
+.vectortable
+	{
+	border: 0;
+	}
+
+.vectortable th
+	{
+	padding: 6px;
+	text-align: left;
+	text-decoration: underline;
+	}
+
+.vectortable td
+	{
+	padding: 6px;
+	text-align: left;
+	vertical-align: top;
+	}
+
+.ref
+	{
+	padding: 0px;
+	/*list-style: none; 
+	counter-reset:array;
+*/	}
+
+.ref li:before
+	{
+	/*counter-increment:array;
+	content:"[" counter(array) "] ";*/
+	}
+	
+.auto-style1 {
+	text-align: left;
+}
+	
+</style>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+
+<hr class="large">
+<!--Insert Block Name, Path and Image here-->
+<img src="Figures/ice_storage.jpg" align=right>
+<p class="blockname">Ice_Storage</p>
+<p style="margin-top:0px; margin-bottom:20px">Path: CARINT/Storage/Thermal</p>
+<p style="margin-top: 0px; margin-bottom: 20px">&nbsp;</p>
+<p style="margin-top: 0px; margin-bottom: 20px">&nbsp;</p>
+<p style="margin-top: 0px; margin-bottom: 20px"><br></p>
+<p style="margin-top: 0px; margin-bottom: 20px">&nbsp;</p>
+<!--End of Insert-->
+<hr>
+
+<p><b>Purpose:</b><br>
+<!--Insert Block Purpose here-->
+Model of a latent heat storage using water/ice als phase change material.
+</p>
+<p><b>Description:</b><br>
+<!--Insert Block Description here-->
+The model of the ice storage uses two heat exchangers, one for charging (heating 
+/ regeneration) and the other one for discharing (cooling). <br>The mathematical 
+description of the model can be found in the publications (FHNW 2013, Wintler, 
+2014).</p>
+
+<p style="margin-bottom:0;"><b>Input:</b>
+<!--Input and Output Variables are presented in tables
+	Do not change the column width!-->
+<table class="inputtable">
+	<tr>
+		<td style="width: 100px;">THBsource</td>
+		<td style="width: 10px;">:</td>
+        <td> Thermo-Hydraulic Bus for charging (heating) the storage (inlet of 
+		the source heat exchanger).</td>
+    </tr>
+    <tr>
+    	<td> THBload</td>
+        <td>:</td>
+        <td> Thermo-Hydraulic Bus for discharging (cooling) the storage (inlet 
+		of the discharging heat exchanger).</td>
+    </tr>
+</table>
+
+<p style="margin-bottom:0;"><b>Output:</b>
+
+<table class="inputtable">
+	<tr>
+		<td style="width: 100px;">THB_source</td>
+		<td style="width: 10px;">:</td>
+        <td> Thermo-Hydraulic Bus for charging (heating) the storage (outlet of 
+		the source heat exchanger) </td>
+    </tr>
+	<tr>
+		<td style="width: 100px;">THB_load</td>
+		<td style="width: 10px;">:</td>
+        <td> Thermo-Hydraulic Bus for discharging (cooling) the storage (inlet 
+		of the load heat exchanger).</td>
+    </tr>
+	<tr>
+		<td style="width: 100px;">data_IceST</td>
+		<td style="width: 10px;">:</td>
+        <td> bus containing informations on the ice storage</td>
+    </tr>
+</table>
+<p>Data bus data_IceST:</p>
+<table class="inputtable">
+	<tr>
+		<td style="width: 100px;" class="auto-style1">Qdot_to_load</td>
+		<td style="width: 10px;">:</td>
+        <td> power of the load heat exchanger given to THB_load (in W)</td>
+    </tr>
+	<tr>
+		<td style="width: 100px;">Qdot_earth2ice</td>
+		<td style="width: 10px;">:</td>
+        <td> power from the surrounding ground to the water/ice (in W), positive 
+		for heat flow to the ice</td>
+    </tr>
+	<tr>
+		<td style="width: 100px;">Qdot_from_source</td>
+		<td style="width: 10px;">:</td>
+        <td> power of the source heat exchanger taken from THBsource (in W)</td>
+    </tr>
+	<tr>
+		<td style="width: 100px;">SOC</td>
+		<td style="width: 10px;">:</td>
+        <td> state of charge of the storage (0: completely frozen, 1: completely 
+		liquid at 0 °C)</td>
+    </tr>
+	<tr>
+		<td style="width: 100px;">Tice</td>
+		<td style="width: 10px;">:</td>
+        <td> temperature of the water or ice in °C</td>
+    </tr>
+	<tr>
+		<td style="width: 100px;">Tground_close</td>
+		<td style="width: 10px;">:</td>
+        <td> ground temperature in °C close to the the storage container (0.5 m 
+		from the wall)</td>
+    </tr>
+	<tr>
+		<td style="width: 100px;">Tground_far</td>
+		<td style="width: 10px;">:</td>
+        <td> undisturbed ground temperature in °C far from the storage container 
+		(depends only on depth)</td>
+    </tr>
+</table>
+<p>Remark: be aware that the SOC is 1 for liquid water at 0 °C in the storage, 
+SOC rises above 1 for higher water temperatures ! </p>
+<p>&nbsp;</p>
+<p><strong>Parameters</strong></p>
+<p><img alt="" src="Figures/ice_storage_fig1.jpg"></p>
+<p><img alt="" src="Figures/ice_storage_fig2.jpg"></p>
+<p><img alt="" src="Figures/ice_storage_fig3.jpg"></p>
+<p><br></p>
+
+<hr>
+
+<p><b>Literature</b><p>FHNW 2013:
+<!--Insert Notes here-->
+<a href="pdf/2013-10-11_Eisspeichermodell-IEBauFHNW.PDF">Eisspeichermodell</a>, 
+Institut für Energie am Bau, Fachhochschule Nordwest-Schweiz<p>Wintler 2014: &nbsp;<a href="pdf/Wintler_Heat_pump_solar_energy_and_ice_storage_systems_HeatPumpConference2014.pdf">Heat 
+Pump, Solar Energy and Ice Storage Systems&nbsp; - Modelling and Seasonal 
+Performance</a>; <br>11th IEA Heat Pump Conference 2014, May 12-16 2014, 
+Montréal (Québec) Canada<hr>
+
+<p style="margin-bottom:0;"><b>Characteristics:</b>
+<table>
+	<tr>
+		<td style="width: 150px;">Direct Feedthrough</td>
+		<td style="width: 10px;">:</td>
+        <td> Yes</td>
+    </tr>
+    <tr>
+    	<td>Sample Time</td>
+        <td>:</td>
+        <td>Inherited from driving block</td>
+    </tr>
+    <tr>
+    	<td>Vectorized</td>
+        <td>:</td>
+        <td>No</td>
+    </tr>
+</table>
+
+</body>
+
+</html>

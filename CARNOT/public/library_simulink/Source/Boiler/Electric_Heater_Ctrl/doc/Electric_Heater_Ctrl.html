@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="de-at" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>electric_heating</title>
+<style type="text/css">
+ div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+p
+	{margin-right:0cm;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+a:link
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;
+}
+ul
+	{margin-bottom:0cm;}
+ li.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+.auto-style1 {
+	margin-left: 120px;
+}
+</style>
+</head>
+
+<body>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=10 width="100%" noshade style='color:#A0A0A0' align=center>
+
+</span></span></div>
+
+<p><!--[if gte vml 1]><v:shape id="Bild_x0020_56" o:spid="_x0000_s1589" type="#_x0000_t75"
+ style='position:absolute;left:0;text-align:left;margin-left:50pt;margin-top:0;
+ width:90pt;height:51pt;z-index:54;visibility:visible;mso-wrap-style:square;
+ mso-wrap-distance-left:0;mso-wrap-distance-top:0;mso-wrap-distance-right:0;
+ mso-wrap-distance-bottom:0;mso-position-horizontal:right;
+ mso-position-horizontal-relative:text;mso-position-vertical:absolute;
+ mso-position-vertical-relative:line' o:allowoverlap="f">
+ <v:imagedata src="Figures/electric_heating.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
+ <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
+</v:shape><![endif]--><![if !vml]>
+<img width=160 height=110
+src="Figures/Electric_Heater_Ctrl.jpg" align=right v:shapes="Bild_x0020_56"><![endif]><span class=GramE><span
+style='mso-bookmark:electric_heating'><span style='mso-bookmark:literature'><b><span style='font-size:18.0pt;line-height:120%'>E</span><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'>lectric_</span><span style='font-size:18.0pt;line-height:120%'>Heater_Ctrl</span></b></span></span></span><span
+style='mso-bookmark:electric_heating'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+<b>Path: CARNOT/ heat_source</b></span><b><span style='font-size:13.5pt;line-height:120%'>/boiler</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br clear=all style='mso-special-character:
+line-break'>
+<o:p></o:p></span></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:electric_heating'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></div>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Purpose</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> 
+<br />
+</span><span style='font-size:13.5pt;line-height:120%'> Model of an </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'> 
+<span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>electrical heat</span><span lang="de-at"><span style='font-size:
+13.5pt;line-height:120%'>er</span></span></span><span style='font-size:
+13.5pt;line-height:120%'><span style='font-size:13.5pt;line-height:120%'> 
+(instantaneous water heater)</span></span><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'><span lang=EN-US style='font-size:13.5pt;line-height:120%'>.<br />
+</span> </span></span></p>
+<p><span style='mso-bookmark:literature'>
+<span lang=EN-US style='font-size:
+13.5pt;line-height:120%'><b>Description</b> </span></span></p>
+<p><span style='mso-bookmark:literature'>
+<span style='font-size:13.5pt;line-height:120%'> The model </span>
+<font size="4">h</font><span lang=EN-US style='font-size:13.5pt;line-height:120%'>eats 
+the </span><span style='font-size:13.5pt;line-height:120%'> entering </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'> mass flow </span>
+<span style='font-size:13.5pt;line-height:120%'> of the</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'> </span><a href="2_Basic_Concepts.html"><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>Thermo-Hydraulic </span>
+<span style='font-size:13.5pt;
+line-height:120%'>Bus</span></span></a><span style='mso-bookmark:literature'> </span>
+with an electric power</span><span style='font-size:13.5pt;line-height:120%'>.&nbsp; 
+A</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> Thermal Node</span><span style='font-size:13.5pt;line-height:120%'> 
+is used to model the thermal inertia
+<span style='font-size:13.5pt;line-height:120%'> of the heater </span> </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'> and losses to the 
+ambient</span><span style='font-size:13.5pt;line-height:120%'> </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'> .</span><span style='font-size:13.5pt;line-height:120%'> 
+The model is described by the equation:</span></span></p>
+<p><span style='mso-bookmark:literature'>
+<span style='font-size:13.5pt;line-height:120%'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'> mcp * dT/dt = 
+UA*(Tamb-T) + mdot*cp_in*(Tin-T) + Ctrl*Electric_heating_power </span></span></p>
+<p><span style='mso-bookmark:literature'>
+<span style='font-size:13.5pt;line-height:120%'> with</span></span></p>
+
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'>
+ <span style='mso-bookmark:literature'>
+ <span lang=EN-US style='font-size:13.5pt;line-height:120%'>cp_in </span>
+ <span style='font-size:13.5pt;line-height:120%'>: </span>
+ <span lang=EN-US style='font-size:13.5pt;line-height:120%'>heat capacity of 
+ entering fluid in J/kg/K</span><span style='line-height:120%'> </span></span></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'>
+	<span style='mso-bookmark:literature'>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>Ctrl </span>
+	<span style='font-size:13.5pt;line-height:120%'>&nbsp; </span>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>: Control input, 
+	range [0...1] </span></span></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt; font-size: 13.5pt;'>
+	mcp&nbsp; : thermal capacity of the heater in J/K</li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'>
+	<span style='mso-bookmark:literature'>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>mdot : entering 
+	fluid massflow in kg/s </span></span></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'>
+	<span style='mso-bookmark:literature'>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>Tamb : ambient 
+	temperature input in °C (for thermal losses) </span></span></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'>
+	<span style='mso-bookmark:literature'>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>Tin </span>
+	<span style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp; </span>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>: </span>
+	<span style='font-size:13.5pt;line-height:120%'>&nbsp; </span>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>temperature of 
+	entering massflow in °C </span></span></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'>
+	<span style='mso-bookmark:literature'>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>T </span>
+	<span style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp; </span>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'>: temperature of 
+	the node and outlet in °C </span>
+	<span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>&nbsp;</span><o:p></o:p></span></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt'>
+	<o:p><span style='mso-bookmark:literature'>
+	<span lang=EN-US style='font-size:13.5pt;line-height:120%'> 
+	Electric_heating_power </span>
+	<span style='font-size:13.5pt;line-height:120%'> in W</span></span></o:p></li>
+	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l115 level1 lfo74;tab-stops:list 36.0pt; font-size: 13.5pt;'>
+	U<o:p>A : thermal loss coefficient in W/K</o:p></li>
+</ul>
+<p>&nbsp;</p>
+<p><span style='mso-bookmark:literature'><b>
+<span style='font-size:
+13.5pt;line-height:120%'>Parameters</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
+<p><img alt="" src="Figures/electricHeaterCtrl_Mask.jpg" /></p>
+<p>&nbsp;</p>
+<p><span style='mso-bookmark:literature'><b>
+<span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Inputs</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
+
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l203 level1 lfo75;tab-stops:list 36.0pt'><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>&nbsp;</span></span><a href="2_Basic_Concepts.html"><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>Thermo-Hydraulic </span>
+ <span style='font-size:13.5pt;
+line-height:120%'>Bus</span></span></a><span
+     style='mso-bookmark:literature'><span style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'> </span>
+ <span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>&nbsp;</span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l203 level1 lfo75;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'>electric
+     heating power in [W] </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+</ul>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Outputs</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></p>
+
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l212 level1 lfo76;tab-stops:list 36.0pt'><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>&nbsp;</span></span><a href="2_Basic_Concepts.html"><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'>Thermo-Hydraulic </span>
+ <span style='font-size:13.5pt;
+line-height:120%'>Bus</span></span></a><span
+     style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+     line-height:120%;mso-fareast-font-family:"Times New Roman"'> </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></li>
+</ul>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Characteristics</span></b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+<span style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes </span>
+<span style='font-size:13.5pt;
+line-height:120%'> (all inputs except temperature)</span></span><br>
+Sample
+time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>&nbsp;
+</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> Inherited
+from driving block <br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>&nbsp;&nbsp;
+</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> No
+</span></span></p>
+
+</body>
+
+</html>

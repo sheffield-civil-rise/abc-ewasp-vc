@@ -82,10 +82,10 @@ hold off
 %  THE POSSIBILITY OF SUCH DAMAGE.
 %  
 %  ************************************************************************
-%  $Revision: 372 $
-%  $Author: carnot-wohlfeil $
-%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/tutorial/templates/template_carnot_m_function.m $
+%  $Revision$
+%  $Author$
+%  $Date$
+%  $HeadURL$
 %  ************************************************************************
 %  VERSIONS
 %  author list:      hf -> Bernd Hafner

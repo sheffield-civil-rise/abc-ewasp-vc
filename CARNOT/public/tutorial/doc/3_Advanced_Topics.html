@@ -87,7 +87,11 @@ table {
 <h1 style="margin-top: 0.5em"><a name="advanced_topics"><b>3 Advanced Topics</b></a>
 </h1>
 <a name="literature0"><hr /></a>
-<h2>3.1 Creating your own C S-functions</h2>
+<h2>3.1 Creating a new Carnot Version</h2>
+<p>The procedure is decribed in the presentation
+<a href="pdf/Carnot%20User%20Meeting%202020%20-%20Working%20with%20Carnot%20Library.pdf">
+Carnot User Meeting 2020 - Working with Carnot Library</a>.</p>
+<h2>3.2 Creating your own C S-functions</h2>
 <p>Simulink offers an interface to C code. <br />
 C code in Simulink has some advantages: </p>
 <ul>
@@ -111,10 +115,11 @@ C code in Simulink has some advantages: </p>
 <p><strong>Preparation</strong></p>
 <p>In order to compile the C code, you need a compiler, e.g. MinGW or the Microsoft SDK 7.1. 
 For the choice of a compiler which works well with your Matlab installation 
-please consult <a href="https://de.mathworks.com/support/compilers.html">
-https://de.mathworks.com/support/compilers.html</a>. </p>
+please consult <a href="https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c-compiler">
+https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c-compiler</a>. </p>
+<p>The compiler MinGW can be installed via the "Home" tab -> "Add-Ons" -> "Get Add-Ons".</p>
 <p>Remark: The mex files of the current version of Carnot have been compiled 
-with MinGW-w64 (TDM-GCC 4.9.2 Version 1.1309.0) .</p>
+with MinGW-w64 6.3 .</p>
 <p>Warning: The current mex-files have been compiled with MinGW. Please do not mix two compilers; this will cause unexpected results.
 So if you want to use other compilers (or versions), please re-compile Carnot before running your simulations.</p>
 <p>After installation, enter <br/>&nbsp;&nbsp;&nbsp; <span class="auto-style7">mex -setup <br/>
@@ -521,7 +526,7 @@ the loop, so the full loop must be: </span></p>
 <p><span class="auto-style3">The above equation is the appropriate form of the differential 
 equation for the multinode model in the S-function and has to be enter in the function 
 block mdlDerivatives (...) in the S-function template file. </span></p>
-<h2><a name="carlib_library">3.2 The Carlib Library</a></h2>
+<h2><a name="carlib_library">3.3 The Carlib Library</a></h2>
 <p><span class="auto-style3">The Carlib Library is built-up of functions that are 
 included in the CARNOT subdirectory &quot;library_c\carlib&quot;. It contains the 
 source code and corresponding header files of useful functions when creating your 
@@ -676,13 +681,13 @@ a nutshell, the rapid accelerator mode is a very powerful method to accelerate c
 However, it should be considered, which functionality can be used from the beginning 
 of modelling.</p>
 
-<h2>3.4 Further acceleration methods</h2>
+<h2>3.5 Further acceleration methods</h2>
 <p>There are several methods to accelerate models provided by the Simulink documentation.
 Examples are zero-crossings, time constants and different solvers. Please refer to
 <a href="https://de.mathworks.com/company/newsletters/articles/improving-simulation-performance-in-simulink.html#IdentifyingSimulationBottlenecks">https://de.mathworks.com/company/newsletters/articles/improving-simulation-performance-in-simulink.html#IdentifyingSimulationBottlenecks</a>.
 </p>
 
-<h2>3.5 Messages and error handling</h2>
+<h2>3.6 Messages and error handling</h2>
 <p>There is a message support in Carnot.<br/>In carlib.h and MessageLevelEnum.m different 
 levels of messages are defined:<table>
 	<tr>
@@ -891,7 +896,7 @@ inputs </p>
 "RANGECHECKERRORS", the range is valid if the return value is "RANGEISCORRECT", 
 which is zero. Since all violations of the range are connected by a binary or ("|") 
 operator, all violations can be analysed individually. </p>
-<h2>3.6 Floating point accuracy</h2>
+<h2>3.7 Floating point accuracy</h2>
 <p>In computer memory variables are represented by a sequence of bits, i.e. of zeros 
 and ones. Depending on the number of bits, more or less information can be stored. 
 It is quite obvious that it is impossible to represent every possible floating number 
@@ -949,7 +954,7 @@ http://uk.mathworks.com/help/matlab/matlab_prog/floating-point-numbers.html#bqxy
 <a href="http://stackoverflow.com/questions/10011544/solve-in-matlab-a-quadratic-equation-with-very-small-coefficients">
 http://stackoverflow.com/questions/10011544/solve-in-matlab-a-quadratic-equation-with-very-small-coefficients</a>
 </p>
-<h2>3.7 Target Language Compiler (TLC)</h2>
+<h2>3.8 Target Language Compiler (TLC)</h2>
 <p>The Target Language Compiler can be used to manipulate generated code. This is 
 interesting in embedded systems, but can be used in accelerator and rapid accelerator 
 mode as well. For the latter modes an S-function needs a .tlc file. For example, 
@@ -964,7 +969,7 @@ is pump.c <br/><br/>#ifdef CARNOT_USES_TLC_WITH_ACCELERATOR<br/>&#160;&#160;&#16
 #else<br/>&#160;&#160;&#160;ssSetOptions(S,<br/>&#160;&#160;&#160;&#160;&#160;SS_OPTION_WORKS_WITH_CODE_REUSE 
 |<br/>&#160;&#160;&#160;&#160;&#160;SS_OPTION_EXCEPTION_FREE_CODE);<br/>#endif<br/>
 <br/>For normal use, this option should not be activated. </p>
-<h2>3.8 Version Management</h2>
+<h2>3.9 Version Management</h2>
 <p>The version manager is in the directory "version_manager" in the Carnot root 
 directory. It can be used to build the Carnot library. This includes the public 
 version as well as the internal version.
@@ -990,7 +995,7 @@ to the corresponding Carnot-directories.
 needed any more, because they can be found in the file carnot.slx.
 <br />
 </p>
-<h2><a name="extending_carnot">3.9 Extending the CARNOT block Library in SIMULINK 
+<h2><a name="extending_carnot">3.10 Extending the CARNOT block Library in SIMULINK 
 Environment </h2>
 <p><span class="auto-style3">Creating a new model block for the </span>
 </a><a href="#carnot"><span class="auto-style3">CARNOT Library</span></a><span class="auto-style3"> 
@@ -1018,7 +1023,7 @@ process available for other users. It is recommended to use the </span>
 <span class="auto-style3">Verification template</span></a>s<span class="auto-style3">.
 <br/>Then you have to write the html help file. Remember that a new model is only 
 helpfull with a good verification and documentation.<br/></span></p>
-<h2><a name="adding_functions_to_carlib">3.10 Adding functions and fluids to the 
+<h2><a name="adding_functions_to_carlib">3.11 Adding functions and fluids to the 
 carlib</a></h2>
 <p><span class="auto-style3">Standard functions as for example entropie, vaporpressure 
 or solartime and fluids are defined in the carlib.c file. These can be changed or 

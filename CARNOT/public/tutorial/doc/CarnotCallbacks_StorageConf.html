@@ -1,0 +1,377 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>CarnotCallbacks_StorageConf - Callback for Carnot model Storage_TypeN</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-05"><meta name="DC.source" content="CarnotCallbacks_StorageConf.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>CarnotCallbacks_StorageConf - Callback for Carnot model Storage_TypeN</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Function Call</a></li><li><a href="#2">Inputs</a></li><li><a href="#3">Outputs</a></li><li><a href="#4">Description</a></li><li><a href="#5">References and Literature</a></li><li><a href="#6">Main function CarnotCallbacks_StorageConf</a></li><li><a href="#8">Copyright and Versions</a></li></ul></div><h2 id="1">Function Call</h2><pre>[ok, param] = CarnotCallbacks_StorageConf(fname, bhandle, storagetype)</pre><h2 id="2">Inputs</h2><pre>fname - function name for the callback:
+        'UserEdit' - disable / enable editing of filename+pathname or parameters
+        'GetFilename' - get the filename and pathname, set these variables in the mask
+        'SaveFilename' - save parameter set with new filename and pathname
+        'SetParameters' - load parameterfile and set parameters
+bhandle - block handle (result of matlab function gcbh)
+storagetype  - 0: buffer storage with inlet and outlet connection
+             - 1: buffer storage with charging and discharging pipes</pre><h2 id="3">Outputs</h2><pre>ok       - true if loading of parameters was successfull, false otherwise
+param    - parameter set (or other return value)</pre><h2 id="4">Description</h2><pre>Search for the parameterfile in the folders parameter_set of the model
+and load the parameter set. The function is used by the mask of the
+Carnot Simlink block.
+Sets geometry values and sets the initial temperature
+vector to a vector with the length of the storage nodes.
+The input initial temperature vector can be of any size.
+The user can specify whether the parameters are read from file or edited
+by the user.</pre><h2 id="5">References and Literature</h2><pre>Function is used by: Simulink block Storage_Type_1 ... Storage_Type_5
+see also CarnotCallbacks_CONFblocks</pre><h2 id="6">Main function CarnotCallbacks_StorageConf</h2><p>check correct number of input arguments</p><h2 id="8">Copyright and Versions</h2><pre>This file is part of the CARNOT Blockset.
+Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
+Additional Copyright for this file see list auf authors.
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+1. Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.</pre><pre>************************************************************************
+VERSIONS
+author list:     hf -&gt; Bernd Hafner
+                 aw -&gt; Arnold Wohlfeil
+version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+Version  Author  Changes                                     Date
+6.1.0    hf      created                                     03oct2014
+6.1.1    hf      direct subsystem mask parameters and        20dec2014
+                 storage sensor position is taken from s.Tsensor
+6.1.2    hf      integrated getConfNamelist                  15feb2015
+6.2.0    hf      set promoted parameters in top mask         13oct2017
+                 instead of parameters in submask, nconnect
+                 is no longer a top mask parameter
+6.2.1    hf      revised for pubish function,                19oct2017
+                 replace function call to getConfNamelist
+                 by _CarnotCallbacks_getConfNamelist
+6.3.0    hf      adapted to new callback concept             27oct2017
+6.4.0    hf      implemented the use of functions in         03jan2018
+                 CarnotCallbacks_CONFblocks
+6.4.1    aw      update comments and copyright               11jan2018
+6.4.2    hf      new structure of output arguments           13jan2018
+6.4.3    hf      added case 'SetParam' for new CONF model    14sep2018
+6.4.4    hf      added Storage_Type_0                        03oct2018
+6.4.5    hf      additional otherwise in switch storagetype  08oct2018
+6.5.0    hf      'SetParam' and 'SetParameters' use          23nov2018
+                 the same case
+                 changed evaluation of dia, nodes, mpoints, t0
+7.1.0    hf      new block name Storage_TypeN                20mar2019
+                 (old name Storage_TypeN_CONF)
+*************************************************************************</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% CarnotCallbacks_StorageConf - Callback for Carnot model Storage_TypeN
+%% Function Call
+%  [ok, param] = CarnotCallbacks_StorageConf(fname, bhandle, storagetype)
+%% Inputs   
+%  fname - function name for the callback:
+%          'UserEdit' - disable / enable editing of filename+pathname or parameters
+%          'GetFilename' - get the filename and pathname, set these variables in the mask
+%          'SaveFilename' - save parameter set with new filename and pathname
+%          'SetParameters' - load parameterfile and set parameters
+%  bhandle - block handle (result of matlab function gcbh)
+%  storagetype  - 0: buffer storage with inlet and outlet connection
+%               - 1: buffer storage with charging and discharging pipes
+%% Outputs
+%  ok       - true if loading of parameters was successfull, false otherwise
+%  param    - parameter set (or other return value)
+% 
+%% Description
+%  Search for the parameterfile in the folders parameter_set of the model
+%  and load the parameter set. The function is used by the mask of the
+%  Carnot Simlink block.
+%  Sets geometry values and sets the initial temperature 
+%  vector to a vector with the length of the storage nodes. 
+%  The input initial temperature vector can be of any size.
+%  The user can specify whether the parameters are read from file or edited
+%  by the user.
+% 
+%% References and Literature
+%  Function is used by: Simulink block Storage_Type_1 ... Storage_Type_5
+%  see also CarnotCallbacks_CONFblocks
+
+
+function varargout = CarnotCallbacks_StorageConf(varargin)
+%% Main function CarnotCallbacks_StorageConf
+% check correct number of input arguments
+if nargin >= 3 && ischar(varargin{1})
+    command = varargin{1};
+    storagetype = varargin{2};
+else
+    error(['CarnotCallbacks_StorageConf: First argument must be ', ...
+        'a valid function name. Second argument must be the blockhandle.' ...
+        'Third argument must be the storage type.'])
+end
+
+% set relative path in carnot to the block
+switch storagetype
+    case 0
+        foldername = 'Storage_Type_0'; 
+    case 1
+        foldername = 'Storage_Type_1'; 
+    case 2
+        foldername = 'Storage_Type_2';
+    case 3
+        foldername = 'Storage_Type_3';
+    case 4
+        foldername = 'Storage_Type_4';
+    case 5
+        foldername = 'Storage_Type_5';
+    otherwise
+        stgtype = get_param(gcb,'stgtype');
+        foldername = ['Storage_Type_', num2str(stgtype)];
+        if ~exist(fullfile(path_carnot('intlibsl'),'Storage','Thermal',foldername,'parameter_set'), 'file')
+            error('Storage_CONF: Unknown storage type')
+        end
+end
+blockpath = fullfile('Storage','Thermal',foldername,'parameter_set');
+
+% switch for command line calls
+switch command
+    case 'UserEdit'
+        % switch to edit mode for file and path
+        [ok, param] = CarnotCallbacks_CONFblocks('UserEdit', varargin{3});
+    case 'GetFilename'
+        % get the filename and pathname, set these variables in the mask
+        [ok, param] = CarnotCallbacks_CONFblocks('GetFilename', varargin{3:end}, blockpath);
+    case 'SaveFilename'
+        % save parameter set with new filename and pathname
+        [ok, param] = CarnotCallbacks_CONFblocks('SaveFilename', varargin{3:end}, blockpath);
+    case {'SetParam', 'SetParameters'}
+        % load parameterfile and set parameters automatically
+        [ok, param] = CarnotCallbacks_CONFblocks('SetParameters', varargin{3:end}, blockpath);
+        
+        % set height according to position 
+        % (height is not stored in parameter set)
+        pos = get_param(gcb,'standing');
+        x = get_param(gcb,'dia');
+        if ischar(x)       % if value is a char array (assume that its a variable name)
+            try
+                dia = evalin('caller', x);
+            catch
+                dia = evalin('base', x);
+            end
+        else
+            error('parameter ''diameter'' is not numeric and not a variable name')
+        end
+        x = get_param(gcb,'volume');
+        if ischar(x)       % if value is a char array (assume that its a variable name)
+            try
+                volume = evalin('caller', x);
+            catch
+                volume = evalin('base', x);
+            end
+        else
+            error('parameter ''volume'' is not numeric and not a variable name')
+        end
+        if strcmp(pos,'standing cylinder')
+            h = volume/(0.25*dia.^2*pi);
+        else
+            h = dia;
+        end
+        set_param(gcb,'hgt',num2str(h));
+
+        % set indices to measurement points 
+        % (only number of sensors is stored in parameter set)
+        x = get_param(gcb,'mpoints');
+        if ischar(x)       % if value is a char array (assume that its a variable name)
+            try
+                mpoints = evalin('caller', x);
+            catch
+                mpoints = evalin('base', x);
+            end
+        else
+            error('parameter ''number of node temperatures'' is not numeric and not a variable name')
+        end
+        x = get_param(gcb,'nodes');
+        if ischar(x)       % if value is a char array (assume that its a variable name)
+            try
+                nodes = evalin('caller', x);
+            catch
+                nodes = evalin('base', x);
+            end
+        else
+            error('parameter ''number of nodes'' is not numeric and not a variable name')
+        end
+        mpoints = max(mpoints,1);
+        mpts = round(nodes/mpoints/2:nodes/mpoints:nodes);
+        set_param(gcb,'mpts',mat2str(mpts));
+        
+        % set initial temperature (value is not in parameter set)
+        x = get_param(gcb,'t0');
+        if ischar(x)       % if value is a char array (assume that its a variable name)
+            try
+                t0 = evalin('caller', x);
+            catch
+                t0 = evalin('base', x);
+            end
+        else
+            error('parameter ''initial temperature'' is not numeric and not a variable name')
+        end
+        n0 = length(t0);
+        if n0 > 1
+            x = linspace(0,1,n0);
+            xx = linspace(0,1,nodes);
+            tini = spline(x,t0,xx);
+            tmin = min(t0);
+            tmax = max(t0);
+            tini = min(tini, tmax);
+            tini = max(tini, tmin);
+        else
+            tini = ones(1,nodes).*t0;
+        end
+        set_param(gcb,'tini',mat2str(tini));
+    
+    otherwise
+        % something went wrong
+        ok = false;
+        param = [];
+end
+varargout{1} = ok;
+varargout{2} = param;
+end     % end of function CarnotCallbacks_StorageConf
+
+%% Copyright and Versions
+%  This file is part of the CARNOT Blockset.
+%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
+%  Additional Copyright for this file see list auf authors.
+%  All rights reserved.
+%  Redistribution and use in source and binary forms, with or without 
+%  modification, are permitted provided that the following conditions are 
+%  met:
+%  1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+%  2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+%  3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+%  THE POSSIBILITY OF SUCH DAMAGE.
+%  
+%  ************************************************************************
+%  VERSIONS
+%  author list:     hf -> Bernd Hafner
+%                   aw -> Arnold Wohlfeil
+%  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+%  Version  Author  Changes                                     Date
+%  6.1.0    hf      created                                     03oct2014
+%  6.1.1    hf      direct subsystem mask parameters and        20dec2014
+%                   storage sensor position is taken from s.Tsensor
+%  6.1.2    hf      integrated getConfNamelist                  15feb2015
+%  6.2.0    hf      set promoted parameters in top mask         13oct2017
+%                   instead of parameters in submask, nconnect
+%                   is no longer a top mask parameter
+%  6.2.1    hf      revised for pubish function,                19oct2017
+%                   replace function call to getConfNamelist
+%                   by _CarnotCallbacks_getConfNamelist
+%  6.3.0    hf      adapted to new callback concept             27oct2017
+%  6.4.0    hf      implemented the use of functions in         03jan2018
+%                   CarnotCallbacks_CONFblocks 
+%  6.4.1    aw      update comments and copyright               11jan2018
+%  6.4.2    hf      new structure of output arguments           13jan2018
+%  6.4.3    hf      added case 'SetParam' for new CONF model    14sep2018
+%  6.4.4    hf      added Storage_Type_0                        03oct2018
+%  6.4.5    hf      additional otherwise in switch storagetype  08oct2018
+%  6.5.0    hf      'SetParam' and 'SetParameters' use          23nov2018
+%                   the same case 
+%                   changed evaluation of dia, nodes, mpoints, t0
+%  7.1.0    hf      new block name Storage_TypeN                20mar2019
+%                   (old name Storage_TypeN_CONF)
+% *************************************************************************
+% $Revision: 751 $
+% $Author: carnot-hafner $
+% $Date: 2020-08-25 23:56:39 +0200 (Di., 25 Aug 2020) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/branches/carnot_7_00_01/public/library_simulink/Storage/Thermal/Storage_Type_1/src_m/CarnotCallbacks_StorageConf.m $
+% *************************************************************************
+
+##### SOURCE END #####
+--></body></html>

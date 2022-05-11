@@ -1,8 +1,8 @@
 % check parameter range for function calculate_power_for_heatex in the
-% $Revision: 81 $
-% $Author: goettsche $
-% $Date: 2016-11-02 14:10:23 +0100 (Mi, 02 Nov 2016) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Thermal_Models/sfun_storage_heatexchanger/scripts/rangecheck_calculate_power_for_heatex.m $
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
 % file storage_heatechanger.c
 
 %     /* following equation is derived from

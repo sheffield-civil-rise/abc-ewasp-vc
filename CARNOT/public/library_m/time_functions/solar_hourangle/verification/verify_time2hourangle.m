@@ -143,10 +143,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision: 372 $
-%  $Author: carnot-wohlfeil $
-%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/time_functions/solar_hourangle/verification/verify_time2hourangle.m $
+%  $Revision$
+%  $Author$
+%  $Date$
+%  $HeadURL$
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder

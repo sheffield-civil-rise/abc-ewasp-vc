@@ -40,8 +40,8 @@ max_simu_error = 1e-7;   % max error between initial and current simu
 % ---------- set model file or function name ------------------------------
 functionname = 'verify_HeatPump_mdl';
 
-% % reference time vector
-% t0 = 0:100:24*365*3600;
+% reference time vector
+t0 = 0:60:3600;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
@@ -49,11 +49,11 @@ functionname = 'verify_HeatPump_mdl';
 load_system(functionname)
 simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
-y2 = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
-t0 = simOut.get('tout');        % get the whole time vector from simu
-% tsy = timeseries(yy,tt);        % timeseries for the columns
-% tx = resample(tsy,t0);          % resample with t0
-% y2 = tx.data;
+yy = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
+tt = simOut.get('tout');        % get the whole time vector from simu
+tsy = timeseries(yy,tt);        % timeseries for the columns
+tx = resample(tsy,t0);          % resample with t0
+y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -93,17 +93,17 @@ s = 'max';
 % ------------- decide if verification is ok ------------------------------
 if e2 > max_error
     v = false;
-    s = sprintf('verification %s with reference FAILED: error %3.3f > allowed error %3.3f', ...
+    s = sprintf('verification %s with reference FAILED: error %3.3g > allowed error %3.3g', ...
         functionname, e2, max_error);
     show = true;
 elseif e3 > max_simu_error
     v = false;
-    s = sprintf('verification %s with 1st calculation FAILED: error %3.3f > allowed error %3.3f', ...
+    s = sprintf('verification %s with 1st calculation FAILED: error %3.3g > allowed error %3.3g', ...
         functionname, e3, max_simu_error);
     show = true;
 else
     v = true;
-    s = sprintf('%s OK: error %3.3f', functionname, e2);
+    s = sprintf('%s OK: error %3.3g', functionname, e2);
 end
 
 %% ------------ display and plot results if required ----------------------
@@ -224,7 +224,7 @@ end
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2022, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -264,4 +264,7 @@ end
 %  6.1.0    ts      created                                     10aug2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
+%  7.1.0    hf      new name verify_HeatPump                    16apr2019
+%                   (old name verify_HeatPump_CONF)
+%  7.1.1    hf      resampling of result with timestep 60 s     09mar2022
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

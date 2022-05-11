@@ -1,4 +1,3 @@
-function outmat = MeteonormMinute2wformat(infile,outfile,lat,long,long0,station,country,comment,infile2)
 % MeteonormMinute2wformat converts weather data in 1 minutes time 
 % resolution which is calculated by METEONORM into the Carnot-Format. 
 % The function takes solar position from carlib since Meteonorm values show 
@@ -29,6 +28,8 @@ function outmat = MeteonormMinute2wformat(infile,outfile,lat,long,long0,station,
 % 13 - G_Bn direct normal radiation in W/m²
 % 14 - Ta ambient temperature in degree C
 % 15 - FF wind speed in m/s
+% 15 - G_Gsc in W/m² global solar radiation at blue sky conditions (??)
+% 16 - PVprod: PV output in ??
 % 
 % infile2 : optional CARNOT weather data file for additional informations
 %           (Meteonorm minute data has no humidity, 
@@ -50,65 +51,8 @@ function outmat = MeteonormMinute2wformat(infile,outfile,lat,long,long0,station,
 % The output matrix has the CARNOT form as described in "wformat.txt". As
 % no collector position is defined, a horizontal plane is assumed.
 
-% ***********************************************************************
-% This file is part of the CARNOT Blockset.
-% 
-% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
-% Additional Copyright for this file see list auf authors.
-% All rights reserved.
-% 
-% Redistribution and use in source and binary forms, with or without 
-% modification, are permitted provided that the following conditions are 
-% met:
-% 
-% 1. Redistributions of source code must retain the above copyright notice, 
-%    this list of conditions and the following disclaimer.
-% 
-% 2. Redistributions in binary form must reproduce the above copyright 
-%    notice, this list of conditions and the following disclaimer in the 
-%    documentation and/or other materials provided with the distribution.
-% 
-% 3. Neither the name of the copyright holder nor the names of its 
-%    contributors may be used to endorse or promote products derived from 
-%    this software without specific prior written permission.
-% 
-% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
-% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
-% THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/Meteonorm/src_m/MeteonormMinute2wformat.m $
-% ***********************************************************************
-% Meteonorm is a commercial sóftware of Meteotest Genossenschaft, Bern, Switzerland 
-% ***********************************************************************
-% history
-% version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
-% author list:  hf -> Bernd Hafner
-%               gf -> Gaelle Faure
-% 
-% version   author  changes                                     date
-% 4.1.0     hf      created, based on meteoconv.m               03jan2011
-% 4.1.1     gf      modify in order to create new data files    15jun2011
-%                   (direct irradiation on a normal surface)
-% 4.1.2     gf      debug : move calcul for humidity in the     26sep2011
-%                   "if moredata" loop to have a really
-%                   optionnal input 'wdata'
-% 4.1.3     gf      debug : correction of the column numbers    28sep2011
-% 5.1.0     hf      corrected help                              11apr2012
-% 5.2.0     hf      filename from uigetfile if not specified    11dec2012
-% 5.2.1     hf      plot of zenith angle and radiation added    14mar2013
-%                   changed input from matrix to filename 'infile'
-%                   station name and comment added as input
-
+function outmat = MeteonormMinute2wformat(infile,outfile, ...
+    lat,long,long0,station,country,comment,infile2)
 if nargin == 0                      % no parameter given
     [infile, pathname, filter] = ...
         uigetfile({'*.dat','Meteonorm output file'; ...
@@ -147,8 +91,21 @@ else
     error('Number of input arguments must be 0 ')
 end
 
-% load data file
-inmat = load (infile);
+%% Set up the Import Options and import the data
+opts = delimitedTextImportOptions("NumVariables", 18);
+% Specify range and delimiter
+opts.DataLines = [4, Inf];
+opts.Delimiter = "\t";
+% Specify column names and types
+opts.VariableNames = ["m", "dm", "dy", "h", "mi", "G_Gh", "hs", "G_Gex", "G_Gh_hr", "G_Dh", "G_Gk", "G_Dk", "G_Bn", "Ta", "FF", "G_Gcs", "Td", "PVprod"];
+opts.VariableTypes = ["double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double", "double"];
+% Specify file level properties
+opts.ExtraColumnsRule = "ignore";
+opts.EmptyLineRule = "read";
+% Import the data
+tdata = readtable(infile, opts);
+inmat = table2array(tdata);
+clear tdata
 if size(inmat,1) < size(inmat,2)    % sometimes weather comes in rows, sometimes in colums
     inmat = inmat';                 % we only use colums
 end
@@ -169,7 +126,7 @@ outmat(:,2) = tvalue(outmat(:,1));      % string with time comment
 outmat(:,3) = zenith;                   % zenith
 outmat(:,4) = azimuth;       			% azimuth
 outmat(:,5) = inmat(:,13);              % I beam normal
-outmat(:,6) = inmat(:,10); 				% Idfu
+outmat(:,6) = inmat(:,10); 				% Idfu on horizontal
 outmat(:,7) = inmat(:,14);				% Tamb in °C
 outmat(:,8) = inmat(:,14)-6;            % tsky  in °C
 outmat(:,9) = -9999;                    % humiditiy
@@ -181,8 +138,8 @@ outmat(:,14) = -9999;	        	    % wind direction is not known
 outmat(:,15) = zenith;					% collector incidence is zenith angle
 outmat(:,16) = -9999;					% teta rise is not known
 outmat(:,17) = -9999;					% teta head is not known
-outmat(:,18) = inmat(:,6)-inmat(:,10);  % Idir on horizontal = global - diffuse
-outmat(:,19) = inmat(:,10);    			% Idfu on horizontal
+outmat(:,18) = inmat(:,11)-inmat(:,12); % Idir on surface = global - diffuse
+outmat(:,19) = inmat(:,12);    			% Idfu on surface
 
 if moredata
     if size(wdata,2) < 18    % old data format
@@ -218,7 +175,6 @@ disp(' ')
 outmat = [outmat(1,:); outmat(:,:); outmat(length(outmat),:)];
 outmat(1,1) = 0;                        % first row has time 0
 outmat(length(outmat),1) = 8760*3600;   % last row is end of the year
-
 outmat = outmat';
 
 fout = fopen(outfile,'w');
@@ -262,16 +218,76 @@ fprintf(fout,'%% 18    direct solar radiation on surface                   W/m^2
 fprintf(fout,'%% 19    diffuse solar radiation on surface                  W/m^2\n');   
 fprintf(fout,'%% UNKNOWN: set -9999 for unknown values\n%%\n');
 fprintf(fout,'%%   time        tvalue    zenith   azimuth   Ibn Idfuhor Tamb   Tsky   hum    prec  cloud   p      wspeed  wdir  incidence  tetal   tetat   Idirhor Idfuhor\n');
-   
 % write matrix row by row to define formats
 %             time   tvalue  zenit  azimut  Ibn    Idfuh  Tamb   Tsky   hum    prec   cloud  press  wspeed wdir   incid  tetal  tetat  Idirh  Idfuh
 fprintf(fout,'%8.0f  %12.0f  %8.2f  %8.2f  %4.0f  %4.0f  %5.1f  %5.1f  %5.1f  %5.0f  %5.3f  %6.0f  %6.2f  %5.1f  %7.1f  %7.1f  %7.1f  %4.0f  %4.0f\n', ...
        outmat);
-
 status = fclose (fout);
 if (status == 0)
     outmat = outmat';
 else
     outmat = status;
 end
-   
+
+% ***********************************************************************
+% This file is part of the CARNOT Blockset.
+% 
+% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+% Additional Copyright for this file see list auf authors.
+% All rights reserved.
+% 
+% Redistribution and use in source and binary forms, with or without 
+% modification, are permitted provided that the following conditions are 
+% met:
+% 
+% 1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+% 
+% 2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+% 
+% 3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+% 
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+% THE POSSIBILITY OF SUCH DAMAGE.
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
+% ***********************************************************************
+% Meteonorm is a commercial sóftware of Meteotest Genossenschaft, Bern, Switzerland 
+% ***********************************************************************
+% history
+% version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+% author list:  hf -> Bernd Hafner
+%               gf -> Gaelle Faure
+% 
+% version   author  changes                                     date
+% 4.1.0     hf      created, based on meteoconv.m               03jan2011
+% 4.1.1     gf      modify in order to create new data files    15jun2011
+%                   (direct irradiation on a normal surface)
+% 4.1.2     gf      debug : move calcul for humidity in the     26sep2011
+%                   "if moredata" loop to have a really
+%                   optionnal input 'wdata'
+% 4.1.3     gf      debug : correction of the column numbers    28sep2011
+% 5.1.0     hf      corrected help                              11apr2012
+% 5.2.0     hf      filename from uigetfile if not specified    11dec2012
+% 5.2.1     hf      plot of zenith angle and radiation added    14mar2013
+%                   changed input from matrix to filename 'infile'
+%                   station name and comment added as input
+% 7.1.0     hf      new inputs G_Gsc, PVprod from Meteonorm 7.3 24apr2022
+%                   use readtable instead of load to import the data
+%                   take "G_Gk", "G_Dk" instead of "G_Gh", "G_Dh"
+%                   for the outmat col 18, 19

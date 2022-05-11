@@ -90,12 +90,15 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
 </v:shape><![endif]--><![if !vml]><img width=134 height=127
 src="Figures/heatpump.jpg" align=right v:shapes="Bild_x0020_113"><![endif]><span class=GramE><span style='mso-bookmark:heatpump'><span
-style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'>heat</span></b></span></span></span><span style='mso-bookmark:
-heatpump'><span style='mso-bookmark:literature'><b><span lang=EN-US
-style='font-size:18.0pt;line-height:120%'> pump</span></b><span
+style='mso-bookmark:literature'><b><span style='font-size:18.0pt;
+line-height:120%'>H</span><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'>eat</span></b></span></span></span><span style='mso-bookmark:
+heatpump'><span style='mso-bookmark:literature'><b><span
+style='font-size:18.0pt;line-height:120%'>P</span><span lang=EN-US
+style='font-size:18.0pt;line-height:120%'>ump</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-<b>Path: CARNOT/heat_source</b> <br clear=all style='mso-special-character:
+<b>Path: CARNOT/<span lang="de-at">S</span>ource</b></span><b><span style='font-size:13.5pt;line-height:120%'>/Heat_Pump</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br clear=all style='mso-special-character:
 line-break'>
 <o:p></o:p></span></span></span></p>
 
@@ -115,47 +118,15 @@ line-height:120%'><o:p></o:p></span></span></p>
 
 <p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
 13.5pt;line-height:120%'>Description</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-The dynamic behaviour of the heat pump is calculated using an empirical model (</span><span style='font-size:13.5pt;line-height:120%'>more 
+The dynamic behaviour of the heat pump is calculated using an empirical model</span><span style='font-size:13.5pt;line-height:120%'>. 
+The model is described in <a href="HeatPump_basic.html">HeatPump_basic</a> </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'> (</span><span style='font-size:13.5pt;line-height:120%'>more 
 details see
 <a href="pdf/CARNOT_Nutzertreffen2017_Viessmann_Hafner_Modellierung_LuftWasserWP.pdf">
 Hafner 2017</a> and </span></span><a
 href="6_Literature.html#schwamberger"><span style='mso-bookmark:literature'><span lang=EN-US
 style='font-size:13.5pt;line-height:120%'>Schwamberger 1991</span></span></a><span style='mso-bookmark:literature'><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>). The basis is the static
-characteristics of the heat pump according to the german standard DIN 8900. In
-the two-dimensional diagram the heating, source and electric powers are given
-for different temperatures in the primary and secondary cycles. The
-characteristics are approximated by linear equations: </span></span></p>
-
-<p><span
-     style='mso-bookmark:literature'>
-<span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>heating_power
-     = K<sub>1</sub> * T<sub>primary,in</sub> + K<sub>2</sub> * T<sub>secondary,out</sub>
-     + K<sub>3</sub> <br />
-electric_power
-     = K4 * T<sub>primary,in</sub> + K5 * T<sub>secondary,out</sub> + K6 
-<span lang=EN-US style='mso-fareast-font-family:
-     "Times New Roman"'>
-<o:p></o:p>
-</span></span>
-<o:p><br />
-<span lang=EN-US style='font-size:13.5pt;
-     line-height:120%;mso-fareast-font-family:"Times New Roman"'>source_power =
-     -K7 * T<sub>primary,in</sub> - K8 * T<sub>secondary,out</sub> - K9</span></o:p></span></p>
-
-<p><span style='mso-bookmark:literature'><span lang=EN-US style='font-size:
-13.5pt;line-height:120%'>The outlet temperatures of the hot and cold branches
-are calculated by the differential equations:</span></span></p>
-
-<p class="auto-style4"><span style='mso-bookmark:literature'><span
-class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>cap<sub>h</sub></span></span><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'> * dT<sub>h</sub>/dt = Qdot<sub>heating</sub> + mdot * cp *
-(T<sub>in,h</sub>-T) + UA * (Tamb-T<sub>h</sub>)<br>
-cap<sub>c</sub> * dT<sub>c</sub>/dt = Qdot<sub>source</sub> + mdot * cp * (T<sub>in,c</sub>-T)
-+ UA * (Tamb-T<sub>c</sub>)<br>
-with: <br />
-cap = mass * heat_capactiy</span></span></p>
+lang=EN-US style='font-size:13.5pt;line-height:120%'>).</span></span></p>
 <p class="auto-style4"><font size="4">Consider that the model does not take into 
 account any limitations of the refrigerant or the controller (e.g. minimum 
 evaporation temperature, maximum condensing temperature, delays during start 
@@ -248,8 +219,7 @@ line-height:120%;mso-fareast-font-family:"Times New Roman"'>
 <p class=MsoNormal><span style='mso-bookmark:literature'><span lang=EN-US
 style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:"Times New Roman"'><br>
 Additional files: The parameters K<sub>1</sub><span class=GramE>..</span>K<sub>9</sub>
-can be determined by the M-file </span></span><a
-href="carnot_manual.htm#hp_param"><span style='mso-bookmark:literature'><span lang=EN-US
+can be determined by the M-file </span></span><a href="hp_param.html"><span style='mso-bookmark:literature'><span lang=EN-US
 style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:"Times New Roman"'>hp_param</span></span></a><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 "Times New Roman"'> which is automatically called by the heat pump block. The
@@ -290,7 +260,10 @@ Schwamberger<span lang="de-at"> (1991)</span>: Modellbildung und Regelung von Ge
 lang=EN-US style='font-size:13.5pt;line-height:120%'><a name=schwamberger>&nbsp;Wärmepumpen, Fortschrittsberichte VDI Reihe 6, Nr. 263, VDI Verlag Düsseldorf</a></span></span><br />
 	<span class="auto-style5">Allen, J.J., Hamilton J.F. (1983): Steady-state 
 	reciprocating water chiller models. <br />
-&nbsp;&nbsp;&nbsp; ASHRAE Transactions 89(2A): pp. 398-407 </span></p>
+&nbsp;&nbsp;&nbsp; ASHRAE Transactions 89(2A): pp. 398-407 <br />
+	Hafner:&nbsp;
+	<a href="pdf/CARNOT_Nutzertreffen2017_Viessmann_Hafner_Modellierung_LuftWasserWP.pdf">
+	Modellierung Luft-Wasser-Wärmepumpen</a>, CARNOT_Nutzertreffen2017</span></p>
 
 </form>
 
@@ -316,6 +289,14 @@ style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
 style='mso-special-character:line-break'>
 </span></span></span></p>
+<p class="auto-style5">
+You may directly choose predefined parameter sets.
+For details see chapter 
+<a href="2_Basic_Concepts.html#Choosing_parameter_sets_for_configurated_models">
+<font
+ size="4">2.2.1 Choosing parameter sets for configurated models</font></a></p>
+
+<p>&nbsp;<font size="4">The model parameters are:</font></p>
 
 <ul type=disc class="auto-style1">
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
@@ -349,107 +330,22 @@ style='mso-special-character:line-break'>
      "Times New Roman"'>heat loss coefficient (UA) [W/K] </span><span
      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     margin-left:36.0pt;mso-list:l239 level1 lfo116;tab-stops:list 36.0pt'><span
-     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+     margin-left:36.0pt;mso-list:l239 level1 lfo116;tab-stops:list 36.0pt'>
+ <font size="4">thermodynamic model parameters </font>
+ <span
+     style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'>
+ <span
      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-     "Times New Roman"'>vectors for determining K1...K9: </span><span
+     "Times New Roman"'>K1...K9 </span><span
      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
-    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
-      auto;margin-left:36.0pt;mso-list:l239 level2 lfo116;tab-stops:list 72.0pt'>
-	<span
-      style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'>
-	<span
-      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-      "Times New Roman"'>inlet source temperature values [°C] </span>
-	<span
-      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'>
-	<o:p></o:p>
-	</span></span></span></li>
-	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
-      auto;margin-left:36.0pt;mso-list:l239 level2 lfo116;tab-stops:list 72.0pt'>
-	<span
-      style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'>
-	<span
-      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-      "Times New Roman"'>outlet load temperature values [°C] </span>
-	<span
-      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'>
-	<o:p></o:p>
-	</span></span></span></li>
-	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
-      auto;margin-left:36.0pt;mso-list:l239 level2 lfo116;tab-stops:list 72.0pt'>
-	<span
-      style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'>
-	<span
-      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-      "Times New Roman"'>heating power values for the temperature couples [W] 
-	</span>
-	<span
-      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'>
-	<o:p></o:p>
-	</span></span></span></li>
-	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
-      auto;margin-left:36.0pt;mso-list:l239 level2 lfo116;tab-stops:list 72.0pt'>
-	<span
-      style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'>
-	<span
-      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-      "Times New Roman"'>source power values for the temperature couples [W] 
-	</span>
-	<span
-      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'>
-	<o:p></o:p>
-	</span></span></span></li>
-	<li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
-      auto;margin-left:36.0pt;mso-list:l239 level2 lfo116;tab-stops:list 72.0pt'>
-	<span
-      style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'>
-	<span
-      lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
-      "Times New Roman"'>electric power values for the temperature couples [W] 
-	</span>
-	<span
-      lang=EN-US style='mso-fareast-font-family:"Times New Roman"'>
-	<o:p></o:p>
-	</span></span></span></li>
 </ul>
-
-<p class="auto-style4"><span style='mso-bookmark:literature'><span
-style='mso-bookmark:schwamberger'><span class=GramE><span lang=EN-US
-style='font-size:13.5pt;line-height:120%'>where</span></span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> vectors and matrix come
-from this kind of tables:<br>
-&nbsp; </span></span></span></p>
-
-<table class=MsoNormalTable border=1 cellpadding=0 style='mso-cellspacing:1.5pt;
- mso-yfti-tbllook:1184'>
- <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
-  <td width=116 style='width:87.0pt;padding:.75pt .75pt .75pt .75pt'>
-  <p align=center style='text-align:center'><span style='mso-bookmark:literature'><span
-  style='mso-bookmark:schwamberger'><span lang=EN-US style='font-size:13.5pt;
-  line-height:120%'>&nbsp;</span></span></span></p>
-  </td>
-  <td width=548 style='width:411.0pt;padding:.75pt .75pt .75pt .75pt'>
-  <p align=center style='text-align:center'><span style='mso-bookmark:literature'><span
-  style='mso-bookmark:schwamberger'><span lang=EN-US style='font-size:13.5pt;
-  line-height:120%'>outlet load temperatures</span></span></span></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
-  <td width=116 style='width:87.0pt;padding:.75pt .75pt .75pt .75pt'>
-  <p align=center style='text-align:center'><span style='mso-bookmark:literature'><span
-  style='mso-bookmark:schwamberger'><span lang=EN-US style='font-size:13.5pt;
-  line-height:120%'>transpose(inlet source temperatures)</span></span></span></p>
-  </td>
-  <td width=548 style='width:411.0pt;padding:.75pt .75pt .75pt .75pt'>
-  <p align=center style='text-align:center'><span style='mso-bookmark:literature'><span
-  style='mso-bookmark:schwamberger'><span lang=EN-US style='font-size:13.5pt;
-  line-height:120%'>heating/source/electric power</span></span></span></p>
-  </td>
- </tr>
-</table>
-
-<p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+<p><span style='mso-bookmark:literature'>
+<span style='mso-bookmark:schwamberger'>
+<span style='font-size:13.5pt;line-height:120%'>See hp_param.m function for the 
+calculation of the K1...K9 parameters.</span></span></span></p>
+<p><span style='mso-bookmark:literature'>
+<span style='mso-bookmark:schwamberger'>
+<span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>&nbsp;</span></span></span></p>
 
 <p><span style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><b><span

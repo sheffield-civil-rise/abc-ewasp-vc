@@ -33,10 +33,10 @@ function varargout = CarnotCallbacks_Grashof(varargin)
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Hydraulics/Grashof/src_m/CarnotCallbacks_Grashof.m $
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

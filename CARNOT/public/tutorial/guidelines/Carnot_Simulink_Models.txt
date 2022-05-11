@@ -256,9 +256,34 @@ Each Block must have a html help-file in the folder <Blockname>/doc.
 You may use the template "carnot_help_file.htlm" in the /tutorial/templates
 folder.
 
-******************** FILE TRAILER ************************************
+**********************************************************************
+19) Data outport
+The model shall have a data outport. The data is collected in a bus. 
+The name of the outport and the bus is XXdat. XX are the first letters of 
+the blockname (e.g. Hdat for the house model, HPdat for the heat pump model). 
+The data outport shall contain the relevant signals which can be usefull 
+for the evaluation of the data: energy balance, control behaviour, comfort, 
+consumption, ... .
+Typically these are:
++ THB inport and outport "THBin", "THBout"
++ other buses like WDB ("WDB"), RDB ("RDBzoneN"), AIV ("AIVzoneN")
++ control signals: the setpoint "ControlSetpoint" (usually the inport value) 
+  and the actual control singal "ControlActual" (e.g. limited to the operation 
+  range of the model)
++ fuel and electric power consumption
++ characteristic parameters (e.g. living surface of the house, volume of the storage)
+The text in "" shall be used as the name for the singal in the bus.
+
+**********************************************************************
+20) Development model
+A Simulink model with a library link to the library_atomic of the block 
+is placed in the folder <BlockName>\specification. This model is used for 
+further development of the block.
+
+**********************************************************************
+ * Copyright and Versions
  * This file is part of the CARNOT Blockset.
- * Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+ * Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
  * Additional Copyright for this file see list auf authors.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without 
@@ -283,16 +308,14 @@ folder.
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
-**********************************************************************
-
-Matlab(C) and Simulink(C) are registered trademarks of The MathWorks, Inc.
-for a complete list see: 
-http://www.mathworks.com/company/aboutus/policies_statements/trademarks.html
-
-**********************************************************************
-* F I L E   D O C U M E N T A T I O N
+************************************************************************
+VERSIONS
+$Revision$
+$Author$
+$Date$
+$HeadURL$
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 * author list:      hf -> Bernd Hafner
-*                   mp -> Marcel Paasche
 * version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
 * Version  Author   Changes                                     Date
 * 6.1.0    hf       created, based on the 2014 user meeting     01apr2014
@@ -303,4 +326,6 @@ http://www.mathworks.com/company/aboutus/policies_statements/trademarks.html
 * 6.1.5    hf       correctes path to \public\data		17sep2015
 * 6.1.6    hf       block color definition added                14oct2016
 * 6.1.7    hf       added requirements in 6) REQUIREMENTS 	18oct2017
+* 7.1.0    hf       definition of data outport chapter 19       20jan2019
+* 7.2.0    hf       added model to the spec folder (Chptr 20)   06mar2022
 ********************************** E N D ************************************

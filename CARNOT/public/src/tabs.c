@@ -25,10 +25,10 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
  * THE POSSIBILITY OF SUCH DAMAGE.
- * $Revision: 418 $
- * $Author: carnot-kefer $
- * $Date: 2018-05-07 16:02:52 +0200 (Mo, 07 Mai 2018) $
- * $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src/tabs.c $
+ * $Revision$
+ * $Author$
+ * $Date$
+ * $HeadURL$
  ***********************************************************************
  *  M O D E L    O R    F U N C T I O N
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

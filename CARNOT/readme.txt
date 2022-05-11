@@ -25,7 +25,8 @@ Open "CARNOT_Installation_Guide.txt" for installation instructions.
 
                               LICENCE
 
-Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen
+Copyright (c) 1998 - 2021, Solar-Institut Juelich of the FH Aachen,
+University of Applied Sciences
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without 

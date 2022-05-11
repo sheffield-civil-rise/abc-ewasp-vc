@@ -1,4 +1,4 @@
-%% Callback for Carnot model HeatPump_CONF
+%% Callback for Carnot model ModelDoc
 %% Function Call
 %  ok = CarnotCallbacks_ModelDoc()
 %% Inputs
@@ -12,9 +12,9 @@
 %  Carnot Simlink block.
 % 
 %% References and Literature
-%  Function is used by: Simulink block Condensing_Boiler_CONF
-%  Function calls: CarnotCallbacks_loadConfParameters.m
-%  see also CarnotCallbacks_loadConfParameters, CarnotCallbacks_getConfNamelist
+%  Function is used by: Simulink block ModelDoc
+%  Function calls: -
+%  see also -
 
 function ok = CarnotCallbacks_ModelDoc()
 %% Calculations

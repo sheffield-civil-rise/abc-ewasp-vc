@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="de-at" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>valve</title>
+<style type="text/css">
+ div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+p
+	{margin-right:0cm;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+ .auto-style1 {
+	margin-left: 40px;
+}
+.auto-style2 {
+	border-width: 0px;
+}
+ </style>
+</head>
+
+<body>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=10 width="100%" noshade style='color:#A0A0A0' align=center>
+
+</span></span></span></div>
+
+<p><span class=GramE><span style='mso-bookmark:Valve'><span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'>
+<img alt="" height="82" src="Figures/valve_table.jpg" style="float: right" width="122" class="auto-style2" /></span><span style='font-size:18.0pt;line-height:120%'>V</span><span
+lang=EN-US style='font-size:18.0pt;line-height:120%'>alve</span><span style='font-size:18.0pt;line-height:120%'>_table</span></b></span></span></span></span><span
+style='mso-bookmark:Valve'><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+<b>Path: CARNOT/<span lang="de-at">H</span>ydraulics</b> <br />
+<br />
+</span></span></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:Valve'><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></span></div>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+</span><span style='font-size:13.5pt;line-height:120%'> C</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>alculate the pressure drop </span>
+<span style='font-size:13.5pt;line-height:120%'> of</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> a valve</span><span style='font-size:13.5pt;line-height:120%'> 
+with different flow coefficient characteristics</span><span
+style='font-size:12.0pt;line-height:120%'><o:p>.</o:p></span></span></span></p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+The valve increases its pressure drop according to the </span>
+<span style='font-size:13.5pt;line-height:120%'> control input (opening). The 
+calculation is based on the flow coefficient <span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Kv</span><span style='font-size:13.5pt;line-height:120%'> 
+and its characteristics (model from [Braun, 2018])</span></span></span></span>. </span>
+<span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> &nbsp; </span></span></span></p>
+
+<p>&nbsp;<span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+class=GramE><span style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;&nbsp; </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>Kv = Vdot * 
+sqrt(1e5Pa/dp * density/1000kg/m³) </span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Vdot is 
+the volumetric flow rate in m³/h</span><span style='font-size:13.5pt;line-height:120%'>.</span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span style='font-size:13.5pt;line-height:120%'>R</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'>esolv</span><span style='font-size:13.5pt;line-height:120%'>ing</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> </span>
+<span style='font-size:13.5pt;line-height:120%'>the </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>equation for </span>
+<span style='font-size:13.5pt;line-height:120%'>the </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>pressure drop dp</span><span style='font-size:13.5pt;line-height:120%'> 
+gives: </span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>
+(Kv/Vdot)² = 1e5Pa/dp * density/1000kg/m³ </span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>dp = (100 
+Pa*m³/kg) * density * (Vdot/Kv)² </span></span></span></span></p>
+<p><font size="4">and </font><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>with Vdot 
+= mdot/density </span><span style='font-size:13.5pt;line-height:120%'>the 
+pressure drop becomes</span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>dp = (100 
+Pa*m³/kg)/density * (mdot/Kv)² </span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>change 
+unit of mdot</span><span style='font-size:13.5pt;line-height:120%'> from</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> 
+kg/h </span><span style='font-size:13.5pt;line-height:120%'>to kg/s: 1 kg/h </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>= </span>
+<span style='font-size:13.5pt;line-height:120%'>1 </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>kg/(3600s) </span>
+<span style='font-size:13.5pt;line-height:120%'>we finally have</span></span></span></span></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>dp = (100 
+Pa*m³/kg) * (3600 s/h)² / density * (mdot/Kv)² </span></span></span></span></p>
+<p><font size="4">The </font><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Carnot 
+equation</span><span style='font-size:13.5pt;line-height:120%'> for the pressure 
+drop is</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'>: dp = 
+qua * mdot² </span></span></span></span></p>
+<p><font size="4">Comparing the two equations for the pressure drop we get:</font></p>
+<p><span style='mso-bookmark:schwamberger' class="auto-style1">
+<span style='mso-bookmark:literature'><span
+class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>qua = 
+(100 Pa*m³/kg) * (3600 s/h)² / (density*Kv²) <br />
+</span></span></span></span></p>
+<p><font size="4"><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'><span
+class=GramE><span style='font-size:13.5pt;line-height:120%'>Kvs is defined as 
+the flow coefficient of the fully opened valve. </span></span></span></span>The 
+relative flow coefficient psi is: </font></p>
+<p><font size="4">&nbsp;&nbsp;&nbsp;&nbsp; psi = Kv/Kvs</font></p>
+<p><font size="4">A lookup table is used for the characteristics of the relative flow coefficient:</font></p>
+<p><font size="4">with </font></p>
+<p><font size="4">&nbsp;&nbsp;&nbsp;&nbsp; h = H/H100 relative opening </font></p>
+<p><font size="4">&nbsp;&nbsp;&nbsp;&nbsp; psi_0 relative flow coefficient of 
+the closed valve (h = 0) </font></p>
+<p><font size="4">Note: Psi must be &gt; 0 for Ctrl = 0 Typical value for the 
+relative flow coefficient at zero opening psi_0 is 0.04&nbsp; </font></p>
+<p>&nbsp;</p>
+<p><font size="4"><strong>Mask Parameters and Dialog Box</strong></font></p>
+<p><font size="4">
+<img alt="" src="Figures/Valve_tableMASK.jpg" height="596" width="432" /></font></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><font size="4"><strong>Literature</strong></font></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'>
+<a href="../../Valve/doc/pdf/CARNOT_Nutzertreffen2018_HSBiberach_Volkmer_Hydraulik.pdf">
+<font size="4">Volkmer</font><span
+class=GramE><span style='font-size:13.5pt;line-height:120%'>: 
+Presentation of the </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>
+<span style='font-size:13.5pt;line-height:120%'> 
+FH Biberach</span></span><span style='font-size:13.5pt;line-height:120%'> </span>
+<span lang=EN-US style='font-size:13.5pt;line-height:120%'>Thamo_6x2</span><span style='font-size:13.5pt;line-height:120%'> 
+Library, Carnot User Meeting Darmstadt 2018</span></span></a></span></span></p>
+<p><span class="GramE"><font size="4">VDMA-Einheitsblatt 24199, 2015</font></span></p>
+<p>&nbsp;</p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>
+Sample
+time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;
+</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> Inherited
+from driving block <br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;
+</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> No
+</span></span></span></p>
+
+</body>
+
+</html>

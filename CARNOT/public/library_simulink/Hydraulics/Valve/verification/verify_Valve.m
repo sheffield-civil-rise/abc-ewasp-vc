@@ -34,7 +34,7 @@ end
 
 %% ---------- set your specific model or function parameters here ---------
 % ----- set error tolerances ----------------------------------------------
-max_error = 1e-7;        % max error between simulation and reference
+max_error = 4e-5;        % max error between simulation and reference
 max_simu_error = 1e-7;   % max error between initial and current simu
 
 % ---------- set model file or function name ------------------------------
@@ -53,7 +53,8 @@ yy = simOut.get('yout');        % get the whole output vector (one value per sim
 tt = simOut.get('tout');        % get the whole time vector from simu
 tsy = timeseries(yy,tt);        % timeseries for the columns
 tx = resample(tsy,t0);          % resample with t0
-y2 = tx.data;
+y2 = tx.data(:,1:2);
+y0 = tx.data(:,3:4);            % reference data for pressure and massflow from THAMO model
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -62,22 +63,18 @@ close_system(functionname, 0)   % close system, but do not save it
 % from the simulation result
 if (save_sim_ref)
     y1 = y2;   % determinded data
-    save('simRef_Valve.mat','y2');
+    save('simRef_Valve.mat','y1');
 else
     y1 = importdata('simRef_Valve.mat');  % result from call at creation of function
 end
-
-% ----------------- set the literature reference values -------------------
-y0 = y1;
-disp('verify_Valve.m: using simulation data as reference data')
 
 %% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
 %   s    - 'sum' - e is the sum of the individual errors of ysim 
 %          'mean' - e is the mean of the individual errors of ysim
 %          'max' - e is the maximum of the individual errors of ysim
-r = 'absolute'; 
-% r = 'relative'; 
+% r = 'absolute'; 
+r = 'relative'; 
 s = 'max';
 % s = 'sum';
 % s = 'mean';
@@ -120,17 +117,15 @@ if (show)
     
     %   y - matrix with y-values (reference values and result of the function call)
     y_p     = [y0(:,1), y1(:,1), y2(:,1)];
-    y_ID    = [y0(:,2), y1(:,2), y2(:,2)];
-
+    y_mdot    = [y0(:,2), y1(:,2), y2(:,2)];
     
     %   x - vector with x values for the plot
     x = t0;
     
     %   ye - matrix with error values for each y-value
     ye_p    = [ye1(:,1), ye2(:,1), ye3(:,1)]; 
-    ye_ID   = [ye1(:,2), ye2(:,2), ye3(:,2)]; 
+    ye_mdot   = [ye1(:,2), ye2(:,2), ye3(:,2)]; 
 
-    
     sz = strrep(s,'_',' ');
     
 % ----------------------- Combining plots ---------------------------------
@@ -156,25 +151,25 @@ if (show)
     end
     legend(sleg2,'Location','best')
     xlabel(sx)
-    ylabel('Difference in Pa')
+    ylabel('relative Difference in Pa')
     
     % ID plots
     subplot(2,2,2)      % divide in subplots (lower and upper one)
-    if size(y_ID,2) == 3
-        plot(x,y_ID(:,1),'x',x,y_ID(:,2),'o',x,y_ID(:,3),'-')
+    if size(y_mdot,2) == 3
+        plot(x,y_mdot(:,1),'x',x,y_mdot(:,2),'o',x,y_mdot(:,3),'-')
     else
-        plot(x,y_ID,'-')
+        plot(x,y_mdot,'-')
     end
     title(st)
-    ylabel('ID')
+    ylabel('massflow in kg/s')
     legend(sleg1,'Location','best')
     text(0,-0.2,sz,'Units','normalized')  % display valiation text
     
     subplot(2,2,4)      % choose lower window
-    if size(ye_ID,2) == 3
-        plot(x,ye_ID(:,1),'x',x,ye_ID(:,2),'o',x,ye_ID(:,3),'-')
+    if size(ye_mdot,2) == 3
+        plot(x,ye_mdot(:,1),'x',x,ye_mdot(:,2),'o',x,ye_mdot(:,3),'-')
     else
-        plot(x,ye_ID,'-')
+        plot(x,ye_mdot,'-')
     end
     legend(sleg2,'Location','best')
     xlabel(sx)

@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>hot water energy profile</title>
+<style type="text/css">
+ div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+p
+	{margin-right:0cm;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+</style>
+</head>
+
+<body>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=10 width="100%" noshade style='color:#A0A0A0' align=center>
+
+</span></span></div>
+
+<p><!--[if gte vml 1]><v:shape id="Bild_x0020_46" o:spid="_x0000_s1599" type="#_x0000_t75"
+ style='position:absolute;left:0;text-align:left;margin-left:46.25pt;
+ margin-top:0;width:86.25pt;height:42pt;z-index:44;visibility:visible;
+ mso-wrap-style:square;mso-wrap-distance-left:0;mso-wrap-distance-top:0;
+ mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
+ mso-position-horizontal:right;mso-position-horizontal-relative:text;
+ mso-position-vertical:absolute;mso-position-vertical-relative:line'
+ o:allowoverlap="f">
+ <v:imagedata src="Figures/dhw_from_dhwcalc.JPG" xmlns:v="urn:schemas-microsoft-com:vml"/>
+ <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
+</v:shape><![endif]--><![if !vml]>
+<img width=210 height=156
+src="Figures/HotWaterEnergyProfile.JPG" align=right v:shapes="Bild_x0020_46"><![endif]><a name="dhw_from_file"><span
+style='mso-bookmark:literature'><b><span style='font-size:18.0pt;
+line-height:120%'>Hot_Water_Energy_Profile</span></b></span></a></p>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Path: CARNOT/</span><span style='font-size:
+13.5pt;line-height:120%'>L</span><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>oad</span><span style='font-size:
+13.5pt;line-height:120%'>/Hot_Water_Tapping</span></b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br clear=all style='mso-special-character:line-break'>
+<o:p></o:p></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></div>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Purpose</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+Hot water consumption with a</span><span style='font-size:13.5pt;line-height:120%'>n 
+energy profile</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'>.</span></span></p>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Description</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+</span><span style='font-size:13.5pt;line-height:120%'> <span style='mso-bookmark:literature'>
+There are different methods to evaluate the hot water comfort (see QAIST 2012).<br />
+In this model the hot water draw-off is defined by an energy profile (see also
+<a href="DHWenergyTapping.html">DHW_Energy_Tapping</a> block). </span>The energy tapping 
+starts at the specified time with the specified flow-rate. The draw-off ends 
+when the energy is reached. <br />
+The model includes a mixing valve trying to maintain 
+the setpoint temperature (defined as an offset on the cold water temperature).</span><span lang=EN-US style='font-size:13.5pt;line-height:120%'> 
+</span></span></p>
+<p>&nbsp;</p>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Parameters and Dialog Box</span></b></span></p>
+
+<p><span style='mso-bookmark:literature'><b
+style='mso-bidi-font-weight:normal'><span style='font-size:13.5pt;line-height:
+120%;mso-ansi-language:DE;mso-fareast-language:DE;mso-bidi-language:AR-SA;
+mso-no-proof:yes'>
+<img border=0 id="_x0000_i1436"
+src="Figures/HotWaterEnergyProfileMASK.JPG"></span></b></span></p>
+<p>&nbsp;</p>
+<p><span style='mso-bookmark:literature'>
+<span style='font-size:13.5pt;line-height:120%'> <strong>Literature</strong></span></span></p>
+<p><font size="4">
+<a href="../../library_simulink/Load/Hot_Water_Tapping/DHW_Energy_Tapping/doc/pdf/QAiST%20D3.6-7%20HWC%20Method.pdf">QAIST : 
+Methodology for the Assessment of the Hot Water Comfort of Factory Made Systems 
+and Custom Built Systems, ITW University of Stuttgart, 2012 </a></font></p>
+<p>&nbsp;</p>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Characteristics</span></b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br>
+Sample
+time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>&nbsp;
+</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> Inherited
+from driving block <br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>&nbsp;&nbsp;
+</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> No
+</span></span></p>
+
+</body>
+
+</html>

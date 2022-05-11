@@ -40,7 +40,7 @@ max_simu_error = 1e-7;   % max error between initial and current simu
 % ---------- set model file or function name ------------------------------
 functionname = 'verify_Storage_Type_4_mdl';
 
-% reference time vector
+% % reference time vector
 t0 = 0:1800:24*3600;
 
 %% ------------------------------------------------------------------------
@@ -51,9 +51,9 @@ simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
 yy = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
 tt = simOut.get('tout');        % get the whole time vector from simu
-yt = timeseries(yy,tt);         % timeseries for the columns
-yt = resample(yt,t0);           % resample with t0
-y2 = yt.data;
+tsy = timeseries(yy,tt);        % timeseries for the columns
+tx = resample(tsy,t0);          % resample with t0
+y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -119,17 +119,17 @@ if (show)
     sleg2 = {'ref. vs initial simu','ref. vs current simu','initial simu vs current'};
     
     %   y - matrix with y-values (reference values and result of the function call)
-    y_Tdhw   = [y0(:,1), y1(:,1), y2(:,1)];
-    y_Q      = [y0(:,2), y1(:,2), y2(:,2)]/36e5;
-    y_Qhx    = [y0(:,3), y1(:,3), y2(:,3)];
-    y_Qdis   = [y0(:,4), y1(:,4), y2(:,4)];
+    y_Tdhw  = [y0(:,1), y1(:,1), y2(:,1)];
+    y_Qint  = [y0(:,2), y1(:,2), y2(:,2)];
+    y_Qhx   = [y0(:,3), y1(:,3), y2(:,3)];
+    y_Qdhw  = [y0(:,4), y1(:,4), y2(:,4)];
     
     %   x - vector with x values for the plot
     x = t0;
     
     %   ye - matrix with error values for each y-value
     ye_Tdhw   = [ye1(:,1), ye2(:,1), ye3(:,1)];
-    ye_Q      = [ye1(:,2), ye2(:,2), ye3(:,2)]/36e5; 
+    ye_Qloss  = [ye1(:,2), ye2(:,2), ye3(:,2)]; 
     ye_Qhx    = [ye1(:,3), ye2(:,3), ye3(:,3)]; 
     ye_Qdis   = [ye1(:,4), ye2(:,4), ye3(:,4)];
    
@@ -138,27 +138,27 @@ if (show)
 % ----------------------- Combining plots ---------------------------------
     figure              % open a new figure
     
-    % internal energy plots
+    % Losses plots
     subplot(2,4,1)      % divide in subplots (lower and upper one)
-    if size(y_Q,2) == 3
-        plot(x,y_Q(:,1),'x',x,y_Q(:,2),'o',x,y_Q(:,3),'-')
+    if size(y_Qint,2) == 3
+        plot(x,y_Qint(:,1),'x',x,y_Qint(:,2),'o',x,y_Qint(:,3),'-')
     else
-        plot(x,y_Q,'-')
+        plot(x,y_Qint,'-')
     end
     title(st)
-    ylabel('Q in kWh')
+    ylabel('Qint in J')
     legend(sleg1,'Location','best')
     text(0,-0.2,sz,'Units','normalized')  % display valiation text
     
     subplot(2,4,5)      % choose lower window
-    if size(ye_Q,2) == 3
-        plot(x,ye_Q(:,1),'x',x,ye_Q(:,2),'o',x,ye_Q(:,3),'-')
+    if size(ye_Qloss,2) == 3
+        plot(x,ye_Qloss(:,1),'x',x,ye_Qloss(:,2),'o',x,ye_Qloss(:,3),'-')
     else
-        plot(x,ye_Q,'-')
+        plot(x,ye_Qloss,'-')
     end
     legend(sleg2,'Location','best')
     xlabel(sx)
-    ylabel('Difference in kWh')
+    ylabel('Difference in W')
     
     % Power Hx plots
     subplot(2,4,2)      % divide in subplots (lower and upper one)
@@ -168,7 +168,7 @@ if (show)
         plot(x,y_Qhx,'-')
     end
     title(st)
-    ylabel('Qdot in W')
+    ylabel('Q solar in J')
     legend(sleg1,'Location','best')
     text(0,-0.2,sz,'Units','normalized')  % display valiation text
     
@@ -180,17 +180,17 @@ if (show)
     end
     legend(sleg2,'Location','best')
     xlabel(sx)
-    ylabel('Difference in W')
+    ylabel('Difference in J')
     
     % Power Dis plots
     subplot(2,4,3)      % divide in subplots (lower and upper one)
-    if size(y_Qdis,2) == 3
-        plot(x,y_Qdis(:,1),'x',x,y_Qdis(:,2),'o',x,y_Qdis(:,3),'-')
+    if size(y_Qdhw,2) == 3
+        plot(x,y_Qdhw(:,1),'x',x,y_Qdhw(:,2),'o',x,y_Qdhw(:,3),'-')
     else
-        plot(x,y_Qdis,'-')
+        plot(x,y_Qdhw,'-')
     end
     title(st)
-    ylabel('Qdot in W')
+    ylabel('Q dhw in J')
     legend(sleg1,'Location','best')
     text(0,-0.2,sz,'Units','normalized')  % display valiation text
     
@@ -202,7 +202,7 @@ if (show)
     end
     legend(sleg2,'Location','best')
     xlabel(sx)
-    ylabel('Difference in W')
+    ylabel('Difference in J')
     
     % Temperature DHW plots
     subplot(2,4,4)      % divide in subplots (lower and upper one)
@@ -229,7 +229,7 @@ end
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -269,5 +269,6 @@ end
 %  6.1.0    ts      created                                     10aug2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
-%  6.1.2    hf      internal energy y_Q in kWh (not in J)       09oct2018
+%  7.1.0    hf      new block name Storage_Type_4               23mar2019
+%                   (old name Storage_Type_4_CONF)
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

@@ -34,8 +34,8 @@ end
 
 %% ---------- set your specific model or function parameters here ---------
 % ----- set error tolerances ----------------------------------------------
-max_error = 1e-7;        % max error between simulation and reference
-max_simu_error = 1e-7;   % max error between initial and current simu
+max_error = 0.004;        % max error between simulation and reference
+max_simu_error = 0.004;   % max error between initial and current simu
 
 % ---------- set model file or function name ------------------------------
 functionname = 'verify_Room_Floor_Heating_mdl';
@@ -92,17 +92,17 @@ s = 'max';
 % ------------- decide if verification is ok ------------------------------
 if e2 > max_error
     v = false;
-    s = sprintf('verification %s with reference FAILED: error %3.3f > allowed error %3.3f', ...
+    s = sprintf('verification %s with reference FAILED: error %3.3g > allowed error %3.3g', ...
         functionname, e2, max_error);
     show = true;
 elseif e3 > max_simu_error
     v = false;
-    s = sprintf('verification %s with 1st calculation FAILED: error %3.3f > allowed error %3.3f', ...
+    s = sprintf('verification %s with 1st calculation FAILED: error %3.3g > allowed error %3.3g', ...
         functionname, e3, max_simu_error);
     show = true;
 else
     v = true;
-    s = sprintf('%s OK: error %3.3f', functionname, e2);
+    s = sprintf('%s OK: error %3.3g', functionname, e2);
 end
 
 %% ------------ display and plot results if required ----------------------
@@ -161,7 +161,7 @@ if (show)
     plot(x,y_Qdot_c_S2(:,1),'x',x,y_Qdot_c_S2(:,2),'o',x,y_Qdot_c_S2(:,3),'-')
     plot(x,y_Qdot_r_S2(:,1),'x',x,y_Qdot_r_S2(:,2),'o',x,y_Qdot_r_S2(:,3),'-')
     title(st)
-    ylabel('Qdot in W')
+    ylabel('Qdot in kW')
     legend(sleg1,'Location','best')
     text(0,-0.2,sz,'Units','normalized')  % display valiation text
     hold off
@@ -245,4 +245,6 @@ end
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
 %  6.1.2    hf      only Tc and Tr are logged, not Ts           14jan2018
+%  7.1.0    hf      changed power from W to kW                  17jul2020
+%  7.1.1    hf      max_error set to 0.004                      14aug2020
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

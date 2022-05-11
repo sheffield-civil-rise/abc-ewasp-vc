@@ -230,11 +230,6 @@ The following column(s) contain the signal data (see Simulink &quot;From Workspa
 block for details).<br>A Unit-Delay with the timestep of the data forces the 
 model to a maximum timestep equal to the data timestep. This &quot;Timestep in data&quot; 
 is shown as information in the &quot;Selection&quot; frame.</p>
-<p>Hints: <br>1) The block Weather_Datafile in CARNOT/Weather is dedicated to 
-read weather data from a file. In this block the signal is directly converted to 
-the Weather Data Bus (WBD).<br>2) Hot water consumption profiles created with 
-the DHWcalc tool of the University of Kassel may directly be read with the 
-&quot;mdot_DHWcalc&quot; block in CARNOT/Load/Hot_Water_Tapping.</p>
 <p>&nbsp;</p>
 <p><b>Parameters</b></p>
 
@@ -258,16 +253,27 @@ in the &quot;Picking a file&quot; frame will anyway overwrite the edited values.
 	Workspace block</li>
 </ul>
 
-<p>
-&nbsp;<p style="margin-bottom:0;"><b>Input:</b>
+<p>&nbsp;Enter 'current' as path and the choice will start in the current Matlab 
+directory. </p>
+<p>You can use the createDatafile.m function to create the files from .csv or 
+other inputs. &nbsp;&nbsp;</p>
+<p style="margin-bottom:0;"><b>Input:</b>
 <!--Input and Output Variables are presented in tables
 	Do not change the column width!-->
 &nbsp;none
 
 <p style="margin-bottom:0;"><b>Output:</b>&nbsp; Signal(s) of the file<p style="margin-bottom:0;">
-<strong>Used functions: </strong>CarnotCallbacks_Data_from_File.m<br>&nbsp;<hr>
-
-<p><b>NOTE: <br></b>similar blocks: Weather_Datafile, mdot_DHWcalc<br>
+<strong>Used functions: </strong>CarnotCallbacks_Data_from_File.m<br>&nbsp;<p>
+<strong>Similar blocks: </strong>
+<ul>
+	<li>Weather_Datafile (path CARNOT/Weather) is dedicated to 
+read weather data from a file. In this block the signal is directly converted to 
+the Weather Data Bus (WBD).</li>
+	<li>Hot_Water_Datafile (path CARNOT/Loads/Hot_Water_Tapping)&nbsp; reads profiles, 
+	e.g those created with the DHWcalc tool of the University of Kassel.</li>
+</ul>
+<p>&nbsp;</p>
+<p><br>
 <!--Insert Notes here-->
 <hr>
 

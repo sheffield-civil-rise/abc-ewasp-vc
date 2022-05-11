@@ -145,10 +145,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision: 372 $
-%  $Author: carnot-wohlfeil $
-%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/time_functions/solartime2legaltime/verification/verify_solartime2legaltime.m $
+%  $Revision$
+%  $Author$
+%  $Date$
+%  $HeadURL$
 %  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction

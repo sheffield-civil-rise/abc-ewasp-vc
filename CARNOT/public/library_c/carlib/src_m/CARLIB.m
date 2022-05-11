@@ -1,13 +1,60 @@
-%  ******************** CARLIB ********************************************
-% Carlib is the central library for material properties, general functions 
-% and general % definition of constants in the CARNOT blockset. 
-% See carlib.h and carlib.c % for more details.
-% cd to /src/libraries and type 'edit carlib.h' or 'edit carlib.c'. 
+%% Carlib library for material properties and general functions of Carnot
+%% Function Call
+%  carlib must be compiled with mex interface functions. See Matlab mex
+%  files for details.
+% 
+%% Inputs
+%  none
+%% Outputs
+%  none
+% 
+%% Description
+%  Carlib is the library for material properties, general functions
+%  and definition of constants in the CARNOT blockset. The library is
+%  written in C. It is compiled together with the s-functions of Carnot to
+%  create the mex-files.
+% 
+%% Available functions 
+%     density
+%     density_solid
+%     enthalpy
+%     entropy
+%     evaporation_enthalpy
+%     enthalpy2temperature
+%     extraterrestrial_radiation
+%     grashof
+%     heat_capacity
+%     heat_capacity_solid
+%     mixViscosity
+%     prandtl
+%     relativeHumidity2waterContent
+%     reynolds
+%     saturationproperty
+%     saturationtemperature
+%     square();
+%     specific_volume
+%     saturationproperty
+%     solar_declination();
+%     solar_time
+%     solar_position
+%     solve_quadratic_equation
+%     thermal_conductivity_solid
+%     thermal_conductivity
+%     temperature_conductivity
+%     unitconv_temp
+%     vapourcontent
+%     vapourpressure
+%     viscosity
+%     waterContent2relativeHumidity
+%
+%% References and Literature
+%  See carlib.h and carlib.c in the \public\library_c\carlib\src folder for more details.
 
-% ***********************************************************************
+
+%% Copyright and Versions
 % This file is part of the CARNOT Blockset.
 % 
-% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+% Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
 % Additional Copyright for this file see list auf authors.
 % All rights reserved.
 % 
@@ -37,10 +84,6 @@
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_c/carlib/src_m/CARLIB.m $
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -50,5 +93,9 @@
 %
 % Version   Author  Changes                                     Date
 % 6.1.0     hf      created                                     03oct2014
-
-
+% 7.1.0     hf      improved appearance with help command 		17jul2020
+% **********************************************************************
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$

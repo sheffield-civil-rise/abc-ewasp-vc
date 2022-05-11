@@ -169,10 +169,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision: 372 $
-%  $Author: carnot-wohlfeil $
-%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/sunangles/verification/verify_sunangles.m $
+%  $Revision$
+%  $Author$
+%  $Date$
+%  $HeadURL$
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction

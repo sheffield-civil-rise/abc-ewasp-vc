@@ -1,4 +1,4 @@
- function position = AddToCarnotMDL(LibDirectory, CarnotDirectory, OffsetX, OffsetY, PositionPublic)
+ function position = AddToCarnotMDL(LibDirectory, CarnotDirectory, OffsetX, OffsetY, LibName, PositionPublic)
 % function AddToCarnotMDL
 % This function is called by CreateCarnotMDL.
 % Parameter:
@@ -42,10 +42,10 @@
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/version_manager/AddToCarnotMDL.m $
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -58,10 +58,13 @@
 % 6.1.1     pk      any directory for internal lib possible       sep2016
 % 6.1.2     aw      updated for R2016b: dir command different   01dec2017
 
-
+    if ~strcmp(LibName, 'carnot')&&~strcmp(LibName, 'carint')
+        error('choose either "carnot" or "carint" as library name')
+    end
+    warnStatus=warning;
     warning('off','all');
     cd(CarnotDirectory)
-    fprintf('Adding %s to the carnot library ...\n', LibDirectory);
+    fprintf(['Adding %s to the ',LibName,' library ...\n'], LibDirectory);
     
     cd(LibDirectory);
     fprintf('\tSearching directories of the atomic libraries ...');
@@ -73,26 +76,26 @@
 
     fprintf('\tCreating mask icons and sub-library blocks ...');
     %cd([(dirScript) '\ReleaseFunctions']);
-    [position]=allicons(models, LibDirectory, CarnotDirectory, OffsetX, OffsetY,PositionPublic);  %, origCarnot);
+    [position]=allicons(models, LibDirectory, CarnotDirectory, OffsetX, OffsetY, LibName, PositionPublic);  %, origCarnot);
     fprintf(' done \n');
     %pause
 
     fprintf('\tChecking dependencies and status of the models ...');
     %cd([(dirScript) '\ReleaseFunctions']);
-    [models]=dependenciesnstatus(models, LibDirectory, CarnotDirectory);
+    [models]=dependenciesnstatus(models, LibDirectory, LibName, CarnotDirectory);
     fprintf(' done \n');
     %pause
 
     fprintf('\tcopying models ... ');
     %cd([(dirScript) '\ReleaseFunctions']);
-    set_param('carnot','Lock','off');
-    copymodels(models, LibDirectory, CarnotDirectory, position);
+    set_param(LibName,'Lock','off');
+    copymodels(models, LibDirectory, CarnotDirectory,  LibName, position);
     fprintf(' done \n');
     %pause
 
     fprintf('\tCreating links ...')
     %cd([(dirScript) '\ReleaseFunctions']);
-    linkmodels(models, CarnotDirectory);
+    linkmodels(models, CarnotDirectory,  LibName);
     fprintf(' done \n');
     %pause
 
@@ -102,13 +105,13 @@
     %fprintf(' Erledigt \n \n');
     %cd(dirScript);
 
-    set_param('carnot','Lock','on');
-    save_system('carnot',[CarnotDirectory,'\carnot']);
-    close_system('carnot', 0);
+    set_param(LibName,'Lock','on');
+    save_system(LibName,[CarnotDirectory,'\', LibName]);
+    close_system(LibName, 0);
     
     cd(CarnotDirectory);
     fprintf('\n');
-    
+    warning(warnStatus);% reset to prev warning status
 end
 
 
@@ -246,13 +249,7 @@ function [models]=modelpaths(models, LibDirectory)
 end
 
 
-
-
-
-
-
-
-function [position]=allicons(models, LibDirectory, CarnotDirectory, OffsetX, OffsetY, PositionPublic)
+function [position]=allicons(models, LibDirectory, CarnotDirectory, OffsetX, OffsetY, LibName, PositionPublic)
 % findet iterativ die Bibliotheken und legt Blöcke in Simulink an.
 % falls Animation vorhanden eingefügt
 % Position der Elemente kann in manchen Fällen falsch sein.
@@ -260,13 +257,22 @@ function [position]=allicons(models, LibDirectory, CarnotDirectory, OffsetX, Off
     SkriptPath = cd;
 
     cd(CarnotDirectory);
-    load_system('carnot');
-    if get_param('carnot','Lock')
-        set_param('carnot','Lock','off')
-    end
-    % rename carnot_base to ...
-    save_system('carnot',[CarnotDirectory,'\carnot'],'OverwriteIfChangedOnDisk',true);
+%     if contains(LibDirectory,path_carnot('pub'))
+%         LibName = 'carnot';
+%     elseif contains(LibDirectory,path_carnot('int'))
+%         LibName = 'carint';
+%     end
+    load_system(LibName);
+    if get_param(LibName,'Lock')
+        set_param(LibName,'Lock','off')
+    end    
+%     load_system('carnot');
+%     if get_param('carnot','Lock')
+%         set_param('carnot','Lock','off')
+%     end
 
+    % rename carnot_base to ...
+    save_system(LibName,[CarnotDirectory,'\',LibName],'OverwriteIfChangedOnDisk',true);
     cd(LibDirectory);
     
     position.XY(1:2,1) = [OffsetX; OffsetY];% Jede Ebene enthält eine Werte-Tabelle darin X,Y. Darunter enthaltene Libs
@@ -281,11 +287,16 @@ function [position]=allicons(models, LibDirectory, CarnotDirectory, OffsetX, Off
             % Erstelle icons in i-tem Level, falls noch nicht vorhanden
 
             % Setze directory zusammen
-            directory='carnot';
+            directory = LibName;
+%             if contains(LibDirectory,path_carnot('pub'))
+%                 BlockPath = directory;
+%             elseif contains(LibDirectory,path_carnot('int'))
+%                 BlockPath = [directory,'/Carint'];
+%             end
             for k=2:iLevel
                 %k
                 directory = [directory, '/', models(j,1).path{k,:}];
-                existBlock=strcmp(find_system('carnot','SearchDepth', k-1), directory);
+                existBlock=strcmp(find_system(LibName,'SearchDepth', k-1), directory);
                 % Merke zu prüfende Lib als "Index" für Positionsstruktur
                 pathPos{1,k-1} = models(j,1).path{k,1};
                 pathPosStr=strcat(pathPosStr,'.',pathPos{1,k-1});
@@ -317,7 +328,6 @@ function [position]=allicons(models, LibDirectory, CarnotDirectory, OffsetX, Off
                     PosLevelY = PosLevel(2,1);
 
                     set_param(directory,'Position',[PosLevelX-(pos2(4)-pos2(2)) PosLevelY+30 PosLevelX PosLevelY+30+pos2(3)-pos2(1)]);
-
                     % Zeilenumbruch, in Unterlibs ein Element pro Zeile
                     if PosLevelX >= 700
                         PosLevelY =  PosLevelY+40+50;
@@ -363,7 +373,7 @@ end
 
 
 
-function [models]=dependenciesnstatus(models, LibDirectory, CarnotDirectory)
+function [models]=dependenciesnstatus(models, LibDirectory, LibName, CarnotDirectory)
     SkriptPath = cd;
 
     % get status of models
@@ -439,7 +449,7 @@ function [models]=dependenciesnstatus(models, LibDirectory, CarnotDirectory)
         clear used_blocks %referenced_blocks
     end
     cd(LibDirectory)
-    save_system('carnot', [CarnotDirectory,'\carnot']);
+    save_system(LibName, [CarnotDirectory,'\',LibName]);
     cd(SkriptPath);
 
 end
@@ -451,25 +461,44 @@ end
 
 
 
-function copymodels(models, LibDirectory, CarnotDirectory, position)
+function copymodels(models, LibDirectory, CarnotDirectory, LibName, position)
 
     SkriptPath = cd;
 
     % Status okay?
     cd(CarnotDirectory)
-    load_system('carnot');
-    if get_param('carnot','Lock')
-        set_param('carnot','Lock','off')
+    load_system(LibName);
+    if get_param(LibName,'Lock')
+        set_param(LibName,'Lock','off')
     end
     % rename carnot_base to ...
-    save_system('carnot',[CarnotDirectory,'\carnot'],'OverwriteIfChangedOnDisk',true);
+    save_system(LibName,[CarnotDirectory,'\',LibName],'OverwriteIfChangedOnDisk',true);
     
     cd(LibDirectory);
-
+    %speichere die maximale Höhe und die Anzahl der Blöcke in einer Zeile
+    maxheight=0;
+    blocksinline=0;
+    maxblocksinline=5;
+    heightoffset=0;
+    posX=30;
     for j=1:length(models)
         % Prüfe Status
         if models(j,1).status
             %j
+            if j == 1
+                maxheight=0;
+                blocksinline=0;
+                maxblocksinline=5;
+                heightoffset=0;
+                posX=30;
+            elseif strcmpi(models(j).path(end-2),models(j-1).path(end-2)) == 0
+                maxheight=0;
+                blocksinline=0;
+                maxblocksinline=5;
+                heightoffset=0;
+                posX=30;
+            else
+            end
             % Setze Pfade des Modells in ursprünglicher Lib und in Carnot
             % zusammen
             k=2;
@@ -481,7 +510,7 @@ function copymodels(models, LibDirectory, CarnotDirectory, position)
             % dirActLib = ['carnot/', directory];
             directory = [directory, '/', models(j,1).path{k+1,:}];
             directoryModel = [directory, '/library_atomic'];
-            directoryCarnot = ['carnot/', directory];
+            directoryCarnot = [LibName,'/', directory];
 
             % Lade das System
             cd(directoryModel);
@@ -510,7 +539,7 @@ function copymodels(models, LibDirectory, CarnotDirectory, position)
             if ~strcmp(get_param(directoryCarnot,'LinkStatus'),'unresolved') %everything ok
                 set_param(directoryCarnot, 'LinkStatus','none')
             else %something strange, might be a link within carnot
-                if ~strcmp(strtok(get_param(directoryCarnot,'SourceBlock'),'/'),'carnot')
+                if ~strcmp(strtok(get_param(directoryCarnot,'SourceBlock'),'/'),LibName)
                     set_param(directoryCarnot, 'LinkStatus','none')
                 end
             end
@@ -518,27 +547,44 @@ function copymodels(models, LibDirectory, CarnotDirectory, position)
 
             iLevel = length(models(j,1).path);
             % Greife Position aus structure ab.
-            posCar = position;
+            posCarY = position;
             pathPos = [];
             for iPath = 2 : length(models(j,1).path)-2
-                posCar = getfield(posCar, models(j,1).path{iPath,1});
+                posCarY = getfield(posCarY, models(j,1).path{iPath,1});
                 pathPos{end+1,1}= models(j,1).path{iPath,1};
             end
             pathPos{end+1,1}= 'XY';
-            posCarX = posCar.XY(1,1);
-            posCar = posCar.XY(2,1);
+            posCarX = posCarY.XY(1,1);
+            posCarY = posCarY.XY(2,1);
 
             % Setze Position 
             pos = get_param(directoryCarnot, 'Position');
-            posCar=posCar+40+(pos(4)-pos(2));
-            set_param(directoryCarnot, 'Position',...
-                [30 posCar-(pos(4)-pos(2)) 30+pos(3)-pos(1) posCar]);
+%             set_param(directoryCarnot, 'Position',...
+%                 [30 posCar-(pos(4)-pos(2)) 30+pos(3)-pos(1) posCar]);
+%              posCarY=posCarY+40+(pos(4)-pos(2));
+
+            if pos(4)-pos(2) > maxheight
+                maxheight=pos(4)-pos(2);
+            end
+            %posCarY=posCarY+40+(pos(4)-pos(2));
+            set_param(directoryCarnot, 'Position', [posX posCarY+heightoffset posX+pos(3)-pos(1) posCarY+(pos(4)-pos(2))+heightoffset]);
+            posX=posX+pos(3)-pos(1)+30;
+            blocksinline=blocksinline+1;
+            if blocksinline == maxblocksinline
+                blocksinline=0;
+                posX=30;
+                heightoffset = heightoffset + maxheight + 30;
+                maxheight = 0;
+            end
+            
             % cleanup
             close_system(models(j,1).path{end-1,1},0);
             % Speichere neue Position
-            position=setfield(position, pathPos{:,1}, [posCarX; posCar]);
+            position=setfield(position, pathPos{:,1}, [posCarX; posCarY]);
         else
-            fprintf('Block %s konnte nicht zugefügt werden \nStatus ungültig, siehe Status.txt \n', models(j,1).path{end-1,:});
+%             fprintf('Block %s konnte nicht zugefügt werden \nStatus ungültig, siehe Status.txt \n', models(j,1).path{end-1,:});
+            fprintf('Block %s could not be added \nStatus invalid, see Status.txt \n', models(j,1).path{end-1,:});
+
             % pause
         end
 
@@ -546,7 +592,7 @@ function copymodels(models, LibDirectory, CarnotDirectory, position)
 
     end
 
-    save_system('carnot', [CarnotDirectory,'\carnot']);
+    save_system(LibName, [CarnotDirectory,'\',LibName]);
     cd(SkriptPath)
     
 end
@@ -557,7 +603,7 @@ end
 
 
 
-function linkmodels(models, CarnotDirectory)
+function linkmodels(models, CarnotDirectory, LibName)
 
     for j=1:length(models)
         % j
@@ -566,7 +612,7 @@ function linkmodels(models, CarnotDirectory)
         % Modell wurde kopiert    
             % Prüfe alle im Modell verbauten Blöcke
             for l=1:length(models(j,1).blocks)
-                pathDepending= 'carnot';
+                pathDepending= LibName;
                 for k= 2:length(models(j,1).path)-2
                     pathDepending=[pathDepending, '/', models(j,1).path{k,1}];
                 end
@@ -577,7 +623,7 @@ function linkmodels(models, CarnotDirectory)
         end 
     end
 
-    save_system('carnot', [CarnotDirectory, '\carnot']);
+    save_system(LibName, [CarnotDirectory, '\', LibName]);
 
 end
 

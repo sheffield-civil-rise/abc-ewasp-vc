@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="de-at" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>storage multiport</title>
+<style type="text/css">
+ div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+p
+	{margin-right:0cm;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+ a:link
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;
+}
+ table.MsoNormalTable
+	{line-height:120%;
+	font-size:10.0pt;
+	font-family:"Calibri","sans-serif";
+	}
+tt
+	{font-family:"Courier New";
+	}
+ ul
+	{margin-bottom:0cm;}
+ li.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+ .auto-style3 {
+	font-size: 18pt;
+}
+.auto-style4 {
+	line-height: 150%;
+	margin-top: 0;
+}
+.auto-style5 {
+	color: #0000FF;
+	text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=10 width="100%" noshade style='color:#A0A0A0' align=center>
+
+</span></span></span></div>
+
+<p class="auto-style4"><span class=GramE><span
+style='mso-bookmark:storage_multiport'><span style='mso-bookmark:schwamberger'>
+<span
+style='mso-bookmark:literature' class="auto-style3">
+<img alt="" src="Figures/stroageType11.jpg" style="float: right" />Storage_Type_11<br />
+</span></span></span></span></p>
+<p class="auto-style4">&nbsp;</p>
+<p class="auto-style4">&nbsp;</p>
+<p class="auto-style4"><span
+style='mso-bookmark:storage_multiport'><span style='mso-bookmark:schwamberger'>
+<span
+style='mso-bookmark:literature'>
+<span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+<b>Path: CARNOT/<span lang="de-at">S</span>torage</b></span><b><span style='font-size:13.5pt;
+line-height:120%'>/Thermal</span></b></span></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:storage_multiport'><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></span></div>
+
+<p style="width: 595px"><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+class=GramE><b><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+Multiport model for </span><span style='font-size:13.5pt;line-height:120%'> 
+buffer </span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> storage with </span>
+<span style='font-size:13.5pt;line-height:120%'> "3-point" direct connection.</span></span></span></span></p>
+<p style="width: 595px"><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+T</span><span style='font-size:13.5pt;line-height:120%'>he model uses 2 buffer 
+storage tanks (<a href="Storage_Type_N.html">Storage_Type_<span class="auto-style5">1</span></a>) to model a 
+buffer storage with a "3-point" connection. <br />
+3 point means that the return flow is passing through the buffer tank via a
+<a href="StoragePorts_PipeConnections.html">Pipe</a> port and the flowline is 
+connected directly to the load. A T-piece in the flowline connects the buffer 
+tank</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>. <br />
+</span><span style='font-size:13.5pt;line-height:120%'> The T-piece is modeled 
+by a small buffer tank of <a href="Storage_Type_N.html">Storage_Type_1</a> with 
+one single node to model the complete mixing of the flow in the T-piece. The 
+T-piece "storage" has no thermal losses. Only the volume of the T-piece and its 
+connecting pipes has to be given.</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br />
+</span><span style='font-size:13.5pt;line-height:120%'> The main storage is 
+modeled by a <a href="Storage_Type_N.html">Storage_Type_<span class="auto-style5">1</span></a> with all its 
+parameters.</span></span></span></p>
+<p style="width: 595px">
+<img alt="" height="349" src="Figures/storageType11_pic1.png" width="376" /></p>
+<p style="width: 595px"><em>Figure: Hydraulic scheme of a 3-point connected 
+buffer storage tank.<br />
+</em></p>
+<p style="width: 595px"><img alt="" src="Figures/storageType11_pic2.jpg" /></p>
+<p style="width: 595px"><em>Figure: Model implementation in Carnot 
+Storage_Type_11<br />
+</em></p>
+<p style="width: 594px"><font size="4"><strong>Parameters and Dialog Box</strong></font></p>
+<p style="width: 594px"><img alt="" src="Figures/storageType11_MASK1.jpg" /></p>
+<p style="width: 594px"><img alt="" src="Figures/storageType11_MASK2.jpg" /></p>
+<p style="width: 594px"><img alt="" src="Figures/storageType11_MASK3.jpg" /></p>
+<p style="width: 594px">&nbsp;</p>
+<p style="width: 594px"><font size="4"><strong>Characteristics</strong> <br />
+Direct Feedthrough&nbsp;&nbsp;&nbsp;Yes <br />
+Continous states&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number of nodes + 1 (for the T-piece)&nbsp;&nbsp; <br />
+Discrete states&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; None <br />
+Sample time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inherited from driving block <br />
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No &nbsp; </font></p>
+<p style="width: 594px"><br />
+</p>
+
+</body>
+
+</html>

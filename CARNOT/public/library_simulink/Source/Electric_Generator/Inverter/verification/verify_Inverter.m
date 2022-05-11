@@ -1,4 +1,4 @@
-%% verify_Inverter - verification of the Inverter block in Carnot
+%% verification of the Inverter block in the Carnot Toolbox
 %% Function Call
 %  [v, s] = verify_Inverter(varargin)
 %% Inputs
@@ -57,6 +57,8 @@ y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
+% ----------------- set the literature reference values -------------------
+
 % ----------------- set reference values initial simulation ---------------
 % result from call at creation of function if required it can be determined
 % from the simulation result
@@ -67,7 +69,6 @@ else
     y1 = importdata('simRef_Inverter.mat');  % result from call at creation of function
 end
 
-% ----------------- set the literature reference values -------------------
 y0 = y1;
 disp('verify_Inverter.m: using simulation data as reference data')
 
@@ -120,20 +121,24 @@ if (show)
     
     %   y - matrix with y-values (reference values and result of the function call)
     y_SB2_5     = [y0(:,1), y1(:,1), y2(:,1)];
+    y_SB5_0     = [y0(:,2), y1(:,2), y2(:,2)];
+    y_SB5000    = [y0(:,3), y1(:,3), y2(:,3)];
     
     %   x - vector with x values for the plot
     x = t0;
     
     %   ye - matrix with error values for each y-value
     ye_SB2_5     = [ye1(:,1), ye2(:,1), ye3(:,1)]; 
+    ye_SB5_0     = [ye1(:,2), ye2(:,2), ye3(:,2)]; 
+    ye_SB5000    = [ye1(:,3), ye2(:,3), ye3(:,3)]; 
     
     sz = strrep(s,'_',' ');
     
 % ----------------------- Combining plots ---------------------------------
     figure              % open a new figure
     
-    % AC power plots
-    subplot(2,1,1)      % divide in subplots (lower and upper one)
+    % AC power SB2_5 plots
+    subplot(2,3,1)      % divide in subplots (lower and upper one)
     if size(y_SB2_5,2) == 3
         plot(x,y_SB2_5(:,1),'x',x,y_SB2_5(:,2),'o',x,y_SB2_5(:,3),'-')
     else
@@ -144,7 +149,7 @@ if (show)
     legend(sleg1,'Location','best')
     text(0,-0.2,sz,'Units','normalized')  % display valiation text
     
-    subplot(2,1,2)      % choose lower window
+    subplot(2,3,4)      % choose lower window
     if size(ye_SB2_5,2) == 3
         plot(x,ye_SB2_5(:,1),'x',x,ye_SB2_5(:,2),'o',x,ye_SB2_5(:,3),'-')
     else
@@ -152,7 +157,51 @@ if (show)
     end
     legend(sleg2,'Location','best')
     xlabel(sx)
-    ylabel('Difference in W')    
+    ylabel('Difference in W')
+    
+    % AC power SB5_0 plots
+    subplot(2,3,2)      % divide in subplots (lower and upper one)
+    if size(y_SB5_0,2) == 3
+        plot(x,y_SB5_0(:,1),'x',x,y_SB5_0(:,2),'o',x,y_SB5_0(:,3),'-')
+    else
+        plot(x,y_SB5_0,'-')
+    end
+    title(st)
+    ylabel('AC power in W')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,3,5)      % choose lower window
+    if size(ye_SB5_0,2) == 3
+        plot(x,ye_SB5_0(:,1),'x',x,ye_SB5_0(:,2),'o',x,ye_SB5_0(:,3),'-')
+    else
+        plot(x,ye_SB5_0,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in W')
+    
+    % AC power SB5000 plots
+    subplot(2,3,3)      % divide in subplots (lower and upper one)
+    if size(y_SB5000,2) == 3
+        plot(x,y_SB5000(:,1),'x',x,y_SB5000(:,2),'o',x,y_SB5000(:,3),'-')
+    else
+        plot(x,y_SB5000,'-')
+    end
+    title(st)
+    ylabel('AC power in W')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,3,6)      % choose lower window
+    if size(ye_SB5000,2) == 3
+        plot(x,ye_SB5000(:,1),'x',x,ye_SB5000(:,2),'o',x,ye_SB5000(:,3),'-')
+    else
+        plot(x,ye_SB5000,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in W')
 end
 
 %% Copyright and Versions
@@ -197,4 +246,5 @@ end
 %  6.1.0    ts      created                                     07aug2017
 %  6.1.1    hf      comments adapted to publish function        01nov2017
 %                   reference y1 does not overwrite y2
+%  7.1.0    hf      Inverter_CONF renamed to Inverter           10mar2019
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

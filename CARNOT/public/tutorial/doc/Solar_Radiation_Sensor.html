@@ -43,26 +43,19 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 
 </span></span></span></div>
 
-<p><!--[if gte vml 1]><v:shape id="Bild_x0020_126" o:spid="_x0000_s1519"
- type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
- margin-left:24.5pt;margin-top:0;width:64.5pt;height:44.25pt;z-index:124;
- visibility:visible;mso-wrap-style:square;mso-wrap-distance-left:0;
- mso-wrap-distance-top:0;mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
- mso-position-horizontal:right;mso-position-horizontal-relative:text;
- mso-position-vertical:absolute;mso-position-vertical-relative:line'
- o:allowoverlap="f">
- <v:imagedata src="Figures/measure_solar_radiation.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
- <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><![if !vml]><img width=86 height=59
-src="Figures/measure_solar_radiation.jpg" align=right v:shapes="Bild_x0020_126"><![endif]><span class=GramE><span
-style='mso-bookmark:Measure_solar_radiation'><span style='mso-bookmark:schwamberger'><span
-style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'>measure</span></b></span></span></span></span><span
-style='mso-bookmark:Measure_solar_radiation'><span style='mso-bookmark:schwamberger'><span
-style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:18.0pt;
-line-height:120%'> solar radiation</span></b><span lang=EN-US style='font-size:13.5pt;
+<p><span
+style='mso-bookmark:Measure_solar_radiation'>
+<span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><b>
+<span style='font-size:18.0pt;
+line-height:120%'> 
+<img alt="" src="Figures/SolarRadiationSensor.gif" style="float: right" />S</span><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'>olar </span><span style='font-size:18.0pt;
+line-height:120%'> R</span><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'>adiatio</span><span style='font-size:18.0pt;
+line-height:120%'>n Sensor</span></b><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'> <br>
-<b>Path: CARNOT/control</b> <br clear=all style='mso-special-character:line-break'>
+<b>Path: CARNOT/<span lang="de-at">C</span>ontrol</b> <br clear=all style='mso-special-character:line-break'>
 <o:p></o:p></span></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
@@ -83,38 +76,36 @@ lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
-The block extracts the solar radiation in [W/<sup>2</sup>] from the </span></span></span><a
-href="carnot_manual.htm#weather_data_vector"><span style='mso-bookmark:schwamberger'><span
+The block extracts the solar radiation in [W/<sup>2</sup>] from the </span></span></span>
+<a href="2_Basic_Concepts.html"><span style='mso-bookmark:schwamberger'><span
 style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
-line-height:120%'>weather data vector</span></span></span></a><span
+line-height:120%'>weather data </span>
+<span style='font-size:13.5pt;
+line-height:120%'>bus (WDB)</span></span></span></a><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>. Direct, diffuse or
 global radiation may be measured. </span></span></span></p>
+<p><font size="4">The data in the WDB defines wether the global, direct or 
+diffuse radiation are on a horizontal or inclided surface. <br />
+Typically weather data sets contain radiation on a horizontal surface. Use the
+<a href="Radiation_on_Inclined_Surface.html">Radiation_on_Inclined_Surface</a>&nbsp; 
+block (in Carnot/Weather) to calculate the radiation on an inclined surface and 
+modify the radiation in WDB.</font></p>
+<p><font size="4">Note: The former Carnot weather data format doesn't contain 
+the nomal beam radiation. Use <a href="convert_weather.html">convert_weather.m</a> 
+to change the format of the data.</font></p>
+<p>&nbsp;</p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
-</span></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_127" o:spid="_x0000_s1518"
- type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
- margin-left:0;margin-top:0;width:282pt;height:117pt;z-index:125;visibility:visible;
- mso-wrap-style:square;mso-wrap-distance-left:0;mso-wrap-distance-top:0;
- mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
- mso-position-horizontal:left;mso-position-horizontal-relative:text;
- mso-position-vertical:absolute;mso-position-vertical-relative:line'
- o:allowoverlap="f">
- <v:imagedata src="Figures/measure_solar_radiationSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
- <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><![if !vml]><img width=376 height=156
-src="Figures/measure_solar_radiationSHOT.jpg" align=left v:shapes="Bild_x0020_127"><![endif]><span
-style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
-style='mso-special-character:line-break'>
-</span></span></span></p>
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b></span></span></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'>
+<span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>
+<img alt="" src="Figures/SolarRadiationSensor_MASK.jpg" /></span></span></span></p>
+<p>&nbsp;</p>
 
-<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
-class=GramE><span lang=EN-US style='font-size:13.5pt;line-height:120%'>choose</span></span><span
-lang=EN-US style='font-size:13.5pt;line-height:120%'> the radiation to be
-measured from the pull-down menu </span></span></span></p>
+<p>&nbsp;</p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span

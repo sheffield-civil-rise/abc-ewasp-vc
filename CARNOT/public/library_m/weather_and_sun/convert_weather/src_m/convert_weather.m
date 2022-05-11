@@ -1,14 +1,13 @@
-function convert_weather(infilename,outfilename)
-% convert_weather converts old weather Carnot-Format data file into the new
-% Carnot-Format. The function assumes that the direct irradiation is on a
-% horizontal surface (the data file is not yet modified by surfrad).
+%% convert_weather converts old Carnot weather format into the new WDB format
+%  The function assumes that the direct irradiation is on a
+%  horizontal surface (the data file is not yet modified by surfrad).
 %
-% SYNTAX: outmat = convert_weather(infilename,outfilename)
+%  SYNTAX: outmat = convert_weather(infilename,outfilename)
 %
-% The infilename is the name of the old file. 
-% The format of the file have to be as the following format:
+%  The infilename is the name of the old file. 
+%  The format of the file have to be as the following format:
 %
-% col(file) description                                         units
+%  col(file) description                                         units
 %  1        time                                                s
 %  2        timevalue (comment line) format YYYYMMDDHHMM        -
 %           Y is the year, M the month, D the day, H the hour
@@ -18,7 +17,7 @@ function convert_weather(infilename,outfilename)
 %  4        azimuth angle of sun (0°=south, east negative)      degree
 %           (at time, not average in timestep)
 %  5        incidence angle on surface (0° = vertical)          degree
-%  6        direct solar radiation on surface                   W/m^2
+%  6        direct solar radiation on horizontal surface        W/m^2
 %  7        diffuse solar radiation on a horizontal surface     W/m^2
 %  8        ambient temperature                                 degree centigrade
 %  9        radiation temperature of sky                        degree centigrade
@@ -37,61 +36,11 @@ function convert_weather(infilename,outfilename)
 %           (= -9999, if surface orientation is unknown)
 %
 % outfilename : character string of the output file name
-% The output file has the CARNOT form as described in "wformat.txt".
-
-% ***********************************************************************
-% This file is part of the CARNOT Blockset.
-% 
-% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
-% Additional Copyright for this file see list auf authors.
-% All rights reserved.
-% 
-% Redistribution and use in source and binary forms, with or without 
-% modification, are permitted provided that the following conditions are 
-% met:
-% 
-% 1. Redistributions of source code must retain the above copyright notice, 
-%    this list of conditions and the following disclaimer.
-% 
-% 2. Redistributions in binary form must reproduce the above copyright 
-%    notice, this list of conditions and the following disclaimer in the 
-%    documentation and/or other materials provided with the distribution.
-% 
-% 3. Neither the name of the copyright holder nor the names of its 
-%    contributors may be used to endorse or promote products derived from 
-%    this software without specific prior written permission.
-% 
-% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
-% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
-% THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/weather_and_sun/convert_weather/src_m/convert_weather.m $
-% **********************************************************************
-% D O C U M E N T A T I O N
-% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-% Carnot model and function m-files should use a name which gives a 
-% hint to the model of function (avoid names like testfunction1.m).
-% 
-% version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
-% author list:  hf -> Bernd Hafner
-%               gf -> Gaelle Faure
-%               tw -> Thomas Wenzel
-% 
-% version   author  changes                                     date
-% 1.0.0     gf      created                                     15jun11
-% 
+% The output file has the CARNOT form as described in "WDB_format.m".
+% see also WDB_format
 
 
+function convert_weather(infilename,outfilename)
 if nargin ~= 2
   help convert_weather
   return
@@ -134,7 +83,7 @@ end
    fprintf(fout,'%% 4     azimuth angle of sun (0°=south, east negative)      degree\n');
    fprintf(fout,'%%       (at time, not average in timestep)\n');
    fprintf(fout,'%% 5     direct solar radiation on a normal surface          W/m^2\n');             
-   fprintf(fout,'%% 6     diffuse solar radiation on surface                  W/m^2\n');             
+   fprintf(fout,'%% 6     diffuse solar radiation on horizontal surface       W/m^2\n');             
    fprintf(fout,'%% 7     ambient temperature                                 degree centigrade\n'); 
    fprintf(fout,'%% 8     radiation temperature of sky                        degree centigrade\n'); 
    fprintf(fout,'%% 9     relative humidity                                   percent\n');           
@@ -163,3 +112,55 @@ fprintf(fout,'%8.0f  %12.0f  %10.2f  %7.2f  %13.1f  %11.1f  %8.1f  %8.1f  %5.0f 
 
 fclose(fin);
 fclose(fout);
+
+% ***********************************************************************
+% This file is part of the CARNOT Blockset.
+% 
+% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+% Additional Copyright for this file see list auf authors.
+% All rights reserved.
+% 
+% Redistribution and use in source and binary forms, with or without 
+% modification, are permitted provided that the following conditions are 
+% met:
+% 
+% 1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+% 
+% 2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+% 
+% 3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+% 
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+% THE POSSIBILITY OF SUCH DAMAGE.
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
+% **********************************************************************
+% D O C U M E N T A T I O N
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+% Carnot model and function m-files should use a name which gives a 
+% hint to the model of function (avoid names like testfunction1.m).
+% 
+% version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+% author list:  hf -> Bernd Hafner
+%               gf -> Gaelle Faure
+% 
+% version   author  changes                                     date
+% 1.0.0     gf      created                                     15jun2011
+% 7.1.0     hf      adapted output text and comments            05mar2020
+

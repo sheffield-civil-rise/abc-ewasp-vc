@@ -1,0 +1,250 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>extendData</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-05"><meta name="DC.source" content="extendData.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function [Data] = extendData(Data)
+% Inputs:       Data - matrix with input Data without extension
+% Outputs:      Data - matrix with extended Data if necessary
+% Description:  extend data to the data of the simulation time if necessary
+% 
+
+% SYNTAX: [Data] = extendData(Data)
+%
+% Data is the name of the Data in *.mat format which needs to be extended. 
+% The Data needs to have a constant timestep and the timestamp in the 1,
+% column.
+% 
+% During the code first the stop time is catched from the simulink model
+% Afterwards the timestep, the length of the data and the necesaary length
+% for the simulation time is calculated.
+% Afterwards it is checked if an extension is needed otherwise its
+% returning the input. 
+% else the data is extended in 2 ways 1 for a simulation end smaller then
+% the double of the Data size and otherwise.
+
+% ***********************************************************************
+% This file is part of the CARNOT Blockset.
+% 
+% Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
+% Additional Copyright for this file see list auf authors.
+% All rights reserved.
+% 
+% Redistribution and use in source and binary forms, with or without 
+% modification, are permitted provided that the following conditions are 
+% met:
+% 
+% 1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+% 
+% 2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+% 
+% 3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+% 
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+% THE POSSIBILITY OF SUCH DAMAGE.
+% $Revision: 372 $
+% $Author: blanke $
+% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/branches/carnot_7_00_01/public/library_m/weather_and_sun/convert_weather/src_m/convert_weather.m $
+% **********************************************************************
+% D O C U M E N T A T I O N
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+% Carnot model and function m-files should use a name which gives a 
+% hint to the model of function (avoid names like testfunction1.m).
+% 
+% version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+% author list:  tob -> Tobias Blanke
+%               pk  -> Patrick Kefer               
+% 
+% version   author   changes                                     date
+% 7.0.1     tob      created                                     06mar2020
+% 7.0.2     tob      negative start time possible as simulation  31mar2020
+%                    time and file input 
+% 7.0.3     pk       strip lower level block paths from          14aug2020
+%                    current_system string (no Stop/StartTime)   
+
+% The current_system is the current simulation block.
+current_system = get_param(0, 'CurrentSystem');
+current_system = regexprep(current_system,'/.*','');
+% get the stop time as string
+stop_time_as_str = get_param(current_system, 'StopTime');
+% get the start time as string
+start_time_as_str = get_param(current_system, 'StartTime');
+% cast stop_time_as_str to double
+stop_time = str2double(stop_time_as_str);
+% cast start_time_as_str to double
+start_time = str2double(start_time_as_str);
+% catch the error of to be caclulated end times like (365*24*3600 for a
+% year instead of 31.536.000â€¬ sec)
+if isnan(stop_time)
+    % calc stop time from string
+    stop_time = eval(stop_time_as_str);
+end
+% catch the error of to be caclulated start times like (-365*24*3600 for a
+% year instead of -31.536.000â€¬ sec)
+if isnan(start_time)
+    % calc stop time from string
+    start_time = eval(start_time_as_str);
+end
+if start_time <Data(1,1)  || stop_time > Data(end,1)
+    % get length of the data matrix 
+    lenData = length(Data(1:end,1));
+    % get number of variables in data matrix
+    numVariables = length(Data(1,1:end));
+    % calc timestep from 1. column
+    timeStep = Data(2,1)-Data(1,1);
+    % calc number of pre start timesteps if necessary
+    if start_time <Data(1,1) 
+        % calc number of pre Start timesteps
+        nStart = uint64(abs(start_time)/timeStep+0.5)- uint64(abs(Data(1,1))/timeStep+0.5);
+    else
+        % set number of pre Start timesteps to 0 because no pre time is
+        % used
+        nStart = uint64(0);
+    end
+    % calc number of timesteps in new Data file
+    if stop_time > Data(end,1)
+        % calc number of after Data timesteps
+        nEnd = uint64(stop_time/timeStep+0.5);
+    else
+        % just the length of Data
+        nEnd = uint64(lenData);
+    end
+    % calc neccessary number of timesteps for used time horizon
+    nTimesteps = nStart+nEnd;
+    % create new Data matrix with extended size
+    newData = zeros(nTimesteps,numVariables);
+    % check if a negative start time is used
+    if start_time <Data(1,1)
+        if -start_time <= Data(end,1)
+            % extend necessary data
+            newData(1:nStart,:) = Data((lenData-nStart+1):lenData,:);
+        else
+            % calc number of complete repetation circles
+            n = uint64(fix((double(nStart)-1)/lenData));
+            % set ending timestep
+            start = nStart-(lenData)*n+1;
+            % duplicate complete repetation circles
+            newData(start:nStart,:) = repmat(Data,n,1);
+            % check if there are missing timesteps and if then fill them
+            if start>1
+                % write missing timesteps
+                newData(1:start-1,:) = Data(lenData-start+2:lenData,:);
+            end
+        end
+        % Write new time stamp in new Data matrix until start time of Data
+        % file
+        newData(1:nStart,1) = (Data(1,1)+sign(start_time)*double(nStart)*timeStep:timeStep:Data(1,1)-timeStep)';
+    end
+    % write the 1. Data time horizon in the new matrix
+    newData(1+nStart:lenData+nStart,:) = Data;
+    % Check if an extenstion is necessary
+    if stop_time>Data(end,1)
+        % check if and extension for more then the double of the Data matrix is
+        % needed
+        if nEnd-lenData>lenData
+            % calc number of complete repetation circles
+            n = uint64(fix((double(nEnd)-lenData)/lenData));
+            % set start timestep
+            ending = nStart + lenData*(n+1);
+            % duplicate complete repetation circles
+            newData(lenData+1+nStart:ending,:) = repmat(Data,n,1);
+            % check if timesteps are missing and if write them 
+            if ending<nTimesteps
+                % write missing timesteps
+                newData(ending:nTimesteps,:) = newData(ending-lenData:nTimesteps-lenData,:);
+            end
+        else
+            % extend necessary data
+            newData(lenData+1+nStart:nTimesteps,:) = Data(1:nTimesteps-lenData-nStart,:);
+        end
+        % Write new time stamp in new Data matrix from start time in Data file until stop time
+        newData(1+nStart:nTimesteps,1) = (Data(1,1):timeStep:double(nEnd-1)*timeStep+Data(1,1))';
+    end
+    % overwrite old Data for the return
+    Data = newData;
+end
+end
+
+
+##### SOURCE END #####
+--></body></html>

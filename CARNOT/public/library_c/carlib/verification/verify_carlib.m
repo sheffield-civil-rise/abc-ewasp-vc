@@ -120,10 +120,10 @@ s = 'verification of CARLIB fluid property functions ok';
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision: 372 $
-%  $Author: carnot-wohlfeil $
-%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_c/carlib/verification/verify_carlib.m $
+%  $Revision$
+%  $Author$
+%  $Date$
+%  $HeadURL$
 %  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:      aw -> Arnold Wohlfeil
 %                   hf -> Bernd Hafner

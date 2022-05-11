@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta content="de-at" http-equiv="Content-Language">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<title>basic_create_EB</title>
+<style type="text/css">
+.ms-column5-main {
+	border: 1.5pt solid gray;
+	margin-left:108.0pt;
+}
+.ms-column5-tl {
+	font-weight: bold;
+	color: black;
+	border-left-style: none;
+	border-right-style: none;
+	border-top-style: none;
+	border-bottom: .75pt solid gray;
+	background-color: #E5E5E5;
+	color:#5A5A5A;
+}
+.ms-column5-left {
+	font-weight: bold;
+	color: black;
+	border-style: none;
+	text-align:center;
+	background-color: white;
+	color:#5A5A5A;
+}
+.ms-column5-top {
+	font-weight: bold;
+	color: black;
+	border-left-style: none;
+	border-right-style: none;
+	border-top-style: none;
+	border-bottom: 1.5pt solid gray;
+	color:#5A5A5A;
+}
+.ms-column5-topleft {
+	font-weight: bold;
+	color: black;
+	border-left-style: none;
+	border-right-style: none;
+	border-top-style: none;
+	border-bottom: 1.5pt solid gray;
+	text-align: center;
+	width: 50pt;
+	color:#5A5A5A;
+}
+}
+.ms-column5 {
+	font-weight: normal;
+	color: black;
+	border-style: none;
+	background-color: white;
+	color:#5A5A5A;
+
+}
+
+ div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+p
+	{margin-right:0cm;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+a:link
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;
+}
+.auto-style1 {
+	font-size: large;
+}
+.auto-style2 {
+	font-size: medium;
+}
+</style>
+</head>
+
+<body>
+
+<div class="MsoNormal" style="text-align:center" align="center"><span style="mso-bookmark:literature"><span style="font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:&quot;Times New Roman&quot;" lang="EN-US">
+
+<hr style="color:#A0A0A0" width="100%" size="10" noshade="noshade" align="center">
+
+</span></span></div>
+
+<p><span style="mso-bookmark:basic_create_EB"><span style="mso-bookmark:literature"><span style="font-size:13.5pt;line-height:120%" lang="EN-US"> 
+<img alt="" height="155" src="Figures/Battery_1.jpg" style="float: right" width="143" /></span></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_36" o:spid="_x0000_s1609" type="#_x0000_t75"
+ style='position:absolute;left:0;text-align:left;margin-left:17.75pt;
+ margin-top:0;width:57.75pt;height:34.5pt;z-index:34;visibility:visible;
+ mso-wrap-style:square;mso-wrap-distance-left:0;mso-wrap-distance-top:0;
+ mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
+ mso-position-horizontal:right;mso-position-horizontal-relative:text;
+ mso-position-vertical:absolute;mso-position-vertical-relative:line'
+ o:allowoverlap="f"><v:imagedata src="Figures/Constant_EB.png" xmlns:v="urn:schemas-microsoft-com:vml"/><w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/></v:shape><![endif]--><!--[if !vml]--><!--[endif]--><span class="GramE"><span style="mso-bookmark:basic_create_EB"><span style="mso-bookmark:literature"><b><span style="font-size:18.0pt;line-height:120%">Battery_EB</span></b></span></span></span><span style="mso-bookmark:basic_create_EB"><span style="mso-bookmark:literature"><span style="font-size:13.5pt;line-height:120%" lang="EN-US"> <br>
+<b>Path: CARNOT/<span lang="de-at">Storage/Electric</span></b> <br style="mso-special-character:line-break" clear="all">
+</span></span></span></p>
+
+<div class="MsoNormal" style="text-align:center" align="center"><span style="mso-bookmark:constant_THV"><span style="mso-bookmark:literature"><span style="font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+&quot;Times New Roman&quot;" lang="EN-US">
+
+<hr width="100%" size="2" align="center">
+
+</span></span></span></div>
+
+<p><span style="mso-bookmark:literature"><b><span style="font-size:
+13.5pt;line-height:120%" lang="EN-US">Purpose</span></b><span style="font-size:13.5pt;line-height:120%" lang="EN-US"> <br>
+</span><span style="font-size:13.5pt;line-height:120%"> Model of a battery based 
+on the energy balance</span>.</span></p>
+<p>&nbsp;</p>
+
+<p><span style="mso-bookmark:literature"><b><span style="font-size:
+13.5pt;line-height:120%" lang="EN-US">Description</span></b><span style="font-size:13.5pt;line-height:120%" lang="EN-US"> <br>
+</span></span><font size="4">Electric energy storage ('rechargable battery') 
+with inverter, 
+based on an energy balance. <br />
+</font></p>
+<p><font size="4">dE/dt = P_in * efficiency</font></p>
+<p class="auto-style2">dE/dt is the change of stored energy per timestep<br />
+P_in is the incomming electric power to the battery cell on the DC side<br />
+efficiency includes AC/DC conversion during charging (DC/AC during discharing) 
+and losses on the DC side</p>
+<p><font size="4">The model uses a single phase AC connection (ActPower1 in EB_in). Separate 
+parameters are used for charging and discharging efficiency.<br />
+Negative power at inport EB_in is for discharging, positive vor charging.<br />
+If the battery is full, the power is led to the output P_over (in BatData).
+<br />
+If the battery is emtpty, the missing power is led to the output P_under (in 
+BatData). <br />
+The state output gives the state of charge in 0...1.</font></p>
+<p>&nbsp;</p>
+
+<p><span style="mso-bookmark:literature"><b><span style="font-size:
+13.5pt;line-height:120%" lang="EN-US">Inputs:</span></b><span style="font-size:13.5pt;line-height:120%" lang="EN-US"> </span>
+<span style="font-size:13.5pt;line-height:120%"> Elecric Bus EB_in</span></span></p>
+
+
+<table class="ms-column5-main" border="0">    
+    <tbody>    
+</tbody></table>
+<p>
+<table class="ms-column5-main" border="0">    
+    <tbody><tr>
+        <th class="ms-column5-top" style="width: 200px; height: 26px;text-align:center;" align="left">
+		elements in EB</th>
+        <th class="ms-column5-top" style="width: 120px; height: 26px;text-align:center;" align="left"><u>physical unit</u></th>
+    </tr>
+    <tr>
+        <td class="ms-column5" valign="top">voltage line 1</td>
+        <td class="ms-column5" valign="top" align="center">[V]</td>
+    </tr>
+    <tr>
+        <td class="ms-column5" valign="top">active power line 1</td>
+        <td class="ms-column5" valign="top" align="center">[W]</td>
+    </tr>
+    <tr>
+        <td class="ms-column5" valign="top">voltage line 2</td>
+        <td class="ms-column5" valign="top" align="center">[V]</td>
+    </tr>
+    <tr>
+        <td class="ms-column5" valign="top">active power line 2</td>
+        <td class="ms-column5" valign="top" align="center">[W]</td>
+    </tr>
+    <tr>
+        <td class="ms-column5" valign="top">voltage line 3</td>
+        <td class="ms-column5" valign="top" align="center">[V]</td>
+	</tr>
+    <tr>
+        <td class="ms-column5" valign="top">active  power line 3</td>
+        <td class="ms-column5" valign="top" align="center">[W]</td>       
+    </tr>   
+</tbody></table>
+<p><span style="mso-bookmark:literature"><b><span style="font-size:
+13.5pt;line-height:120%" lang="EN-US">Outputs:</span></b><span style="font-size:13.5pt;line-height:120%" lang="EN-US"> 1 </span>
+<span style="font-size:13.5pt;line-height:120%"> EB</span><span style="font-size:13.5pt;line-height:120%" lang="EN-US"> </span></span></p>
+<p>&nbsp;</p>
+<p><font size="4"><strong>Parameters</strong></font></p>
+<p><img alt="" src="Figures/BatteryMask.jpg" /></p>
+
+<p>&nbsp;</p>
+<p class="auto-style1"><strong>L</strong><font size="4"><strong>iterature</strong><b><br />
+</b><a href="pdf/Battery_EB_Verification_Report.pdf">Koch, Manuel: Verification 
+of the battery block with electric bus connectors, FHNW, 2019</a></font></p>
+<p><span style="mso-bookmark:literature"><b>
+<span style="font-size:
+13.5pt;line-height:120%" lang="EN-US">Characteristics</span></b><span style="font-size:13.5pt;
+line-height:120%" lang="EN-US"> <br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;</span><span style="font-size:13.5pt;
+line-height:120%">Yes (EB_in to </span><span style="font-size:13.5pt;
+line-height:120%" lang="EN-US"> &nbsp;<br>
+Sample
+time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size:13.5pt;
+line-height:120%">
+</span><span style="font-size:13.5pt;
+line-height:120%" lang="EN-US"> Inherited
+from driving block <br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size:13.5pt;
+line-height:120%">&nbsp;
+</span><span style="font-size:13.5pt;
+line-height:120%" lang="EN-US"> No
+</span></span></p>
+
+
+
+
+</body></html>

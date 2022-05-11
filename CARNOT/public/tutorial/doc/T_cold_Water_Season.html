@@ -47,14 +47,15 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
  o:allowoverlap="f">
  <v:imagedata src="Figures/water_temp_season.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><![if !vml]><img width=65 height=59
-src="Figures/water_temp_season.jpg" align=right alt=symbol v:shapes="Bild_x0020_295"><![endif]><span
+</v:shape><![endif]--><![if !vml]>
+<img
+src="Figures/TcoldWaterSeason.jpg" align=right alt=symbol v:shapes="Bild_x0020_295"><![endif]><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><a
 name="water_temp_season"></a><span style='mso-bookmark:water_temp_season'><span
-class=GramE><b><span lang=EN-US style='font-size:18.0pt;line-height:120%'>water_temp_season</span></b></span></span><b><span lang=EN-US style='font-size:18.0pt;
+class=GramE><b><span style='font-size:18.0pt;line-height:120%'>T_cold_W</span><span lang=EN-US style='font-size:18.0pt;line-height:120%'>ater_</span><span style='font-size:18.0pt;line-height:120%'>S</span><span lang=EN-US style='font-size:18.0pt;line-height:120%'>eason</span></b></span></span><b><span lang=EN-US style='font-size:18.0pt;
 line-height:120%'> </span></b><span lang=EN-US style='font-size:13.5pt;
 line-height:120%'><br>
-<b>Path: CARNOT/misc</b><o:p></o:p></span></span></span></p>
+<b>Path: CARNOT/<span lang="de">Load/Hot_Water_Tapping</span></b><o:p></o:p></span></span></span></p>
 
 <div class=MsoNormal align=center style='text-align:center'><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
@@ -68,15 +69,26 @@ lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
-This block sets a temperature. </span><span lang=EN-US
+<span style='font-size:13.5pt;line-height:120%'>Create a seasonally 
+varying cold water temperature.</span> </span><span lang=EN-US
 style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></span></p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
-The block creates temperature distrbibution for a year. For two specified
-monthes and temperatures the block creates either a sine or a linear function, </span></span></span></p>
-
+The block creates </span><span style='font-size:13.5pt;line-height:120%'>a cold 
+water </span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>temperature </span>
+<span style='font-size:13.5pt;line-height:120%'>over the year. The uses a linear 
+curve between minimum and maximum or an approximation with a sine curve. </span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> &nbsp;</span></span></span></p>
+<p><font size="4">The minimum and maximum values are set to the 15th of the 
+selected month. </font></p>
+<p><font size="4">Both linear and since curve can have the asymmetric times for 
+minimum and maximum&nbsp; (e.g. lowest temperature in March and highest in 
+July). <br />
+Two different parameter sets are used for the short and the long intervall.</font></p>
+<p>&nbsp;</p>
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
@@ -90,12 +102,32 @@ lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
  o:allowoverlap="f">
  <v:imagedata src="Figures/water_temp_seasonSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
  <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
-</v:shape><![endif]--><![if !vml]><img width=376 height=294
-src="Figures/water_temp_seasonSHOT.jpg" align=left alt=mask v:shapes="Bild_x0020_296"><![endif]><span
+</v:shape><![endif]--><![if !vml]>
+<img
+src="Figures/TcoldWaterSeasonMASK.jpg" align=left alt=mask v:shapes="Bild_x0020_296"><![endif]><span
 style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
 style='mso-special-character:line-break'>
 </span></span></span></p>
+
+<p><span style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:
+13.5pt;line-height:120%'>Characteristics</span></b><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>No</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+Sample
+time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>&nbsp;
+</span><font size="4">none</font><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> <br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;
+line-height:120%'>&nbsp;&nbsp;
+</span><span lang=EN-US style='font-size:13.5pt;
+line-height:120%'> No
+</span></span></p>
+
+<p>&nbsp;</p>
 
 <p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
 lang=EN-US style='font-size:13.5pt;line-height:120%'>&nbsp;</span></span></span></p>

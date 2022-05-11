@@ -1,0 +1,184 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Carnot m-Functions for Blocks Overview</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-05"><meta name="DC.source" content="CarnotMFunBlockOverview.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Carnot m-Functions for Blocks Overview</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Basic / Electric</a></li><li><a href="#2">Basic / Heat_Transfer</a></li><li><a href="#3">Basic / Hydraulics</a></li><li><a href="#4">Basic / Material_Properties</a></li><li><a href="#5">Basic / Thermal_Models</a></li><li><a href="#6">Hydraulics</a></li><li><a href="#7">Load / General</a></li><li><a href="#8">Load / Hot_Water_Tapping</a></li><li><a href="#9">Load / Houses</a></li><li><a href="#10">Outputs</a></li><li><a href="#11">Source / Boiler</a></li><li><a href="#12">Source / Chiller</a></li><li><a href="#13">Source / Electric_Generator</a></li><li><a href="#14">Source / Energy</a></li><li><a href="#15">Source / Heat_Pump</a></li><li><a href="#16">Source / Solar_Thermal</a></li><li><a href="#17">Source / Solar_Thermal / IncidenceAngleModifier</a></li><li><a href="#18">Source / Solar_Thermal</a></li><li><a href="#19">Storage / Thermal</a></li><li><a href="#20">Toolbox</a></li></ul></div><h2 id="1">Basic / Electric</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_EBCreator.html'),'-helpbrowser')">CarnotCallbacks_EBCreator</a></p><h2 id="2">Basic / Heat_Transfer</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'fitSineToTamb.html'),'-helpbrowser')">fitSineToTamb</a></p><h2 id="3">Basic / Hydraulics</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Grashof.html'),'-helpbrowser')">CarnotCallbacks_Grashof</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Prandtl.html'),'-helpbrowser')">CarnotCallbacks_Prandtl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_THBCreator.html'),'-helpbrowser')">CarnotCallbacks_THBCreator</a></p><h2 id="4">Basic / Material_Properties</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Density.html'),'-helpbrowser')">CarnotCallbacks_Density</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Enthalpy2Temperature.html'),'-helpbrowser')">CarnotCallbacks_Enthalpy2Temperature</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Enthalpy.html'),'-helpbrowser')">CarnotCallbacks_Enthalpy</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Entropy.html'),'-helpbrowser')">CarnotCallbacks_Entropy</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Evaporation_Enthalpy.html'),'-helpbrowser')">CarnotCallbacks_Evaporation_Enthalpy</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Heat_Capacity.html'),'-helpbrowser')">CarnotCallbacks_Heat_Capacity</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Kinematic_Viscosity.html'),'-helpbrowser')">CarnotCallbacks_Kinematic_Viscosity</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Saturation_Property.html'),'-helpbrowser')">CarnotCallbacks_Saturation_Property</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Saturation_Temperature.html'),'-helpbrowser')">CarnotCallbacks_Saturation_Temperature</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Saturation_Value_Water.html'),'-helpbrowser')">CarnotCallbacks_Saturation_Value_Water</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Specific_Volume.html'),'-helpbrowser')">CarnotCallbacks_Specific_Volume</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Thermal_Conductivity.html'),'-helpbrowser')">CarnotCallbacks_Thermal_Conductivity</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Thermal_Conductivity.html'),'-helpbrowser')">CarnotCallbacks_Thermal_Conductivity</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Vapour_Content.html'),'-helpbrowser')">CarnotCallbacks_Vapour_Content</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Vapour_Pressure.html'),'-helpbrowser')">CarnotCallbacks_Vapour_Pressure</a></p><h2 id="5">Basic / Thermal_Models</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'hp_param.html'),'-helpbrowser')">hp_param</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_WindowWithShading.html'),'-helpbrowser')">CarnotCallbacks_WindowWithShading</a></p><h2 id="6">Hydraulics</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_PumpAdditional.html'),'-helpbrowser')">CarnotCallbacks_PumpAdditional</a></p><h2 id="7">Load / General</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Data_from_File.html'),'-helpbrowser')">CarnotCallbacks_Data_from_File</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'createDatafile.html'),'-helpbrowser')">createDatafile</a></p><h2 id="8">Load / Hot_Water_Tapping</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_EU_Tapping_Cycle.html'),'-helpbrowser')">CarnotCallbacks_EU_Tapping_Cycle</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_mdot_annual_profile.html'),'-helpbrowser')">CarnotCallbacks_mdot_annual_profile</a></p><h2 id="9">Load / Houses</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_HouseSimple.html'),'-helpbrowser')">CarnotCallbacks_HouseSimple</a></p><h2 id="10">Outputs</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_PMV_PPD.html'),'-helpbrowser')">CarnotCallbacks_PMV_PPD</a></p><h2 id="11">Source / Boiler</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_CondensingBoilerConf.html'),'-helpbrowser')">CarnotCallbacks_CondensingBoilerConf</a></p><h2 id="12">Source / Chiller</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Absorption_Chiller_LookUp.html'),'-helpbrowser')">CarnotCallbacks_Absorption_Chiller_LookUp</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'acm_param.html'),'-helpbrowser')">acm_param</a></p><h2 id="13">Source / Electric_Generator</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_InverterConf.html'),'-helpbrowser')">CarnotCallbacks_InverterConf</a></p><h2 id="14">Source / Energy</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_FuelConf.html'),'-helpbrowser')">CarnotCallbacks_FuelConf</a></p><h2 id="15">Source / Heat_Pump</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_HeatPump.html'),'-helpbrowser')">CarnotCallbacks_HeatPump</a></p><h2 id="16">Source / Solar_Thermal</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_CollectorUnglazedConf.html'),'-helpbrowser')">CarnotCallbacks_CollectorUnglazedConf</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_CollectorUnglazedISO9806.html'),'-helpbrowser')">CarnotCallbacks_CollectorUnglazedISO9806</a></p><h2 id="17">Source / Solar_Thermal / IncidenceAngleModifier</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'taualfa.html'),'-helpbrowser')">taualfa</a></p><h2 id="18">Source / Solar_Thermal</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_CollectorEN12975Conf.html'),'-helpbrowser')">CarnotCallbacks_CollectorEN12975Conf</a></p><h2 id="19">Storage / Thermal</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_StorageConf.html'),'-helpbrowser')">CarnotCallbacks_StorageConf</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_StorageTypeN.html'),'-helpbrowser')">CarnotCallbacks_StorageTypeN</a></p><h2 id="20">Toolbox</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_GlobalMessageLevel.html'),'-helpbrowser')">CarnotCallbacks_GlobalMessageLevel</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'MessageLevelEnum.html'),'-helpbrowser')">MessageLevelEnum</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_ModelDoc.html'),'-helpbrowser')">CarnotCallbacks_ModelDoc</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'SearchWriteParams.html'),'-helpbrowser')">SearchWriteParams</a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Carnot m-Functions for Blocks Overview 
+%% Basic / Electric
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_EBCreator.html'),'-helpbrowser') CarnotCallbacks_EBCreator>
+% 
+%% Basic / Heat_Transfer
+% <matlab:web(fullfile(path_carnot('help'),'fitSineToTamb.html'),'-helpbrowser') fitSineToTamb>
+% 
+%% Basic / Hydraulics
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Grashof.html'),'-helpbrowser') CarnotCallbacks_Grashof>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Prandtl.html'),'-helpbrowser') CarnotCallbacks_Prandtl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_THBCreator.html'),'-helpbrowser') CarnotCallbacks_THBCreator>
+% 
+%% Basic / Material_Properties
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Density.html'),'-helpbrowser') CarnotCallbacks_Density>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Enthalpy2Temperature.html'),'-helpbrowser') CarnotCallbacks_Enthalpy2Temperature>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Enthalpy.html'),'-helpbrowser') CarnotCallbacks_Enthalpy>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Entropy.html'),'-helpbrowser') CarnotCallbacks_Entropy>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Evaporation_Enthalpy.html'),'-helpbrowser') CarnotCallbacks_Evaporation_Enthalpy>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Heat_Capacity.html'),'-helpbrowser') CarnotCallbacks_Heat_Capacity>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Kinematic_Viscosity.html'),'-helpbrowser') CarnotCallbacks_Kinematic_Viscosity>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Saturation_Property.html'),'-helpbrowser') CarnotCallbacks_Saturation_Property>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Saturation_Temperature.html'),'-helpbrowser') CarnotCallbacks_Saturation_Temperature>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Saturation_Value_Water.html'),'-helpbrowser') CarnotCallbacks_Saturation_Value_Water>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Specific_Volume.html'),'-helpbrowser') CarnotCallbacks_Specific_Volume>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Thermal_Conductivity.html'),'-helpbrowser') CarnotCallbacks_Thermal_Conductivity>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Thermal_Conductivity.html'),'-helpbrowser') CarnotCallbacks_Thermal_Conductivity>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Vapour_Content.html'),'-helpbrowser') CarnotCallbacks_Vapour_Content>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Vapour_Pressure.html'),'-helpbrowser') CarnotCallbacks_Vapour_Pressure>
+% 
+%% Basic / Thermal_Models
+% <matlab:web(fullfile(path_carnot('help'),'hp_param.html'),'-helpbrowser') hp_param>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_WindowWithShading.html'),'-helpbrowser') CarnotCallbacks_WindowWithShading>
+% 
+%% Hydraulics
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_PumpAdditional.html'),'-helpbrowser') CarnotCallbacks_PumpAdditional>
+% 
+%% Load / General
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Data_from_File.html'),'-helpbrowser') CarnotCallbacks_Data_from_File>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'createDatafile.html'),'-helpbrowser') createDatafile>
+% 
+%% Load / Hot_Water_Tapping
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_EU_Tapping_Cycle.html'),'-helpbrowser') CarnotCallbacks_EU_Tapping_Cycle>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_mdot_annual_profile.html'),'-helpbrowser') CarnotCallbacks_mdot_annual_profile>
+% 
+%% Load / Houses
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_HouseSimple.html'),'-helpbrowser') CarnotCallbacks_HouseSimple>
+% 
+%% Outputs
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_PMV_PPD.html'),'-helpbrowser') CarnotCallbacks_PMV_PPD>
+% 
+%% Source / Boiler
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_CondensingBoilerConf.html'),'-helpbrowser') CarnotCallbacks_CondensingBoilerConf>
+% 
+%% Source / Chiller
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_Absorption_Chiller_LookUp.html'),'-helpbrowser') CarnotCallbacks_Absorption_Chiller_LookUp>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'acm_param.html'),'-helpbrowser') acm_param>
+% 
+%% Source / Electric_Generator
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_InverterConf.html'),'-helpbrowser') CarnotCallbacks_InverterConf>
+% 
+%% Source / Energy
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_FuelConf.html'),'-helpbrowser') CarnotCallbacks_FuelConf>
+% 
+%% Source / Heat_Pump
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_HeatPump.html'),'-helpbrowser') CarnotCallbacks_HeatPump>
+% 
+%% Source / Solar_Thermal
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_CollectorUnglazedConf.html'),'-helpbrowser') CarnotCallbacks_CollectorUnglazedConf>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_CollectorUnglazedISO9806.html'),'-helpbrowser') CarnotCallbacks_CollectorUnglazedISO9806>
+% 
+%% Source / Solar_Thermal / IncidenceAngleModifier
+% <matlab:web(fullfile(path_carnot('help'),'taualfa.html'),'-helpbrowser') taualfa>
+% 
+%% Source / Solar_Thermal
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_CollectorEN12975Conf.html'),'-helpbrowser') CarnotCallbacks_CollectorEN12975Conf>
+% 
+%% Storage / Thermal
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_StorageConf.html'),'-helpbrowser') CarnotCallbacks_StorageConf>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_StorageTypeN.html'),'-helpbrowser') CarnotCallbacks_StorageTypeN>
+% 
+%% Toolbox
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_GlobalMessageLevel.html'),'-helpbrowser') CarnotCallbacks_GlobalMessageLevel>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'MessageLevelEnum.html'),'-helpbrowser') MessageLevelEnum>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'CarnotCallbacks_ModelDoc.html'),'-helpbrowser') CarnotCallbacks_ModelDoc>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'SearchWriteParams.html'),'-helpbrowser') SearchWriteParams>
+% 
+
+##### SOURCE END #####
+--></body></html>

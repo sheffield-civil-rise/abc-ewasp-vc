@@ -172,10 +172,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision: 445 $
-%  $Author: carnot-hafner $
-%  $Date: 2018-09-25 21:22:47 +0200 (Di, 25 Sep 2018) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Thermal_Models/Pipe_basic/verification/verify_PipeBasic.m $
+%  $Revision$
+%  $Author$
+%  $Date$
+%  $HeadURL$
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder

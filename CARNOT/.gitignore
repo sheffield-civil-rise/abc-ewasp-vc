@@ -1,0 +1,8 @@
+# Windows default autosave extension
+*.asv
+
+# Simulink Code Generation
+slprj/
+
+# Simulink model cache
+*.slxc

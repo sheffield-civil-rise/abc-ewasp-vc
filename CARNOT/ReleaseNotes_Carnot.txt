@@ -1,0 +1,73 @@
+Release notes for Carnot for Matlab/Simulink
+(C) 2022 Solar Institut Juelich
+
+***** Release 7.3 (Matlab 2018b) **********
+New:
+1) Storage_Type11 : buffer tank with "3 point connection" 
+                    The flow line from source to load has a T-piece, the storage is connected 
+					to the T-piece with a short pipe. The return line of the load is connected
+					to the storage, the retrun line to the source is taken from the storage.
+2) Storage_Type12 : buffer tank with 5 pipe connection ports
+3) Weather_Simple_Model: Longitude and timezone as additional parameters in mask
+
+Bug fixes:
+1) block Window : gvalue applied once to solar radiation (not twice)
+2) block Window : applying gvalue to the glass surface (not total window surface with frame)
+3) block Window : new parameter names 
+                  gvalue -> Solar heat gain coefficient (SHGC)
+                  light transmission -> Primary solar heat gain 
+4) Solar_Position : Corrected text of the mask. Timezone is longitude (not latitude).
+
+Improvements
+1) verification is correct for Matlab R2018b, R2020b and R2021b
+2) Radiation_Diversion : solar position from carlib, verification done with TRY04
+
+
+***** Release 7.2 (Matlab 2018b) **********
+new:
+1) 2-node solar thermal collector (glazed + unglazed)
+2) battery inverter
+3) heat exchanger based on VDI Waermeatlas model
+4) electric heating port at thermal storages
+5) ice storage model (10 m³)
+bug fixes:
+1) improvements of ground probe model (EWS)
+2) function "solarposition" in carlib.c: 
+   limit hourangle to -180° ... 180°
+
+***** Release 7.1 (Matlab 2018b) *********
+1) importfilter epw2wdb.m for EnergyPlus weather data files (https://energyplus.net/weather)
+2) Collector_Unglazed_ISO9806: new model for unglazed collectors according to ISO 9806 equations
+3) Ventilation: bug fix for pressure calculation (pressure outport was connected to temperature not to pressure)
+4) Room_Node : bug fix in pressure calculation
+5) Average : improved calculation of the average by taking the mean of the upper and lower sum
+6) atomic libraries and examples saved in current .slx format (R2018b)
+
+***** Release 7.0.1 (Matlab 2018b) *******
+1) Bug fix in Ventilation_AIV and Room_Node: corrected air pressure calculation
+2) Pump control is linear, not quadratic as suggested in CARNOT_Nutzertreffen2018_HSBiberach_Volkmer_Hydraulik.pdf
+   Quadratic correlation results in a strange behaviour for pumps in series.
+
+***** Release 7.0 (Matlab 2018b) *******
+1) _CONF models combinded with the component model
+Storage_Type_N_CONF -> Storage_Type_N
+Condensing_Boiler_CONF -> Condensing_Boiler
+Heat_Pump_CONF -> Heat_Pump
+2) Pump and mixing valves changed according to the propositions of Stephan Volkmer
+see <carnot>\public\tutorial\doc\pdf\CARNOT_Nutzertreffen2018_HSBiberach_Volkmer_Hydraulik.pdf
+3) The solar collector models according to EN 12975:
+- Collector_EN12975
+- Collector_EN12975_CONF
+- Collector_EN12975_FlatPlate
+- Collector_EN12975_FlatPlate_CONF
+have been replaced by the model
++ SolarCollector
+Accord to the new standard ISO 9806:2017 only table values for the incidence angle modifier calculation (KL and KT) are given.
+All other data like Ambrosetti correlation of b0 correlation must be transformed to the table data.
+4) functions replaced
+	tmy2wformat by tmy2wdb
+	try2wformat by try2wdb
+   (old functions will be kept for compatibility in version 7.0 but will disappear in a future version)
+5) Window model with layrwall.c has been replaced by the validated model with transfer functions (formerly Window_with_Shading)
+The validation has been done in IEA Task 44, the reference scenario is from Task 34.
+6) transversal and longitudinal incidence angle calculation in surfrad.c (model Radiation_on_Inclined_Surface) adapted to equations of ISO 9806

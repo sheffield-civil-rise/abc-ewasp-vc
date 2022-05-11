@@ -41,7 +41,7 @@ max_simu_error = 1e-7;   % max error between initial and current simu
 functionname = 'verify_Pump_Additional_mdl';
 
 % % reference time vector
-% t0 = 0:100:24*365*3600;
+t0 = 0:5:75;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
@@ -49,11 +49,11 @@ functionname = 'verify_Pump_Additional_mdl';
 load_system(functionname)
 simOut = sim(functionname, 'SrcWorkspace','current', ...
     'SaveOutput','on','OutputSaveName','yout');
-y2 = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
-t0 = simOut.get('tout');        % get the whole time vector from simu
-% tsy = timeseries(yy,tt);        % timeseries for the columns
-% tx = resample(tsy,t0);          % resample with t0
-% y2 = tx.data;
+yy = simOut.get('yout');        % get the whole output vector (one value per simulation timestep)
+tt = simOut.get('tout');        % get the whole time vector from simu
+tsy = timeseries(yy,tt);        % timeseries for the columns
+tx = resample(tsy,t0);          % resample with t0
+y2 = tx.data;
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------

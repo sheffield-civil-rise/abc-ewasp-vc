@@ -171,10 +171,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision: 441 $
-%  $Author: carnot-hafner $
-%  $Date: 2018-09-15 19:23:16 +0200 (Sa, 15 Sep 2018) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Basic/Thermal_Models/sfun_storage_heatexchanger/verification/verify_sfun_storage_heatexchanger.m $
+%  $Revision$
+%  $Author$
+%  $Date$
+%  $HeadURL$
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder

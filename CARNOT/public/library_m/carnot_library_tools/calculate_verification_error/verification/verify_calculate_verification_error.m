@@ -33,68 +33,103 @@ v = true;                   % be optimistic, no errors will occur
 % ---------- set model file or function name ------------------------------
 functionname = 'calculate_verification_error';
 
-% ----------------- set the literature reference values -------------------
-y0 = (1:10);                % reference input values
-y1 = y0+0.1;                % reference results
+%% set the literature reference values
+y = ones(10,4,1).*(1:10)';
+y0(:,:,1) = y;
+y0(:,:,2) = 2*y;
+y0(:,:,3) = 3*y;            % reference results
+y1 = 0.1*ones(10,4,3);
+y1 = y0+y1;                 % simulation results
 
-%% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
 %   s    - 'sum' - e is the sum of the individual errors of ysim 
 %          'mean' - e is the mean of the individual errors of ysim
 %          'max' - e is the maximum of the individual errors of ysim
 %          'last' - e is the last value in ysim
 
-for n = 1:8
+for n = 1:12
     switch n
         case 1
             r = 'absolute'; 
-            s = 'max';
-            exp = 0.1;
+            s = 'sum';
+            eexp = 1;
+            yexp = abs(y0-y1);
         case 2
             r = 'absolute'; 
-            s = 'sum';
-            exp = 1.0;
+            s = 'mean';
+            eexp = 0.1;
+            yexp = abs(y0-y1);
         case 3
             r = 'absolute'; 
-            s = 'mean';
-            exp = 0.1;
+            s = 'last';
+            eexp = 0.1;
+            yexp = abs(y0-y1);
         case 4
             r = 'absolute'; 
-            s = 'last';
-            exp = 0.1;
+            s = 'max';
+            eexp = 0.1;
+            yexp = abs(y0-y1);
         case 5
             r = 'relative'; 
-            s = 'max';
-            exp = 0.1/1;
+            s = 'sum';
+            eexp = (10*0.1)/sum(1:10);
+            yexp = abs((y0-y1)./y0);
         case 6
             r = 'relative'; 
-            s = 'sum';
-            exp = 1/55;
+            s = 'mean';
+            eexp = 0.1/5.5;
+            yexp = abs((y0-y1)./y0);
         case 7
             r = 'relative'; 
-            s = 'mean';
-            exp = 0.1/5.5;
+            s = 'max';
+            eexp = 0.1/1;
+            yexp = abs((y0-y1)./y0);
         case 8
             r = 'relative'; 
             s = 'last';
-            exp = 0.1/10;
-        otherwise
+            eexp = 0.1/10;
+            yexp = abs((y0-y1)./y0);
+        case 9
+            r = 'relative'; 
+            s = 'relmax';
+            eexp = 0.1/10;
+            yexp = abs((y0-y1)./y0);
+        case 10   
+            r = 'relative'; 
+            s = '';             % check default case for s (should be 'max')
+            eexp = 0.1/1;
+            yexp = abs((y0-y1)./y0);
+        case 11
             r = 'absolute'; 
-            s = 'max';
-            exp = 0;
+            s = '';             % check default case for s (should be 'max')
+            eexp = 0.1;
+            yexp = abs(y0-y1);
+        case 12
+            r = '';             % check default case for r (should be 'absolute')
+            s = '';             % check default case for s (should be 'max')
+            eexp = 0.1;
+            yexp = abs(y0-y1);
+        otherwise
+            error('case not defined')
     end     
+    %% calculate the errors
     % error in the reference data 
     [e1, ye1] = calculate_verification_error(y0, y1, r, s);
-    e1 = abs(e1-exp);
-    ye1 = ye1-exp;
+    ee = abs(e1-eexp);
+    ye = ye1-yexp;
 
-    % ------------- decide if verification is ok ------------------------------
-    if e1 > max_error       % case has an error
+    %% decide if verification is ok
+    if ee > max_error       % calculated error is wrong
         v = false;
         s = sprintf('verification %s with reference FAILED for case %1.0f: error %3.3f > allowed error %3.3f', ...
             functionname, n, e1, max_error);
         show = true;
-        disp(s) %#ok<DSPS>
+    elseif ye > max_error   % calculated error matrix is wrong
+        v = false;
+        s = sprintf('verification %s with reference FAILED for case %1.0f: error %3.3f > allowed error %3.3f', ...
+            functionname, n, ye, max_error);
+        show = true;
+        disp(s) 
     else
         s = sprintf('%s case %1.0f OK: error %3.3f', functionname, n, e1);
     end
@@ -112,11 +147,11 @@ for n = 1:8
         % lower legend
         sleg2 = {'initial vs. current fn call'};
         %   x - vector with x values for the plot
-        x = reshape(y0,length(y0),1);
+        x = y0(:);
         %   y - matrix with y-values (reference values and result of the function call)
-        y = [reshape(y0,length(y0),1), reshape(y1,length(y1),1)];
+        y = [y0(:), y1(:)];
         %   ye - matrix with error values for each y-value
-        ye = reshape(ye1,length(ye1),1);
+        ye = ye(:);
         sz = strrep(s,'_',' ');
         display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, sz)
     end
@@ -159,7 +194,9 @@ end
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder
 %  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
-%  Version   Author  Changes                                     Date
-%  6.1.0     hf      created                                     22jan2017
-%  6.1.1     hf      comments adapted to publish function        01nov2017
+%  Version   Author Changes                                     Date
+%  6.1.0     hf     created                                     22jan2017
+%  6.1.1     hf     comments adapted to publish function        01nov2017
+%  7.1.0     hf     added case 'relmax', include yexp           15apr2020
+%                   enhance to 3-dimensional array
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

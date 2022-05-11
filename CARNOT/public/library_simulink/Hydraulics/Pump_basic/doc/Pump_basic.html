@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>pump const</title>
+<style type="text/css">
+ div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+p
+	{margin-right:0cm;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+ .auto-style1 {
+	margin-left: 120px;
+}
+ul
+	{margin-bottom:0cm;}
+ li.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+ p.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:108.0pt;
+	line-height:120%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:#5A5A5A;
+	}
+a:link
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;
+}
+</style>
+</head>
+
+<body>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:literature'><span style='mso-bookmark:schwamberger'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'>
+
+<hr size=10 width="100%" noshade style='color:#A0A0A0' align=center>
+
+</span></span></span></div>
+
+<p><!--[if gte vml 1]><v:shape id="Bild_x0020_171" o:spid="_x0000_s1474"
+ type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
+ margin-left:32.75pt;margin-top:0;width:72.75pt;height:60.75pt;z-index:169;
+ visibility:visible;mso-wrap-style:square;mso-wrap-distance-left:0;
+ mso-wrap-distance-top:0;mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
+ mso-position-horizontal:right;mso-position-horizontal-relative:text;
+ mso-position-vertical:absolute;mso-position-vertical-relative:line'
+ o:allowoverlap="f">
+ <v:imagedata src="Figures/pump_const.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
+ <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
+</v:shape><![endif]--><![if !vml]>
+<img width=129 height=100
+src="Figures/Pump_basic.jpg" align=right v:shapes="Bild_x0020_171"><![endif]><span class=GramE><span
+style='mso-bookmark:Pump_const'><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><b><span style='font-size:18.0pt;
+line-height:120%'>P</span><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'>ump</span></b></span></span></span></span><span
+style='mso-bookmark:Pump_const'><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><b><span lang=EN-US style='font-size:18.0pt;
+line-height:120%'> </span><span style='font-size:18.0pt;
+line-height:120%'> basic</span></b><span lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+<b>Path: CARNOT/<span lang="de">Hydraulics</span></b> <br clear=all style='mso-special-character:line-break'>
+<o:p></o:p></span></span></span></span></p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-bookmark:Pump_const'><span style='mso-bookmark:schwamberger'><span
+style='mso-bookmark:literature'><span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=2 width="100%" align=center>
+
+</span></span></span></span></div>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+class=GramE><b><span lang=EN-US style='font-size:13.5pt;line-height:120%'>Purpose</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+Very simple pump model where the mass flow rate is set to </span>
+<span style='font-size:13.5pt;line-height:120%'> a fixed</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> value.</span></span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span><span
+lang=EN-US style='font-size:12.0pt;line-height:120%'><o:p></o:p></span></span></span></p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Description</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br />
+This is a very simple pump, where the mass flow is set to the </span>
+<span style='font-size:13.5pt;line-height:120%'> a </span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> maximum specified in the 
+mask. </span><span style='font-size:13.5pt;line-height:120%'> This value is 
+multiplied with the incomming control signal.<br />
+Although the model sets a fixed flow rate, the calculation of the pressure drop 
+may be switched on. This can be usefull for the pump design later. The parameter 
+static height is only necessary when the parameter for the pressure drop is set 
+to "Full pressure drop with static height".</span></span></span></p>
+<p><span style='mso-bookmark:schwamberger'>
+<span style='mso-bookmark:literature'>
+<span style='font-size:13.5pt;line-height:120%'> <strong>Note: </strong>The 
+control signal is not limited by the model, a value above 1 is possible. Values 
+below 0 must be avoided </span>!</span></span></p>
+<p><img alt="" src="Figures/Pump_basicFig1.gif" /></p>
+<p>&nbsp;</p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Inputs:</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
+
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l187 level1 lfo160;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>TH</span><span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>B</span><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'> </span><span lang=EN-US
+     style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l187 level1 lfo160;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>control signal </span><span
+     lang=EN-US style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+</ul>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Outputs:</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> </span></span></span></p>
+
+<ul type=disc class="auto-style1">
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     margin-left:36.0pt;mso-list:l199 level1 lfo161;tab-stops:list 36.0pt'><span
+     style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+     lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>TH</span><span style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+     "Times New Roman"'>B</span><span lang=EN-US
+     style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></span></span></li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'></div>
+<p class=MsoNormal><span style='mso-bookmark:schwamberger'>
+<span
+style='mso-bookmark:literature'><b>
+<span lang=EN-US style='font-size:13.5pt;
+line-height:120%;mso-fareast-font-family:"Times New Roman"'>Example:</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'> the load in storage demos </span><span
+lang=EN-US style='font-size:12.0pt;line-height:120%;mso-fareast-font-family:
+"Times New Roman"'><o:p></o:p></span></span></span></p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Parameters and Dialog Box</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br>
+</span></span></span><!--[if gte vml 1]><v:shape id="Bild_x0020_172" o:spid="_x0000_s1473"
+ type="#_x0000_t75" style='position:absolute;left:0;text-align:left;
+ margin-left:0;margin-top:0;width:282pt;height:270.75pt;z-index:170;
+ visibility:visible;mso-wrap-style:square;mso-wrap-distance-left:0;
+ mso-wrap-distance-top:0;mso-wrap-distance-right:0;mso-wrap-distance-bottom:0;
+ mso-position-horizontal:left;mso-position-horizontal-relative:text;
+ mso-position-vertical:absolute;mso-position-vertical-relative:line'
+ o:allowoverlap="f">
+ <v:imagedata src="Figures/pump_constSHOT.jpg" xmlns:v="urn:schemas-microsoft-com:vml"/>
+ <w:wrap type="square" anchory="line" xmlns:w="urn:schemas-microsoft-com:office:word"/>
+</v:shape><![endif]--><![if !vml]>
+<img width=490 height=681
+src="Figures/Pump_basicMASK.jpg" align=left v:shapes="Bild_x0020_172"><![endif]><span
+style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'><br clear=all
+style='mso-special-character:line-break'>
+</span></span></span></p>
+
+<p><span style='mso-bookmark:schwamberger'><span style='mso-bookmark:literature'><b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'>Characteristics</span></b><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> <br>
+Direct Feedthrough&nbsp;&nbsp;&nbsp;No <br>
+Sample
+time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;
+</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> Inherited
+from driving block <br>
+Vectorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style='font-size:13.5pt;line-height:120%'>&nbsp;&nbsp;
+</span><span
+lang=EN-US style='font-size:13.5pt;line-height:120%'> No
+</span></span></span></p>
+
+</body>
+
+</html>

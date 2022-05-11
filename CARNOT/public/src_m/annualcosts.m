@@ -1,86 +1,70 @@
+%% ANNUALCOSTS calculates the annual costs of a system all through its lifetime.
+%% Function Call
+% Annuity = annualcosts(UseTime,IntRate,IncFuel,IncMat,InvestCosts,...
+%   CompLifeTime,ContOpCosts,RunOpCosts,FuelCosts,RunTime,RunTimeDep)
+%
+%% Inputs   
+%   Usetime      :  time of use of the system                      [y]
+%   IntRate      :  Interest rate per year                         [1/y]
+%   IncFuel      :  Expected annual increase of fuel costs         [1/y]
+%   IncMat       :  Expected annual increase of permanent costs    [1/y]
+%   CompLifeTime :  lifetime of component                          [y] 
+%   InvestCosts  :  Investment costs                               [-]
+%   ContOpCosts  :  Continuous operation costs                     [-]
+%   RunOpCosts   :  Operation costs depending on the run time      [1/s]
+%   FuelCosts    :  Fuel costs within one year                     [1/y]
+%   RunTime      :  Run time of component                          [s]
+%   RunTimeDep   :  Dependence of the lifetime of the comp. on
+%                       its run time (yes = 1, no = 0)             [-]
+% 
+%% Outputs
+%   Annuity       :   Annuity of the whole system				[costs/y]
+% 
+%% Description
+%  It considers the investment costs, continuous operation costs and operation costs 
+%  which depend on the runtime and also fuel costs. Interest rate and 
+%  annual increase of permanent costs are also taken into consideration. 
+%  The output is calculated in the same currency
+%  as the given by the input. Remaining values of the components are calculated
+%  due to linear degression. 
+%  For the use together with a simulation model you can use the output of the 
+%  economy_ecology block to get the values for the parameters "FuelCosts" and
+%  RunTime". They are written to the workspace.
+%  The program refers to chapter 2.1. of [Hau 1994].
+%
+%  The parameters "Usetime","IntRate","IncFuel","IncMat" are general for all 
+%  of the components and have to be given as scalar values. All of the other 
+%  parameters are component specific. For each parameter you have to give a 
+%  vector which has as much elements as components you have. If you have e.g. 
+%  a boiler, a collector and a storage you would have to define for each 
+%  component its lifetime. This would result in a vector like: 
+%   CompLifeTime = [ 20 10 20 ]; 
+%  The definition of the parameters (CompLifeTime, InvestCosts, ContOpCosts, 
+%  RunOpCosts, FuelCosts, RunTime, RunTimeDep) has to be done for all 
+%  components. The operation costs are divided into operation costs which 
+%  depend on the run time (e.g. lubricants, maintenance) and fix operation 
+%  costs (e.g. continuous servicing to prevent failure). FuelCosts and 
+%  RunTime depend on the system behaviour during simulation, so they are set 
+%  by the simulation model. You can use the output of the economy_ecology 
+%  block to get the values for the parameters "FuelCosts" and RunTime". 
+%  They are written to the workspace with the name "input_annual_costs". 
+%  The lifetime of a component can depend on its runtime (e.g. diesel 
+%  generators). Therefore you have to specify for each component if it 
+%  depends on its runtime or not. 
+% 
+%% Example 
+%  To become familiar with the function "annualcosts" open the m-script 
+%  example_annualcosts.m. There the vectors for the costs are defined for an 
+%  example and the link to the economy_ecology block can be seen from the 
+%  code. 
+% 
+%% References and Literature
+%  Haubrich, Hans-Jürgen: Elektrische Energieversorgungssysteme, 
+%       ISBN 3-86073-204-8, 1994
+%  see also example_annualcosts.m
+
 function [Annuity] = annualcosts(UseTime,IntRate,IncFuel,IncMat,InvestCosts,...
    CompLifeTime,ContOpCosts,RunOpCosts,RunTimeDep,FuelCosts,RunTime)
-% ANNUALCOSTS calculates the annual costs of a system all through its lifetime.
-% It considers the investment costs, continuous operation costs and operation costs 
-% which depend on the runtime and also fuel costs. Interest rate and 
-% annual increase of permanent costs are also taken into consideration. 
-% The output is calculated in the same currency
-% as the given by the input. Remaining values of the components are calculated
-% due to linear degression. 
-% For the use together with a simulation model you can use the output of the 
-% economy_ecology block to get the values for the parameters "FuelCosts" and
-% RunTime". They are written to the workspace.
-% The program refers to chapter 2.1. of [Hau]:
-% Haubrich, Hans-Jürgen: Elektrische Energieversorgungssysteme. ISBN 3-86073-204-8, 1994.
-%
-% syntax:
-%
-% annualcosts(UseTime,IntRate,IncFuel,IncMat,InvestCosts,...
-%   CompLifeTime,ContOpCosts,RunOpCosts,FuelCosts,RunTime,RunTimeDep);
-%
-% INPUT
-% Parameters        description                                  unit
-%
-% Usetime      :  time of use of the system                      [y]
-% IntRate      :  Interest rate per year                         [1/y]
-% IncFuel      :  Expected annual increase of fuel costs         [1/y]
-% IncMat       :  Expected annual increase of permanent costs    [1/y]
-% CompLifeTime :  lifetime of component                          [y] 
-% InvestCosts  :  Investment costs                               [-]
-% ContOpCosts  :  Continuous operation costs                     [-]
-% RunOpCosts   :  Operation costs depending on the run time      [1/s]
-% FuelCosts    :  Fuel costs within one year                     [1/y]
-% RunTime      :  Run time of component                          [s]
-% RunTimeDep   :  Dependence of the lifetime of the comp. on
-%                       its run time (yes = 1, no = 0)           [-]
-%
-% OUTPUT
-% Annuity       :   Annuity of the whole system							[costs/y]
-
-% ***********************************************************************
-% This file is part of the CARNOT Blockset.
-% 
-% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
-% Additional Copyright for this file see list auf authors.
-% All rights reserved.
-% 
-% Redistribution and use in source and binary forms, with or without 
-% modification, are permitted provided that the following conditions are 
-% met:
-% 
-% 1. Redistributions of source code must retain the above copyright notice, 
-%    this list of conditions and the following disclaimer.
-% 
-% 2. Redistributions in binary form must reproduce the above copyright 
-%    notice, this list of conditions and the following disclaimer in the 
-%    documentation and/or other materials provided with the distribution.
-% 
-% 3. Neither the name of the copyright holder nor the names of its 
-%    contributors may be used to endorse or promote products derived from 
-%    this software without specific prior written permission.
-% 
-% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
-% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
-% THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/annualcosts.m $
-% **********************************************************************
-% D O C U M E N T A T I O N
-% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-% Carnot model and function m-files should use a name which gives a 
-% hint to the model of function (avoid names like testfunction1.m).
-% edited        99/09/07 by JPM
-
 % Check of the correct size of the parameters
 if size(UseTime,2) ~=1
    error('Error: Time of use of the system can be only one value for the whole system')
@@ -116,7 +100,7 @@ RunTimeDep = RunTimeDep';
 % Calculation when which component has to be replaced in between the time of use.
 % Calculation of the remaining values at the end of the time of use.
 NewComp = zeros(0,UseTime);
-for k=1:size(InvestCosts,1),
+for k=1:size(InvestCosts,1)
    if RunTimeDep(k) == 0    % For components with a lifetime that does not depend 
                                 % on the use of the component.
        Years = CompLifeTime(k)*[1:floor(UseTime/CompLifeTime(k))];
@@ -187,3 +171,45 @@ TotalCosts = sum(TotalPermCosts) + sum(TotalDiscrCosts) + TotalInvest - ...
 
 % Annual costs:
 Annuity = TotalCosts/beta;   % [Hau] (2.13)
+
+%% Copyright and Versions
+%  This file is part of the CARNOT Blockset.
+%  Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
+%  Additional Copyright for this file see list auf authors.
+%  All rights reserved.
+%  Redistribution and use in source and binary forms, with or without 
+%  modification, are permitted provided that the following conditions are 
+%  met:
+%  1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+%  2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+%  3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+%  THE POSSIBILITY OF SUCH DAMAGE.
+%  
+%  ************************************************************************
+%  VERSIONS
+%  author list:      hf -> Bernd Hafner
+%  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+%  Version  Author  Changes                                     Date
+%  1.1.0    JPM     created                                     07sep1999  
+%  7.1.0    hf      comments adapted for publish                09aug2020
+%  ************************************************************************
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
+% **********************************************************************

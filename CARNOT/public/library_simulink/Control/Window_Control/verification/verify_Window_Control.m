@@ -13,9 +13,20 @@
 %  s - text string with verification result
 %% Description
 %  verification of the Window_Control block in the Carnot Toolbox by
-%  comparing the simulation resuls with the initial simulation.
-%                                                                          
-%  Literature:   --
+%  comparing the simulation resuls with the initial simulation and the 
+%  requirements:
+%  Window is opened if:
+%  + Room temperature (Troom) is above a fixed value (24°C)
+%  + Outdoor ambient temperature (Tamb) is 2 K below Troom
+%  + Tamb of the last hour is not below 12°C
+%  + During the day (8 a.m <= time < 10 p.m.)
+%  Window is closed if:
+%  - Room temperature is below a fixed value (23°C)
+%  - Tamb is not 2 K below Troom
+%  - Tamb of the last hour is below 12°C
+%  - During nighttime (before 8 a.m or after 10 p.m.)
+%  
+%  Literature:   Task 44
 %  see also template_verify_mFunction, template_verify_SimulinkBlock, verification_carnot
 
 function [v, s] = verify_Window_Control(varargin)
@@ -42,7 +53,7 @@ max_simu_error = 1e-7;   % max error between initial and current simu
 functionname = 'verify_Window_Control_mdl';
 
 % % reference time vector
-t0 = 0:1800:24*3600;
+t0 = 0:1800:3*24*3600;
 
 %% ------------------------------------------------------------------------
 %  -------------- simulate the model or call the function -----------------
@@ -54,7 +65,10 @@ yy = simOut.get('yout');        % get the whole output vector (one value per sim
 tt = simOut.get('tout');        % get the whole time vector from simu
 tsy = timeseries(yy,tt);        % timeseries for the columns
 tx = resample(tsy,t0);          % resample with t0
-y2 = tx.data;
+tsim = tx.data(:,1);            % simulation time
+Tamb = tx.data(:,2);            % ambient temperature
+Troom = tx.data(:,3);           % room temperature
+y2 = tx.data(:,4);              % window control signal
 close_system(functionname, 0)   % close system, but do not save it
 
 %% ---------------- set the reference values ------------------------------
@@ -69,8 +83,29 @@ else
 end
 
 % ----------------- set the literature reference values -------------------
-y0 = y1;
-disp('verify_Window_Control.m: using simulation data as reference data')
+%  Window is opened if:
+%  + Room temperature (Troom) is above a fixed value (24°C)
+%  + Outdoor ambient temperature (Tamb) is 2 K below Troom
+%  + Tamb of the last hour is not below 12°C
+%  + During the day (8 a.m <= time < 10 p.m.)
+%  Window is closed if:
+%  - Tamb is not 2 K below Troom
+%  - Tamb of the last hour is below 12°C
+%  - During nighttime (before 8 a.m or after 10 p.m.)
+hour = floor(rem(tsim,24*3600)/3600);
+y0 = (hour >= 8) & (hour < 22) & (Tamb > 12) & (Troom > Tamb+2) & (Troom >= 24);
+
+%  Window is closed if:
+%  - Room temperature is below a fixed value (23°C)
+for n = 2:length(y0)
+    if y0(n-1) == true                                          % if y0 was true the timestep before
+        if (hour(n) >= 8) && (hour(n) < 22) && (Tamb(n) > 12) ...
+                && (Troom(n) > Tamb(n)+2) && (Troom(n) > 23)    % compare to switch off criteria
+            y0(n) = true;                                       % still true because above switch-off criteria
+        end
+    end     
+end
+
 
 %% -------- calculate the errors ------------------------------------------
 %   r    - 'relative' error or 'absolute' error
@@ -159,7 +194,7 @@ end
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2019, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -199,4 +234,5 @@ end
 %  6.1.0    ts      created                                     21jul2017
 %  6.1.1    hf      comments adapted to publish function        09nov2017
 %                   reference y1 does not overwrite y2
+%  7.1.0    hf      create theoretical signal from requirements 05jan2019
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

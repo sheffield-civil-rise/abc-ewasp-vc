@@ -1,8 +1,8 @@
 % Format of the Air Infiltration Bus AIB (former AIV)
-% $Revision: 81 $
-% $Author: goettsche $
-% $Date: 2016-11-02 14:10:23 +0100 (Mi, 02 Nov 2016) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_m/carnot_library_tools/Buses/src_m/AIB_format.m $
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
 % 1   Sensitive room temperature          Ts      °C
 % 2   Convective room temperature         Tc      °C      Air temperature
 % 3   Radiative room temperature          Tr      °C 

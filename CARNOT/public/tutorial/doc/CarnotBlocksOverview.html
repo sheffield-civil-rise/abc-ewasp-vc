@@ -1,0 +1,528 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Carnot Blocks</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-05"><meta name="DC.source" content="CarnotBlocksOverview.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Carnot Blocks</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Basic / Electric</a></li><li><a href="#2">Basic / Heat_Transfer</a></li><li><a href="#3">Basic / Hydraulics</a></li><li><a href="#4">Basic / Material_Properties</a></li><li><a href="#5">Basic / Pressure_Drop</a></li><li><a href="#6">Basic / Thermal_Models</a></li><li><a href="#7">Basic / Weather_and_Sun</a></li><li><a href="#8">Control</a></li><li><a href="#9">Hydraulics</a></li><li><a href="#10">Load / General</a></li><li><a href="#11">Load / Hot_Water_Tapping</a></li><li><a href="#12">Load / Houses</a></li><li><a href="#13">Outputs</a></li><li><a href="#14">Source / Boiler</a></li><li><a href="#15">Source / Chiller</a></li><li><a href="#16">Source / Cogeneration</a></li><li><a href="#17">Source / Electric_Generator</a></li><li><a href="#18">Source / Energy</a></li><li><a href="#19">Source / Heat_Exchanger</a></li><li><a href="#20">Source / Heat_Pump</a></li><li><a href="#21">Source / Simple</a></li><li><a href="#22">Source / Solar_Thermal</a></li><li><a href="#23">Source / Solar_Thermal / IncidenceAngleModifier</a></li><li><a href="#24">Source / Solar_Thermal / PressureDropCollector</a></li><li><a href="#25">Source / Solar_Thermal</a></li><li><a href="#26">Source / Ventilation</a></li><li><a href="#27">Storage / Electric</a></li><li><a href="#28">Storage / Thermal</a></li><li><a href="#29">Storage / Thermal / Storage_Ports</a></li><li><a href="#30">Storage / Thermal</a></li><li><a href="#31">Storage / Thermal / detailed_storage_models</a></li><li><a href="#32">Storage / Thermal / surface_models</a></li><li><a href="#33">Toolbox</a></li><li><a href="#34">Weather</a></li></ul></div><h2 id="1">Basic / Electric</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'EBCreator.html'),'-helpbrowser')">EBCreator</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'basic_EB.html'),'-helpbrowser')">basic_EB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'basic_create_EB.html'),'-helpbrowser')">basic_create_EB</a></p><h2 id="2">Basic / Heat_Transfer</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Heattransfer2GroundISO.html'),'-helpbrowser')">Heattransfer2GroundISO</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Heattransfer2GroundSimple.html'),'-helpbrowser')">Heattransfer2GroundSimple</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'alfa_ceiling.html'),'-helpbrowser')">alfa_ceiling</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'alfa_floor.html'),'-helpbrowser')">alfa_floor</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'alfa_wall_in.html'),'-helpbrowser')">alfa_wall_in</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'alfa_wall_out.html'),'-helpbrowser')">alfa_wall_out</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'alfa_window_in.html'),'-helpbrowser')">alfa_window_in</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'alfa_window_out.html'),'-helpbrowser')">alfa_window_out</a></p><h2 id="3">Basic / Hydraulics</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Flow_Mixer_basic.html'),'-helpbrowser')">Flow_Mixer_basic</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Grashof_mdl.html'),'-helpbrowser')">Grashof_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Mix_T_Mdot.html'),'-helpbrowser')">Mix_T_Mdot</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Prandtl_mdl.html'),'-helpbrowser')">Prandtl_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'ReynoldsTHB.html'),'-helpbrowser')">ReynoldsTHB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Reynolds_mdl.html'),'-helpbrowser')">Reynolds_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THBCreator.html'),'-helpbrowser')">THBCreator</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Velocity_mdl.html'),'-helpbrowser')">Velocity_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'basic_THB.html'),'-helpbrowser')">basic_THB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'basic_create_THB.html'),'-helpbrowser')">basic_create_THB</a></p><h2 id="4">Basic / Material_Properties</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'AIV_Wet_BulbTemperature.html'),'-helpbrowser')">AIV_Wet_BulbTemperature</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'density_mdl.html'),'-helpbrowser')">density_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'enthalpy2temperature_mdl.html'),'-helpbrowser')">enthalpy2temperature_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'enthalpy_mdl.html'),'-helpbrowser')">enthalpy_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'entropy_mdl.html'),'-helpbrowser')">entropy_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'evaporation_enthalpy_mdl.html'),'-helpbrowser')">evaporation_enthalpy_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'heat_capacity_mdl.html'),'-helpbrowser')">heat_capacity_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'input_material.html'),'-helpbrowser')">input_material</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'kinematic_viscosity_mdl.html'),'-helpbrowser')">kinematic_viscosity_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'PhaseCheck.html'),'-helpbrowser')">PhaseCheck</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'RelHum2x.html'),'-helpbrowser')">RelHum2x</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Saturation_Property.html'),'-helpbrowser')">Saturation_Property</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'saturation_temperature.html'),'-helpbrowser')">saturation_temperature</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Saturation_Value_Water.html'),'-helpbrowser')">Saturation_Value_Water</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Specific_Volume_mdl.html'),'-helpbrowser')">Specific_Volume_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THB_Wet_BulbTemperature.html'),'-helpbrowser')">THB_Wet_BulbTemperature</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Temperature_Conductivity_mdl.html'),'-helpbrowser')">Temperature_Conductivity_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Thermal_Conductivity_mdl.html'),'-helpbrowser')">Thermal_Conductivity_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'vapour_content.html'),'-helpbrowser')">vapour_content</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Vapour_Pressure.html'),'-helpbrowser')">Vapour_Pressure</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'x2RelHum.html'),'-helpbrowser')">x2RelHum</a></p><h2 id="5">Basic / Pressure_Drop</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop.html'),'-helpbrowser')">Pressure_Drop</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_Ceta.html'),'-helpbrowser')">Pressure_Drop_Ceta</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_Collector.html'),'-helpbrowser')">Pressure_Drop_Collector</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_Fix.html'),'-helpbrowser')">Pressure_Drop_Fix</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_PipeTheory.html'),'-helpbrowser')">Pressure_Drop_PipeTheory</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_StorageHX.html'),'-helpbrowser')">Pressure_Drop_StorageHX</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_StoragePipe.html'),'-helpbrowser')">Pressure_Drop_StoragePipe</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_changeD.html'),'-helpbrowser')">Pressure_Drop_changeD</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_staticHeight.html'),'-helpbrowser')">Pressure_Drop_staticHeight</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pressuredrop.html'),'-helpbrowser')">Pressuredrop</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'pressuredropcoeff2clq.html'),'-helpbrowser')">pressuredropcoeff2clq</a></p><h2 id="6">Basic / Thermal_Models</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'CreateSdat.html'),'-helpbrowser')">CreateSdat</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Floor_in.html'),'-helpbrowser')">Floor_in</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'HeatPump_basic.html'),'-helpbrowser')">HeatPump_basic</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'HouseOneNodeModel.html'),'-helpbrowser')">HouseOneNodeModel</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pipe_basic.html'),'-helpbrowser')">Pipe_basic</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Roof.html'),'-helpbrowser')">Roof</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Room_Node.html'),'-helpbrowser')">Room_Node</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Solar_Collector_basic.html'),'-helpbrowser')">Solar_Collector_basic</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'T_Ground_Undisturbed.html'),'-helpbrowser')">T_Ground_Undisturbed</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Thermal_Node.html'),'-helpbrowser')">Thermal_Node</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Wall_basic.html'),'-helpbrowser')">Wall_basic</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Wall_in.html'),'-helpbrowser')">Wall_in</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Wall_out.html'),'-helpbrowser')">Wall_out</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Wall_with_Window.html'),'-helpbrowser')">Wall_with_Window</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'WindowWithShading.html'),'-helpbrowser')">WindowWithShading</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'sfun_storageTnodes.html'),'-helpbrowser')">sfun_storageTnodes</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'StoragePorts_HeatExchangerModels.html'),'-helpbrowser')">StoragePorts_HeatExchangerModels</a></p><h2 id="7">Basic / Weather_and_Sun</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Cloudage.html'),'-helpbrowser')">Cloudage</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Radiation_Divison.html'),'-helpbrowser')">Radiation_Divison</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Sky_Temperature.html'),'-helpbrowser')">Sky_Temperature</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Solar_Declination_Angle.html'),'-helpbrowser')">Solar_Declination_Angle</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Solar_Extraterrestrial_Radiation.html'),'-helpbrowser')">Solar_Extraterrestrial_Radiation</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Solar_Hour_Angle.html'),'-helpbrowser')">Solar_Hour_Angle</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Solar_Position.html'),'-helpbrowser')">Solar_Position</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Solar_Time.html'),'-helpbrowser')">Solar_Time</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'WDB_Creator.html'),'-helpbrowser')">WDB_Creator</a></p><h2 id="8">Control</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Controller_Bang_Bang.html'),'-helpbrowser')">Controller_Bang_Bang</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'EnergyMeter.html'),'-helpbrowser')">EnergyMeter</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'EnergyMeter_HC.html'),'-helpbrowser')">EnergyMeter_HC</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Massflow_Sensor.html'),'-helpbrowser')">Massflow_Sensor</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Max_Run_Time.html'),'-helpbrowser')">Max_Run_Time</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Min_Run_Time.html'),'-helpbrowser')">Min_Run_Time</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Min_Stop_Time.html'),'-helpbrowser')">Min_Stop_Time</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'OnOff_switch.html'),'-helpbrowser')">OnOff_switch</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'PowerMeter.html'),'-helpbrowser')">PowerMeter</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'ShadingControl.html'),'-helpbrowser')">ShadingControl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Solar_Radiation_Sensor.html'),'-helpbrowser')">Solar_Radiation_Sensor</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Start_Delay.html'),'-helpbrowser')">Start_Delay</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'T_Sensor.html'),'-helpbrowser')">T_Sensor</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'T_Sensor_Surface.html'),'-helpbrowser')">T_Sensor_Surface</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Thermostat_Proportional.html'),'-helpbrowser')">Thermostat_Proportional</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Window_Control.html'),'-helpbrowser')">Window_Control</a></p><h2 id="9">Hydraulics</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Flow_Diverter.html'),'-helpbrowser')">Flow_Diverter</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Flow_Mixer.html'),'-helpbrowser')">Flow_Mixer</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Flow_Mixer_Thermostatic.html'),'-helpbrowser')">Flow_Mixer_Thermostatic</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Mixing_Valve.html'),'-helpbrowser')">Mixing_Valve</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pipe.html'),'-helpbrowser')">Pipe</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pipe_Geometry.html'),'-helpbrowser')">Pipe_Geometry</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pipe_Isolation.html'),'-helpbrowser')">Pipe_Isolation</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pump_Const.html'),'-helpbrowser')">Pump_Const</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pump_Main.html'),'-helpbrowser')">Pump_Main</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Pump_basic.html'),'-helpbrowser')">Pump_basic</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Thermosyphon.html'),'-helpbrowser')">Thermosyphon</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Valve.html'),'-helpbrowser')">Valve</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Valve_Thermostatic.html'),'-helpbrowser')">Valve_Thermostatic</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Valve_table.html'),'-helpbrowser')">Valve_table</a></p><h2 id="10">Load / General</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Data_from_File.html'),'-helpbrowser')">Data_from_File</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Repeating_Profile.html'),'-helpbrowser')">Repeating_Profile</a></p><h2 id="11">Load / Hot_Water_Tapping</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'DHWenergyTapping.html'),'-helpbrowser')">DHWenergyTapping</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'EuTappingCycle.html'),'-helpbrowser')">EuTappingCycle</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'HotWaterDatafile.html'),'-helpbrowser')">HotWaterDatafile</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'HotWaterEuTappingCycle.html'),'-helpbrowser')">HotWaterEuTappingCycle</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'HotWaterEnergyProfile.html'),'-helpbrowser')">HotWaterEnergyProfile</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'HotWaterTmdotProfile.html'),'-helpbrowser')">HotWaterTmdotProfile</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'T_cold_Water_Location.html'),'-helpbrowser')">T_cold_Water_Location</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'T_cold_Water_Season.html'),'-helpbrowser')">T_cold_Water_Season</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'T_cold_Water_Sine.html'),'-helpbrowser')">T_cold_Water_Sine</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Water_Tap.html'),'-helpbrowser')">Water_Tap</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'mdot_annual_profile.html'),'-helpbrowser')">mdot_annual_profile</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'mdotRepSeq.html'),'-helpbrowser')">mdotRepSeq</a></p><h2 id="12">Load / Houses</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'houseSimple.html'),'-helpbrowser')">houseSimple</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Room_Floor_Heating.html'),'-helpbrowser')">Room_Floor_Heating</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Room_Radiator.html'),'-helpbrowser')">Room_Radiator</a></p><h2 id="13">Outputs</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'AIV_selector.html'),'-helpbrowser')">AIV_selector</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Display_THB.html'),'-helpbrowser')">Display_THB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'PMV_PPD.html'),'-helpbrowser')">PMV_PPD</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'S_selector.html'),'-helpbrowser')">S_selector</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Sensitive_room_temperature.html'),'-helpbrowser')">Sensitive_room_temperature</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'display_weather.html'),'-helpbrowser')">display_weather</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'printer.html'),'-helpbrowser')">printer</a></p><h2 id="14">Source / Boiler</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Condensing_Boiler.html'),'-helpbrowser')">Condensing_Boiler</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Electric_Heater.html'),'-helpbrowser')">Electric_Heater</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Electric_Heater_Ctrl.html'),'-helpbrowser')">Electric_Heater_Ctrl</a></p><h2 id="15">Source / Chiller</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'absorption_chiller_lookup.html'),'-helpbrowser')">absorption_chiller_lookup</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'absorption_chiller_ddt.html'),'-helpbrowser')">absorption_chiller_ddt</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Compression_Chiller.html'),'-helpbrowser')">Compression_Chiller</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Cooling_Tower.html'),'-helpbrowser')">Cooling_Tower</a></p><h2 id="16">Source / Cogeneration</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'microCHP_constant.html'),'-helpbrowser')">microCHP_constant</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'microCHP_modulating.html'),'-helpbrowser')">microCHP_modulating</a></p><h2 id="17">Source / Electric_Generator</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Inverter.html'),'-helpbrowser')">Inverter</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'PV_Generator.html'),'-helpbrowser')">PV_Generator</a></p><h2 id="18">Source / Energy</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Fuel.html'),'-helpbrowser')">Fuel</a></p><h2 id="19">Source / Heat_Exchanger</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'FHB_TABS.html'),'-helpbrowser')">FHB_TABS</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'HeatExchanger.html'),'-helpbrowser')">HeatExchanger</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Radiator.html'),'-helpbrowser')">Radiator</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THB_P_adapter.html'),'-helpbrowser')">THB_P_adapter</a></p><h2 id="20">Source / Heat_Pump</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Ground_Source_Heat_Exchanger.html'),'-helpbrowser')">Ground_Source_Heat_Exchanger</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'HeatPump.html'),'-helpbrowser')">HeatPump</a></p><h2 id="21">Source / Simple</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Constant_EB.html'),'-helpbrowser')">Constant_EB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Constant_THB.html'),'-helpbrowser')">Constant_THB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'EB_set_power.html'),'-helpbrowser')">EB_set_power</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'EB_set_voltage.html'),'-helpbrowser')">EB_set_voltage</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THB_fixed_T.html'),'-helpbrowser')">THB_fixed_T</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THB_fixed_mdot.html'),'-helpbrowser')">THB_fixed_mdot</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THB_set_T.html'),'-helpbrowser')">THB_set_T</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THB_set_mdot.html'),'-helpbrowser')">THB_set_mdot</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'create_EB.html'),'-helpbrowser')">create_EB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'createTHB.html'),'-helpbrowser')">createTHB</a></p><h2 id="22">Source / Solar_Thermal</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Collector_1xN.html'),'-helpbrowser')">Collector_1xN</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Collector_Unglazed.html'),'-helpbrowser')">Collector_Unglazed</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Collector_Unglazed_ISO9806.html'),'-helpbrowser')">Collector_Unglazed_ISO9806</a></p><h2 id="23">Source / Solar_Thermal / IncidenceAngleModifier</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'IAM_Table.html'),'-helpbrowser')">IAM_Table</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'IAM_Table_KbL_KbT.html'),'-helpbrowser')">IAM_Table_KbL_KbT</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'IAM_b0.html'),'-helpbrowser')">IAM_b0</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Theoretical_Collector_Optics.html'),'-helpbrowser')">Theoretical_Collector_Optics</a></p><h2 id="24">Source / Solar_Thermal / PressureDropCollector</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'pressure_drop_calculated_for_header_riser_water.html'),'-helpbrowser')">pressure_drop_calculated_for_header_riser_water</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'pressure_drop_for_measured_data_water.html'),'-helpbrowser')">pressure_drop_for_measured_data_water</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'pressure_drop_quadratic_fitted_data.html'),'-helpbrowser')">pressure_drop_quadratic_fitted_data</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'pressure_drop_quadratic_fitted_data_water.html'),'-helpbrowser')">pressure_drop_quadratic_fitted_data_water</a></p><h2 id="25">Source / Solar_Thermal</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Collector_EN12975.html'),'-helpbrowser')">Collector_EN12975</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Collector_EN12975_FlatPlate.html'),'-helpbrowser')">Collector_EN12975_FlatPlate</a></p><h2 id="26">Source / Ventilation</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Ventilation.html'),'-helpbrowser')">Ventilation</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Ventilation_AIV.html'),'-helpbrowser')">Ventilation_AIV</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Window_Ventilation.html'),'-helpbrowser')">Window_Ventilation</a></p><h2 id="27">Storage / Electric</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Battery.html'),'-helpbrowser')">Battery</a></p><h2 id="28">Storage / Thermal</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Ground_Storage.html'),'-helpbrowser')">Ground_Storage</a></p><h2 id="29">Storage / Thermal / Storage_Ports</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Electric_Heating.html'),'-helpbrowser')">Electric_Heating</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'StoragePorts_HeatExchangerModels.html'),'-helpbrowser')">StoragePorts_HeatExchangerModels</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'StoragePorts_PipeConnections.html'),'-helpbrowser')">StoragePorts_PipeConnections</a></p><h2 id="30">Storage / Thermal</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Storage_Type_N.html'),'-helpbrowser')">Storage_Type_N</a></p><h2 id="31">Storage / Thermal / detailed_storage_models</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'heat_exchanger_storage.html'),'-helpbrowser')">heat_exchanger_storage</a></p><h2 id="32">Storage / Thermal / surface_models</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Isolated_Cover.html'),'-helpbrowser')">Isolated_Cover</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Open_Surface.html'),'-helpbrowser')">Open_Surface</a></p><h2 id="33">Toolbox</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Average.html'),'-helpbrowser')">Average</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Count_Working_Time.html'),'-helpbrowser')">Count_Working_Time</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Economy_Ecology.html'),'-helpbrowser')">Economy_Ecology</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'RealDate.html'),'-helpbrowser')">RealDate</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'RealTimePulse.html'),'-helpbrowser')">RealTimePulse</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'RealTime.html'),'-helpbrowser')">RealTime</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'SumTime_mdl.html'),'-helpbrowser')">SumTime_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'SystemPulse.html'),'-helpbrowser')">SystemPulse</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THB2THV.html'),'-helpbrowser')">THB2THV</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THBMemory.html'),'-helpbrowser')">THBMemory</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'THV2THB.html'),'-helpbrowser')">THV2THB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'UnitConv.html'),'-helpbrowser')">UnitConv</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'UnitConv_Temperature_mdl.html'),'-helpbrowser')">UnitConv_Temperature_mdl</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Wait.html'),'-helpbrowser')">Wait</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'write_txt_file.html'),'-helpbrowser')">write_txt_file</a></p><h2 id="34">Weather</h2><p><a href="matlab:web(fullfile(path_carnot('help'),'Solar_Position.html'),'-helpbrowser')">Solar_Position</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'DWD_TRY_Radiation_Filter.html'),'-helpbrowser')">DWD_TRY_Radiation_Filter</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Fixed_Surface.html'),'-helpbrowser')">Fixed_Surface</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Radiation_on_Inclined_Surface.html'),'-helpbrowser')">Radiation_on_Inclined_Surface</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Tracked_Surface.html'),'-helpbrowser')">Tracked_Surface</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'WDB2THB.html'),'-helpbrowser')">WDB2THB</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'WeatherDatafile.html'),'-helpbrowser')">WeatherDatafile</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Weather_Simple_Model.html'),'-helpbrowser')">Weather_Simple_Model</a></p><p><a href="matlab:web(fullfile(path_carnot('help'),'Weather_from_Workspace.html'),'-helpbrowser')">Weather_from_Workspace</a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Carnot Blocks 
+%% Basic / Electric
+% <matlab:web(fullfile(path_carnot('help'),'EBCreator.html'),'-helpbrowser') EBCreator>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'basic_EB.html'),'-helpbrowser') basic_EB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'basic_create_EB.html'),'-helpbrowser') basic_create_EB>
+% 
+%% Basic / Heat_Transfer
+% <matlab:web(fullfile(path_carnot('help'),'Heattransfer2GroundISO.html'),'-helpbrowser') Heattransfer2GroundISO>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Heattransfer2GroundSimple.html'),'-helpbrowser') Heattransfer2GroundSimple>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'alfa_ceiling.html'),'-helpbrowser') alfa_ceiling>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'alfa_floor.html'),'-helpbrowser') alfa_floor>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'alfa_wall_in.html'),'-helpbrowser') alfa_wall_in>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'alfa_wall_out.html'),'-helpbrowser') alfa_wall_out>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'alfa_window_in.html'),'-helpbrowser') alfa_window_in>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'alfa_window_out.html'),'-helpbrowser') alfa_window_out>
+% 
+%% Basic / Hydraulics
+% <matlab:web(fullfile(path_carnot('help'),'Flow_Mixer_basic.html'),'-helpbrowser') Flow_Mixer_basic>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Grashof_mdl.html'),'-helpbrowser') Grashof_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Mix_T_Mdot.html'),'-helpbrowser') Mix_T_Mdot>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Prandtl_mdl.html'),'-helpbrowser') Prandtl_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'ReynoldsTHB.html'),'-helpbrowser') ReynoldsTHB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Reynolds_mdl.html'),'-helpbrowser') Reynolds_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THBCreator.html'),'-helpbrowser') THBCreator>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Velocity_mdl.html'),'-helpbrowser') Velocity_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'basic_THB.html'),'-helpbrowser') basic_THB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'basic_create_THB.html'),'-helpbrowser') basic_create_THB>
+% 
+%% Basic / Material_Properties
+% <matlab:web(fullfile(path_carnot('help'),'AIV_Wet_BulbTemperature.html'),'-helpbrowser') AIV_Wet_BulbTemperature>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'density_mdl.html'),'-helpbrowser') density_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'enthalpy2temperature_mdl.html'),'-helpbrowser') enthalpy2temperature_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'enthalpy_mdl.html'),'-helpbrowser') enthalpy_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'entropy_mdl.html'),'-helpbrowser') entropy_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'evaporation_enthalpy_mdl.html'),'-helpbrowser') evaporation_enthalpy_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'heat_capacity_mdl.html'),'-helpbrowser') heat_capacity_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'input_material.html'),'-helpbrowser') input_material>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'kinematic_viscosity_mdl.html'),'-helpbrowser') kinematic_viscosity_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'PhaseCheck.html'),'-helpbrowser') PhaseCheck>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'RelHum2x.html'),'-helpbrowser') RelHum2x>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Saturation_Property.html'),'-helpbrowser') Saturation_Property>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'saturation_temperature.html'),'-helpbrowser') saturation_temperature>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Saturation_Value_Water.html'),'-helpbrowser') Saturation_Value_Water>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Specific_Volume_mdl.html'),'-helpbrowser') Specific_Volume_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THB_Wet_BulbTemperature.html'),'-helpbrowser') THB_Wet_BulbTemperature>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Temperature_Conductivity_mdl.html'),'-helpbrowser') Temperature_Conductivity_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Thermal_Conductivity_mdl.html'),'-helpbrowser') Thermal_Conductivity_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'vapour_content.html'),'-helpbrowser') vapour_content>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Vapour_Pressure.html'),'-helpbrowser') Vapour_Pressure>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'x2RelHum.html'),'-helpbrowser') x2RelHum>
+% 
+%% Basic / Pressure_Drop
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop.html'),'-helpbrowser') Pressure_Drop>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_Ceta.html'),'-helpbrowser') Pressure_Drop_Ceta>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_Collector.html'),'-helpbrowser') Pressure_Drop_Collector>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_Fix.html'),'-helpbrowser') Pressure_Drop_Fix>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_PipeTheory.html'),'-helpbrowser') Pressure_Drop_PipeTheory>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_StorageHX.html'),'-helpbrowser') Pressure_Drop_StorageHX>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_StoragePipe.html'),'-helpbrowser') Pressure_Drop_StoragePipe>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_changeD.html'),'-helpbrowser') Pressure_Drop_changeD>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressure_Drop_staticHeight.html'),'-helpbrowser') Pressure_Drop_staticHeight>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pressuredrop.html'),'-helpbrowser') Pressuredrop>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'pressuredropcoeff2clq.html'),'-helpbrowser') pressuredropcoeff2clq>
+% 
+%% Basic / Thermal_Models
+% <matlab:web(fullfile(path_carnot('help'),'CreateSdat.html'),'-helpbrowser') CreateSdat>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Floor_in.html'),'-helpbrowser') Floor_in>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'HeatPump_basic.html'),'-helpbrowser') HeatPump_basic>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'HouseOneNodeModel.html'),'-helpbrowser') HouseOneNodeModel>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pipe_basic.html'),'-helpbrowser') Pipe_basic>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Roof.html'),'-helpbrowser') Roof>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Room_Node.html'),'-helpbrowser') Room_Node>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Solar_Collector_basic.html'),'-helpbrowser') Solar_Collector_basic>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'T_Ground_Undisturbed.html'),'-helpbrowser') T_Ground_Undisturbed>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Thermal_Node.html'),'-helpbrowser') Thermal_Node>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Wall_basic.html'),'-helpbrowser') Wall_basic>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Wall_in.html'),'-helpbrowser') Wall_in>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Wall_out.html'),'-helpbrowser') Wall_out>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Wall_with_Window.html'),'-helpbrowser') Wall_with_Window>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'WindowWithShading.html'),'-helpbrowser') WindowWithShading>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'sfun_storageTnodes.html'),'-helpbrowser') sfun_storageTnodes>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'StoragePorts_HeatExchangerModels.html'),'-helpbrowser') StoragePorts_HeatExchangerModels>
+% 
+%% Basic / Weather_and_Sun
+% <matlab:web(fullfile(path_carnot('help'),'Cloudage.html'),'-helpbrowser') Cloudage>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Radiation_Divison.html'),'-helpbrowser') Radiation_Divison>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Sky_Temperature.html'),'-helpbrowser') Sky_Temperature>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Solar_Declination_Angle.html'),'-helpbrowser') Solar_Declination_Angle>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Solar_Extraterrestrial_Radiation.html'),'-helpbrowser') Solar_Extraterrestrial_Radiation>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Solar_Hour_Angle.html'),'-helpbrowser') Solar_Hour_Angle>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Solar_Position.html'),'-helpbrowser') Solar_Position>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Solar_Time.html'),'-helpbrowser') Solar_Time>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'WDB_Creator.html'),'-helpbrowser') WDB_Creator>
+% 
+%% Control
+% <matlab:web(fullfile(path_carnot('help'),'Controller_Bang_Bang.html'),'-helpbrowser') Controller_Bang_Bang>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'EnergyMeter.html'),'-helpbrowser') EnergyMeter>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'EnergyMeter_HC.html'),'-helpbrowser') EnergyMeter_HC>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Massflow_Sensor.html'),'-helpbrowser') Massflow_Sensor>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Max_Run_Time.html'),'-helpbrowser') Max_Run_Time>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Min_Run_Time.html'),'-helpbrowser') Min_Run_Time>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Min_Stop_Time.html'),'-helpbrowser') Min_Stop_Time>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'OnOff_switch.html'),'-helpbrowser') OnOff_switch>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'PowerMeter.html'),'-helpbrowser') PowerMeter>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'ShadingControl.html'),'-helpbrowser') ShadingControl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Solar_Radiation_Sensor.html'),'-helpbrowser') Solar_Radiation_Sensor>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Start_Delay.html'),'-helpbrowser') Start_Delay>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'T_Sensor.html'),'-helpbrowser') T_Sensor>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'T_Sensor_Surface.html'),'-helpbrowser') T_Sensor_Surface>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Thermostat_Proportional.html'),'-helpbrowser') Thermostat_Proportional>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Window_Control.html'),'-helpbrowser') Window_Control>
+% 
+%% Hydraulics
+% <matlab:web(fullfile(path_carnot('help'),'Flow_Diverter.html'),'-helpbrowser') Flow_Diverter>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Flow_Mixer.html'),'-helpbrowser') Flow_Mixer>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Flow_Mixer_Thermostatic.html'),'-helpbrowser') Flow_Mixer_Thermostatic>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Mixing_Valve.html'),'-helpbrowser') Mixing_Valve>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pipe.html'),'-helpbrowser') Pipe>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pipe_Geometry.html'),'-helpbrowser') Pipe_Geometry>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pipe_Isolation.html'),'-helpbrowser') Pipe_Isolation>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pump_Const.html'),'-helpbrowser') Pump_Const>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pump_Main.html'),'-helpbrowser') Pump_Main>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Pump_basic.html'),'-helpbrowser') Pump_basic>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Thermosyphon.html'),'-helpbrowser') Thermosyphon>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Valve.html'),'-helpbrowser') Valve>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Valve_Thermostatic.html'),'-helpbrowser') Valve_Thermostatic>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Valve_table.html'),'-helpbrowser') Valve_table>
+% 
+%% Load / General
+% <matlab:web(fullfile(path_carnot('help'),'Data_from_File.html'),'-helpbrowser') Data_from_File>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Repeating_Profile.html'),'-helpbrowser') Repeating_Profile>
+% 
+%% Load / Hot_Water_Tapping
+% <matlab:web(fullfile(path_carnot('help'),'DHWenergyTapping.html'),'-helpbrowser') DHWenergyTapping>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'EuTappingCycle.html'),'-helpbrowser') EuTappingCycle>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'HotWaterDatafile.html'),'-helpbrowser') HotWaterDatafile>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'HotWaterEuTappingCycle.html'),'-helpbrowser') HotWaterEuTappingCycle>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'HotWaterEnergyProfile.html'),'-helpbrowser') HotWaterEnergyProfile>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'HotWaterTmdotProfile.html'),'-helpbrowser') HotWaterTmdotProfile>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'T_cold_Water_Location.html'),'-helpbrowser') T_cold_Water_Location>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'T_cold_Water_Season.html'),'-helpbrowser') T_cold_Water_Season>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'T_cold_Water_Sine.html'),'-helpbrowser') T_cold_Water_Sine>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Water_Tap.html'),'-helpbrowser') Water_Tap>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'mdot_annual_profile.html'),'-helpbrowser') mdot_annual_profile>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'mdotRepSeq.html'),'-helpbrowser') mdotRepSeq>
+% 
+%% Load / Houses
+% <matlab:web(fullfile(path_carnot('help'),'houseSimple.html'),'-helpbrowser') houseSimple>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Room_Floor_Heating.html'),'-helpbrowser') Room_Floor_Heating>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Room_Radiator.html'),'-helpbrowser') Room_Radiator>
+% 
+%% Outputs
+% <matlab:web(fullfile(path_carnot('help'),'AIV_selector.html'),'-helpbrowser') AIV_selector>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Display_THB.html'),'-helpbrowser') Display_THB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'PMV_PPD.html'),'-helpbrowser') PMV_PPD>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'S_selector.html'),'-helpbrowser') S_selector>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Sensitive_room_temperature.html'),'-helpbrowser') Sensitive_room_temperature>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'display_weather.html'),'-helpbrowser') display_weather>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'printer.html'),'-helpbrowser') printer>
+% 
+%% Source / Boiler
+% <matlab:web(fullfile(path_carnot('help'),'Condensing_Boiler.html'),'-helpbrowser') Condensing_Boiler>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Electric_Heater.html'),'-helpbrowser') Electric_Heater>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Electric_Heater_Ctrl.html'),'-helpbrowser') Electric_Heater_Ctrl>
+% 
+%% Source / Chiller
+% <matlab:web(fullfile(path_carnot('help'),'absorption_chiller_lookup.html'),'-helpbrowser') absorption_chiller_lookup>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'absorption_chiller_ddt.html'),'-helpbrowser') absorption_chiller_ddt>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Compression_Chiller.html'),'-helpbrowser') Compression_Chiller>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Cooling_Tower.html'),'-helpbrowser') Cooling_Tower>
+% 
+%% Source / Cogeneration
+% <matlab:web(fullfile(path_carnot('help'),'microCHP_constant.html'),'-helpbrowser') microCHP_constant>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'microCHP_modulating.html'),'-helpbrowser') microCHP_modulating>
+% 
+%% Source / Electric_Generator
+% <matlab:web(fullfile(path_carnot('help'),'Inverter.html'),'-helpbrowser') Inverter>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'PV_Generator.html'),'-helpbrowser') PV_Generator>
+% 
+%% Source / Energy
+% <matlab:web(fullfile(path_carnot('help'),'Fuel.html'),'-helpbrowser') Fuel>
+% 
+%% Source / Heat_Exchanger
+% <matlab:web(fullfile(path_carnot('help'),'FHB_TABS.html'),'-helpbrowser') FHB_TABS>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'HeatExchanger.html'),'-helpbrowser') HeatExchanger>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Radiator.html'),'-helpbrowser') Radiator>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THB_P_adapter.html'),'-helpbrowser') THB_P_adapter>
+% 
+%% Source / Heat_Pump
+% <matlab:web(fullfile(path_carnot('help'),'Ground_Source_Heat_Exchanger.html'),'-helpbrowser') Ground_Source_Heat_Exchanger>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'HeatPump.html'),'-helpbrowser') HeatPump>
+% 
+%% Source / Simple
+% <matlab:web(fullfile(path_carnot('help'),'Constant_EB.html'),'-helpbrowser') Constant_EB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Constant_THB.html'),'-helpbrowser') Constant_THB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'EB_set_power.html'),'-helpbrowser') EB_set_power>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'EB_set_voltage.html'),'-helpbrowser') EB_set_voltage>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THB_fixed_T.html'),'-helpbrowser') THB_fixed_T>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THB_fixed_mdot.html'),'-helpbrowser') THB_fixed_mdot>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THB_set_T.html'),'-helpbrowser') THB_set_T>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THB_set_mdot.html'),'-helpbrowser') THB_set_mdot>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'create_EB.html'),'-helpbrowser') create_EB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'createTHB.html'),'-helpbrowser') createTHB>
+% 
+%% Source / Solar_Thermal
+% <matlab:web(fullfile(path_carnot('help'),'Collector_1xN.html'),'-helpbrowser') Collector_1xN>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Collector_Unglazed.html'),'-helpbrowser') Collector_Unglazed>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Collector_Unglazed_ISO9806.html'),'-helpbrowser') Collector_Unglazed_ISO9806>
+% 
+%% Source / Solar_Thermal / IncidenceAngleModifier
+% <matlab:web(fullfile(path_carnot('help'),'IAM_Table.html'),'-helpbrowser') IAM_Table>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'IAM_Table_KbL_KbT.html'),'-helpbrowser') IAM_Table_KbL_KbT>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'IAM_b0.html'),'-helpbrowser') IAM_b0>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Theoretical_Collector_Optics.html'),'-helpbrowser') Theoretical_Collector_Optics>
+% 
+%% Source / Solar_Thermal / PressureDropCollector
+% <matlab:web(fullfile(path_carnot('help'),'pressure_drop_calculated_for_header_riser_water.html'),'-helpbrowser') pressure_drop_calculated_for_header_riser_water>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'pressure_drop_for_measured_data_water.html'),'-helpbrowser') pressure_drop_for_measured_data_water>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'pressure_drop_quadratic_fitted_data.html'),'-helpbrowser') pressure_drop_quadratic_fitted_data>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'pressure_drop_quadratic_fitted_data_water.html'),'-helpbrowser') pressure_drop_quadratic_fitted_data_water>
+% 
+%% Source / Solar_Thermal
+% <matlab:web(fullfile(path_carnot('help'),'Collector_EN12975.html'),'-helpbrowser') Collector_EN12975>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Collector_EN12975_FlatPlate.html'),'-helpbrowser') Collector_EN12975_FlatPlate>
+% 
+%% Source / Ventilation
+% <matlab:web(fullfile(path_carnot('help'),'Ventilation.html'),'-helpbrowser') Ventilation>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Ventilation_AIV.html'),'-helpbrowser') Ventilation_AIV>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Window_Ventilation.html'),'-helpbrowser') Window_Ventilation>
+% 
+%% Storage / Electric
+% <matlab:web(fullfile(path_carnot('help'),'Battery.html'),'-helpbrowser') Battery>
+% 
+%% Storage / Thermal
+% <matlab:web(fullfile(path_carnot('help'),'Ground_Storage.html'),'-helpbrowser') Ground_Storage>
+% 
+%% Storage / Thermal / Storage_Ports
+% <matlab:web(fullfile(path_carnot('help'),'Electric_Heating.html'),'-helpbrowser') Electric_Heating>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'StoragePorts_HeatExchangerModels.html'),'-helpbrowser') StoragePorts_HeatExchangerModels>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'StoragePorts_PipeConnections.html'),'-helpbrowser') StoragePorts_PipeConnections>
+% 
+%% Storage / Thermal
+% <matlab:web(fullfile(path_carnot('help'),'Storage_Type_N.html'),'-helpbrowser') Storage_Type_N>
+% 
+%% Storage / Thermal / detailed_storage_models
+% <matlab:web(fullfile(path_carnot('help'),'heat_exchanger_storage.html'),'-helpbrowser') heat_exchanger_storage>
+% 
+%% Storage / Thermal / surface_models
+% <matlab:web(fullfile(path_carnot('help'),'Isolated_Cover.html'),'-helpbrowser') Isolated_Cover>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Open_Surface.html'),'-helpbrowser') Open_Surface>
+% 
+%% Toolbox
+% <matlab:web(fullfile(path_carnot('help'),'Average.html'),'-helpbrowser') Average>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Count_Working_Time.html'),'-helpbrowser') Count_Working_Time>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Economy_Ecology.html'),'-helpbrowser') Economy_Ecology>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'RealDate.html'),'-helpbrowser') RealDate>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'RealTimePulse.html'),'-helpbrowser') RealTimePulse>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'RealTime.html'),'-helpbrowser') RealTime>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'SumTime_mdl.html'),'-helpbrowser') SumTime_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'SystemPulse.html'),'-helpbrowser') SystemPulse>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THB2THV.html'),'-helpbrowser') THB2THV>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THBMemory.html'),'-helpbrowser') THBMemory>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'THV2THB.html'),'-helpbrowser') THV2THB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'UnitConv.html'),'-helpbrowser') UnitConv>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'UnitConv_Temperature_mdl.html'),'-helpbrowser') UnitConv_Temperature_mdl>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Wait.html'),'-helpbrowser') Wait>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'write_txt_file.html'),'-helpbrowser') write_txt_file>
+% 
+%% Weather
+% <matlab:web(fullfile(path_carnot('help'),'Solar_Position.html'),'-helpbrowser') Solar_Position>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'DWD_TRY_Radiation_Filter.html'),'-helpbrowser') DWD_TRY_Radiation_Filter>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Fixed_Surface.html'),'-helpbrowser') Fixed_Surface>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Radiation_on_Inclined_Surface.html'),'-helpbrowser') Radiation_on_Inclined_Surface>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Tracked_Surface.html'),'-helpbrowser') Tracked_Surface>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'WDB2THB.html'),'-helpbrowser') WDB2THB>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'WeatherDatafile.html'),'-helpbrowser') WeatherDatafile>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Weather_Simple_Model.html'),'-helpbrowser') Weather_Simple_Model>
+% 
+% <matlab:web(fullfile(path_carnot('help'),'Weather_from_Workspace.html'),'-helpbrowser') Weather_from_Workspace>
+% 
+
+##### SOURCE END #####
+--></body></html>

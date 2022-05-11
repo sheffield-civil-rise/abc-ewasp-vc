@@ -1,8 +1,8 @@
 modelfile = 'create_verification_weather_file';
-% $Revision: 81 $
-% $Author: goettsche $
-% $Date: 2016-11-02 14:10:23 +0100 (Mi, 02 Nov 2016) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Weather/Weather_from_Workspace/scripts/create_verification_weatherdata.m $
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
 load_system(modelfile)
 simOut = sim(modelfile);
 close_system(modelfile)

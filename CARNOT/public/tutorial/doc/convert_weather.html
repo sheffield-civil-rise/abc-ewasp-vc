@@ -1,0 +1,267 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>convert_weather converts old Carnot weather format into the new WDB format</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-05"><meta name="DC.source" content="convert_weather.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>convert_weather converts old Carnot weather format into the new WDB format</h1><pre>The function assumes that the direct irradiation is on a
+horizontal surface (the data file is not yet modified by surfrad).</pre><pre>SYNTAX: outmat = convert_weather(infilename,outfilename)</pre><pre>The infilename is the name of the old file.
+The format of the file have to be as the following format:</pre><pre>col(file) description                                         units
+1        time                                                s
+2        timevalue (comment line) format YYYYMMDDHHMM        -
+         Y is the year, M the month, D the day, H the hour
+3        zenith angle of sun (at time, not averaged)         degree
+         (continue at night to get time of sunrise by
+         linear interpolation)
+4        azimuth angle of sun (0&deg;=south, east negative)      degree
+         (at time, not average in timestep)
+5        incidence angle on surface (0&deg; = vertical)          degree
+6        direct solar radiation on horizontal surface        W/m^2
+7        diffuse solar radiation on a horizontal surface     W/m^2
+8        ambient temperature                                 degree centigrade
+9        radiation temperature of sky                        degree centigrade
+10        relative humidity                                   percent
+11        precipitation                                       m/s
+12        cloud index (0=no cloud, 1=covered sky)             -
+13        station pressure                                    Pa
+14        mean wind speed                                     m/s
+15        wind direction (north=0&deg; west=270&deg;)                 degree
+16        incidence angle in a vertical plane on the collecor degree
+         orientation of the plane is parallel to the risers,
+         referred as longitudinal plane in EN 12975
+17        incidence angle in a vertical plane on the collecor degree
+         orientation of the plane is parallel to the headers
+         referred as transversal plane in EN 12975
+         (= -9999, if surface orientation is unknown)</pre><p>outfilename : character string of the output file name The output file has the CARNOT form as described in "WDB_format.m". see also WDB_format</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% convert_weather converts old Carnot weather format into the new WDB format
+%  The function assumes that the direct irradiation is on a
+%  horizontal surface (the data file is not yet modified by surfrad).
+%
+%  SYNTAX: outmat = convert_weather(infilename,outfilename)
+%
+%  The infilename is the name of the old file. 
+%  The format of the file have to be as the following format:
+%
+%  col(file) description                                         units
+%  1        time                                                s
+%  2        timevalue (comment line) format YYYYMMDDHHMM        -
+%           Y is the year, M the month, D the day, H the hour
+%  3        zenith angle of sun (at time, not averaged)         degree
+%           (continue at night to get time of sunrise by
+%           linear interpolation)
+%  4        azimuth angle of sun (0°=south, east negative)      degree
+%           (at time, not average in timestep)
+%  5        incidence angle on surface (0° = vertical)          degree
+%  6        direct solar radiation on horizontal surface        W/m^2
+%  7        diffuse solar radiation on a horizontal surface     W/m^2
+%  8        ambient temperature                                 degree centigrade
+%  9        radiation temperature of sky                        degree centigrade
+% 10        relative humidity                                   percent
+% 11        precipitation                                       m/s
+% 12        cloud index (0=no cloud, 1=covered sky)             -
+% 13        station pressure                                    Pa
+% 14        mean wind speed                                     m/s
+% 15        wind direction (north=0° west=270°)                 degree
+% 16        incidence angle in a vertical plane on the collecor degree
+%           orientation of the plane is parallel to the risers,
+%           referred as longitudinal plane in EN 12975
+% 17        incidence angle in a vertical plane on the collecor degree
+%           orientation of the plane is parallel to the headers
+%           referred as transversal plane in EN 12975
+%           (= -9999, if surface orientation is unknown)
+%
+% outfilename : character string of the output file name
+% The output file has the CARNOT form as described in "WDB_format.m".
+% see also WDB_format
+
+
+function convert_weather(infilename,outfilename)
+if nargin ~= 2
+  help convert_weather
+  return
+end
+
+inmat = load(infilename);
+
+outmat = zeros(size(inmat,1),19);
+outmat(:,1:4) = inmat(:,1:4);     % time - timevalue - zenith - azimuth
+outmat(:,6:14) = inmat(:,7:15);			% Idfu - Tamb - tsky - humiditiy - precipitation - cloud index
+                                        % pressure - wind speed - wind direction
+outmat(:,15) = inmat(:,5);				% collector incidence
+outmat(:,16:17) = inmat(:,16:17);		% teta rise - teta head
+outmat(:,18) = -9999;                   % Idir on surface : not konwn 
+outmat(:,19) = -9999;    				% Idfu on surface : not konwn 
+
+% Calculation of the direct irradiation on a normal plane
+Idir_hor = inmat(:,6);
+zenith = inmat(:,3);
+outmat(:,5) = max(0,Idir_hor./cosd(zenith));
+
+output = outmat';
+fout = fopen(outfilename,'w');
+
+% copy of the beginning of the header
+fin = fopen(infilename);
+for i=1:14
+     line = fgets(fin);
+     fprintf(fout,'%s',line);
+end
+
+   fprintf(fout,'%%\n%%\n');
+   fprintf(fout,'%% col   description                                       units\n');
+   fprintf(fout,'%% 1     time                                                s\n');
+   fprintf(fout,'%% 2     timevalue (comment line) format YYYYMMDDHHMM        -\n');
+   fprintf(fout,'%%       Y is the year, M the month, D the day, H the hour\n');
+   fprintf(fout,'%% 3     zenith angle of sun (at time, not averaged)         degree\n');
+   fprintf(fout,'%%       (continue at night to get time of sunrise by\n');
+   fprintf(fout,'%%       linear interpolation)\n');
+   fprintf(fout,'%% 4     azimuth angle of sun (0°=south, east negative)      degree\n');
+   fprintf(fout,'%%       (at time, not average in timestep)\n');
+   fprintf(fout,'%% 5     direct solar radiation on a normal surface          W/m^2\n');             
+   fprintf(fout,'%% 6     diffuse solar radiation on horizontal surface       W/m^2\n');             
+   fprintf(fout,'%% 7     ambient temperature                                 degree centigrade\n'); 
+   fprintf(fout,'%% 8     radiation temperature of sky                        degree centigrade\n'); 
+   fprintf(fout,'%% 9     relative humidity                                   percent\n');           
+   fprintf(fout,'%% 10    precipitation                                       m/s\n');               
+   fprintf(fout,'%% 11    cloud index (0=no cloud, 1=covered sky)             -\n');                 
+   fprintf(fout,'%% 12    station pressure                                    Pa\n');                
+   fprintf(fout,'%% 13    mean wind speed                                     m/s\n');               
+   fprintf(fout,'%% 14    wind direction (north=0° west=270°)                 degree\n');            
+   fprintf(fout,'%% 15    incidence angle on surface (0° = vertical)          degree\n');          
+   fprintf(fout,'%%       (= -9999, if surface orientation is unknown)\n');                        
+   fprintf(fout,'%% 16    incidence angle in plane of vertical and main       degree\n');            
+   fprintf(fout,'%%       surface axis (the main axis is parallel to heat\n');                       
+   fprintf(fout,'%%       collecting pipes in a collector, it is pointing\n');                       
+   fprintf(fout,'%%       to the center of the earth)\n');                                           
+   fprintf(fout,'%% 17    incidence angle in plane of vertical and second     degree\n');            
+   fprintf(fout,'%%       surface axis (the second axis is in the surface\n');                       
+   fprintf(fout,'%%       and a vertical on the heat collecting pipes in \n');                   
+   fprintf(fout,'%%       a collector, it is pointing to the horizon)\n%%\n');                   
+   fprintf(fout,'%% 18    direct solar radiation on surface                   W/m^2\n');   
+   fprintf(fout,'%% 19    diffuse solar radiation on surface                  W/m^2\n');   
+   fprintf(fout,'%% UNKNOWN: set -9999 for unknown values\n%%\n');
+   fprintf(fout,'%% time[s]   tvalue    zenit[°]   azimuth[°]  Idir[W/m²]  Idfu[W/m²] Tamb[°C]  Tsky[°C]  hum  prec[m/s]   cloud[0..1]    p[Pa]   speed[m/s]  dir[°]   incidence[°]   tetarise[°]   tetahead[°]  IdirSurf[W/m²]   IdfuSurf[W/m²]\n');
+
+% write try-matrix row by row to define formats
+fprintf(fout,'%8.0f  %12.0f  %10.2f  %7.2f  %13.1f  %11.1f  %8.1f  %8.1f  %5.0f  %10.0f  %12.2f  %6.0f  %10.2f  %10.1f  %10.0f  %12.0f  %12.0f %13.1f  %11.1f\n',output);
+
+fclose(fin);
+fclose(fout);
+
+% ***********************************************************************
+% This file is part of the CARNOT Blockset.
+% 
+% Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+% Additional Copyright for this file see list auf authors.
+% All rights reserved.
+% 
+% Redistribution and use in source and binary forms, with or without 
+% modification, are permitted provided that the following conditions are 
+% met:
+% 
+% 1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+% 
+% 2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+% 
+% 3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+% 
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+% THE POSSIBILITY OF SUCH DAMAGE.
+% $Revision: 720 $
+% $Author: carnot-hafner $
+% $Date: 2020-08-09 21:32:12 +0200 (So., 09 Aug 2020) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/branches/carnot_7_00_01/public/library_m/weather_and_sun/convert_weather/src_m/convert_weather.m $
+% **********************************************************************
+% D O C U M E N T A T I O N
+% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+% Carnot model and function m-files should use a name which gives a 
+% hint to the model of function (avoid names like testfunction1.m).
+% 
+% version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+% author list:  hf -> Bernd Hafner
+%               gf -> Gaelle Faure
+% 
+% version   author  changes                                     date
+% 1.0.0     gf      created                                     15jun2011
+% 7.1.0     hf      adapted output text and comments            05mar2020
+
+
+##### SOURCE END #####
+--></body></html>

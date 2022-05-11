@@ -1,6 +1,31 @@
 % open all systems in a directory and save without library links
 % the directory is an input from the user
 
+comm = 'dir';
+arg = '*.mdl';
+filesori = feval(comm,arg);                 % get all *.mdl filenames in the directory
+
+for i = 1:size(filesori,1)                 % loop over all files
+    file=filesori(i).name(1:end-4);         % cut .dir
+    fprintf('\n\n%3.0f %3.0f %-20s\n\n', [i size(filesori,1)], file);   %print progress
+    open_system(file);                      % open model
+    save_system(file, ['b_',file], 'BreakAllLinks', true);  % save without links
+    close_system(['b_',file]);              % close model
+end
+
+% save .SLX files without library links
+comm = 'dir';
+arg = '*.slx';
+filesori = feval(comm,arg);                 % get all *.mdl filenames in the directory
+
+for i = 1:size(filesori,1)                 % loop over all files
+    file=filesori(i).name(1:end-4);         % cut .dir
+    fprintf('\n\n%3.0f %3.0f %-20s\n\n', [i size(filesori,1)], file);   %print progress
+    open_system(file);                      % open model
+    save_system(file, ['b_',file], 'BreakAllLinks', true);  % save without links
+    close_system(['b_',file]);              % close model
+end
+
 % ***********************************************************************
 % This file is part of the CARNOT Blockset.
 % 
@@ -34,10 +59,10 @@
 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
 % THE POSSIBILITY OF SUCH DAMAGE.
-% $Revision: 372 $
-% $Author: carnot-wohlfeil $
-% $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-% $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/src_m/link_breaker.m $
+% $Revision$
+% $Author$
+% $Date$
+% $HeadURL$
 % **********************************************************************
 % D O C U M E N T A T I O N
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -52,35 +77,4 @@
 % version   author  changes                                     date
 % 4.1.0     hf      created                                     10oct2009
 % 6.0.1     hf      included slx files, removed path serach     11oct2013
-
-% currdir=pwd;                                % remember current directory
-% pathname=uigetdir([matlabroot,'\work']);    % get new directory, start is in \work
-% cd (pathname)                               % change to new directory
-
-% save .MDL files without library links
-comm = 'dir';
-arg = '*.mdl';
-filesori = feval(comm,arg);                 % get all *.mdl filenames in the directory
-
-for i = 1:size(filesori,1);                 % loop over all files
-    file=filesori(i).name(1:end-4);         % cut .dir
-    fprintf('\n\n%3.0f %3.0f %-20s\n\n', [i size(filesori,1)], file);   %print progress
-    open_system(file);                      % open model
-    save_system(file, ['b_',file], 'BreakAllLinks', true);  % save without links
-    close_system(['b_',file]);              % close model
-end
-
-% save .SLX files without library links
-comm = 'dir';
-arg = '*.slx';
-filesori = feval(comm,arg);                 % get all *.mdl filenames in the directory
-
-for i = 1:size(filesori,1);                 % loop over all files
-    file=filesori(i).name(1:end-4);         % cut .dir
-    fprintf('\n\n%3.0f %3.0f %-20s\n\n', [i size(filesori,1)], file);   %print progress
-    open_system(file);                      % open model
-    save_system(file, ['b_',file], 'BreakAllLinks', true);  % save without links
-    close_system(['b_',file]);              % close model
-end
-
-% cd (currdir)                                % back to the current directory
+% 7.1.0     hf      removed editor warnings                     30mar2020

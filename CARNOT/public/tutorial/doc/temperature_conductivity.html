@@ -1,0 +1,190 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>calculates the temperature conductivity in [m^2/s] of fluids using Carlib</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-05"><meta name="DC.source" content="temperature_conductivity.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>calculates the temperature conductivity in [m^2/s] of fluids using Carlib</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Function Call</a></li><li><a href="#2">Inputs</a></li><li><a href="#3">Outputs</a></li><li><a href="#4">Description</a></li><li><a href="#5">References and Literature</a></li><li><a href="#7">Copyright and Versions</a></li></ul></div><h2 id="1">Function Call</h2><pre>l = temperature_conductivity(t, p, ft, fm)</pre><h2 id="2">Inputs</h2><pre>(scalar or vector)
+t    :   temperature [&deg;C]
+p    :   pressure [Pa]
+ft   :   fluid_ID (see link to FluidEnum below)
+fm   :   fluid_mix</pre><h2 id="3">Outputs</h2><pre>l    :   temperature conductivity in [m^2/s]</pre><h2 id="4">Description</h2><pre>The function calls the function "temperature_conductivity" in the CARNOT library Carlib.
+The Carlib function is also used by the "Temperature_Conductivity"-block in CARNOT library.</pre><h2 id="5">References and Literature</h2><pre>Function is used by: Carnot blocks in basic/material_properties
+See also Carnot_Fluid_Types, FluidEnum, Carlib,
+ density, enthalpy, enthalpy2temperature, evaporation_enthalpy,
+ entropy, heat_capacity, kinematic_viscosity, saturationtemperature,
+ specific_volume, temperature_conductivity, thermal_conductivity,
+ vapourpressure</pre><h2 id="7">Copyright and Versions</h2><pre>This file is part of the CARNOT Blockset.
+Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
+Additional Copyright for this file see list auf authors.
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+1. Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.
+**********************************************************************
+D O C U M E N T A T I O N
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+author list:     hf -&gt; Bernd Hafner</pre><pre>version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction</pre><pre>Version  Author  Changes                                     Date
+1.0.0    hf      created                                     1999
+6.1.0    hf      updated help text and error handling        03oct2014
+7.1.0    hf      updated comments for publish                12aug2020
+**********************************************************************</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% calculates the temperature conductivity in [m^2/s] of fluids using Carlib 
+%% Function Call
+%  l = temperature_conductivity(t, p, ft, fm)
+%% Inputs   
+%  (scalar or vector)
+%  t    :   temperature [°C] 
+%  p    :   pressure [Pa]  
+%  ft   :   fluid_ID (see link to FluidEnum below)
+%  fm   :   fluid_mix 
+%% Outputs
+%  l    :   temperature conductivity in [m^2/s] 
+% 
+%% Description
+%  The function calls the function "temperature_conductivity" in the CARNOT library Carlib.
+%  The Carlib function is also used by the "Temperature_Conductivity"-block in CARNOT library.
+% 
+%% References and Literature
+%  Function is used by: Carnot blocks in basic/material_properties
+%  See also Carnot_Fluid_Types, FluidEnum, Carlib, 
+%   density, enthalpy, enthalpy2temperature, evaporation_enthalpy, 
+%   entropy, heat_capacity, kinematic_viscosity, saturationtemperature, 
+%   specific_volume, temperature_conductivity, thermal_conductivity, 
+%   vapourpressure  
+
+function l = temperature_conductivity(t, p, ft, fm)
+if nargin<4
+  help temperature_conductivity
+  error('4 input arguments required: temperature_conductivity(t,p,id,mix)')
+end
+l = fluidprop (t, p, ft, fm, 13);
+
+%% Copyright and Versions
+%  This file is part of the CARNOT Blockset.
+%  Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
+%  Additional Copyright for this file see list auf authors.
+%  All rights reserved.
+%  Redistribution and use in source and binary forms, with or without 
+%  modification, are permitted provided that the following conditions are 
+%  met:
+%  1. Redistributions of source code must retain the above copyright notice, 
+%    this list of conditions and the following disclaimer.
+%  2. Redistributions in binary form must reproduce the above copyright 
+%    notice, this list of conditions and the following disclaimer in the 
+%    documentation and/or other materials provided with the distribution.
+%  3. Neither the name of the copyright holder nor the names of its 
+%    contributors may be used to endorse or promote products derived from 
+%    this software without specific prior written permission.
+%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+%  THE POSSIBILITY OF SUCH DAMAGE.
+%  **********************************************************************
+%  D O C U M E N T A T I O N
+%  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+%  author list:     hf -> Bernd Hafner
+%
+%  version: CarnotVersion.MajorVersionOfFunction.SubversionOfFunction
+%
+%  Version  Author  Changes                                     Date
+%  1.0.0    hf      created                                     1999
+%  6.1.0    hf      updated help text and error handling        03oct2014
+%  7.1.0    hf      updated comments for publish                12aug2020
+% **********************************************************************
+% $Revision: 724 $
+% $Author: carnot-hafner $
+% $Date: 2020-08-12 22:46:58 +0200 (Mi., 12 Aug 2020) $
+% $HeadURL: https://svn.noc.fh-aachen.de/carnot/branches/carnot_7_00_01/public/library_m/material_properties/fluidprop/src_m/temperature_conductivity.m $
+
+##### SOURCE END #####
+--></body></html>

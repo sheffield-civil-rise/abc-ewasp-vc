@@ -12,10 +12,18 @@
 %  v - true if verification passed, false otherwise
 %  s - text string with verification result
 %% Description
-%  verification of the RadiationInclinedSurface block in the Carnot Toolbox
+%  Verification of the RadiationInclinedSurface block in the Carnot Toolbox
+%  by comparing the results to the initial simulation, the solar position
+%  calculated with equations from [Duffie 2006] and the longitudinal and 
+%  transversal incidence angle from [ISO 9806:2017]. The calculation is
+%  donce for one year. The angles are compared for each day at 3 p.m.
+%  Remark: ISO equations seem to be correct only for surface inclination
+%  of 0°. So comparison is done for a this angle. 
 %                                                                          
-%  Literature:   --
-%  see also template_verify_mFunction, template_verify_SimulinkBlock, verification_carnot
+%  Literature:
+%   Duffie, Beckman: Solar Engineering of Thermal Processes, 2006
+%   ISO 9806:2017 : Solar thermal collectors – Test methods
+%  see also verification_carnot, verify_RadiationInclinedSurface_day, solar_angles
 
 function [v, s] = verify_RadiationInclinedSurface(varargin)
 %% Calculations
@@ -35,21 +43,24 @@ end
 
 %% specific model or function parameters
 % ----- set error tolerances ----------------------------------------------
-max_error = 0.6;        % max error between simulation and reference
+max_error = 1e-5;       % max error between simulation and reference
 max_simu_error = 1e-7;  % max error between initial and current simu
 functionname = 'RadiationOnInclinedSurface';
 modelfile = 'verify_RadiationInclinedSurface_mdl';
+Deg2Rad = pi/180;
+Rad2Deg = 180/pi;
 
 % function parameters
 lat = 45;               % reference input values for latitude
 lst = 0;                % reference meridian
 local = 0;              % local meridian
-slope = 30;             % collector slope
-azimu = 20;             % collector azimuth
+slope = 0;              % collector slope
+azimu = 0;              % collector azimuth
 rotat = 0;              % collector rotation
-nday = 1:30:365;        % calculate one day for each month
+nday = (1:30:365)';     % calculate one day for each month
 u0 = nday;
-standardtime = 10;      % calculate for 10 a.m.
+standardtime = 15;      % calculate for 3 p.m.
+t0 = (nday*24 + standardtime)*3600;
 
 %% start simulation
 y2 = zeros(length(nday),3);
@@ -87,29 +98,34 @@ else
 end
 
 % ----------------- set the literature reference values -------------------
-brad = slope*pi/180;
-gamarad = azimu*pi/180;
-latirad = lat*pi/180;
-b = ((nday-81)*360/364)*pi/180;
-E = (9.87*sin(2*b)-7.53*cos(b)-1.5*sin(b))/60;
-solartime = standardtime+E+(lst-local)/15;
-del = 23.45*sin((360*(nday+284)/365)*pi/180);
-delrad = del*pi/180;
-wdegree = (solartime-12)*15;
-wrad = wdegree*(pi/180);
-% zenrad = acos(sin(delrad)*sin(latirad)+cos(delrad)*cos(latirad)*cos(wrad));
-% zenith = zenrad*(180/pi);
-% azimuth = sign(wrad).*(180/pi).*acos((sin(latirad)*cos(zenrad)-sin(delrad))./ ...
-%     (cos(latirad)*sin(zenrad)));
-% equation from /1/
-coosincidenceangle = sin(delrad).*sin(latirad).*cos(brad) - ...
+brad = slope*Deg2Rad;
+% rotrad = rotat*Deg2Rad;
+gamarad = azimu*Deg2Rad;
+latirad = lat*Deg2Rad;
+% decination and azimuth from carlib
+[del,~,~,azi,wdegree] = solar_angles(t0,lat,lst,local);
+wrad = wdegree*Deg2Rad;
+delrad = del*Deg2Rad;
+azirad = Deg2Rad*azi;
+inanglecos = sin(delrad).*sin(latirad).*cos(brad) - ...
     sin(delrad).*cos(latirad).*sin(brad).*cos(gamarad) + ...
     cos(delrad).*cos(latirad).*cos(brad).*cos(wrad) + ...
     cos(delrad).*sin(latirad).*sin(brad).*cos(gamarad).*cos(wrad) + ...
     cos(delrad).*sin(brad).*sin(gamarad).*sin(wrad);
-incidence = (180/pi)*acos(coosincidenceangle);
-%     incidence angle, longitudinal angle, transversal angle
-y0 = incidence';             % reference results
+inangle = acos(inanglecos);
+inanglesin = sin(inangle);
+% equations of ISO 9806 for longitudunal and transversal angle
+tetalong = atan(inanglesin.*cos(azirad)./inanglecos);   % longitudinal incidence angle
+tetatrans = atan(inanglesin.*sin(azirad)./inanglecos);   % transversal incidence angle
+
+% reference results
+y0(:,1) = Rad2Deg*inangle;                         % incidence angle
+y0(:,2) =  min(90, Rad2Deg*tetalong);   % longitudinal incidence angle from ISO 9806
+y0(:,3) = min(90, Rad2Deg*tetatrans);   % transversal incidence angle from ISO 9806
+
+% internal check
+% cr = (inangletan).^2 - ((inangletan.*cos(azirad)).^2 + (inangletan.*sin(azirad)).^2);
+% disp(cr)   % cr must be ~0
 
 
 %% -------- calculate the errors -------------------------------------------
@@ -123,14 +139,10 @@ s = 'max';
 % s = 'sum';
 % s = 'mean';
 
-% a_err1 = (y0-y1(:,1));  % error between reference data and initial simulation
-% a_err2 = (y0-y2(:,1));  % error between reference data and current simulation
-% a_err3 = (y1-y2);       % error between initial simulation and current simulation
-
 % error between reference and initial simu 
-[e1, ye1] = calculate_verification_error(y0, y1(:,1), r, s);
+[e1, ye1] = calculate_verification_error(y0, y1, r, s);
 % error between reference and current simu
-[e2, ye2] = calculate_verification_error(y0, y2(:,1), r, s);
+[e2, ye2] = calculate_verification_error(y0, y2, r, s);
 % error between initial and current simu
 [e3, ye3] = calculate_verification_error(y1, y2, r, s);
 
@@ -156,24 +168,101 @@ if (show)
     disp(['Initial error = ', num2str(e1)])
     sx = 'Day';                         % x-axis label
     st = 'Simulink block verification';   % title
-    sy1 = 'Angles in °';                    % y-axis label in the upper plot
-    sy2 = 'Difference';                     % y-axis label in the lower plot
+
     % upper legend
     sleg1 = {'reference data','initial simulation','current simulation'};
     % lower legend
     sleg2 = {'ref. vs initial simu','ref. vs current simu','initial simu vs current'};
-    %   x - vector with x values for the plot
-    x = reshape(u0,length(u0),1);
+    
     %   y - matrix with y-values (reference values and result of the function call)
-    y = [y0, y1, y2];
+    y_teta  = [y0(:,1), y1(:,1), y2(:,1)];
+    y_tetaL = [y0(:,2), y1(:,2), y2(:,2)];
+    y_tetaT = [y0(:,3), y1(:,3), y2(:,3)];
+    
+    %   x - vector with x values for the plot
+    x = u0;
+    
     %   ye - matrix with error values for each y-value
-    ye = [ye1, ye2, ye3];
-    display_verification_error(x, y, ye, st, sx, sy1, sleg1, sy2, sleg2, s)
+    ye_teta  = [ye1(:,1), ye2(:,1), ye3(:,1)];
+    ye_tetaL = [ye1(:,2), ye2(:,2), ye3(:,2)];
+    ye_tetaT = [ye1(:,3), ye2(:,3), ye3(:,3)];
+    
+    sz = strrep(s,'_',' ');
+    
+    % ----------------------- Combining plots ---------------------------------
+    figure              % open a new figure
+    
+    % longitudinal incidence angle plots
+    subplot(2,3,1)      % divide in subplots (lower and upper one)
+    if size(y_tetaL,2) == 3
+        plot(x,y_tetaL(:,1),'x',x,y_tetaL(:,2),'o',x,y_tetaL(:,3),'-')
+    else
+        plot(x,y_tetaL,'-')
+    end
+    title(st)
+    ylabel('longitudinal angle in °')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,3,4)      % choose lower window
+    if size(ye_tetaL,2) == 3
+        plot(x,ye_tetaL(:,1),'x',x,ye_tetaL(:,2),'o',x,ye_tetaL(:,3),'-')
+    else
+        plot(x,ye_tetaL,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in °')
+    
+    % transversal incidence angle plots
+    subplot(2,3,2)      % divide in subplots (lower and upper one)
+    if size(y_tetaT,2) == 3
+        plot(x,y_tetaT(:,1),'x',x,y_tetaT(:,2),'o',x,y_tetaT(:,3),'-')
+    else
+        plot(x,y_tetaT,'-')
+    end
+    title(st)
+    ylabel('transversal angle in °')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,3,5)      % choose lower window
+    if size(ye_tetaT,2) == 3
+        plot(x,ye_tetaT(:,1),'x',x,ye_tetaT(:,2),'o',x,ye_tetaT(:,3),'-')
+    else
+        plot(x,ye_tetaT,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in °')
+    
+    %  incidence angle plots
+    subplot(2,3,3)      % divide in subplots (lower and upper one)
+    if size(y_teta,2) == 3
+        plot(x,y_teta(:,1),'x',x,y_teta(:,2),'o',x,y_teta(:,3),'-')
+    else
+        plot(x,y_teta,'-')
+    end
+    title(st)
+    ylabel('incidence angle in °')
+    legend(sleg1,'Location','best')
+    text(0,-0.2,sz,'Units','normalized')  % display valiation text
+    
+    subplot(2,3,6)      % choose lower window
+    if size(ye_teta,2) == 3
+        plot(x,ye_teta(:,1),'x',x,ye_teta(:,2),'o',x,ye_teta(:,3),'-')
+    else
+        plot(x,ye_teta,'-')
+    end
+    legend(sleg2,'Location','best')
+    xlabel(sx)
+    ylabel('Difference in °')
 end
+
 
 %% Copyright and Versions
 %  This file is part of the CARNOT Blockset.
-%  Copyright (c) 1998-2018, Solar-Institute Juelich of the FH Aachen.
+%  Copyright (c) 1998-2020, Solar-Institute Juelich of the FH Aachen.
 %  Additional Copyright for this file see list auf authors.
 %  All rights reserved.
 %  Redistribution and use in source and binary forms, with or without 
@@ -201,10 +290,10 @@ end
 %  
 %  ************************************************************************
 %  VERSIONS
-%  $Revision: 372 $
-%  $Author: carnot-wohlfeil $
-%  $Date: 2018-01-11 07:38:48 +0100 (Do, 11 Jan 2018) $
-%  $HeadURL: https://svn.noc.fh-aachen.de/carnot/trunk/public/library_simulink/Weather/Radiation_on_Inclined_Surface/verification/verify_RadiationInclinedSurface.m $
+%  $Revision$
+%  $Author$
+%  $Date$
+%  $HeadURL$
 %  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 %  author list:     hf -> Bernd Hafner
 %                   ts -> Thomas Schroeder
@@ -216,4 +305,8 @@ end
 %  6.2.2    hf      close system without saving it              16may2016
 %  6.3.0    hf      comments adapted to publish function        02nov2017
 %                   added save_sim_ref as 2nd input argument
+%  7.1.0    hf      added incidence angle calculation of ISO    24mar2019
+%  7.1.1    hf      new collector position, corrected comments  05jan2020
+%  7.1.2    hf      correceted solar azimut calculation         25jan2020
+%                   slope = 0, ISO seems wrong for slope > 0
 % * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
