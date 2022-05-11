@@ -44,7 +44,7 @@ Tank_Exist_Probability = 1; %probability of a single house having a DHW tank, (0
 variableASHP = 1;%does the ASHP have a variable speed compressor? 1 = yes, 0 = no
 pumpRamp = 180;%seconds for pump to reach full heat output
 
-numRuns = 100;%number of Simulations to run
+numRuns = 1;%number of Simulations to run
 %%
 
 %Applicable only to those wishing to change detailed house structure and
