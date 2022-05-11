@@ -1,2 +1,0 @@
-Html file of the model is in the folder:
-\public\library_simulink\Storage\Thermal\Storage_Ports\HX_data_fit\doc
