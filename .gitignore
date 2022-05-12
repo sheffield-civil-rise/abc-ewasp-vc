@@ -8,7 +8,7 @@ CARNOT*/
 *.m~
 
 # Compiled MEX binaries (all platforms)
-#*.mex* # Some .mexw64 files must stay; they can't be recompiled. TJH 11 May 2022
+#*.mex* # Some .mexw64 must stay, can't be recompiled. TJH 11 May 2022
 
 # Packaged app and toolbox files
 *.mlappinstall
@@ -28,7 +28,7 @@ codegen/
 *.autosave
 
 # Simulink cache files
-*.slxc # Treat with a bit of caution. TJH 11 May 2022
+#*.slxc # Some .slxc must stay, can't be recompiled. TJH 11 May 2022
 
 # Octave session info
 octave-workspace
