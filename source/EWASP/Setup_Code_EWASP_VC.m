@@ -434,7 +434,7 @@ Elec_Min(isnan(Elec_Min)) = 0;
 %%
 
 [AirFlowID] = createUniqueIDforHouseLayout(rotation,flip,C_d,roomVol,HCM_State_1,verticalConnectMatrix); %determine the unique ID for this building layout
-location = fullfile(ewaspPath, "AirFlowPregens", strcat(AirFlowID, ".mat"));
+location = fullfile(dataPath, "AirFlowPregens", strcat(AirFlowID, ".mat"));
 
 %%check whether HCM stats are both the same, and ensure there are no closed
 %%doors, otherwise don't use the fast load function (will extend to load complex airflow definitions in futer versions) 
