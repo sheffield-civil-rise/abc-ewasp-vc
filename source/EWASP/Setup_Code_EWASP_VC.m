@@ -1,169 +1,98 @@
-homePath = char(java.lang.System.getProperty("user.home"));
-mainPath = fullfile(homePath, "temp_ewasp_vc");
+% Load configs.
+run("setup_configs.m");
+configs = load("setup_configs.mat");
+
+% Load paths.
+mainPath = configs.mainPath;
 sourcePath = fullfile(mainPath, "source");
 dataPath = fullfile(mainPath, "data");
 ewaspPath = fullfile(sourcePath, "EWASP");
 structuralPath = fullfile(dataPath, "Structural");
 energyDemandsPath = fullfile(dataPath, "EnergyDemandsData");
 
-manualStructureDefinition = 0; %only set to 1 if you want to manually define all of the connection matricies and floor areas
+% Load whether we're setting structure definitions manually.
+manualStructureDefinition = configs.manualStructureDefinition;
 
-buildingAge = 2005; %house build year - should not exceed 2019 unless the user intends to activate the passivehouse model, which is currently experimental and of limited validity
-buildingType = 4; %1 = end terraced, 2 = mid Terraced, 3 = semi, 4 = detached
-buildingSize = 'S'; %'S' = Small, 'N' = Normal, 'L' = Large
-wallRetrofit = 1;
-systemWall = 0;
-floorInsulationUpgrade = 1;
-roofInsulationUpgrade = 1; 
-expect30Degrees = 1; %do homeowners expect the pump to perform as well as/better than a boiler i.e. the pump can easily achieve deltaT's of 30 degrees?
-fixStat = 0; %assume all homeowners expect house to reach 21 degrees
-fixedStatPoint = 21; % if fixing all thermostat setpoints, this variable must be assigned the setPoint (e.g. 21 if the user desires all houses the set their thermost to 21oC). This variable will be ignored if fixStat = 0
-forceTen = 0; %force radiators to be a minimum of 10 litres - useful to avoid model crashes when houses are low heat demand (newer houses)
-rotation = 0; %equal to 0 (defined building is not rotated), 90 (rotated 90 degreesclockwise from north), 180, or 270
-flip = 'N'; %mirror image the house (only affects airflow and irradiance calcs)
+% Load "other" building configs.
+buildingAge = configs.buildingYearBuilt;
+buildingType = configs.buildingType;
+buildingSize = configs.buildingSize;
+wallRetrofit = configs.wallRetrofit;
+systemWall = configs.systemWall;
+floorInsulationUpgrade = configs.floorInsulationUpgrade;
+roofInsulationUpgrade = configs.roofInsulationUpgrade; 
+expect30Degrees = configs.expect30Degrees;
+fixStat = configs.fixStat;
+fixedStatPoint = configs.fixedStatPoint;
+forceTen = configs.forceTen;
+rotation = configs.rotation;
+flip = configs.flip;
+forcedOccupancy = configs.forcedOccupancy;
+occ = configs.occ;
 
-forcedOccupancy = 1; % 0 = statisticaly assigned occupancy, 1 = fixed occupancy level (specified in 'occ')
-occ = 1; % the occupancy level of simulated houses - only affects output if 'forcedOccupancy = 1'
+% Load control type inputs.
+preHeatChance = configs.preHeatChance;
+slackRequestChance = configs.slackRequestChance;
+C_d = configs.C_d;
+thermostatBand = configs.thermostatBand;
+fastAirFlow = configs.fastAirFlow;
 
-% Control Type Inputs
+% Load time and weather inputs.
+dayType = configs.dayType;
+forceCold = configs.forceCold;
 
-preHeatChance = 0; %EXPERIMENTAL - probability of any given house partaking in preheating - set to 1 or 0 if you want to force presence/absence of the strategy
-slackRequestChance = 0; %EXPERIMENTAL - probability of house partaking in thermostat dead band temperature reduction at peak times (reduced to 18oC) - set to 1 or 0 if you want to force presence/absence of the strategy
+% Load heat pump variables.
+Tank_Exist_Probability = configs.Tank_Exist_Probability;
+variableASHP = configs.variableASHP;
+pumpRamp = configs.pumpRamp;
 
-C_d = 0.75; %doorway coefficient of discharge - set to a typical value (0.75) by default, but can be set between 0 and 1
-thermostatBand = 0.1; %deadband of the room thermostat - set to a typical 0.1 oC by default, but adjustable to any real positive value
-fastAirFlow = 1; %save results of airflow for your floorplan, and auto load later without having to run airflow again (only works if all internal doors are open in both all building states - will be futher developed for later versions)
+% Load number of simulations.
+numRuns = configs.numRuns;
 
-%Time and Weather Inputs
-
-dayType = 'WD'; %Day type - 'WD' is weekday, 'WE' is weekend
-forceCold = 0; %forces temperature to a constant -5 degrees celcius if set equal to 1 
-
-%Heat Pump Variables
-
-Tank_Exist_Probability = 1; %probability of a single house having a DHW tank, (0 = never, 1 = certain ownership, all in between values permitted)
-
-variableASHP = 1;%does the ASHP have a variable speed compressor? 1 = yes, 0 = no
-pumpRamp = 180;%seconds for pump to reach full heat output
-
-numRuns = 1;%number of Simulations to run
-%%
-
-%Applicable only to those wishing to change detailed house structure and
-%fabric (see instruction manual for details on this)
-
+% Set structure definition variables.
 if manualStructureDefinition == 1
-
-roomUse = ['L' 'O' 'O' 'O' 'O' 'B' 'B' 'B' 'B' 'O' 'O' ' '];
-frenchDoors = ['N' 'N' 'N' 'N' 'N' 'N' 'N' 'N' 'N' 'N' 'N' 'N'];
-upDown = [0;0;0;0;1;1;1;1;1;1;1]; %0 = room is downstairs, 1 = room is upstairs
-floortype = 1; %0 = suspended timber 1 = concrete slab
-rooftype = 0; %0 = standard 1 = high mass green roof
-floorOrCeilingArea =  [25.4 11.1 4.40 4.50 4.00 12.9 8.37 8.20 5.94 2.70 6.60 0.00];
-
-NESW_Lengths = [
-3.4 0 0 1.8 0 3.5 0 3.9 0 0 0   
-7.5 0 0 0 0 3.3 2.7 0 0 0 1
-3.3 4.1 0 0 0 0 3.1 0 2.2 2 0
-0 2.7 2.1 1 0 0 0 2.1 2.7 0 0];%the test house wall lengths as a function of direction facing
-
-NESW_Windows = [
-3.6	0	0	0	0	1	0	1	0	0	0
-0	0	0	0	0	0	0	0	0	0	0
-2.5	2.1	0	0	0	0	1	0	1	0	0
-0	0	0	0	0	0	0	0	0	0	0];%the test house window areas as a function of direction facing
-
-verticalConnectMatrix = [
- 0 0 0 0 0 0 0 0 0 0 0  %1   
- 0 0 0 0 0 0 0 0 0 0 0  %2
- 0 0 0 0 0 0 0 0 0 0 0  %3
- 0 0 0 0 1 0 0 0 0 0 0  %4
- 0 0 0 -1 0 0 0 0 0 0 0  %5
- 0 0 0 0 0 0 0 0 0 0 0  %6
- 0 0 0 0 0 0 0 0 0 0 0  %7
- 0 0 0 0 0 0 0 0 0 0 0  %8
- 0 0 0 0 0 0 0 0 0 0 0  %9
- 0 0 0 0 0 0 0 0 0 0 0  %10
- 0 0 0 0 0 0 0 0 0 0 0  %11
-];
-
-HCM_State_1 = [ %connect matrix for the 'day' state - 0 means rooms are not connected, 1 means rooms are connected by an open doorway, 2 means rooms are conneced by a closed doorway
- 0 1 0 1 0 0 0 0 0 0 0 %e.g. if element (1,2) is 2, then rooms 1 and 2 are linked by a closed door   
- 1 0 0 1 0 0 0 0 0 0 0 %matrix must be symmetric
- 0 0 0 1 0 0 0 0 0 0 0 
- 1 1 1 0 0 0 0 0 0 0 0 
- 0 0 0 0 0 1 1 1 1 0 1
- 0 0 0 0 1 0 0 0 0 1 0 
- 0 0 0 0 1 0 0 0 0 0 0 
- 0 0 0 0 1 0 0 0 0 0 0 
- 0 0 0 0 1 0 0 0 0 0 0 
- 0 0 0 0 0 1 0 0 0 0 0
- 0 0 0 0 1 0 0 0 0 0 0  
-];
-
-HCM_State_2 = [
- 0 2 0 2 0 0 0 0 0 0 0    
- 2 0 0 2 0 0 0 0 0 0 0 
- 0 0 0 2 0 0 0 0 0 0 0 
- 2 2 2 0 0 0 0 0 0 0 0 
- 0 0 0 0 0 2 2 2 2 0 2
- 0 0 0 0 2 0 0 0 0 2 0 
- 0 0 0 0 2 0 0 0 0 0 0 
- 0 0 0 0 2 0 0 0 0 0 0 
- 0 0 0 0 2 0 0 0 0 0 0 
- 0 0 0 0 0 2 0 0 0 0 0
- 0 0 0 0 2 0 0 0 0 0 0  
-];
-
-conductiveHconnectMatrix = [
-0	3.3	0	3.1	0	0	0	0	0	0	0
-3.3	0	0	3.8	0	0	0	0	0	0	0
-0	0	0	4.1	0	0	0	0	0	0	0
-3.1	3.8	4.1	0	0	0	0	0	0	0	0
-0	0	0	0	0	4.3	0.6	3.9	2.8	0	2
-0	0	0	0	4.3	0	0	1.6	0	2.7	0
-0	0	0	0	0.6	0	0	0	0	3.1	3.3
-0	0	0	0	3.9	1.6	0	0	0	0	0
-0	0	0	0	2.8	0	0	0	0	0	3.3
-0	0	0	0	0	2.7	3.1	0	0	0	0
-0	0	0	0	2	0	3.3	0	3.3	0	0];
-
-conductiveVConnectMatrix = [
- 0 0 0 0 0 1 1 0 0 0 0 0 %1   
- 0 0 0 0 0 0 0 0 1 0 0 0 %2
- 0 0 0 0 0 0 0 1 0 0 0 0 %3
- 0 0 0 0 0 0 0 1 0 0 0 0 %4
- 0 0 0 -1 0 0 0 0 0 0 0 0 %5
- -1 0 0 0 0 0 0 0 0 0 0 0 %6
- -1 0 0 0 0 0 0 0 0 0 0 0 %7
- 0 0 -1 0 0 0 0 0 0 0 0 0 %8
- 0 -1 0 0 0 0 0 0 0 0 0 0 %8
- -1 0 0 0 0 0 0 0 0 0 0 0 %10
- 0 -1 0 0 0 0 0 0 0 0 0 0 %11
- 0 0 0 0 0 0 0 0 0 0 0 0 %12
-];
-
-%Control Transition Time to second closed door state 
-Diurnal_State_Active = 0;
-Evening_State_Start_Hour = 10;
-Evening_State_End_Hour = 6;
-
-
-else %autoassign building structure
-    
-%Control Transition Time to second closed door state - are not used in auto
-%structure definiton mode, but must be given numerical values for the mdoel
-%to run
-Diurnal_State_Active = 0;
-Evening_State_Start_Hour = 10;
-Evening_State_End_Hour = 6;
-    
-  %AUTOASSIGN the structure of the building, based on a typical layout from
-  %the time period
-[HCM_State_1,HCM_State_2,verticalConnectMatrix,conductiveHconnectMatrix,conductiveVConnectMatrix,NESW_Lengths,NESW_Windows,roomUse,frenchDoors,upDown,floorOrCeilingArea,floortype,rooftype,ventPattern] = AssignBuildingStructure(buildingType,buildingAge);
-
+    roomUse = configs.roomUse;
+    frenchDoors = configs.frenchDoors;
+    upDown = configs.upDown;
+    floortype = configs.floortype;
+    rooftype = configs.rooftype;
+    floorOrCeilingArea = configs.floorOrCeilingArea;
+    NESW_Lengths = configs.NESW_Lengths;
+    NESW_Windows = configs.NESW_Windows;
+    verticalConnectMatrix = configs.verticalConnectMatrix;
+    HCM_State_1 = configs.HCM_State_1;
+    HCM_State_2 = configs.HCM_State_2;
+    conductiveHconnectMatrix = configs.conductiveHconnectMatrix;
+    conductiveVConnectMatrix = configs.conductiveVConnectMatrix;
+    Diurnal_State_Active = configs.Diurnal_State_Active;
+    Evening_State_Start_Hour = configs.Evening_State_Start_Hour;
+    Evening_State_End_Hour = configs.Evening_State_End_Hour;
+else % Auto-assign building structure.
+    % Control Transition Time to second closed door state - are not used in
+    % auto structure definiton mode, but must be given numerical values for
+    % the model to run.
+    Diurnal_State_Active = 0;
+    Evening_State_Start_Hour = 10;
+    Evening_State_End_Hour = 6;    
+    % Auto-assign the structure of the building, based on a typical layout
+    % from the time period.
+    [...
+        HCM_State_1,...
+        HCM_State_2,...
+        verticalConnectMatrix,...
+        conductiveHconnectMatrix,...
+        conductiveVConnectMatrix,...
+        NESW_Lengths,...
+        NESW_Windows,...
+        roomUse,...
+        frenchDoors,...
+        upDown,...
+        floorOrCeilingArea,...
+        floortype,...
+        rooftype,...
+        ventPattern...
+    ] = AssignBuildingStructure(buildingType,buildingAge);
 end
-
 
 %% 
 
