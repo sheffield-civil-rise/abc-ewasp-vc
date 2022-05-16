@@ -193,7 +193,7 @@ wallStartTempInt = 16; %starting temperature of internal face of external walls,
 open_system(fullfile(ewaspPath, "Final_EWASP_VC.slx"));
 
 %Load Input Arrays
-load(fullfile(ewaspPath, "Meteorological", "GroundTempTimeSeries.mat"))
+load(fullfile(dataPath, "Meteorological", "GroundTempTimeSeries.mat"))
 load(fullfile(structuralPath, "UVal_Data.mat"), "UVals_Archetypes")
 load(fullfile(energyDemandsPath, "EnergyDemandProfiles.mat"))
 load(fullfile(energyDemandsPath, "HeatingOnProfiles.mat"))
