@@ -1,6 +1,7 @@
 homePath = char(java.lang.System.getProperty("user.home"));
 mainPath = fullfile(homePath, "temp_ewasp_vc");
 sourcePath = fullfile(mainPath, "source");
+dataPath = fullfile(mainPath, "data");
 ewaspPath = fullfile(sourcePath, "EWASP");
 structuralPath = fullfile(ewaspPath, "Structural");
 energyDemandsPath = fullfile(ewaspPath, "Energy Demands");
@@ -325,7 +326,7 @@ pumpChoice = pumpChoices(MinIndex,1);
 PUMPWARNING = 0; %Warn that no commercially available pump is large enough
 end
 
-heatPumpDataSetsPath = fullfile(sourcePath, "HeatPumpDataSets");
+heatPumpDataSetsPath = fullfile(dataPath, "HeatPumpDataSets");
 minHeatPumpPath = fullfile(heatPumpDataSetsPath,"COPDatabase_Min.xls");
 midHeatPumpPath = fullfile(heatPumpDataSetsPath,"COPDatabase_Mid.xls");
 maxHeatPumpPath = fullfile(heatPumpDataSetsPath,"COPDatabase_Max.xls");
