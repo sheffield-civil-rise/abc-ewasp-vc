@@ -4,7 +4,7 @@ sourcePath = fullfile(mainPath, "source");
 dataPath = fullfile(mainPath, "data");
 ewaspPath = fullfile(sourcePath, "EWASP");
 structuralPath = fullfile(ewaspPath, "Structural");
-energyDemandsPath = fullfile(ewaspPath, "Energy Demands");
+energyDemandsPath = fullfile(dataPath, "EnergyDemandsData");
 
 manualStructureDefinition = 0; %only set to 1 if you want to manually define all of the connection matricies and floor areas
 
