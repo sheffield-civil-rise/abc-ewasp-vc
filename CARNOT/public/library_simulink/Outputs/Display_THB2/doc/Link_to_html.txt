@@ -1,2 +1,0 @@
-Html file of the model is in the folder:
-\public\library_simulink\Outputs\Display_THB1\doc
