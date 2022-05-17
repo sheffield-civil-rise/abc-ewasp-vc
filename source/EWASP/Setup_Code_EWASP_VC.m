@@ -1,6 +1,6 @@
 % Load configs.
-run("setup_configs.m");
-configs = load("setup_configs.mat");
+run("configs.m");
+configs = load("configs.mat");
 
 % Load paths.
 mainPath = configs.mainPath;
