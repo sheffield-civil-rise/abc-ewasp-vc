@@ -3,7 +3,7 @@ homePath = char(java.lang.System.getProperty("user.home"));
 mainPath = fullfile(homePath, "temp_ewasp_vc");
 
 % Number of runs.
-numRuns = 100; % Number of simulations to run.
+numRuns = 1; % Number of simulations to run.
 
 % Manual structure definition.
 manualStructureDefinition = 0;
@@ -153,4 +153,4 @@ variableASHP = 1; % Does the ASHP have a variable speed compressor?
 pumpRamp = 180; % Seconds for pump to reach full heat output.
 
 % Save these configs to an importable file.
-save("setup_configs.mat");
+save("configs.mat");
