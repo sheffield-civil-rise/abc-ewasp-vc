@@ -120,7 +120,7 @@ fixedStatPoint = 21; % ^
 forceTen = 0; % Force radiators to be a minimum of 10 litres.
 % 0 = defined building not rotated, 90 = rotated 90 degrees clockwise from
 % north, etc
-rotation = 0 % ^;
+rotation = 0; % ^
 flip = 'N'; % Mirror image house. (Only affects airflow and irradiance.)
 % 0 = statisticaly assigned occupancy, 1 = fixed occupancy level (specified
 % in 'occ')

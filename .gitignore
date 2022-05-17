@@ -1,5 +1,5 @@
 # Custom.
-*_configs.mat # Importable configs files.
+configs.mat
 /data/
 
 # Windows default autosave extension
