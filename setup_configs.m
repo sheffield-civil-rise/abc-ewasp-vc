@@ -3,7 +3,7 @@ homePath = char(java.lang.System.getProperty("user.home"));
 mainPath = fullfile(homePath, "temp_ewasp_vc");
 
 % Number of runs.
-numRuns = 1; % Number of simulations to run.
+numRuns = 100; % Number of simulations to run.
 
 % Manual structure definition.
 manualStructureDefinition = 0;
